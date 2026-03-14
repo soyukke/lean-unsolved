@@ -69,3 +69,115 @@ theorem collatz_pow_two : ∀ k : ℕ, collatzIter k (2 ^ k) = 1 := by
   | succ n ih =>
     simp only [collatzIter_succ, collatzStep_pow_two]
     exact ih
+
+/-! ## Syracuse関数版コラッツ予想 -/
+
+/-! ### 2-adic付値 (v2)
+自然数 n が 2 で何回割り切れるかを返す。
+n = 0 のときは 0 を返す。
+-/
+
+/-- 2-adic付値: n を 2 で割れる回数 -/
+def v2 (n : ℕ) : ℕ :=
+  if n = 0 then 0
+  else if n % 2 ≠ 0 then 0
+  else 1 + v2 (n / 2)
+termination_by n
+decreasing_by
+  omega
+
+/-- Syracuse関数: 奇数 n に対して (3n+1) / 2^v2(3n+1) を返す -/
+def syracuse (n : ℕ) : ℕ :=
+  let m := 3 * n + 1
+  m / 2 ^ v2 m
+
+/-- Syracuse反復: syracuse を k 回適用する -/
+def syracuseIter : ℕ → ℕ → ℕ
+  | 0, n => n
+  | k + 1, n => syracuseIter k (syracuse n)
+
+/-- Syracuse版コラッツ予想: 任意の奇数の正の整数に対し、
+    有限回のSyracuse反復で1に到達する -/
+def SyracuseConjecture : Prop :=
+  ∀ n : ℕ, n ≥ 1 → n % 2 = 1 → ∃ k : ℕ, syracuseIter k n = 1
+
+/-! ### v2 の基本補題 -/
+
+@[simp] theorem v2_zero : v2 0 = 0 := by
+  unfold v2; simp
+
+theorem v2_odd (n : ℕ) (h : n % 2 ≠ 0) : v2 n = 0 := by
+  unfold v2
+  split
+  · rfl
+  · rfl
+
+theorem v2_even (n : ℕ) (hn : n ≠ 0) (h : n % 2 = 0) : v2 n = 1 + v2 (n / 2) := by
+  conv_lhs => rw [v2]
+  have h1 : ¬(n = 0) := hn
+  have h2 : ¬(n % 2 ≠ 0) := by omega
+  simp only [h1, ↓reduceIte, h2]
+
+theorem v2_two_mul (n : ℕ) (hn : n ≠ 0) : v2 (2 * n) = 1 + v2 n := by
+  rw [v2_even (2 * n) (by omega) (by omega)]
+  have : 2 * n / 2 = n := Nat.mul_div_cancel_left n (by omega)
+  rw [this]
+
+/-! ### Syracuse の基本定理 -/
+
+private theorem v2_4 : v2 4 = 2 := by unfold v2; unfold v2; unfold v2; simp
+
+/-- 1 は Syracuse 関数の不動点 -/
+theorem syracuse_one : syracuse 1 = 1 := by
+  change (3 * 1 + 1) / 2 ^ v2 (3 * 1 + 1) = 1
+  norm_num [v2_4]
+
+/-! ### 小さい値での検証例 -/
+
+-- v2 の展開を繰り返す補助マクロの代わりに unfold を繰り返す
+example : v2 4 = 2 := v2_4
+example : v2 8 = 3 := by unfold v2; unfold v2; unfold v2; unfold v2; simp
+example : v2 6 = 1 := by unfold v2; unfold v2; simp
+example : v2 12 = 2 := by unfold v2; unfold v2; unfold v2; simp
+
+-- syracuse の検証
+example : syracuse 1 = 1 := syracuse_one
+
+private theorem v2_10 : v2 10 = 1 := by unfold v2; unfold v2; simp
+private theorem v2_16 : v2 16 = 4 := by unfold v2; unfold v2; unfold v2; unfold v2; unfold v2; simp
+private theorem v2_22 : v2 22 = 1 := by unfold v2; unfold v2; simp
+private theorem v2_28 : v2 28 = 2 := by unfold v2; unfold v2; unfold v2; simp
+private theorem v2_34 : v2 34 = 1 := by unfold v2; unfold v2; simp
+
+example : syracuse 3 = 5 := by
+  change 10 / 2 ^ v2 10 = 5; rw [v2_10]; norm_num
+
+example : syracuse 5 = 1 := by
+  change 16 / 2 ^ v2 16 = 1; rw [v2_16]; norm_num
+
+example : syracuse 7 = 11 := by
+  change 22 / 2 ^ v2 22 = 11; rw [v2_22]; norm_num
+
+example : syracuse 9 = 7 := by
+  change 28 / 2 ^ v2 28 = 7; rw [v2_28]; norm_num
+
+example : syracuse 11 = 17 := by
+  change 34 / 2 ^ v2 34 = 17; rw [v2_34]; norm_num
+
+/-! ### syracuseIter の基本補題 -/
+
+@[simp] theorem syracuseIter_zero (n : ℕ) : syracuseIter 0 n = n := rfl
+
+@[simp] theorem syracuseIter_succ (k n : ℕ) :
+    syracuseIter (k + 1) n = syracuseIter k (syracuse n) := rfl
+
+private theorem syracuse_3 : syracuse 3 = 5 := by
+  change 10 / 2 ^ v2 10 = 5; rw [v2_10]; norm_num
+
+private theorem syracuse_5 : syracuse 5 = 1 := by
+  change 16 / 2 ^ v2 16 = 1; rw [v2_16]; norm_num
+
+/-- 3 は2ステップで1に到達する: 3 → 5 → 1 -/
+example : syracuseIter 2 3 = 1 := by
+  simp only [syracuseIter_succ, syracuseIter_zero]
+  rw [syracuse_3, syracuse_5]
