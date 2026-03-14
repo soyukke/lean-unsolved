@@ -13,13 +13,7 @@ def TwinPrimeConjecture : Prop :=
   ∀ N : ℕ, ∃ p : ℕ, p > N ∧ Nat.Prime p ∧ Nat.Prime (p + 2)
 
 -- (3, 5) は双子素数
-example : Nat.Prime 3 ∧ Nat.Prime 5 := by
-  constructor
-  · exact Nat.prime_iff.mpr ⟨by omega, by omega⟩
-  · exact Nat.prime_iff.mpr ⟨by omega, by omega⟩
+example : Nat.Prime 3 ∧ Nat.Prime 5 := by constructor <;> norm_num
 
 -- (11, 13) は双子素数
-example : Nat.Prime 11 ∧ Nat.Prime 13 := by
-  constructor
-  · exact Nat.prime_iff.mpr ⟨by omega, by omega⟩
-  · exact Nat.prime_iff.mpr ⟨by omega, by omega⟩
+example : Nat.Prime 11 ∧ Nat.Prime 13 := by constructor <;> norm_num

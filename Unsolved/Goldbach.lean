@@ -15,7 +15,7 @@ def GoldbachConjecture : Prop :=
 
 -- 小さい値での検証例
 example : ∃ p q : ℕ, Nat.Prime p ∧ Nat.Prime q ∧ 4 = p + q := by
-  exact ⟨2, 2, Nat.prime_iff.mpr ⟨by omega, by omega⟩, Nat.prime_iff.mpr ⟨by omega, by omega⟩, by omega⟩
+  exact ⟨2, 2, by norm_num, by norm_num, by norm_num⟩
 
 example : ∃ p q : ℕ, Nat.Prime p ∧ Nat.Prime q ∧ 6 = p + q := by
-  exact ⟨3, 3, Nat.prime_iff.mpr ⟨by omega, by omega⟩, Nat.prime_iff.mpr ⟨by omega, by omega⟩, by omega⟩
+  exact ⟨3, 3, by norm_num, by norm_num, by norm_num⟩
