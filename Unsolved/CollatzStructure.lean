@@ -133,3 +133,60 @@ theorem syracuse_lt_of_mod4_eq1 (n : ℕ) (h : n % 4 = 1) (hn : n > 1) :
   -- (3n+1)/4 < n when n > 1
   have hlt : (3 * n + 1) / 4 < n := by omega
   omega
+
+/-! ## 7. 2ステップ下降補題: n ≡ 3 (mod 8) の場合 -/
+
+/-- n ≡ 3 (mod 8) ならば n ≡ 3 (mod 4) -/
+theorem mod4_eq3_of_mod8_eq3 (n : ℕ) (h : n % 8 = 3) : n % 4 = 3 := by
+  omega
+
+/-- n ≡ 3 (mod 8) ならば syracuse n ≡ 1 (mod 4) -/
+theorem syracuse_mod4_eq1_of_mod8_eq3 (n : ℕ) (h : n % 8 = 3) :
+    syracuse n % 4 = 1 := by
+  rw [syracuse_mod4_eq3 n (mod4_eq3_of_mod8_eq3 n h)]
+  omega
+
+/-- n ≡ 3 (mod 8) ならば syracuse n > 1 -/
+theorem syracuse_gt_one_of_mod8_eq3 (n : ℕ) (h : n % 8 = 3) :
+    syracuse n > 1 := by
+  rw [syracuse_mod4_eq3 n (mod4_eq3_of_mod8_eq3 n h)]
+  omega
+
+/-- n ≡ 3 (mod 8) ならば syracuse(syracuse(n)) < syracuse(n)
+    (2ステップ目は下降) -/
+theorem syracuse_two_step_descent (n : ℕ) (h : n % 8 = 3) :
+    syracuse (syracuse n) < syracuse n := by
+  exact syracuse_lt_of_mod4_eq1 (syracuse n)
+    (syracuse_mod4_eq1_of_mod8_eq3 n h)
+    (syracuse_gt_one_of_mod8_eq3 n h)
+
+/-! ## 8. 2ステップの上界 -/
+
+/-- n ≡ 1 (mod 4) かつ n > 1 ならば syracuse n ≤ (3*n+1)/4 -/
+theorem syracuse_le_of_mod4_eq1 (n : ℕ) (h : n % 4 = 1) (_hn : n > 1) :
+    syracuse n ≤ (3 * n + 1) / 4 := by
+  change (3 * n + 1) / 2 ^ v2 (3 * n + 1) ≤ (3 * n + 1) / 4
+  have hv2 := v2_ge_two_of_mod4_eq1 n h
+  have hpow_ge : 2 ^ v2 (3 * n + 1) ≥ 4 := by
+    have : 2 ^ v2 (3 * n + 1) ≥ 2 ^ 2 := Nat.pow_le_pow_right (by omega) hv2
+    simpa using this
+  exact Nat.div_le_div_left (by omega) (by omega)
+
+/-- n ≡ 3 (mod 8) ならば syracuse(syracuse(n)) ≤ (3 * syracuse n + 1) / 4
+    上昇後の下降ステップにおける上界 -/
+theorem syracuse_two_step_upper_bound (n : ℕ) (h : n % 8 = 3) :
+    syracuse (syracuse n) ≤ (3 * syracuse n + 1) / 4 := by
+  exact syracuse_le_of_mod4_eq1 (syracuse n)
+    (syracuse_mod4_eq1_of_mod8_eq3 n h)
+    (syracuse_gt_one_of_mod8_eq3 n h)
+
+/-- n ≡ 3 (mod 8) ならば syracuse n = (3 * n + 1) / 2 かつ
+    syracuse(syracuse(n)) ≤ (3 * ((3 * n + 1) / 2) + 1) / 4
+    上昇→下降サイクルの上界をnの式で表現 -/
+theorem syracuse_two_step_bound_in_n (n : ℕ) (h : n % 8 = 3) :
+    syracuse (syracuse n) ≤ (3 * ((3 * n + 1) / 2) + 1) / 4 := by
+  have heq : syracuse n = (3 * n + 1) / 2 :=
+    syracuse_mod4_eq3 n (mod4_eq3_of_mod8_eq3 n h)
+  calc syracuse (syracuse n)
+      ≤ (3 * syracuse n + 1) / 4 := syracuse_two_step_upper_bound n h
+    _ = (3 * ((3 * n + 1) / 2) + 1) / 4 := by rw [heq]
