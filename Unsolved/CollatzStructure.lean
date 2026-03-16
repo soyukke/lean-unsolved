@@ -190,3 +190,90 @@ theorem syracuse_two_step_bound_in_n (n : ℕ) (h : n % 8 = 3) :
   calc syracuse (syracuse n)
       ≤ (3 * syracuse n + 1) / 4 := syracuse_two_step_upper_bound n h
     _ = (3 * ((3 * n + 1) / 2) + 1) / 4 := by rw [heq]
+
+/-! ## 9. 形式化可能な小さい結果 -/
+
+/-! ### 9.1 奇数の 3n+1 は必ず偶数 -/
+
+/-- 奇数 n に対して 3*n+1 は偶数 -/
+theorem three_mul_add_one_even (n : ℕ) (hn : n % 2 = 1) : (3 * n + 1) % 2 = 0 := by
+  omega
+
+/-! ### 9.2 collatzStep (2*n) = n -/
+
+/-- 正の整数 n に対して collatzStep (2*n) = n -/
+theorem collatzStep_double (n : ℕ) (_hn : n > 0) : collatzStep (2 * n) = n := by
+  have heven : (2 * n) % 2 = 0 := by omega
+  rw [collatzStep_even_eq_div2 (2 * n) heven]
+  omega
+
+/-! ### 9.3 Syracuse 値の非零性 -/
+
+/-- v2(m) に対応する 2^v2(m) は m を割り切る -/
+private theorem pow_v2_dvd (m : ℕ) : 2 ^ v2 m ∣ m := by
+  induction m using Nat.strongRecOn with
+  | ind m ih =>
+    by_cases hm : m = 0
+    · subst hm; simp
+    · by_cases hmod : m % 2 ≠ 0
+      · rw [v2_odd m hmod]; simp
+      · push_neg at hmod
+        rw [v2_even m hm hmod]
+        have hdiv_lt : m / 2 < m := by omega
+        have ih_half := ih (m / 2) hdiv_lt
+        change 2 ^ (1 + v2 (m / 2)) ∣ m
+        rw [pow_add, pow_one]
+        -- 2^v2(m/2) ∣ m/2 from IH, and m = 2 * (m/2)
+        calc 2 * 2 ^ v2 (m / 2) ∣ 2 * (m / 2) := Nat.mul_dvd_mul_left 2 ih_half
+          _ ∣ m := by exact ⟨1, by omega⟩
+
+/-- 2^v2(n) ≤ n （n > 0 のとき） -/
+private theorem pow_v2_le (n : ℕ) (hn : n > 0) : 2 ^ v2 n ≤ n := by
+  have ⟨c, hc⟩ := pow_v2_dvd n
+  have hpow_pos : 2 ^ v2 n > 0 := by positivity
+  have hc_pos : c > 0 := by
+    by_contra h
+    push_neg at h
+    interval_cases c
+    omega
+  calc 2 ^ v2 n ≤ 2 ^ v2 n * c := Nat.le_mul_of_pos_right _ hc_pos
+    _ = n := by omega
+
+/-- 奇数 n ≥ 1 に対して syracuse n ≥ 1 -/
+theorem syracuse_pos (n : ℕ) (_hn : n ≥ 1) (hodd : n % 2 = 1) : syracuse n ≥ 1 := by
+  change (3 * n + 1) / 2 ^ v2 (3 * n + 1) ≥ 1
+  have hpow_le : 2 ^ v2 (3 * n + 1) ≤ 3 * n + 1 := pow_v2_le (3 * n + 1) (by omega)
+  have hpow_pos : 2 ^ v2 (3 * n + 1) > 0 := by positivity
+  exact Nat.div_pos hpow_le hpow_pos
+
+/-! ### 9.4 T(n) は 3 の倍数にならない -/
+
+/-- 3*n+1 は 3 の倍数でない -/
+private theorem three_mul_add_one_not_div_three (n : ℕ) : (3 * n + 1) % 3 ≠ 0 := by
+  omega
+
+/-- 2^k と 3 は互いに素 -/
+private theorem coprime_pow_two_three (k : ℕ) : Nat.Coprime (2 ^ k) 3 := by
+  have h : Nat.Coprime 2 3 := by decide
+  exact Nat.Coprime.pow_left k h
+
+/-- m が 3 の倍数でなく、d が 3 と互いに素で、d ∣ m ならば m / d も 3 の倍数でない -/
+private theorem not_div_three_of_div (m d : ℕ) (_hd_pos : d > 0) (hdvd : d ∣ m)
+    (hm3 : m % 3 ≠ 0) (_hcop : Nat.Coprime d 3) : (m / d) % 3 ≠ 0 := by
+  intro h
+  apply hm3
+  have ⟨c, hc⟩ := hdvd
+  rw [hc, Nat.mul_div_cancel_left c (by omega)] at h
+  have h3c : 3 ∣ c := Nat.dvd_of_mod_eq_zero (by omega)
+  have h3m : 3 ∣ m := by rw [hc]; exact dvd_mul_of_dvd_right h3c d
+  exact Nat.mod_eq_zero_of_dvd h3m
+
+/-- 全ての奇数 n に対して syracuse n は 3 の倍数でない -/
+theorem syracuse_not_div_three (n : ℕ) (_hn : n % 2 = 1) :
+    syracuse n % 3 ≠ 0 := by
+  change (3 * n + 1) / 2 ^ v2 (3 * n + 1) % 3 ≠ 0
+  apply not_div_three_of_div (3 * n + 1) (2 ^ v2 (3 * n + 1))
+  · positivity
+  · exact pow_v2_dvd (3 * n + 1)
+  · exact three_mul_add_one_not_div_three n
+  · exact coprime_pow_two_three (v2 (3 * n + 1))
