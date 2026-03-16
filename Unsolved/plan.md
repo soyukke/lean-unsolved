@@ -1,6 +1,7 @@
 # コラッツ予想 探索記録
 
-詳細な探索インデックスは [explorations/INDEX.md](explorations/INDEX.md) を参照。
+詳細な探索インデックスは [explorations/collatz/INDEX.md](explorations/collatz/INDEX.md) を参照。
+全問題の一覧は [explorations/INDEX.md](explorations/INDEX.md) を参照。
 
 ## 現在のステータス
 - 探索回数: 23回完了
