@@ -3,74 +3,85 @@
 ## フェーズ1: 問題の理解と再定式化
 
 ### 探索1: 現状の把握
+- Mathlib自体にCollatzの形式化はない
+- 既存: syracuse-confinement (12,947行, 核心sorry), formal-conjectures (定義のみ)
 
-**Mathlibの状況:**
-- Mathlib自体にCollatzの形式化は**存在しない**
-- 使える道具: `Function.iterate`, `StateTransition`, `WellFounded`, `Dynamics.FixedPoints`
-
-**既存のLean形式化:**
-- [syracuse-confinement](https://github.com/johnjanik/syracuse-confinement) — 12,947行、核心部分はまだsorry
-- [formal-conjectures (Google DeepMind)](https://github.com/google-deepmind/formal-conjectures) — 問題文のみ
-
-### 探索2: 再定式化の候補
-1. Syracuse関数 T(n) = (3n+1)/2^v₂(3n+1) ✅ 採用・形式化済み
-2. 2-adic数での解析
-3. コラッツグラフの木構造
-4. 確率的モデル（各サイクルで平均3/4倍）
+### 探索2: 再定式化 → Syracuse関数 T(n) = (3n+1)/2^v₂(3n+1) を採用 ✅
 
 ## フェーズ2: 小さいケースの網羅的探索
 
-### 探索3: 数値実験 (scripts/collatz_explore.py)
-- n=871 が1〜1000で最大stopping time (178ステップ)
-- v2(3n+1) の分布は理論予測 P(v2=k) = 1/2^k と完全一致（幾何分布）
-- mod 12 で r=7 が最大停止時間
-
-### 探索4: Syracuse関数のLean形式化 (Collatz.lean)
-- v2（2-adic付値）、syracuse、syracuseIter を定義
-- syracuse 1 = 1（不動点）、syracuse 3 = 5、syracuse 5 = 1 等を検証
-- ✅ ビルド成功
+### 探索3: 数値実験 → v2分布は幾何分布に完全一致 ✅
+### 探索4: Syracuse関数のLean形式化 ✅
 
 ## フェーズ3: 構造の発見
 
-### 探索5: 構造解析 (scripts/collatz_structure.py)
-- **mod 4 が軌道の上昇/下降を完全に決定する**
-  - n ≡ 1 (mod 4) → 即座に下降
-  - n ≡ 3 (mod 4) → 必ず上昇、上昇後は50:50でmod 4が分岐
-- 逆コラッツ木の成長率は2に漸近
-- trailing 1-bits と停止時間に正の相関
-
-### 探索6: CollatzStructure.lean
-- collatzStep_odd_gives_even, collatz_cycle_1_4_2 等を証明
-- v2_three_mul_add_one_of_mod4_eq3 (n≡3 mod 4 → v2=1)
-- collatzStep_even_lt (偶数n≥2なら下降)
-- ✅ ビルド成功、sorry なし
+### 探索5: mod 4 が上昇/下降を完全に決定する ✅
+### 探索6: CollatzStructure.lean — 基本補題群 ✅
 
 ## フェーズ4: 形式化と証明
 
-### 探索7: ビットパターン遷移 (scripts/collatz_bit_transition.py)
-- **末尾ビットパターンがv2を完全決定**: ...11→v2=1, ...001→v2=2, ...1101→v2=3
-- n ≡ 3 (mod 8) → T(n) ≡ 1 (mod 4) 100% → 次で必ず下降
-- n ≡ 7 (mod 8) → T(n) ≡ 3 (mod 4) 100% → もう一度上昇
-- 連続上昇回数 = 末尾連続1ビット数 → 幾何分布 (1/2)^k
-- マルコフ連鎖の定常分布はほぼ一様、混合が速い
+### 探索7: ビットパターン遷移 → v2を完全決定 ✅
+### 探索8: 下降補題 (syracuse_lt_of_mod4_eq1) ✅
+### 探索9: 2ステップ下降 (syracuse_two_step_descent) ✅
+### 探索10: Tao (2022) 調査 → 対数密度, 特性関数の超多項式的減衰 ✅
+### 探索11: mod 8 完全分類 + Hensel attrition k=1..4 ✅
+### 探索12: サイクル排除 (3^a=2^b→a=b=0, Baker公理) ✅
+### 探索13: Hensel attrition k=1..4 の同値条件 ✅
 
-### 探索8: 下降補題のLean証明 (CollatzStructure.lean)
-- ✅ `v2_ge_two_of_mod4_eq1`: n≡1(mod 4) → v2(3n+1) ≥ 2
-- ✅ `syracuse_lt_of_mod4_eq1`: n≡1(mod 4), n>1 → T(n) < n **← 核心的下降補題**
-- ✅ `syracuse_mod4_eq3`: n≡3(mod 4) → T(n) = (3n+1)/2
-- ✅ `syracuse_gt_of_mod4_eq3`: n≡3(mod 4) → T(n) > n
+### 探索14: 加速Syracuse関数 (CollatzAccel.lean)
+- 1回上昇+下降: T²(n) ≤ (9n+5)/8 (9/8倍、拡大するケースあり!)
+- 2回上昇+下降: T³(n) ≤ (27n+19)/16
+- 即時下降: T(n) ≤ (3n+1)/4 ≈ 3n/4 (確実に縮小)
+- **核心的発見**: 個別サイクルでは縮小しないことがあるが、
+  即時下降の確率1/2が支配的で平均は縮小
+- firstDescent関数（fuelパターン）定義
 - ✅ ビルド成功、sorry なし
+
+### 探索15: 大規模数値解析 + 一般k帰納法調査
+**数値結果:**
+- 平均縮小率 0.985、中央値 0.75
+- 71.4%が縮小、28.6%が拡大
+- 最悪: メルセンヌ数 2^15-1 で 218倍拡大（でも最終的に1到達）
+- trailing 1-bits は上昇ごとに正確に1つ減少（決定的!）
+- 2サイクル後80.2%縮小、3サイクル後83.3%縮小
+
+**一般k帰納法の調査結果:**
+- 一般公式: `syracuse^k(n) = (3^k * n + (3^k - 1)/2) / 2^k` (連続上昇中)
+- 帰納法は技術的に可能だが、omega が使えず手動証明が必要
+- k=1..4 の10倍以上の労力見込み
+- 推奨: まず一般公式を独立補題として証明
+
+## 現在のプロジェクト構成
+
+```
+Unsolved/
+├── Collatz.lean          — 基本定義、Syracuse関数、v2
+├── CollatzStructure.lean — mod 4 上昇/下降、2ステップ下降
+├── CollatzMod.lean       — mod 8 完全分類
+├── CollatzCycle.lean     — サイクル排除 (Baker公理含む)
+├── CollatzHensel.lean    — Hensel attrition k=1..4
+├── CollatzAccel.lean     — 加速Syracuse、縮小率上界
+├── Goldbach.lean         — ゴールドバッハ予想（定義+例）
+├── TwinPrime.lean        — 双子素数予想（定義+例）
+└── plan.md
+```
 
 ## 現在の理解
 
-**コラッツの本質**: 各奇数nに対して
-- n ≡ 1 (mod 4): 下降確定（T(n) < n）
-- n ≡ 3 (mod 4): 上昇確定（T(n) > n）、上昇後は50:50で分岐
+### 証明できたこと（全て sorry なし）
+1. mod 4 で上昇/下降が決定: n≡1→下降, n≡3→上昇
+2. mod 8 で完全分類（v2の確定値と上界）
+3. Hensel attrition: k回連続上昇 ⟺ n≡2^{k+1}-1 (mod 2^{k+1})
+4. サイクル排除: 不動点なし、2-cycleなし、3^a≠2^b
+5. 各サイクルの明示的上界
 
-連続上昇回数は末尾1ビット数で決まり幾何分布。平均で各サイクルは 3/4 倍に縮小。
-**未解決の壁**: 「全ての整数で有限回で1に到達する」ことの証明。確率的には成り立つが決定論的証明がない。
+### 未解決の壁
+- **決定論的縮小の証明がない**: 個別のサイクルでは拡大しうる(9/8倍等)
+- 「平均的に3/4倍」は確率的にしか言えない
+- Taoの証明の核心（特性関数の減衰）はMathlib未整備で形式化困難
+- 一般k帰納法は可能だが大労力
 
 ## 次にやること
-- [ ] 2ステップ下降の形式化: n≡3(mod 8) → T(T(n)) < T(n) < ... → 2ステップで下降
-- [ ] 「上昇+下降」の1サイクルでの縮小率の形式化
-- [ ] Tao (2022) のアプローチ調査: 対数密度での「ほぼ全て」の証明手法
+- [ ] 一般公式 syracuse^k(n) = (3^k*n + (3^k-1)/2) / 2^k の証明
+- [ ] 逆コラッツ木の形式化（全正整数がコラッツ木に含まれる ⟺ 予想）
+- [ ] 「nが十分大きければ、あるステップで必ずn未満に落ちる」の部分結果
