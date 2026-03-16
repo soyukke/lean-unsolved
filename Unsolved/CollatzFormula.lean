@@ -253,3 +253,253 @@ theorem syracuseIter_upper_bound (n k : ℕ) (hn : n ≥ 1) (hodd : n % 2 = 1)
   calc 2 ^ k * syracuseIter k n
       ≤ 2 ^ k * syracuseIter k n + 2 ^ k := Nat.le_add_right _ _
     _ = 3 ^ k * (n + 1) := h
+
+/-! ## 11. 連続上昇中の syracuseIter の奇数性と正値性 -/
+
+/-- 連続上昇中の各ステップの値は奇数 -/
+theorem syracuseIter_odd_of_ascents (n k : ℕ) (hn : n ≥ 1) (hodd : n % 2 = 1)
+    (hasc : consecutiveAscents n k) :
+    syracuseIter k n % 2 = 1 := by
+  induction k generalizing n with
+  | zero => simp only [syracuseIter_zero]; exact hodd
+  | succ k ih =>
+    simp only [syracuseIter_succ]
+    have hmod4 := mod4_eq3_of_consecutiveAscents n k hn hodd hasc
+    have hsyr_odd := syracuse_odd_of_ascent n hmod4
+    have hsyr_pos := syracuse_pos_of_ascent n hmod4
+    have hasc_shift := consecutiveAscents_shift n k hasc
+    exact ih (syracuse n) hsyr_pos hsyr_odd hasc_shift
+
+/-- 連続上昇中の各ステップの値は正 -/
+theorem syracuseIter_pos_of_ascents (n k : ℕ) (hn : n ≥ 1) (hodd : n % 2 = 1)
+    (hasc : consecutiveAscents n k) :
+    syracuseIter k n ≥ 1 := by
+  induction k generalizing n with
+  | zero => simp only [syracuseIter_zero, ge_iff_le]; exact hn
+  | succ k ih =>
+    simp only [syracuseIter_succ]
+    have hmod4 := mod4_eq3_of_consecutiveAscents n k hn hodd hasc
+    have hsyr_pos := syracuse_pos_of_ascent n hmod4
+    have hsyr_odd := syracuse_odd_of_ascent n hmod4
+    have hasc_shift := consecutiveAscents_shift n k hasc
+    exact ih (syracuse n) hsyr_pos hsyr_odd hasc_shift
+
+/-- 連続上昇中の各ステップの値は mod 4 ≡ 3 -/
+theorem syracuseIter_mod4_eq3_of_ascents (n k : ℕ) (hn : n ≥ 1) (hodd : n % 2 = 1)
+    (hasc : consecutiveAscents n (k + 1)) :
+    syracuseIter k n % 4 = 3 := by
+  induction k generalizing n with
+  | zero =>
+    simp only [syracuseIter_zero]
+    exact mod4_eq3_of_consecutiveAscents n 0 hn hodd hasc
+  | succ k ih =>
+    simp only [syracuseIter_succ]
+    have hmod4 := mod4_eq3_of_consecutiveAscents n (k + 1) hn hodd
+      (consecutiveAscents_mono n (by omega) hasc)
+    have hsyr_pos := syracuse_pos_of_ascent n hmod4
+    have hsyr_odd := syracuse_odd_of_ascent n hmod4
+    -- consecutiveAscents n (k+2) → consecutiveAscents (syracuse n) (k+1)
+    have hasc_shift := consecutiveAscents_shift n (k + 1) hasc
+    exact ih (syracuse n) hsyr_pos hsyr_odd hasc_shift
+
+/-! ## 12. 上昇終了後の mod 4 ≡ 1 -/
+
+/-- 上昇終了後の値は mod 4 ≡ 1:
+    consecutiveAscents n k が成立し、k+1 回目は上昇しないとき、
+    syracuseIter k n % 4 = 1 -/
+theorem ascent_end_mod4 (n k : ℕ) (hn : n ≥ 1) (hodd : n % 2 = 1)
+    (hasc : consecutiveAscents n k)
+    (hstop : ¬ consecutiveAscents n (k + 1)) :
+    syracuseIter k n % 4 = 1 := by
+  -- syracuseIter k n は奇数
+  have hiter_odd := syracuseIter_odd_of_ascents n k hn hodd hasc
+  have hiter_pos := syracuseIter_pos_of_ascents n k hn hodd hasc
+  -- ¬ consecutiveAscents n (k+1) は k番目のステップで上昇しないことを意味する
+  -- consecutiveAscents n (k+1) ↔ ∀ i < k+1, syracuse (syracuseIter i n) > syracuseIter i n
+  -- 否定: ∃ i < k+1, ¬(syracuse (syracuseIter i n) > syracuseIter i n)
+  -- hasc より i < k のケースはすべて成立するので、i = k が成立しない
+  have hno_ascent : ¬ (syracuse (syracuseIter k n) > syracuseIter k n) := by
+    intro h_asc_k
+    apply hstop
+    intro i hi
+    by_cases hik : i < k
+    · exact hasc i hik
+    · have : i = k := by omega
+      subst this
+      exact h_asc_k
+  -- 奇数で上昇しない → mod 4 ≡ 1
+  have hne3 : ¬ (syracuseIter k n % 4 = 3) := by
+    intro h3
+    exact hno_ascent (syracuse_gt_of_mod4_eq3 (syracuseIter k n) h3)
+  -- 奇数で mod 4 ≠ 3 → mod 4 = 1
+  omega
+
+/-! ## 13. 下降値の公式 -/
+
+/-- 3 * ascentConst k + 2^k の値の補題:
+    3 * ascentConst k + 2^k + 2^{k+1} = 3^{k+1} -/
+theorem three_ascentConst_add_pow (k : ℕ) :
+    3 * ascentConst k + 2 ^ k + 2 ^ (k + 1) = 3 ^ (k + 1) := by
+  have h := ascentConst_add_two_pow k
+  -- h: ascentConst k + 2^k = 3^k
+  -- 目標: 3 * ascentConst k + 2^k + 2^{k+1} = 3^{k+1}
+  -- = 3 * ascentConst k + 2^k + 2 * 2^k
+  -- = 3 * ascentConst k + 3 * 2^k
+  -- = 3 * (ascentConst k + 2^k)
+  -- = 3 * 3^k = 3^{k+1}
+  have h2 : 2 ^ (k + 1) = 2 * 2 ^ k := by ring
+  have h3 : 3 ^ (k + 1) = 3 * 3 ^ k := by ring
+  nlinarith
+
+/-- 下降値の公式（加法形式、自然数の引き算を回避）:
+    consecutiveAscents n k のとき
+    2^k * (3 * syracuseIter k n + 1) + 2^{k+1} = 3^{k+1} * (n + 1)
+
+    これは一般公式 2^k * T^k(n) = 3^k * n + ascentConst k から導かれる。
+    展開: 2^k * (3 * T^k(n) + 1) = 3 * 2^k * T^k(n) + 2^k
+         = 3 * (3^k * n + ascentConst k) + 2^k
+         = 3^{k+1} * n + 3 * ascentConst k + 2^k
+    よって 2^k * (3*T^k(n)+1) + 2^{k+1} = 3^{k+1}*n + 3*ascentConst k + 2^k + 2^{k+1}
+         = 3^{k+1}*n + 3^{k+1} = 3^{k+1}*(n+1) -/
+theorem descent_value_formula (n k : ℕ) (hn : n ≥ 1) (hodd : n % 2 = 1)
+    (hasc : consecutiveAscents n k) :
+    2 ^ k * (3 * syracuseIter k n + 1) + 2 ^ (k + 1) = 3 ^ (k + 1) * (n + 1) := by
+  have hmul := syracuse_iter_mul_formula n k hn hodd hasc
+  have hkey := three_ascentConst_add_pow k
+  -- hmul: 2^k * syracuseIter k n = 3^k * n + ascentConst k
+  -- 目標: 2^k * (3 * syracuseIter k n + 1) + 2^{k+1} = 3^{k+1} * (n + 1)
+  -- 左辺 = 3 * 2^k * syracuseIter k n + 2^k + 2^{k+1}
+  --       = 3 * (3^k * n + ascentConst k) + 2^k + 2^{k+1}
+  --       = 3^{k+1} * n + 3 * ascentConst k + 2^k + 2^{k+1}
+  --       = 3^{k+1} * n + 3^{k+1}
+  --       = 3^{k+1} * (n + 1)
+  -- 2^k * (3 * iter + 1) = 3 * (2^k * iter) + 2^k
+  --   = 3 * (3^k * n + ascentConst k) + 2^k
+  --   = 3^{k+1} * n + 3 * ascentConst k + 2^k
+  -- + 2^{k+1} → 3^{k+1} * n + (3 * ascentConst k + 2^k + 2^{k+1})
+  --           = 3^{k+1} * n + 3^{k+1} = 3^{k+1} * (n + 1)
+  have h3pow : 3 ^ (k + 1) = 3 * 3 ^ k := by ring
+  have h_expand : 2 ^ k * (3 * syracuseIter k n + 1) =
+      3 * (2 ^ k * syracuseIter k n) + 2 ^ k := by ring
+  rw [h_expand, hmul]
+  -- 目標: 3 * (3^k * n + ascentConst k) + 2^k + 2^{k+1} = 3^{k+1} * (n + 1)
+  nlinarith [hkey]
+
+/-! ## 14. 完全サイクルの上界: k回上昇 + 1回下降 -/
+
+/-- 完全サイクルの上界（乗法形式）:
+    consecutiveAscents n k かつ syracuseIter k n % 4 = 1 のとき
+    4 * 2^k * syracuseIter (k+1) n + 2^{k+1} ≤ 3^{k+1} * (n + 1)
+
+    証明: 下降ステップで v2 ≥ 2 より syracuseIter (k+1) n ≤ (3*T^k(n)+1)/4
+    つまり 4 * syracuseIter (k+1) n ≤ 3*T^k(n)+1
+    2^k を掛けて: 4 * 2^k * syracuseIter (k+1) n ≤ 2^k * (3*T^k(n)+1)
+    descent_value_formula より: 2^k * (3*T^k(n)+1) = 3^{k+1}*(n+1) - 2^{k+1}
+    よって: 4 * 2^k * T^{k+1}(n) + 2^{k+1} ≤ 3^{k+1}*(n+1) -/
+theorem full_cycle_bound (n k : ℕ) (hn : n ≥ 1) (hodd : n % 2 = 1)
+    (hasc : consecutiveAscents n k)
+    (hmod4 : syracuseIter k n % 4 = 1)
+    (hgt1 : syracuseIter k n > 1) :
+    4 * 2 ^ k * syracuseIter (k + 1) n + 2 ^ (k + 1) ≤ 3 ^ (k + 1) * (n + 1) := by
+  -- syracuseIter (k+1) n = syracuseIter k (syracuse n) なので
+  -- syracuseIter (k+1) n = syracuse (syracuseIter k n)... いいえ
+  -- syracuseIter (k+1) n は n に (k+1) 回 syracuse を適用
+  -- = syracuseIter k (syracuse n)
+  -- ただし syracuseIter k n に syracuse を適用したものを直接使いたい
+  -- syracuseIter_succ_right のような補題が必要
+  -- 実は syracuseIter (k+1) n = syracuseIter k (syracuse n)
+  -- しかし syracuseIter k (syracuse n) ≠ syracuse (syracuseIter k n) 一般に
+  -- これは Syracuse を「左」に展開するか「右」に展開するかの違い
+  -- 定義上 syracuseIter (k+1) n = syracuseIter k (syracuse n)
+  -- でも我々は「k回上昇した後の値 syracuseIter k n に syracuse を適用した値」が欲しい
+
+  -- syracuseIter の右展開: syracuseIter (k+1) n = syracuse (syracuseIter k n)
+  -- これは帰納法で示す
+  suffices h_syr : syracuseIter (k + 1) n = syracuse (syracuseIter k n) by
+    -- v2 ≥ 2 from hmod4
+    have hv2 := v2_ge_two_of_mod4_eq1 (syracuseIter k n) hmod4
+    have hle := syracuse_le_of_mod4_eq1 (syracuseIter k n) hmod4 hgt1
+    -- hle: syracuse (syracuseIter k n) ≤ (3 * syracuseIter k n + 1) / 4
+    rw [← h_syr] at hle
+    -- hle: syracuseIter (k+1) n ≤ (3 * syracuseIter k n + 1) / 4
+    -- 4 * syracuseIter (k+1) n ≤ 3 * syracuseIter k n + 1
+    have h4le : 4 * syracuseIter (k + 1) n ≤ 3 * syracuseIter k n + 1 := by
+      have := Nat.mul_div_le (3 * syracuseIter k n + 1) 4
+      omega
+    -- 2^k を掛ける
+    have h_scaled : 4 * 2 ^ k * syracuseIter (k + 1) n ≤
+        2 ^ k * (3 * syracuseIter k n + 1) := by
+      nlinarith [Nat.pos_of_ne_zero (show 2 ^ k ≠ 0 by positivity)]
+    -- descent_value_formula
+    have h_dvf := descent_value_formula n k hn hodd hasc
+    -- h_dvf: 2^k * (3 * syracuseIter k n + 1) + 2^{k+1} = 3^{k+1} * (n + 1)
+    linarith
+  -- syracuse (syracuseIter k n) = syracuseIter (k+1) n の証明
+  -- これは syracuseIter_succ_right: 帰納法
+  exact (syracuseIter_succ_right n k).symm
+where
+  /-- syracuseIter の右展開: syracuseIter (k+1) n = syracuse (syracuseIter k n) -/
+  syracuseIter_succ_right (n k : ℕ) : syracuse (syracuseIter k n) = syracuseIter (k + 1) n := by
+    induction k generalizing n with
+    | zero => rfl
+    | succ k ih =>
+      simp only [syracuseIter_succ]
+      exact ih (syracuse n)
+
+/-! ## 15. k=0 の下降（再エクスポート） -/
+
+/-- k=0 の場合: n % 4 = 1 かつ n > 1 → syracuse n < n -/
+theorem full_cycle_descent_k0 (n : ℕ) (h : n % 4 = 1) (hn : n > 1) :
+    syracuse n < n :=
+  syracuse_lt_of_mod4_eq1 n h hn
+
+/-! ## 16. 数値検証 -/
+
+-- descent_value_formula の検算
+-- k=1, n=3: T(3)=5, 2^1*(3*5+1) + 2^2 = 2*16 + 4 = 36, 3^2 * 4 = 36 ✓
+example : 2 ^ 1 * (3 * syracuseIter 1 3 + 1) + 2 ^ 2 = 3 ^ 2 * (3 + 1) := by
+  have hasc : consecutiveAscents 3 1 := by
+    rw [single_ascent_mod4 3 (by omega) (by omega)]
+  exact descent_value_formula 3 1 (by omega) (by omega) hasc
+
+-- k=1, n=11: T(11)=17, 2^1*(3*17+1) + 2^2 = 2*52 + 4 = 108, 3^2*12 = 108 ✓
+example : 2 ^ 1 * (3 * syracuseIter 1 11 + 1) + 2 ^ 2 = 3 ^ 2 * (11 + 1) := by
+  have hasc : consecutiveAscents 11 1 := by
+    rw [single_ascent_mod4 11 (by omega) (by omega)]
+  exact descent_value_formula 11 1 (by omega) (by omega) hasc
+
+-- k=2, n=7: T²(7)=17, 2^2*(3*17+1) + 2^3 = 4*52 + 8 = 216, 3^3*8 = 216 ✓
+example : 2 ^ 2 * (3 * syracuseIter 2 7 + 1) + 2 ^ 3 = 3 ^ 3 * (7 + 1) := by
+  have hasc : consecutiveAscents 7 2 := by
+    rw [double_ascent_mod8 7 (by omega) (by omega)]
+  exact descent_value_formula 7 2 (by omega) (by omega) hasc
+
+-- full_cycle_bound の検算
+-- k=1, n=11: T²(11)=13, 4*2^1*13 + 2^2 = 108, 3^2*12 = 108 ≤ 108 ✓
+example : 4 * 2 ^ 1 * syracuseIter 2 11 + 2 ^ 2 ≤ 3 ^ 2 * (11 + 1) := by
+  have hasc : consecutiveAscents 11 1 := by
+    rw [single_ascent_mod4 11 (by omega) (by omega)]
+  have hmod4 : syracuseIter 1 11 % 4 = 1 :=
+    syracuse_mod4_eq1_of_mod8_eq3 11 (by omega)
+  have hgt1 : syracuseIter 1 11 > 1 :=
+    syracuse_gt_one_of_mod8_eq3 11 (by omega)
+  exact full_cycle_bound 11 1 (by omega) (by omega) hasc hmod4 hgt1
+
+-- k=1, n=3: T²(3)=1, 4*2*1 + 4 = 12, 9*4 = 36. 12 ≤ 36 ✓
+example : 4 * 2 ^ 1 * syracuseIter 2 3 + 2 ^ 2 ≤ 3 ^ 2 * (3 + 1) := by
+  have hasc : consecutiveAscents 3 1 := by
+    rw [single_ascent_mod4 3 (by omega) (by omega)]
+  have hmod4 : syracuseIter 1 3 % 4 = 1 :=
+    syracuse_mod4_eq1_of_mod8_eq3 3 (by omega)
+  have hgt1 : syracuseIter 1 3 > 1 :=
+    syracuse_gt_one_of_mod8_eq3 3 (by omega)
+  exact full_cycle_bound 3 1 (by omega) (by omega) hasc hmod4 hgt1
+
+-- ascent_end_mod4 の検算
+-- n=3, k=1: T(3)=5, 5 % 4 = 1 ✓
+example : syracuseIter 1 3 % 4 = 1 := by
+  have hasc : consecutiveAscents 3 1 := by
+    rw [single_ascent_mod4 3 (by omega) (by omega)]
+  have hstop : ¬ consecutiveAscents 3 2 := by
+    rw [double_ascent_mod8 3 (by omega) (by omega)]; omega
+  exact ascent_end_mod4 3 1 (by omega) (by omega) hasc hstop

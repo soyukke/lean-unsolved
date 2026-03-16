@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500">
+<rect width="900" height="500" fill="white"/>
+<text x="450" y="25" text-anchor="middle" font-size="16" font-weight="bold">delta = log₂(T(n)) - log₂(n) の分布 (v2別)</text>
+<line x1="70" y1="40" x2="70" y2="450" stroke="black"/>
+<line x1="70" y1="450" x2="870" y2="450" stroke="black"/>
+<rect x="74.6" y="450.0" width="2.3" height="0.0" fill="#a65628" opacity="0.7"/>
+<rect x="166.6" y="450.0" width="2.3" height="0.0" fill="#a65628" opacity="0.7"/>
+<rect x="212.5" y="450.0" width="2.3" height="0.0" fill="#a65628" opacity="0.7"/>
+<rect x="258.5" y="449.9" width="2.3" height="0.1" fill="#a65628" opacity="0.7"/>
+<rect x="302.2" y="450.0" width="2.3" height="0.0" fill="#a65628" opacity="0.7"/>
+<rect x="304.5" y="449.9" width="2.3" height="0.1" fill="#a65628" opacity="0.7"/>
+<rect x="348.2" y="450.0" width="2.3" height="0.0" fill="#a65628" opacity="0.7"/>
+<rect x="350.5" y="449.8" width="2.3" height="0.2" fill="#a65628" opacity="0.7"/>
+<rect x="394.1" y="449.9" width="2.3" height="0.1" fill="#a65628" opacity="0.7"/>
+<rect x="396.4" y="449.6" width="2.3" height="0.4" fill="#a65628" opacity="0.7"/>
+<rect x="440.1" y="449.9" width="2.3" height="0.1" fill="#a65628" opacity="0.7"/>
+<rect x="442.4" y="449.2" width="2.3" height="0.8" fill="#a65628" opacity="0.7"/>
+<rect x="486.1" y="449.8" width="2.3" height="0.2" fill="#a65628" opacity="0.7"/>
+<rect x="488.4" y="448.4" width="2.3" height="1.6" fill="#a65628" opacity="0.7"/>
+<rect x="532.1" y="449.5" width="2.3" height="0.5" fill="#a65628" opacity="0.7"/>
+<rect x="534.4" y="446.8" width="2.3" height="3.2" fill="#a65628" opacity="0.7"/>
+<rect x="578.0" y="449.1" width="2.3" height="0.9" fill="#a65628" opacity="0.7"/>
+<rect x="580.3" y="443.6" width="2.3" height="6.4" fill="#a65628" opacity="0.7"/>
+<rect x="624.0" y="448.1" width="2.3" height="1.9" fill="#a65628" opacity="0.7"/>
+<rect x="626.3" y="437.2" width="2.3" height="12.8" fill="#a65628" opacity="0.7"/>
+<rect x="670.0" y="446.3" width="2.3" height="3.7" fill="#ff7f00" opacity="0.7"/>
+<rect x="672.3" y="424.4" width="2.3" height="25.6" fill="#ff7f00" opacity="0.7"/>
+<rect x="716.0" y="442.6" width="2.3" height="7.4" fill="#984ea3" opacity="0.7"/>
+<rect x="718.3" y="398.8" width="2.3" height="51.2" fill="#984ea3" opacity="0.7"/>
+<rect x="720.6" y="450.0" width="2.3" height="0.0" fill="#984ea3" opacity="0.7"/>
+<rect x="762.0" y="435.2" width="2.3" height="14.8" fill="#4daf4a" opacity="0.7"/>
+<rect x="764.3" y="347.5" width="2.3" height="102.5" fill="#4daf4a" opacity="0.7"/>
+<rect x="807.9" y="420.4" width="2.3" height="29.6" fill="#377eb8" opacity="0.7"/>
+<rect x="810.2" y="245.0" width="2.3" height="205.0" fill="#377eb8" opacity="0.7"/>
+<rect x="812.5" y="450.0" width="2.3" height="0.0" fill="#377eb8" opacity="0.7"/>
+<rect x="828.6" y="450.0" width="2.3" height="0.0" fill="#377eb8" opacity="0.7"/>
+<rect x="853.9" y="390.8" width="2.3" height="59.2" fill="#e41a1c" opacity="0.7"/>
+<rect x="856.2" y="40.0" width="2.3" height="410.0" fill="#e41a1c" opacity="0.7"/>
+<rect x="858.5" y="450.0" width="2.3" height="0.0" fill="#e41a1c" opacity="0.7"/>
+<rect x="863.1" y="450.0" width="2.3" height="0.0" fill="#e41a1c" opacity="0.7"/>
+<text x="554.8" y="465" text-anchor="middle" font-size="10">-6</text>
+<text x="600.9" y="465" text-anchor="middle" font-size="10">-5</text>
+<text x="647.0" y="465" text-anchor="middle" font-size="10">-4</text>
+<text x="693.1" y="465" text-anchor="middle" font-size="10">-3</text>
+<text x="739.2" y="465" text-anchor="middle" font-size="10">-2</text>
+<text x="785.3" y="465" text-anchor="middle" font-size="10">-1</text>
+<text x="831.4" y="465" text-anchor="middle" font-size="10">0</text>
+<line x1="812.3" y1="40" x2="812.3" y2="450" stroke="black" stroke-width="1.5" stroke-dasharray="4,4"/>
+<text x="812.3" y="35" text-anchor="middle" font-size="10">E[δ]=-0.415</text>
+<text x="450" y="495" text-anchor="middle" font-size="12">delta</text>
+<rect x="780" y="44" width="12" height="12" fill="#e41a1c" opacity="0.7"/>
+<text x="795" y="50" font-size="10" dominant-baseline="middle">v2=1</text>
+<rect x="780" y="62" width="12" height="12" fill="#377eb8" opacity="0.7"/>
+<text x="795" y="68" font-size="10" dominant-baseline="middle">v2=2</text>
+<rect x="780" y="80" width="12" height="12" fill="#4daf4a" opacity="0.7"/>
+<text x="795" y="86" font-size="10" dominant-baseline="middle">v2=3</text>
+<rect x="780" y="98" width="12" height="12" fill="#984ea3" opacity="0.7"/>
+<text x="795" y="104" font-size="10" dominant-baseline="middle">v2=4</text>
+<rect x="780" y="116" width="12" height="12" fill="#ff7f00" opacity="0.7"/>
+<text x="795" y="122" font-size="10" dominant-baseline="middle">v2=5</text>
+<rect x="780" y="134" width="12" height="12" fill="#a65628" opacity="0.7"/>
+<text x="795" y="140" font-size="10" dominant-baseline="middle">v2=6+</text>
+</svg>
