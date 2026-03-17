@@ -92,12 +92,14 @@ def search_cycles(L_max, a_max=20):
         if L <= 8:
             # L <= 8 なら全探索可能（ただし a_max を調整）
             actual_a_max = min(a_max, max(5, int(3 * log2(3)) + 2))
-            if L <= 5:
+            if L <= 3:
                 actual_a_max = min(a_max, 15)
+            elif L <= 5:
+                actual_a_max = min(a_max, 6)
             elif L <= 7:
-                actual_a_max = min(a_max, 8)
+                actual_a_max = min(a_max, 4)
             else:
-                actual_a_max = min(a_max, 5)
+                actual_a_max = min(a_max, 3)
 
             print(f"L = {L}: 全探索 (a_i in [1, {actual_a_max}])")
 

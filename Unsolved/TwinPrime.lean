@@ -6,14 +6,100 @@ import Mathlib
 差が2の素数の組（双子素数）は無限に存在する。
 
 例: (3,5), (5,7), (11,13), (17,19), (29,31), ...
+
+## 探索1: Mathlib調査結果
+- Mathlibに双子素数の直接的な形式化は存在しない
+- 関連する形式化:
+  - `Nat.primeCounting` (素数計数関数 π)
+  - `SelbergSieve` (Selberg篩の基本設定)
+  - `SumPrimeReciprocals` (素数逆数和の発散)
+  - `Chebyshev` (チェビシェフの定理)
+- Brunの定理、Zhang/Maynard-Taoの有界ギャップ定理は未形式化
+
+## 探索2: 数値実験結果 (scripts/twinprime_explore.py)
+- π₂(10⁶) = 8,169 組
+- p > 3 の双子素数は全て p ≡ 5 (mod 6) — 下記で証明
+- mod 30 では 11, 17, 29 の3剰余類にほぼ均等分布
+- Brunの定数 B₂ ≈ 1.711 (10⁶までの部分和)
+
+## 探索3: Lean検証例と基本補題
 -/
 
 /-- 双子素数予想: 差が2の素数の組は無限に存在する -/
 def TwinPrimeConjecture : Prop :=
   ∀ N : ℕ, ∃ p : ℕ, p > N ∧ Nat.Prime p ∧ Nat.Prime (p + 2)
 
+-- ===== 双子素数の検証例 =====
+
 -- (3, 5) は双子素数
 example : Nat.Prime 3 ∧ Nat.Prime 5 := by constructor <;> norm_num
 
+-- (5, 7) は双子素数
+example : Nat.Prime 5 ∧ Nat.Prime 7 := by constructor <;> norm_num
+
 -- (11, 13) は双子素数
 example : Nat.Prime 11 ∧ Nat.Prime 13 := by constructor <;> norm_num
+
+-- (17, 19) は双子素数
+example : Nat.Prime 17 ∧ Nat.Prime 19 := by constructor <;> norm_num
+
+-- (29, 31) は双子素数
+example : Nat.Prime 29 ∧ Nat.Prime 31 := by constructor <;> norm_num
+
+-- (41, 43) は双子素数
+example : Nat.Prime 41 ∧ Nat.Prime 43 := by constructor <;> norm_num
+
+-- (59, 61) は双子素数
+example : Nat.Prime 59 ∧ Nat.Prime 61 := by constructor <;> norm_num
+
+-- (71, 73) は双子素数
+example : Nat.Prime 71 ∧ Nat.Prime 73 := by constructor <;> norm_num
+
+-- ===== 基本補題: 双子素数の mod 6 構造 =====
+
+/-- 素数 p > 3 は 2 で割れない -/
+private lemma prime_gt_three_not_dvd_two {p : ℕ} (hp : Nat.Prime p) (hp3 : p > 3) :
+    ¬ (2 ∣ p) := by
+  intro h2
+  have := hp.eq_one_or_self_of_dvd 2 h2
+  omega
+
+/-- 素数 p > 3 は 3 で割れない -/
+private lemma prime_gt_three_not_dvd_three {p : ℕ} (hp : Nat.Prime p) (hp3 : p > 3) :
+    ¬ (3 ∣ p) := by
+  intro h3
+  have := hp.eq_one_or_self_of_dvd 3 h3
+  omega
+
+/-- 3より大きい素数は 6 で割った余りが 1 か 5 -/
+lemma prime_gt_three_mod_six {p : ℕ} (hp : Nat.Prime p) (hp3 : p > 3) :
+    p % 6 = 1 ∨ p % 6 = 5 := by
+  have hmod : p % 6 < 6 := Nat.mod_lt p (by norm_num)
+  have h2 : ¬ (2 ∣ p) := prime_gt_three_not_dvd_two hp hp3
+  have h3 : ¬ (3 ∣ p) := prime_gt_three_not_dvd_three hp hp3
+  -- p % 6 ∈ {0,1,2,3,4,5} のうち偶数(0,2,4)と3の倍数(0,3)を除外
+  have h0 : p % 6 ≠ 0 := fun h => h2 ⟨p / 6 * 3, by omega⟩
+  have h2' : p % 6 ≠ 2 := fun h => h2 ⟨p / 6 * 3 + 1, by omega⟩
+  have h3' : p % 6 ≠ 3 := fun h => h3 ⟨p / 6 * 2 + 1, by omega⟩
+  have h4 : p % 6 ≠ 4 := fun h => h2 ⟨p / 6 * 3 + 2, by omega⟩
+  omega
+
+/-- p > 3 かつ p, p+2 がともに素数なら、p % 6 = 5
+    （つまり双子素数 (p, p+2) で p > 3 なら p ≡ 5 mod 6 = 6k-1 の形） -/
+theorem twin_prime_mod_six {p : ℕ} (hp : Nat.Prime p) (hp2 : Nat.Prime (p + 2))
+    (hp3 : p > 3) : p % 6 = 5 := by
+  rcases prime_gt_three_mod_six hp hp3 with h1 | h5
+  · -- p % 6 = 1 の場合、(p+2) % 6 = 3 なので 3 ∣ (p+2)
+    exfalso
+    have hmod : (p + 2) % 6 = 3 := by omega
+    have h3dvd : 3 ∣ (p + 2) := ⟨(p + 2) / 3, by omega⟩
+    have := hp2.eq_one_or_self_of_dvd 3 h3dvd
+    omega
+  · exact h5
+
+/-- 双子素数 (p, p+2) の p+2 > 3 なら (p+2) % 6 = 1
+    つまり大きい方は 6k+1 の形 -/
+theorem twin_prime_plus_two_mod_six {p : ℕ} (hp : Nat.Prime p) (hp2 : Nat.Prime (p + 2))
+    (hp3 : p > 3) : (p + 2) % 6 = 1 := by
+  have h5 := twin_prime_mod_six hp hp2 hp3
+  omega

@@ -5,5 +5,6 @@ import Unsolved.CollatzCycle
 import Unsolved.CollatzHensel
 import Unsolved.CollatzAccel
 import Unsolved.CollatzFormula
+import Unsolved.CollatzMinimal
 import Unsolved.Goldbach
 import Unsolved.TwinPrime
