@@ -213,3 +213,123 @@ theorem no_minimal_of_collatz (hcc : CollatzConjecture) :
     ∀ n, ¬isMinimalCounterexample n := by
   intro n ⟨hge, hnr, _⟩
   exact hnr (hcc n hge)
+
+/-! ## 14. 最小反例は n ≡ 3 (mod 16) ではない -/
+
+/-! ### 補助定理: reachesOne の対偶と syracuse の関係 -/
+
+/-- ¬reachesOne n → ¬reachesOne (syracuse n)（奇数 n ≥ 1 に対して）
+    対偶: reachesOne_of_syracuse の逆 -/
+private theorem not_reachesOne_syracuse (n : ℕ) (hn : n ≥ 1) (hodd : n % 2 = 1)
+    (hnr : ¬reachesOne n) : ¬reachesOne (syracuse n) := by
+  intro hsyr
+  exact hnr (reachesOne_of_syracuse n hn hodd hsyr)
+
+/-- n ≡ 3 (mod 16) → n ≡ 3 (mod 8) -/
+private theorem mod8_eq3_of_mod16_eq3 (n : ℕ) (h : n % 16 = 3) : n % 8 = 3 := by
+  omega
+
+/-- n ≡ 3 (mod 16) → n ≡ 3 (mod 4) -/
+private theorem mod4_eq3_of_mod16_eq3 (n : ℕ) (h : n % 16 = 3) : n % 4 = 3 := by
+  omega
+
+/-- n = 16*q + 3 のとき syracuse n = 24*q + 5 -/
+private theorem syracuse_of_mod16_eq3 (n q : ℕ) (hq : n = 16 * q + 3) :
+    syracuse n = 24 * q + 5 := by
+  rw [syracuse_mod4_eq3 n (by omega)]
+  omega
+
+/-- n = 16*q + 3 のとき syracuse n ≡ 5 (mod 8) -/
+private theorem syracuse_mod8_of_mod16_eq3 (n : ℕ) (h : n % 16 = 3) :
+    syracuse n % 8 = 5 := by
+  rw [syracuse_mod4_eq3 n (by omega)]
+  omega
+
+/-- n = 16*q + 3 のとき v2(3 * syracuse n + 1) ≥ 3 -/
+private theorem v2_ge3_of_syracuse_mod16_eq3 (n : ℕ) (h : n % 16 = 3) :
+    v2 (3 * syracuse n + 1) ≥ 3 := by
+  exact v2_ge_three_of_mod8_eq5 (syracuse n) (syracuse_mod8_of_mod16_eq3 n h)
+
+/-- n = 16*q + 3 のとき syracuse(syracuse n) ≤ (3 * syracuse n + 1) / 8 -/
+private theorem syracuse2_le_of_mod16_eq3 (n : ℕ) (h : n % 16 = 3) :
+    syracuse (syracuse n) ≤ (3 * syracuse n + 1) / 8 := by
+  exact syracuse_le_of_mod8_eq5 (syracuse n) (syracuse_mod8_of_mod16_eq3 n h)
+
+/-- n = 16*q + 3 のとき syracuse(syracuse n) ≤ 9*q + 2
+    3 * (24q+5) + 1 = 72q + 16, (72q+16)/8 = 9q+2 -/
+private theorem syracuse2_le_9q2 (n q : ℕ) (hq : n = 16 * q + 3) :
+    syracuse (syracuse n) ≤ 9 * q + 2 := by
+  have hsyr : syracuse n = 24 * q + 5 := syracuse_of_mod16_eq3 n q hq
+  rw [hsyr]
+  have hle := syracuse_le_of_mod8_eq5 (24 * q + 5) (by omega)
+  -- hle : syracuse (24*q+5) ≤ (3*(24*q+5)+1)/8
+  -- (3*(24*q+5)+1)/8 = (72*q+16)/8 = 9*q+2
+  have : (3 * (24 * q + 5) + 1) / 8 = 9 * q + 2 := by omega
+  omega
+
+/-- n = 16*q + 3 のとき 9*q + 2 < n -/
+private theorem bound_lt_n (n q : ℕ) (hq : n = 16 * q + 3) :
+    9 * q + 2 < n := by
+  omega
+
+/-- n ≡ 3 (mod 16) のとき syracuse(syracuse n) < n -/
+private theorem syracuse2_lt_of_mod16_eq3 (n : ℕ) (h : n % 16 = 3) :
+    syracuse (syracuse n) < n := by
+  obtain ⟨q, hq⟩ : ∃ q, n = 16 * q + 3 := ⟨n / 16, by omega⟩
+  calc syracuse (syracuse n)
+      ≤ 9 * q + 2 := syracuse2_le_9q2 n q hq
+    _ < n := bound_lt_n n q hq
+
+/-- syracuse n が奇数 (n ≡ 3 (mod 16) のとき) -/
+private theorem syracuse_odd_of_mod16_eq3 (n : ℕ) (h : n % 16 = 3) :
+    syracuse n % 2 = 1 := by
+  exact syracuse_odd_of_mod4_eq3 n (by omega)
+
+/-- syracuse n ≥ 1 (n ≡ 3 (mod 16) のとき) -/
+private theorem syracuse_ge1_of_mod16_eq3 (n : ℕ) (h : n % 16 = 3) :
+    syracuse n ≥ 1 := by
+  exact syracuse_pos_of_mod4_eq3 n (by omega)
+
+/-- 最小反例に対して syracuse(syracuse n) < n かつ ¬reachesOne(syracuse(syracuse n))
+    ならば矛盾 -/
+private theorem minimal_contradiction_of_syracuse2_lt (n : ℕ)
+    (h : isMinimalCounterexample n)
+    (hlt : syracuse (syracuse n) < n)
+    (hnr2 : ¬reachesOne (syracuse (syracuse n)))
+    (hpos2 : syracuse (syracuse n) ≥ 1) : False := by
+  have hmin := h.2.2
+  exact hnr2 (hmin (syracuse (syracuse n)) hpos2 hlt)
+
+/-- **最小反例は n ≡ 3 (mod 16) ではない**
+
+    証明の骨格:
+    1. n = 16*q + 3 と仮定
+    2. n は奇数 (minimal_counterexample_odd) で n ≡ 3 (mod 4)
+    3. T(n) = (3n+1)/2 = 24q+5
+    4. 24q+5 ≡ 5 (mod 8) → v2(3*(24q+5)+1) ≥ 3
+    5. T(T(n)) ≤ (72q+16)/8 = 9q+2
+    6. 9q+2 < 16q+3 = n（自然数 q ≥ 0 なので常に成立）
+    7. ¬reachesOne n → ¬reachesOne(T(n)) → ¬reachesOne(T(T(n)))
+    8. T(T(n)) < n かつ T(T(n)) ≥ 1 かつ ¬reachesOne(T(T(n))) は最小性に矛盾 -/
+theorem minimal_counterexample_not_mod16_eq3 (n : ℕ) (h : isMinimalCounterexample n) :
+    n % 16 ≠ 3 := by
+  intro h16
+  have hge := h.1
+  have hnr := h.2.1
+  have hodd := minimal_counterexample_odd n h
+  -- syracuse n の性質
+  have hsyr_odd := syracuse_odd_of_mod16_eq3 n h16
+  have hsyr_ge1 := syracuse_ge1_of_mod16_eq3 n h16
+  -- ¬reachesOne の伝播
+  have hnr_syr : ¬reachesOne (syracuse n) :=
+    not_reachesOne_syracuse n hge hodd hnr
+  have hnr_syr2 : ¬reachesOne (syracuse (syracuse n)) :=
+    not_reachesOne_syracuse (syracuse n) hsyr_ge1 hsyr_odd hnr_syr
+  -- syracuse(syracuse n) ≥ 1
+  have hpos2 : syracuse (syracuse n) ≥ 1 := by
+    have := syracuse_mod8_of_mod16_eq3 n h16
+    exact syracuse_pos (syracuse n) hsyr_ge1 hsyr_odd
+  -- syracuse(syracuse n) < n
+  have hlt := syracuse2_lt_of_mod16_eq3 n h16
+  -- 最小性との矛盾
+  exact minimal_contradiction_of_syracuse2_lt n h hlt hnr_syr2 hpos2
