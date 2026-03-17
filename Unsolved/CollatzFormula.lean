@@ -503,3 +503,233 @@ example : syracuseIter 1 3 % 4 = 1 := by
   have hstop : ¬ consecutiveAscents 3 2 := by
     rw [double_ascent_mod8 3 (by omega) (by omega)]; omega
   exact ascent_end_mod4 3 1 (by omega) (by omega) hasc hstop
+
+/-! ## 17. メルセンヌ数 2^m - 1 の Collatz 軌道
+
+メルセンヌ数 2^m - 1 は全ビットが 1 であり、m-1 回連続上昇する。
+乗法形式の公式を帰納法で直接証明し、以下の美しい帰結を得る:
+
+- T^{m-1}(2^m - 1) = 2 * 3^{m-1} - 1
+- 2 * 3^{m-1} - 1 ≡ 1 (mod 4) (m ≥ 2)
+- T^m(2^m - 1) < 2 * 3^{m-1} - 1 (下降)
+-/
+
+/-! ### 17.1 乗法形式の核心公式 -/
+
+/-- メルセンヌ数の軌道公式（乗法形式）:
+    k + 1 ≤ m のとき
+    2^k * syracuseIter k (2^m - 1) + 2^k = 3^k * 2^m
+
+    すなわち 2^k * (syracuseIter k (2^m - 1) + 1) = 3^k * 2^m -/
+theorem mersenne_orbit_mul (m k : ℕ) (_hm : m ≥ 1) (hk : k + 1 ≤ m) :
+    2 ^ k * syracuseIter k (2 ^ m - 1) + 2 ^ k = 3 ^ k * 2 ^ m := by
+  induction k with
+  | zero =>
+    simp [syracuseIter]
+    have : 2 ^ m ≥ 1 := Nat.one_le_pow m 2 (by omega)
+    omega
+  | succ k ih =>
+    -- 帰納仮定を適用: k + 1 ≤ m (k+1+1 ≤ m → k+1 ≤ m)
+    have hk' : k + 1 ≤ m := by omega
+    have ih_hyp := ih hk'
+    -- iter_k = syracuseIter k (2^m - 1) とする
+    set iter_k := syracuseIter k (2 ^ m - 1) with hiter_k_def
+    -- ih_hyp: 2^k * iter_k + 2^k = 3^k * 2^m
+    -- すなわち 2^k * (iter_k + 1) = 3^k * 2^m
+    have h_mul : 2 ^ k * (iter_k + 1) = 3 ^ k * 2 ^ m := by linarith
+    -- iter_k % 4 = 3 を示す
+    -- k + 2 ≤ m なので 2^{k+2} | 3^k * 2^m
+    -- 2^k * (iter_k + 1) = 3^k * 2^m かつ 2^{k+2} | 3^k * 2^m
+    -- → 4 | (iter_k + 1) → iter_k % 4 = 3
+    have hmod4 : iter_k % 4 = 3 := by
+      -- 2^m = 2^(k+2) * 2^(m-k-2) で k+2 ≤ m
+      have hk2 : k + 2 ≤ m := by omega
+      -- 4 * 2^k | 3^k * 2^m を示す
+      -- 4 * 2^k = 2^{k+2}
+      have h4_dvd : (4 * 2 ^ k) ∣ (3 ^ k * 2 ^ m) := by
+        refine ⟨3 ^ k * 2 ^ (m - (k + 2)), ?_⟩
+        have h_pow_split : 2 ^ m = 2 ^ (k + 2) * 2 ^ (m - (k + 2)) := by
+          rw [← pow_add]; congr 1; omega
+        have h42k : 4 * 2 ^ k = 2 ^ (k + 2) := by ring
+        rw [h42k, h_pow_split]; ring
+      -- 4 * 2^k | 2^k * (iter_k + 1)
+      have h4_dvd' : (4 * 2 ^ k) ∣ (2 ^ k * (iter_k + 1)) := by
+        rw [h_mul]; exact h4_dvd
+      -- 2^k > 0
+      have hpow_pos : 2 ^ k > 0 := Nat.pos_of_ne_zero (by positivity)
+      -- 4 * 2^k | 2^k * (iter_k + 1) → 4 | (iter_k + 1)
+      have h4_dvd_iter : 4 ∣ (iter_k + 1) := by
+        rwa [show 4 * 2 ^ k = 2 ^ k * 4 from by ring,
+             Nat.mul_dvd_mul_iff_left hpow_pos] at h4_dvd'
+      omega
+    -- two_mul_syracuse_of_mod4_eq3 適用
+    have h2syr := two_mul_syracuse_of_mod4_eq3 iter_k hmod4
+    -- h2syr: 2 * syracuse iter_k = 3 * iter_k + 1
+    -- 目標: 2^{k+1} * syracuseIter (k+1) (2^m-1) + 2^{k+1} = 3^{k+1} * 2^m
+    -- syracuseIter (k+1) (2^m-1) = syracuseIter k (syracuse (2^m-1))
+    -- iter_{k+1} = syracuse iter_k  ... いや、これは右展開
+    -- 左展開: syracuseIter (k+1) n = syracuseIter k (syracuse n)
+    -- 右展開: syracuseIter (k+1) n = syracuse (syracuseIter k n)
+    -- full_cycle_bound の where 節に syracuseIter_succ_right がある
+    -- ここでは右展開を使いたい: syracuseIter (k+1) (2^m-1) = syracuse iter_k
+    have hright : syracuseIter (k + 1) (2 ^ m - 1) = syracuse iter_k := by
+      rw [hiter_k_def]
+      exact (full_cycle_bound.syracuseIter_succ_right (2 ^ m - 1) k).symm
+    rw [hright]
+    -- 目標: 2^{k+1} * syracuse iter_k + 2^{k+1} = 3^{k+1} * 2^m
+    -- = 2 * 2^k * syracuse iter_k + 2 * 2^k
+    -- = 2 * (2^k * syracuse iter_k + 2^k)
+    -- = 2 * 2^k * (syracuse iter_k + 1)
+    -- 2 * (syracuse iter_k + 1) = 2 * syracuse iter_k + 2 = 3 * iter_k + 1 + 2 = 3 * iter_k + 3
+    --                             = 3 * (iter_k + 1)
+    -- よって 2^k * 2 * (syracuse iter_k + 1) = 2^k * 3 * (iter_k + 1) = 3 * (2^k * (iter_k + 1))
+    --       = 3 * 3^k * 2^m = 3^{k+1} * 2^m
+    have hkey : 2 * (syracuse iter_k + 1) = 3 * (iter_k + 1) := by linarith
+    -- 目標: 2^{k+1} * syr + 2^{k+1} = 3^{k+1} * 2^m
+    -- 左辺 = 2 * 2^k * (syr + 1) = 2^k * (2 * (syr + 1)) = 2^k * (3 * (iter+1))
+    --       = 3 * (2^k * (iter+1)) = 3 * (3^k * 2^m) = 3^{k+1} * 2^m
+    have h_eq : 2 ^ k * (2 * (syracuse iter_k + 1)) = 2 ^ k * (3 * (iter_k + 1)) := by
+      rw [hkey]
+    have h_eq2 : 2 ^ k * (3 * (iter_k + 1)) = 3 * (3 ^ k * 2 ^ m) := by
+      nlinarith
+    have h2pow : 2 ^ (k + 1) = 2 * 2 ^ k := by ring
+    have h3pow : 3 ^ (k + 1) = 3 * 3 ^ k := by ring
+    rw [h2pow, h3pow]
+    nlinarith
+
+/-! ### 17.2 メルセンヌ数の (m-1) 回反復値 -/
+
+/-- T^{m-1}(2^m - 1) + 1 = 2 * 3^{m-1}
+    加法形式（自然数の引き算を回避） -/
+theorem mersenne_penultimate_add (m : ℕ) (hm : m ≥ 1) :
+    syracuseIter (m - 1) (2 ^ m - 1) + 1 = 2 * 3 ^ (m - 1) := by
+  have hk : (m - 1) + 1 ≤ m := by omega
+  have hmul := mersenne_orbit_mul m (m - 1) hm hk
+  -- hmul: 2^{m-1} * iter + 2^{m-1} = 3^{m-1} * 2^m
+  -- 2^{m-1} * (iter + 1) = 3^{m-1} * 2^m = 3^{m-1} * 2 * 2^{m-1}
+  -- iter + 1 = 2 * 3^{m-1}
+  have hpow_pos : 2 ^ (m - 1) > 0 := Nat.pos_of_ne_zero (by positivity)
+  -- hmul: 2^{m-1} * iter + 2^{m-1} = 3^{m-1} * 2^m
+  -- すなわち 2^{m-1} * (iter + 1) = 3^{m-1} * 2^m
+  -- 2^m = 2^{m-1} * 2
+  have h2m : 2 ^ m = 2 ^ (m - 1) * 2 := by
+    conv_lhs => rw [show m = (m - 1) + 1 from by omega, pow_succ]
+  -- 3^{m-1} * 2^m = 2^{m-1} * (2 * 3^{m-1})
+  have h_rhs : 3 ^ (m - 1) * 2 ^ m = 2 ^ (m - 1) * (2 * 3 ^ (m - 1)) := by
+    rw [h2m]; ring
+  -- 2^{m-1} * (iter + 1) = 2^{m-1} * (2 * 3^{m-1})
+  have h_eq : 2 ^ (m - 1) * (syracuseIter (m - 1) (2 ^ m - 1) + 1) =
+      2 ^ (m - 1) * (2 * 3 ^ (m - 1)) := by linarith
+  exact Nat.eq_of_mul_eq_mul_left hpow_pos h_eq
+
+/-- T^{m-1}(2^m - 1) = 2 * 3^{m-1} - 1 (m ≥ 1) -/
+theorem mersenne_penultimate (m : ℕ) (hm : m ≥ 1) :
+    syracuseIter (m - 1) (2 ^ m - 1) = 2 * 3 ^ (m - 1) - 1 := by
+  have := mersenne_penultimate_add m hm
+  omega
+
+/-! ### 17.3 2 * 3^k - 1 ≡ 1 (mod 4) -/
+
+/-- 3^k は奇数 -/
+theorem three_pow_odd (k : ℕ) : 3 ^ k % 2 = 1 := by
+  induction k with
+  | zero => simp
+  | succ k ih => rw [pow_succ]; omega
+
+/-- 2 * 3^k - 1 ≡ 1 (mod 4) (k ≥ 1) -/
+theorem two_mul_three_pow_sub_one_mod4 (k : ℕ) (_hk : k ≥ 1) :
+    (2 * 3 ^ k - 1) % 4 = 1 := by
+  -- 3^k mod 2 = 1 (奇数)
+  -- 2 * 3^k mod 4: 3^k ≡ 1 or 3 (mod 4)
+  -- 3^k mod 4 の周期: 3^0=1, 3^1=3, 3^2=1, 3^3=3, ...
+  -- k 偶数 → 3^k ≡ 1 (mod 4) → 2*3^k ≡ 2 (mod 4) → 2*3^k - 1 ≡ 1 (mod 4)
+  -- k 奇数 → 3^k ≡ 3 (mod 4) → 2*3^k ≡ 6 ≡ 2 (mod 4) → 2*3^k - 1 ≡ 1 (mod 4)
+  -- いずれにしても 2*3^k ≡ 2 (mod 4)
+  have h_mod4 : (2 * 3 ^ k) % 4 = 2 := by
+    have : 3 ^ k % 2 = 1 := three_pow_odd k
+    omega
+  have h_pos : 2 * 3 ^ k ≥ 1 := by
+    have : 3 ^ k ≥ 1 := Nat.one_le_pow k 3 (by omega)
+    omega
+  omega
+
+/-! ### 17.4 メルセンヌ数のペナルティメイト値の mod 4 -/
+
+/-- T^{m-1}(2^m - 1) ≡ 1 (mod 4) (m ≥ 2) -/
+theorem mersenne_penultimate_mod4 (m : ℕ) (hm : m ≥ 2) :
+    syracuseIter (m - 1) (2 ^ m - 1) % 4 = 1 := by
+  rw [mersenne_penultimate m (by omega)]
+  exact two_mul_three_pow_sub_one_mod4 (m - 1) (by omega)
+
+/-! ### 17.5 メルセンヌ数のペナルティメイト値 > 1 -/
+
+/-- T^{m-1}(2^m - 1) > 1 (m ≥ 2) -/
+theorem mersenne_penultimate_gt_one (m : ℕ) (hm : m ≥ 2) :
+    syracuseIter (m - 1) (2 ^ m - 1) > 1 := by
+  rw [mersenne_penultimate m (by omega)]
+  have : 3 ^ (m - 1) ≥ 3 := by
+    have : 3 ^ (m - 1) ≥ 3 ^ 1 := Nat.pow_le_pow_right (by omega) (by omega)
+    simpa using this
+  omega
+
+/-! ### 17.6 下降: m 回目のステップは値が減少する -/
+
+/-- T^m(2^m - 1) < T^{m-1}(2^m - 1) (m ≥ 2)
+    T^{m-1}(2^m-1) = 2*3^{m-1}-1 ≡ 1 (mod 4) かつ > 1
+    なので syracuse_lt_of_mod4_eq1 により下降する -/
+theorem mersenne_descent (m : ℕ) (hm : m ≥ 2) :
+    syracuse (syracuseIter (m - 1) (2 ^ m - 1)) <
+    syracuseIter (m - 1) (2 ^ m - 1) := by
+  exact syracuse_lt_of_mod4_eq1
+    (syracuseIter (m - 1) (2 ^ m - 1))
+    (mersenne_penultimate_mod4 m hm)
+    (mersenne_penultimate_gt_one m hm)
+
+/-- T^{m-1}(2^m - 1) ≥ 2^m - 1 (m ≥ 1)
+    メルセンヌ数は m-1 回の上昇で元の値以上に成長する -/
+theorem mersenne_penultimate_ge (m : ℕ) (hm : m ≥ 1) :
+    syracuseIter (m - 1) (2 ^ m - 1) ≥ 2 ^ m - 1 := by
+  rw [mersenne_penultimate m hm]
+  have : 2 * 3 ^ (m - 1) ≥ 2 ^ m := by
+    have h3ge2 := three_pow_ge_two_pow (m - 1)
+    have h2m : 2 ^ m = 2 ^ (m - 1) * 2 := by
+      conv_lhs => rw [show m = (m - 1) + 1 from by omega, pow_succ]
+    rw [h2m]; nlinarith
+  omega
+
+/-! ### 17.7 数値検証 -/
+
+-- m=2: 2^2 - 1 = 3, T^1(3) = 5 = 2*3 - 1 ✓
+example : syracuseIter 1 3 = 5 := by
+  simp [syracuseIter, syracuse, v2]
+
+-- m=3: 2^3 - 1 = 7, T^2(7) = 17 = 2*9 - 1 ✓
+example : syracuseIter 2 7 = 17 := by
+  simp [syracuseIter, syracuse, v2]
+
+-- m=4: 2^4 - 1 = 15, T^3(15) = 53 = 2*27 - 1 ✓
+example : syracuseIter 3 15 = 53 := by
+  simp [syracuseIter, syracuse, v2]
+
+-- mersenne_orbit_mul の検算
+-- m=3, k=2: 2^2 * T^2(7) + 2^2 = 4*17+4 = 72 = 3^2 * 8 = 9*8 ✓
+example : 2 ^ 2 * syracuseIter 2 7 + 2 ^ 2 = 3 ^ 2 * 2 ^ 3 := by
+  simp [syracuseIter, syracuse, v2]
+
+-- m=4, k=3: 2^3 * T^3(15) + 2^3 = 8*53+8 = 432 = 3^3 * 16 = 27*16 ✓
+example : 2 ^ 3 * syracuseIter 3 15 + 2 ^ 3 = 3 ^ 3 * 2 ^ 4 := by
+  simp [syracuseIter, syracuse, v2]
+
+-- mersenne_descent の検算
+-- m=2: T^1(3)=5, T^2(3)=T(5)=1, 1 < 5 ✓
+example : syracuse (syracuseIter 1 3) < syracuseIter 1 3 := by
+  simp [syracuseIter, syracuse, v2]
+
+-- m=3: T^2(7)=17, T^3(7)=T(17)=13, 13 < 17 ✓
+example : syracuse (syracuseIter 2 7) < syracuseIter 2 7 := by
+  simp [syracuseIter, syracuse, v2]
+
+-- m=4: T^3(15)=53, T^4(15)=T(53)=?, 53≡1(mod4) → 下降
+-- T(53) = (3*53+1) / 2^v2(160) = 160/... v2(160) = 5, 160/32 = 5. 5 < 53 ✓
+example : syracuse (syracuseIter 3 15) < syracuseIter 3 15 := by
+  simp [syracuseIter, syracuse, v2]
