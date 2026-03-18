@@ -100,6 +100,7 @@
 | 65 | 小さい値の到達可能性 | ✅ | CollatzStoppingTime.lean | collatzReaches 5,6,7 を decide で証明 | B |
 | 66 | mod 2^k 完全分類まとめ + 到達可能性拡張 | ✅ | CollatzMod3.lean, CollatzStoppingTime.lean | mod 16 分類追加, collatzReaches 8,9,10 | B |
 | 67 | collatzReaches の合成性質 | ✅ | CollatzStoppingTime.lean | collatzReaches_even_iff: 偶数nの到達⟺n/2の到達 | B |
+| 68 | collatzReaches の奇数版 | ✅ | CollatzStoppingTime.lean | collatzReaches_odd_iff: 奇数n>1の到達⟺3n+1の到達 | B |
 
 ## フェーズ12: 深堀り (探索56-59)
 

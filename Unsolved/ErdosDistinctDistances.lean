@@ -310,3 +310,9 @@ example : distSq (8, 0) (0, 15) = 289 := by decide
 theorem distSq_expand (p q : Point) :
     distSq p q = distSq p (0,0) + distSq q (0,0) - 2 * (p.1 * q.1 + p.2 * q.2) := by
   unfold distSq; ring
+
+/-! ## 探索17: 距離の非退化性 -/
+
+/-- 格子点 (a,0) と (0,b) の距離² = a²+b² -/
+theorem distSq_axes (a b : ℤ) : distSq (a, 0) (0, b) = a ^ 2 + b ^ 2 := by
+  unfold distSq; ring

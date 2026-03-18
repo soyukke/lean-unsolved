@@ -359,3 +359,18 @@ theorem collatzReaches_even_iff (n : ℕ) (_hn : n > 0) (heven : n % 2 = 0) :
       exact ⟨k, hk⟩
   · intro ⟨k, hk⟩
     exact ⟨k + 1, by rw [collatzIter_succ, collatzStep_even_eq_div2 n heven, hk]⟩
+
+/-! ## 15. collatzReaches の奇数版 -/
+
+/-- 奇数 n > 1 なら collatzReaches n ↔ collatzReaches (3*n+1) -/
+theorem collatzReaches_odd_iff (n : ℕ) (hn : n > 1) (hodd : n % 2 = 1) :
+    collatzReaches n ↔ collatzReaches (3 * n + 1) := by
+  constructor
+  · intro ⟨k, hk⟩
+    cases k with
+    | zero => change n = 1 at hk; omega
+    | succ k =>
+      rw [collatzIter_succ, collatzStep_odd_eq n hodd] at hk
+      exact ⟨k, hk⟩
+  · intro ⟨k, hk⟩
+    exact ⟨k + 1, by rw [collatzIter_succ, collatzStep_odd_eq n hodd, hk]⟩

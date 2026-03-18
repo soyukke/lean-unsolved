@@ -353,3 +353,12 @@ example : IsGoldbach 28 := ⟨5, 23, by norm_num, by norm_num, by norm_num⟩
 -- 既存だが、具体例:
 -- 2·11 = 22
 example : IsGoldbach 22 := isGoldbach_double_prime (by norm_num : Nat.Prime 11)
+
+/-! ## 探索19: ゴールドバッハ検証の系統化 -/
+
+-- 連続偶数 32-40
+example : IsGoldbach 32 := ⟨3, 29, by norm_num, by norm_num, by norm_num⟩
+example : IsGoldbach 34 := ⟨3, 31, by norm_num, by norm_num, by norm_num⟩
+example : IsGoldbach 36 := ⟨5, 31, by norm_num, by norm_num, by norm_num⟩
+example : IsGoldbach 38 := ⟨7, 31, by norm_num, by norm_num, by norm_num⟩
+example : IsGoldbach 40 := ⟨3, 37, by norm_num, by norm_num, by norm_num⟩

@@ -267,3 +267,17 @@ theorem IsTwinPrime.middle_div6 {p : ℕ} (h : IsTwinPrime p) (hp3 : p > 3) :
 example : IsTwinPrime 59 := ⟨by norm_num, by norm_num⟩
 -- 71 と 73 は双子素数
 example : IsTwinPrime 71 := ⟨by norm_num, by norm_num⟩
+
+/-! ## 探索16: TwinPrimeConjecture の同値な定式化 -/
+
+/-- 双子素数予想は IsTwinPrime を使って書ける -/
+theorem twinPrimeConjecture_iff :
+    TwinPrimeConjecture ↔ ∀ N : ℕ, ∃ p : ℕ, p > N ∧ IsTwinPrime p := by
+  unfold TwinPrimeConjecture IsTwinPrime
+  constructor
+  · intro h N
+    obtain ⟨p, hp1, hp2, hp3⟩ := h N
+    exact ⟨p, hp1, hp2, hp3⟩
+  · intro h N
+    obtain ⟨p, hp1, hp2, hp3⟩ := h N
+    exact ⟨p, hp1, hp2, hp3⟩

@@ -283,3 +283,11 @@ example : allColoringsHaveAP3 3 = false := by native_decide
 
 -- N=4 でも 3-AP を回避可能
 example : allColoringsHaveAP3 4 = false := by native_decide
+
+/-! ## 探索11: 5-AP の検証 -/
+
+-- N=5 で 5-AP は自明に回避（全位置が同色でも 5-AP には d≥1 が必要で 0+4d<5 → d=1 のみ）
+example : hasMonoAPList [false, true, false, true, false] 5 = false := by rfl
+
+-- N=9 での 5-AP 回避（RRBRRBRBB）
+example : hasMonoAPList [false, false, true, false, false, true, false, true, true] 5 = false := by rfl

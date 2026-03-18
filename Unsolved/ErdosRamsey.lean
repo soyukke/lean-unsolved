@@ -291,3 +291,12 @@ def allFalseColoring (n : ℕ) : TwoColoring n where
 theorem allFalse_mono_clique (n : ℕ) (S : Finset (Fin n)) :
     IsMonochromaticClique (allFalseColoring n) S false := by
   intro i _ j _ _; rfl
+
+/-! ## 探索11: HasRamseyProperty 3 2 の証明 -/
+
+/-- 全辺 true の K_n で n ≥ k なら、カード k の任意の部分集合が true 単色クリーク -/
+theorem hasRamseyProperty_of_allTrue (n k : ℕ) (hk : k ≤ n) :
+    ∀ (S : Finset (Fin n)), S.card = k →
+    IsMonochromaticClique (allTrueColoring n) S true := by
+  intro S _ i hi j hj hij
+  rfl
