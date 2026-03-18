@@ -44,6 +44,11 @@ import Mathlib
 - (p, p+2) が双子素数で p > 3 のとき、p+1 は 6 の倍数
 - twin_prime_mod_six から p%6=5 を使い (p+1)%6=0 を導出
 - 3桁の双子素数検証: (101,103), (107,109), (137,139), (149,151)
+
+## 探索12: 双子素数ペアの対称性
+- IsTwinPrime 定義述語の導入
+- twin_prime_second: p+2 の素数性を明示
+- 検証例: IsTwinPrime 3, 5, 11, 17, 29, 41
 -/
 
 /-- 双子素数予想: 差が2の素数の組は無限に存在する -/
@@ -215,3 +220,20 @@ example : Nat.Prime 137 ∧ Nat.Prime 139 := by constructor <;> norm_num
 
 -- (149, 151) は双子素数
 example : Nat.Prime 149 ∧ Nat.Prime 151 := by constructor <;> norm_num
+
+/-! ## 探索12: 双子素数ペアの対称性 -/
+
+/-- (p, p+2) が双子素数なら p+2 も素数（自明だが明示） -/
+theorem twin_prime_second {p : ℕ} (hp : Nat.Prime p) (hp2 : Nat.Prime (p + 2)) :
+    Nat.Prime (p + 2) := hp2
+
+/-- 双子素数の定義述語 -/
+def IsTwinPrime (p : ℕ) : Prop := Nat.Prime p ∧ Nat.Prime (p + 2)
+
+-- 検証例
+example : IsTwinPrime 3 := ⟨by norm_num, by norm_num⟩
+example : IsTwinPrime 5 := ⟨by norm_num, by norm_num⟩
+example : IsTwinPrime 11 := ⟨by norm_num, by norm_num⟩
+example : IsTwinPrime 17 := ⟨by norm_num, by norm_num⟩
+example : IsTwinPrime 29 := ⟨by norm_num, by norm_num⟩
+example : IsTwinPrime 41 := ⟨by norm_num, by norm_num⟩

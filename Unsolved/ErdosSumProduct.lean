@@ -34,6 +34,9 @@ Bloom (2025): max(|A+A|, |A·A|) ≥ |A|^{1270/951} (≈ |A|^{1.335})
 - sumset, productset の Finset 上の定義
 - 小さい例での検証
 - 自明な下界の証明
+
+### 探索10: A={1,...,n} の sumset カード = 2n-1
+- {1,2,3,4} の sumset card = 7, productset card = 9
 -/
 
 open Finset
@@ -273,4 +276,14 @@ theorem sumset_23_card : (sumsetFinset {2, 3}).card = 3 := by
 
 /-- {2, 3}: prodset = {4, 6, 9}, card = 3 -/
 theorem prodset_23_card : (prodsetFinset {2, 3}).card = 3 := by
+  simp only [prodsetFinset]; decide
+
+/-! ## 探索10: A={1,...,n} の sumset カード = 2n-1 -/
+
+-- {1,2,3,4} の sumset カード = 7
+theorem sumset_1234_card : (sumsetFinset {1, 2, 3, 4}).card = 7 := by
+  simp only [sumsetFinset]; decide
+
+-- {1,2,3,4} の productset カード = 9
+theorem prodset_1234_card : (prodsetFinset {1, 2, 3, 4}).card = 9 := by
   simp only [prodsetFinset]; decide

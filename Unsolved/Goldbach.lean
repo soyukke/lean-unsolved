@@ -298,3 +298,14 @@ example : IsGoldbach 10 := ⟨5, 5, by norm_num, by norm_num, by norm_num⟩
 theorem isGoldbach_sum_comm {p q : ℕ} (hp : Nat.Prime p) (hq : Nat.Prime q) :
     IsGoldbach (q + p) :=
   ⟨q, p, hq, hp, rfl⟩
+
+/-! ## 探索15: ゴールドバッハ予想の同値な定式化 -/
+
+/-- ゴールドバッハ予想は「全ての偶数 n ≥ 4 に対して IsGoldbach n」と同値 -/
+theorem goldbachConjecture_iff_ge4 :
+    GoldbachConjecture ↔ ∀ n : ℕ, n ≥ 4 → n % 2 = 0 → IsGoldbach n := by
+  constructor
+  · intro hG n hn heven
+    exact hG n (by omega) heven
+  · intro h n hn heven
+    exact h n (by omega) heven

@@ -187,3 +187,17 @@ theorem three_mul_add_one_div2_ge_two (n : ℕ) (hn : n ≥ 1) (hodd : n % 2 = 1
 /-- 奇数 n ≥ 1 に対して (3n+1)/2 > n（奇数ステップは値を増加させる） -/
 theorem three_mul_add_one_div2_gt (n : ℕ) (hn : n ≥ 1) (hodd : n % 2 = 1) :
     (3 * n + 1) / 2 > n := by omega
+
+/-! ## 13. (3n+1)/2 の mod 性質 -/
+
+/-- n ≡ 1 (mod 4) → (3n+1)/2 は偶数 -/
+theorem syracuse_even_of_mod4_eq1 (n : ℕ) (h : n % 4 = 1) :
+    ((3 * n + 1) / 2) % 2 = 0 := by omega
+
+/-- n ≡ 3 (mod 8) → (3n+1)/2 ≡ 1 (mod 4) -/
+theorem syracuse_mod4_of_mod8_eq3 (n : ℕ) (h : n % 8 = 3) :
+    ((3 * n + 1) / 2) % 4 = 1 := by omega
+
+/-- n ≡ 7 (mod 8) → (3n+1)/2 ≡ 3 (mod 4) -/
+theorem syracuse_mod4_of_mod8_eq7 (n : ℕ) (h : n % 8 = 7) :
+    ((3 * n + 1) / 2) % 4 = 3 := by omega

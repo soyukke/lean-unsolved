@@ -15,6 +15,7 @@
 | 7 | sumset/prodset の単調性・上界 | — | mono補題と|A+A|,|A*A|≤|A|^2をLeanで証明 |
 | 8 | シングルトンのsumset/prodset | — | sumset({a})={2a}, prodset({a})={a²}, {1,2}の計算例 |
 | 9 | 2元集合の和積比較 | — | {1,3},{2,3}でsumset/prodsetともにcard=3を検証 |
+| 10 | A={1,...,n}のsumsetカード=2n-1 | — | {1,2,3,4}でsumset card=7, prodset card=9を検証 |
 
 ## 主要発見
 

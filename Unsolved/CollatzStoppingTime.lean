@@ -301,3 +301,18 @@ theorem collatzReaches_trans (n m : ℕ) (k : ℕ)
     (hiter : collatzIter k n = m) (hm : collatzReaches m) : collatzReaches n := by
   obtain ⟨j, hj⟩ := hm
   exact ⟨k + j, by rw [collatzIter_add', hiter, hj]⟩
+
+/-! ## 11. stoppingTime の追加性質 -/
+
+/-- collatzStep 3 = 10 -/
+example : collatzStep 3 = 10 := by decide
+
+/-- collatzStep 10 = 5 -/
+example : collatzStep 10 = 5 := by decide
+
+/-- collatzStep 5 = 16 -/
+example : collatzStep 5 = 16 := by decide
+
+/-- 3 はコラッツ操作で1に到達する -/
+theorem collatzReaches_three : collatzReaches 3 :=
+  ⟨7, by decide⟩
