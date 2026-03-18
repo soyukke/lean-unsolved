@@ -1,5 +1,8 @@
 import Mathlib
 
+set_option linter.style.longLine false
+set_option linter.flexible false
+
 /-!
 # エルデシュ問題 #77: Ramsey Number Limit (ラムゼー数の極限)
 
@@ -327,3 +330,140 @@ example : c5Coloring.color ⟨0, by omega⟩ ⟨2, by omega⟩ = false := by dec
 example : c5Coloring.color ⟨1, by omega⟩ ⟨3, by omega⟩ = false := by decide
 -- {0, 4} は隣接
 example : c5Coloring.color ⟨0, by omega⟩ ⟨4, by omega⟩ = true := by decide
+
+-- =============================================================================
+-- R(3,3) ≤ 6 の証明: HasRamseyProperty 6 3
+-- =============================================================================
+
+/-! ## R(3,3) ≤ 6: K_6 の任意の2色塗り分けに単色三角形が存在する
+
+数学的証明:
+1. 頂点 v を固定。v から他の5頂点への辺は2色なので鳩の巣原理で3辺以上が同色 c
+2. その3頂点 a, b, c のうち:
+   - ab, ac, bc のいずれかが色 c → v と合わせて色 c の三角形
+   - 全て ¬c → abc が色 ¬c の三角形
+-/
+
+/-- 頂点 v の色 c の近傍集合 -/
+def colorNeighbors {n : ℕ} (col : TwoColoring n) (v : Fin n) (c : Bool) : Finset (Fin n) :=
+  (Finset.univ.erase v).filter (fun u => col.color v u = c)
+
+/-- colorNeighbors の互いに素性 -/
+theorem colorNeighbors_disjoint {n : ℕ} (col : TwoColoring n) (v : Fin n) :
+    Disjoint (colorNeighbors col v true) (colorNeighbors col v false) := by
+  unfold colorNeighbors
+  exact Finset.disjoint_filter.mpr (fun u _ ht hf => by simp [ht] at hf)
+
+/-- colorNeighbors の和集合 -/
+theorem colorNeighbors_union {n : ℕ} (col : TwoColoring n) (v : Fin n) :
+    colorNeighbors col v true ∪ colorNeighbors col v false = Finset.univ.erase v := by
+  unfold colorNeighbors
+  ext u
+  simp only [Finset.mem_union, Finset.mem_filter, Finset.mem_erase, Finset.mem_univ]
+  constructor
+  · rintro (⟨h, _⟩ | ⟨h, _⟩) <;> exact h
+  · intro h
+    cases hc : col.color v u
+    · right; exact ⟨h, rfl⟩
+    · left; exact ⟨h, rfl⟩
+
+/-- 色 true/false の近傍で v 以外の頂点を分割: |N_true| + |N_false| = n - 1 -/
+theorem colorNeighbors_card_add {n : ℕ} (col : TwoColoring n) (v : Fin n) :
+    (colorNeighbors col v true).card + (colorNeighbors col v false).card = n - 1 := by
+  rw [← Finset.card_union_of_disjoint (colorNeighbors_disjoint col v),
+      colorNeighbors_union col v,
+      Finset.card_erase_of_mem (Finset.mem_univ v), Finset.card_univ, Fintype.card_fin]
+
+/-- n=6 なら少なくとも一方の色の近傍が3以上 -/
+theorem exists_large_color_neighborhood (col : TwoColoring 6) (v : Fin 6) :
+    ∃ c : Bool, 3 ≤ (colorNeighbors col v c).card := by
+  have h := colorNeighbors_card_add col v
+  -- h : ... + ... = 6 - 1 = 5
+  by_cases ht : 3 ≤ (colorNeighbors col v true).card
+  · exact ⟨true, ht⟩
+  · exact ⟨false, by omega⟩
+
+/-- colorNeighbors の要素は v と異なる -/
+theorem colorNeighbors_ne {n : ℕ} (col : TwoColoring n) (v : Fin n) (c : Bool)
+    (u : Fin n) (hu : u ∈ colorNeighbors col v c) : u ≠ v := by
+  unfold colorNeighbors at hu
+  simp [Finset.mem_filter, Finset.mem_erase] at hu
+  exact hu.1
+
+/-- colorNeighbors の要素は色 c の辺を持つ -/
+theorem colorNeighbors_color {n : ℕ} (col : TwoColoring n) (v : Fin n) (c : Bool)
+    (u : Fin n) (hu : u ∈ colorNeighbors col v c) : col.color v u = c := by
+  unfold colorNeighbors at hu
+  simp [Finset.mem_filter, Finset.mem_erase] at hu
+  exact hu.2
+
+/-- Bool の否定: b ≠ true → b = false, b ≠ false → b = true -/
+theorem bool_eq_not_of_ne {b : Bool} {c : Bool} (h : b ≠ c) : b = !c := by
+  cases b <;> cases c <;> simp_all
+
+/-- 3頂点の単色クリーク: 全ペアの辺が同じ色 -/
+private theorem mono_clique_of_three {n : ℕ} {col : TwoColoring n}
+    {x y z : Fin n} {c : Bool}
+    (hxy : x ≠ y) (hxz : x ≠ z) (hyz : y ≠ z)
+    (exy : col.color x y = c) (exz : col.color x z = c) (eyz : col.color y z = c) :
+    IsMonochromaticClique col {x, y, z} c := by
+  intro i hi j hj hij
+  simp [Finset.mem_insert, Finset.mem_singleton] at hi hj
+  rcases hi with rfl | rfl | rfl <;> rcases hj with rfl | rfl | rfl
+  all_goals (first | exact absurd rfl hij | exact exy | exact exz | exact eyz | (rw [col.symm]; first | exact exy | exact exz | exact eyz))
+
+/-- 3頂点 + 中心頂点から単色三角形を構成する核心補題 -/
+theorem ramsey_triangle_from_three {col : TwoColoring 6} {v a b c_vtx : Fin 6}
+    {color : Bool}
+    (hab : a ≠ b) (hac : a ≠ c_vtx) (hbc : b ≠ c_vtx)
+    (hva : col.color v a = color) (hvb : col.color v b = color) (hvc : col.color v c_vtx = color)
+    (hav : a ≠ v) (hbv : b ≠ v) (hcv : c_vtx ≠ v) :
+    ∃ S : Finset (Fin 6), S.card = 3 ∧
+      (IsMonochromaticClique col S true ∨ IsMonochromaticClique col S false) := by
+  by_cases hab_c : col.color a b = color
+  · -- {v, a, b} が色 color の三角形
+    refine ⟨{v, a, b}, Finset.card_eq_three.mpr ⟨v, a, b, hav.symm, hbv.symm, hab, rfl⟩, ?_⟩
+    cases color
+    · exact Or.inr (mono_clique_of_three hav.symm hbv.symm hab hva hvb hab_c)
+    · exact Or.inl (mono_clique_of_three hav.symm hbv.symm hab hva hvb hab_c)
+  · by_cases hac_c : col.color a c_vtx = color
+    · -- {v, a, c_vtx} が色 color の三角形
+      refine ⟨{v, a, c_vtx}, Finset.card_eq_three.mpr ⟨v, a, c_vtx, hav.symm, hcv.symm, hac, rfl⟩, ?_⟩
+      cases color
+      · exact Or.inr (mono_clique_of_three hav.symm hcv.symm hac hva hvc hac_c)
+      · exact Or.inl (mono_clique_of_three hav.symm hcv.symm hac hva hvc hac_c)
+    · by_cases hbc_c : col.color b c_vtx = color
+      · -- {v, b, c_vtx} が色 color の三角形
+        refine ⟨{v, b, c_vtx}, Finset.card_eq_three.mpr ⟨v, b, c_vtx, hbv.symm, hcv.symm, hbc, rfl⟩, ?_⟩
+        cases color
+        · exact Or.inr (mono_clique_of_three hbv.symm hcv.symm hbc hvb hvc hbc_c)
+        · exact Or.inl (mono_clique_of_three hbv.symm hcv.symm hbc hvb hvc hbc_c)
+      · -- 全て ≠ color なので {a, b, c_vtx} が色 !color の三角形
+        have hab' : col.color a b = !color := bool_eq_not_of_ne hab_c
+        have hac' : col.color a c_vtx = !color := bool_eq_not_of_ne hac_c
+        have hbc' : col.color b c_vtx = !color := bool_eq_not_of_ne hbc_c
+        refine ⟨{a, b, c_vtx}, Finset.card_eq_three.mpr ⟨a, b, c_vtx, hab, hac, hbc, rfl⟩, ?_⟩
+        cases color
+        · exact Or.inl (mono_clique_of_three hab hac hbc hab' hac' hbc')
+        · exact Or.inr (mono_clique_of_three hab hac hbc hab' hac' hbc')
+
+/-- R(3,3) ≤ 6: K_6 の任意の2色塗り分けに単色三角形が存在する -/
+theorem ramsey_three_three : HasRamseyProperty 6 3 := by
+  intro col
+  -- Step 1: 頂点 0 を固定
+  set v : Fin 6 := ⟨0, by omega⟩
+  -- Step 2: 鳩の巣原理で3頂点以上が同色
+  obtain ⟨c, hc⟩ := exists_large_color_neighborhood col v
+  -- Step 3: 3元以上の集合から3つの異なる要素を取り出す
+  have hc' : 2 < (colorNeighbors col v c).card := by omega
+  rw [Finset.two_lt_card] at hc'
+  obtain ⟨a, ha, b, hb, c_vtx, hc_vtx, hab, hac, hbc⟩ := hc'
+  -- Step 4: 色の情報を取得
+  have hva := colorNeighbors_color col v c a ha
+  have hvb := colorNeighbors_color col v c b hb
+  have hvc := colorNeighbors_color col v c c_vtx hc_vtx
+  have hav := colorNeighbors_ne col v c a ha
+  have hbv := colorNeighbors_ne col v c b hb
+  have hcv := colorNeighbors_ne col v c c_vtx hc_vtx
+  -- Step 5: 三角形を構成
+  exact ramsey_triangle_from_three hab hac hbc hva hvb hvc hav hbv hcv
