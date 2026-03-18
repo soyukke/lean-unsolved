@@ -300,3 +300,21 @@ theorem hasRamseyProperty_of_allTrue (n k : ℕ) (hk : k ≤ n) :
     IsMonochromaticClique (allTrueColoring n) S true := by
   intro S _ i hi j hj hij
   rfl
+
+/-! ## 探索12: HasRamseyProperty の合成 -/
+
+/-- HasRamseyProperty n k かつ k ≥ 1 → n ≥ 1 -/
+theorem hasRamseyProperty_pos {n k : ℕ} (hk : k ≥ 1) (h : HasRamseyProperty n k) :
+    n ≥ 1 := by
+  by_contra hn
+  push_neg at hn
+  have : n = 0 := by omega
+  subst this
+  -- K_0 上の塗り分けを構成
+  have col : TwoColoring 0 :=
+    ⟨fun i => Fin.elim0 i, fun i => Fin.elim0 i⟩
+  obtain ⟨S, hcard, _⟩ := h col
+  -- S ⊆ Fin 0 で |S| = k ≥ 1 だが |Fin 0| = 0
+  have hsle : S.card ≤ Fintype.card (Fin 0) := Finset.card_le_univ S
+  rw [hcard, Fintype.card_fin] at hsle
+  omega

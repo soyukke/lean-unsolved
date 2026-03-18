@@ -103,6 +103,7 @@
 | 68 | collatzReaches の奇数版 | ✅ | CollatzStoppingTime.lean | collatzReaches_odd_iff: 奇数n>1の到達⟺3n+1の到達 | B |
 | 69 | 増減まとめ + collatzReaches 合成 | ✅ | CollatzMod3.lean, CollatzStoppingTime.lean | (3n+1)/2≤2n, collatzReaches 13,15,16 | B |
 | 70 | collatzReaches の偶数合成と具体例 | ✅ | CollatzStoppingTime.lean | collatzReaches_of_half, collatzReaches 20 | B |
+| 71 | mod 2^k 性質まとめ + stoppingTime 上界 | ✅ | CollatzMod3.lean, CollatzStoppingTime.lean | (3n+1)≥4∧偶数, mod4排中律, collatzReaches 32,64 | B |
 
 ## フェーズ12: 深堀り (探索56-59)
 

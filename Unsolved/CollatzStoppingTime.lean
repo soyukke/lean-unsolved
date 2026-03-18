@@ -399,3 +399,13 @@ theorem collatzReaches_of_half (n : ℕ) (hn : n > 0) (heven : n % 2 = 0)
 /-- collatzReaches 20 -/
 theorem collatzReaches_twenty : collatzReaches 20 :=
   ⟨7, by decide⟩
+
+/-! ## 18. stoppingTime の上界 -/
+
+/-- collatzReaches 32 -/
+theorem collatzReaches_thirtytwo : collatzReaches 32 :=
+  collatzReaches_pow_two 5
+
+/-- collatzReaches 64 -/
+theorem collatzReaches_sixtyfour : collatzReaches 64 :=
+  collatzReaches_pow_two 6

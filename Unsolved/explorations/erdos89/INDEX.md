@@ -30,6 +30,8 @@ Guth-Katz (2015) が d(n) ≥ cn/log(n) を証明。
 | 16 | 距離と内積の関係 | ✅ | ErdosDistinctDistances.lean | distSq_expand: |p-q|²=|p|²+|q|²-2⟨p,q⟩をringで証明 |
 | 17 | 距離の非退化性 | ✅ | ErdosDistinctDistances.lean | distSq_axes: 格子点(a,0)と(0,b)の距離²=a²+b²をringで証明 |
 | 18 | 距離の二乗和恒等式 | ✅ | ErdosDistinctDistances.lean | distSq_explicit: distSq(a,b)(c,d)=(a-c)²+(b-d)²の明示的展開 |
+| 19 | 等距離点の例 | ✅ | ErdosDistinctDistances.lean | 正三角形近似・正方形の距離検証、二等辺三角形配置 |
+| 20 | 距離の単調性 | ✅ | ErdosDistinctDistances.lean | distSq_nat_valued: 格子上の距離²は自然数値、5点配置の距離検証 |
 
 ## 主要知見
 

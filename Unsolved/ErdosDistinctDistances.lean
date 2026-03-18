@@ -337,3 +337,21 @@ example : distSq (0, 0) (4, 0) = 16 := by decide
 example : distSq (0, 0) (2, 3) = 13 := by decide
 example : distSq (4, 0) (2, 3) = 13 := by decide
 -- → 2種類の距離 (16, 13)、二等辺三角形
+
+/-! ## 探索20: 距離の単調性 -/
+
+-- 格子上の距離²は自然数値を取る
+-- 整数座標なので distSq は非負整数。明示的に自然数への対応を示す。
+
+/-- 5点配置 (0,0),(1,0),(2,0),(0,1),(1,1) の全距離の検証 -/
+example : distSq (0, 0) (2, 0) = 4 := by decide
+example : distSq (0, 1) (1, 0) = 2 := by decide
+example : distSq (0, 1) (2, 0) = 5 := by decide
+example : distSq (1, 1) (2, 0) = 2 := by decide
+
+/-- distSq_nat_valued: 格子上の距離²は自然数値を取る -/
+theorem distSq_nat_valued (p q : Point) :
+    ∃ m : ℕ, distSq p q = (m : ℤ) := by
+  have h_nn := distSq_nonneg p q
+  exact ⟨(distSq p q).toNat, by
+    rw [Int.toNat_of_nonneg h_nn]⟩

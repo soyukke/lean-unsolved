@@ -25,6 +25,7 @@ lim_{k→∞} R(k)^{1/k} を求めよ。R(k)は対角ラムゼー数。
 | 9 | 自明な塗り分けの例 | 完了 | ErdosRamsey.lean | allTrueColoring定義、任意部分集合が単色クリーク |
 | 10 | allFalseColoring | 完了 | ErdosRamsey.lean | allFalseColoring定義、false単色クリークの証明 |
 | 11 | HasRamseyProperty 3 2 の証明 | 完了 | ErdosRamsey.lean | hasRamseyProperty_of_allTrue: 全辺trueのK_nで任意の部分集合が単色クリーク |
+| 12 | HasRamseyProperty の合成 | 完了 | ErdosRamsey.lean | hasRamseyProperty_pos: k≥1かつHasRamseyProperty n k → n≥1（K_0上の背理法） |
 
 ## 主要な知見
 

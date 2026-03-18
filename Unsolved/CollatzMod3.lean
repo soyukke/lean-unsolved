@@ -228,3 +228,14 @@ theorem three_mul_add_one_div4_even_of_mod16_eq13 (n : ℕ) (h : n % 16 = 13) :
 /-- 奇数 n ≥ 1 に対して (3n+1)/2 ≤ 2n -/
 theorem three_mul_add_one_div2_le_two_mul (n : ℕ) (hn : n ≥ 1) (hodd : n % 2 = 1) :
     (3 * n + 1) / 2 ≤ 2 * n := by omega
+
+/-! ## 16. コラッツ写像の mod 2^k 性質のまとめ -/
+
+/-- 奇数 n に対して (3n+1) は 4 以上の偶数 -/
+theorem three_mul_add_one_even_ge4 (n : ℕ) (hn : n ≥ 1) (hodd : n % 2 = 1) :
+    (3 * n + 1) ≥ 4 ∧ (3 * n + 1) % 2 = 0 := by
+  constructor <;> omega
+
+/-- n ≡ 1 (mod 2) → n ≡ 1 (mod 4) ∨ n ≡ 3 (mod 4) の排中律 -/
+theorem odd_mod4_cases (n : ℕ) (hodd : n % 2 = 1) :
+    n % 4 = 1 ∨ n % 4 = 3 := by omega

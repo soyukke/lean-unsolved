@@ -378,3 +378,10 @@ example : IsGoldbach 54 := ⟨7, 47, by norm_num, by norm_num, by norm_num⟩
 example : IsGoldbach 60 := ⟨7, 53, by norm_num, by norm_num, by norm_num⟩
 -- 66 = 5 + 61
 example : IsGoldbach 66 := ⟨5, 61, by norm_num, by norm_num, by norm_num⟩
+
+/-! ## 探索22: IsGoldbach と偶数性の関係 -/
+
+-- 300 = 7 + 293
+example : IsGoldbach 300 := ⟨7, 293, by norm_num, by norm_num, by norm_num⟩
+-- 400 = 11 + 389
+example : IsGoldbach 400 := ⟨11, 389, by norm_num, by norm_num, by norm_num⟩

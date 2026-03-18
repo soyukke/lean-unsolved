@@ -110,6 +110,12 @@
 - twin_prime_mod_six で p%6=5 → (p+4)%6=3 → 3|(p+4) → 素数でない
 - 素数三つ子 (p, p+2, p+4) は (3, 5, 7) のみ
 
+### 探索19: IsCousinPrime の定義 ✅
+- `IsCousinPrime` 述語の定義: `Nat.Prime p ∧ Nat.Prime (p + 4)`
+- 検証例: IsCousinPrime 3, 7, 13, 37, 67（全て norm_num で自動証明）
+- `IsCousinPrime.mod_six`: p > 3 → p % 6 = 1（cousin_prime_mod_six のラッパー）
+- IsTwinPrime (差2) との対比: Twin→p%6=5, Cousin→p%6=1
+
 ### 探索16: TwinPrimeConjecture の同値な定式化 ✅
 - `twinPrimeConjecture_iff`: TwinPrimeConjecture ↔ ∀ N, ∃ p > N, IsTwinPrime p
 - TwinPrimeConjecture の定義を IsTwinPrime 述語で書き直せることを形式証明

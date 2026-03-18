@@ -300,3 +300,20 @@ theorem no_prime_triplet_gt3 {p : ℕ} (hp : Nat.Prime p) (hp2 : Nat.Prime (p + 
   have h3dvd : 3 ∣ (p + 4) := ⟨(p + 4) / 3, by omega⟩
   have := hp4.eq_one_or_self_of_dvd 3 h3dvd
   omega
+
+/-! ## 探索19: IsCousinPrime の定義 -/
+
+/-- Cousin prime の定義述語 -/
+def IsCousinPrime (p : ℕ) : Prop := Nat.Prime p ∧ Nat.Prime (p + 4)
+
+-- 検証例
+example : IsCousinPrime 3 := ⟨by norm_num, by norm_num⟩
+example : IsCousinPrime 7 := ⟨by norm_num, by norm_num⟩
+example : IsCousinPrime 13 := ⟨by norm_num, by norm_num⟩
+example : IsCousinPrime 37 := ⟨by norm_num, by norm_num⟩
+example : IsCousinPrime 67 := ⟨by norm_num, by norm_num⟩
+
+/-- IsCousinPrime p かつ p > 3 → p % 6 = 1 -/
+theorem IsCousinPrime.mod_six {p : ℕ} (h : IsCousinPrime p) (hp3 : p > 3) :
+    p % 6 = 1 :=
+  cousin_prime_mod_six h.1 h.2 hp3
