@@ -532,3 +532,57 @@ theorem collatzReaches_le_25 (n : ℕ) (hn1 : n ≥ 1) (hn25 : n ≤ 25) :
     | exact collatzReaches_23
     | exact collatzReaches_twentyfour
     | exact collatzReaches_25
+
+/-! ## 26. 全 n ≤ 100 の体系的検証 -/
+
+set_option linter.style.nativeDecide false in
+/-- 1 ≤ n ≤ 100 の全自然数はコラッツ操作で1に到達する -/
+theorem collatzReaches_le_100 (n : ℕ) (hn1 : n ≥ 1) (hn100 : n ≤ 100) :
+    collatzReaches n := by
+  interval_cases n
+    <;> first
+    | exact ⟨0, by native_decide⟩
+    | exact ⟨1, by native_decide⟩
+    | exact ⟨2, by native_decide⟩
+    | exact ⟨3, by native_decide⟩
+    | exact ⟨4, by native_decide⟩
+    | exact ⟨5, by native_decide⟩
+    | exact ⟨6, by native_decide⟩
+    | exact ⟨7, by native_decide⟩
+    | exact ⟨8, by native_decide⟩
+    | exact ⟨9, by native_decide⟩
+    | exact ⟨10, by native_decide⟩
+    | exact ⟨11, by native_decide⟩
+    | exact ⟨12, by native_decide⟩
+    | exact ⟨13, by native_decide⟩
+    | exact ⟨14, by native_decide⟩
+    | exact ⟨15, by native_decide⟩
+    | exact ⟨16, by native_decide⟩
+    | exact ⟨17, by native_decide⟩
+    | exact ⟨18, by native_decide⟩
+    | exact ⟨19, by native_decide⟩
+    | exact ⟨20, by native_decide⟩
+    | exact ⟨21, by native_decide⟩
+    | exact ⟨22, by native_decide⟩
+    | exact ⟨23, by native_decide⟩
+    | exact ⟨24, by native_decide⟩
+    | exact ⟨25, by native_decide⟩
+    | exact ⟨26, by native_decide⟩
+    | exact ⟨27, by native_decide⟩
+    | exact ⟨29, by native_decide⟩
+    | exact ⟨30, by native_decide⟩
+    | exact ⟨32, by native_decide⟩
+    | exact ⟨34, by native_decide⟩
+    | exact ⟨35, by native_decide⟩
+    | exact ⟨92, by native_decide⟩
+    | exact ⟨102, by native_decide⟩
+    | exact ⟨104, by native_decide⟩
+    | exact ⟨105, by native_decide⟩
+    | exact ⟨106, by native_decide⟩
+    | exact ⟨107, by native_decide⟩
+    | exact ⟨109, by native_decide⟩
+    | exact ⟨110, by native_decide⟩
+    | exact ⟨111, by native_decide⟩
+    | exact ⟨112, by native_decide⟩
+    | exact ⟨115, by native_decide⟩
+    | exact ⟨118, by native_decide⟩

@@ -361,3 +361,17 @@ theorem distSq_nat_valued (p q : Point) :
 example : distSq (0, 0) (4, 4) = 32 := by decide
 example : distSq (0, 0) (5, 5) = 50 := by decide
 example : distSq (0, 0) (6, 6) = 72 := by decide
+
+/-! ## 探索22: 1点集合・2点集合の距離数 -/
+
+/-- 1点集合の異なる距離数は 0 -/
+theorem numDistinctDist_singleton (p : Point) :
+    numDistinctDist {p} = 0 := by
+  unfold numDistinctDist distinctDistSqSet
+  simp [distSq]
+
+/-- 2点の異なる距離数は 1 以上 -/
+theorem numDistinctDist_pair {p q : Point} (hne : p ≠ q) :
+    numDistinctDist {p, q} ≥ 1 :=
+  numDistinctDist_ge_one (by
+    rw [Finset.card_pair hne])
