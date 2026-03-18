@@ -291,3 +291,12 @@ example : hasMonoAPList [false, true, false, true, false] 5 = false := by rfl
 
 -- N=9 での 5-AP 回避（RRBRRBRBB）
 example : hasMonoAPList [false, false, true, false, false, true, false, true, true] 5 = false := by rfl
+
+/-! ## 探索12: W(3)=9 の完全性の再確認 -/
+
+-- N=8 での回避塗り分けのバリエーション
+-- RRBBRRBB は既存。追加:
+-- BRRBBRRB
+example : hasMonoAPList [true, false, false, true, true, false, false, true] 3 = false := by rfl
+-- BBRRBBRR
+example : hasMonoAPList [true, true, false, false, true, true, false, false] 3 = false := by rfl

@@ -388,3 +388,14 @@ theorem collatzReaches_fifteen : collatzReaches 15 :=
 /-- collatzReaches 16 -/
 theorem collatzReaches_sixteen : collatzReaches 16 :=
   collatzReaches_pow_two 4
+
+/-! ## 17. collatzReaches の偶数・奇数合成 -/
+
+/-- n が偶数で collatzReaches (n/2) なら collatzReaches n -/
+theorem collatzReaches_of_half (n : ℕ) (hn : n > 0) (heven : n % 2 = 0)
+    (hr : collatzReaches (n / 2)) : collatzReaches n :=
+  (collatzReaches_even_iff n hn heven).mpr hr
+
+/-- collatzReaches 20 -/
+theorem collatzReaches_twenty : collatzReaches 20 :=
+  ⟨7, by decide⟩

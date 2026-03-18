@@ -325,3 +325,15 @@ theorem distSq_axes (a b : ℤ) : distSq (a, 0) (0, b) = a ^ 2 + b ^ 2 := by
 theorem distSq_explicit (a b c d : ℤ) :
     distSq (a, b) (c, d) = (a - c) ^ 2 + (b - d) ^ 2 := by
   unfold distSq; ring
+
+/-! ## 探索19: 等距離点の例 -/
+
+-- 正方形の4頂点: 辺の距離²=1, 対角線の距離²=2
+-- (0,0),(1,0),(0,1),(1,1) → 2種類の距離（1と2）
+-- 既存の検証例に加えて:
+
+-- 正三角形に近い配置: (0,0),(4,0),(2,3)
+example : distSq (0, 0) (4, 0) = 16 := by decide
+example : distSq (0, 0) (2, 3) = 13 := by decide
+example : distSq (4, 0) (2, 3) = 13 := by decide
+-- → 2種類の距離 (16, 13)、二等辺三角形

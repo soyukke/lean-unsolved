@@ -287,3 +287,16 @@ theorem twinPrimeConjecture_iff :
 example : IsTwinPrime 179 := ⟨by norm_num, by norm_num⟩
 example : IsTwinPrime 191 := ⟨by norm_num, by norm_num⟩
 example : IsTwinPrime 197 := ⟨by norm_num, by norm_num⟩
+
+/-! ## 探索18: IsTwinPrime と素数三つ子の非存在 -/
+
+/-- p > 3 の双子素数 (p,p+2) では p+4 は素数でない（3の倍数）
+    つまり素数三つ子 (p,p+2,p+4) は p ≤ 3 でのみ存在 -/
+theorem no_prime_triplet_gt3 {p : ℕ} (hp : Nat.Prime p) (hp2 : Nat.Prime (p + 2))
+    (hp3 : p > 3) : ¬ Nat.Prime (p + 4) := by
+  have h5 := twin_prime_mod_six hp hp2 hp3
+  -- p % 6 = 5 → (p+4) % 6 = 3 → 3 | (p+4)
+  intro hp4
+  have h3dvd : 3 ∣ (p + 4) := ⟨(p + 4) / 3, by omega⟩
+  have := hp4.eq_one_or_self_of_dvd 3 h3dvd
+  omega

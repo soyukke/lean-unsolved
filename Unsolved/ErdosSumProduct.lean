@@ -316,3 +316,14 @@ theorem sumsetFinset_empty : sumsetFinset (∅ : Finset ℕ) = ∅ := by
 /-- 空集合の productset は空 -/
 theorem prodsetFinset_empty : prodsetFinset (∅ : Finset ℕ) = ∅ := by
   simp [prodsetFinset]
+
+/-! ## 探索14: sumset の等差数列公式 -/
+
+/-- 等差数列 {1,...,n} の sumset は {2,...,2n} で |A+A| = 2n-1 -/
+-- {1,2,3}: card 5 = 2*3-1 (既存 sumset_123_card)
+-- {1,...,4}: card 7 = 2*4-1 (既存 sumset_1234_card)
+-- {1,...,5}: card 9 = 2*5-1 (既存 sumset_12345_card)
+
+-- {1,...,6}: card = 11 = 2*6-1
+theorem sumset_123456_card : (sumsetFinset {1, 2, 3, 4, 5, 6}).card = 11 := by
+  simp only [sumsetFinset]; decide

@@ -105,6 +105,11 @@
 - norm_num で自動証明
 - 累計 IsTwinPrime 検証: 3, 5, 11, 17, 29, 41, 59, 71, 179, 191, 197 の11個
 
+### 探索18: 素数三つ子の非存在 (p > 3) ✅
+- `no_prime_triplet_gt3`: p > 3 の双子素数 (p, p+2) では p+4 は素数でない
+- twin_prime_mod_six で p%6=5 → (p+4)%6=3 → 3|(p+4) → 素数でない
+- 素数三つ子 (p, p+2, p+4) は (3, 5, 7) のみ
+
 ### 探索16: TwinPrimeConjecture の同値な定式化 ✅
 - `twinPrimeConjecture_iff`: TwinPrimeConjecture ↔ ∀ N, ∃ p > N, IsTwinPrime p
 - TwinPrimeConjecture の定義を IsTwinPrime 述語で書き直せることを形式証明

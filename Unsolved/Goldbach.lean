@@ -368,3 +368,13 @@ example : IsGoldbach 40 := ⟨3, 37, by norm_num, by norm_num, by norm_num⟩
 example : IsGoldbach 102 := ⟨5, 97, by norm_num, by norm_num, by norm_num⟩
 example : IsGoldbach 110 := ⟨3, 107, by norm_num, by norm_num, by norm_num⟩
 example : IsGoldbach 150 := ⟨11, 139, by norm_num, by norm_num, by norm_num⟩
+
+/-! ## 探索21: mod 6 構造と組み合わせた検証 -/
+
+-- 6k (k≥9) の検証例
+-- 54 = 7 + 47
+example : IsGoldbach 54 := ⟨7, 47, by norm_num, by norm_num, by norm_num⟩
+-- 60 = 7 + 53
+example : IsGoldbach 60 := ⟨7, 53, by norm_num, by norm_num, by norm_num⟩
+-- 66 = 5 + 61
+example : IsGoldbach 66 := ⟨5, 61, by norm_num, by norm_num, by norm_num⟩
