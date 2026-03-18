@@ -633,3 +633,36 @@ theorem collatzReaches_le_100 (n : ℕ) (hn1 : n ≥ 1) (hn100 : n ≤ 100) :
     | exact ⟨112, by native_decide⟩
     | exact ⟨115, by native_decide⟩
     | exact ⟨118, by native_decide⟩
+
+/-! ## 27. コラッツ予想は奇数で十分 -/
+
+/-- コラッツ予想は奇数で十分:
+    全奇数 n ≥ 1 が1に到達するならば、全自然数 n ≥ 1 が1に到達する。
+    偶数 n は n/2 に帰着でき、n/2 < n なので強帰納法で完了する。 -/
+theorem collatzReaches_of_all_odd
+    (h : ∀ n : ℕ, n ≥ 1 → n % 2 = 1 → collatzReaches n) :
+    ∀ n : ℕ, n ≥ 1 → collatzReaches n := by
+  intro n
+  induction n using Nat.strongRecOn with
+  | ind n ih =>
+    intro hn
+    by_cases hodd : n % 2 = 1
+    · exact h n hn hodd
+    · -- n は偶数
+      have heven : n % 2 = 0 := by omega
+      have hpos : n > 0 := by omega
+      rw [collatzReaches_even_iff n hpos heven]
+      have hdiv : n / 2 < n := by omega
+      have hdiv_pos : n / 2 ≥ 1 := by omega
+      exact ih (n / 2) hdiv hdiv_pos
+
+/-- コラッツ予想は奇数 > 1 で十分（1は自明に到達）:
+    全ての奇数 n > 1 が1に到達するならば、全自然数 n ≥ 1 が1に到達する。 -/
+theorem collatzReaches_of_all_odd_gt1
+    (h : ∀ n : ℕ, n > 1 → n % 2 = 1 → collatzReaches n) :
+    ∀ n : ℕ, n ≥ 1 → collatzReaches n := by
+  apply collatzReaches_of_all_odd
+  intro n hn hodd
+  by_cases h1 : n = 1
+  · rw [h1]; exact collatzReaches_one
+  · exact h n (by omega) hodd

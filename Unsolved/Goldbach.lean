@@ -438,3 +438,13 @@ example : IsGoldbach 96 := ⟨7, 89, by norm_num, by norm_num, by norm_num⟩
 example : IsGoldbach 98 := ⟨19, 79, by norm_num, by norm_num, by norm_num⟩
 
 /-! ## 探索28: 偶数 74-100 の個別 Goldbach 検証（4-72は既出） -/
+
+/-! ## ゴールドバッハ予想と弱ゴールドバッハ予想の定量的関係 -/
+
+/-- n > 7 が奇数のとき、IsGoldbach (n - 3) → IsWeakGoldbach n
+    n - 3 は偶数かつ > 4 なのでゴールドバッハ分解 p + q = n - 3 が存在し、
+    n = 3 + p + q と書ける。 -/
+theorem weakGoldbach_of_goldbach_sub3 {n : ℕ} (hn : n > 7) (hodd : n % 2 = 1)
+    (hg : IsGoldbach (n - 3)) : IsWeakGoldbach n := by
+  obtain ⟨p, q, hp, hq, heq⟩ := hg
+  exact ⟨3, p, q, by norm_num, hp, hq, by omega⟩
