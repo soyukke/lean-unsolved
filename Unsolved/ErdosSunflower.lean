@@ -338,3 +338,25 @@ theorem erdosRado_uniform1 {α : Type*} [DecidableEq α]
       exact hunif S (List.mem_of_mem_take hS)
     · -- Nodup
       exact List.Nodup.sublist (List.take_sublist k family) hnodup
+
+-- =============================================================================
+-- 互いに素な集合族のひまわり性
+-- =============================================================================
+
+/-! ## 互いに素な集合族は自動的にひまわり
+
+k 個の互いに素な集合からなる族は、core = ∅ のひまわりである。
+各集合 S_i \ ∅ = S_i で、仮定から互いに素。
+-/
+
+/-- 互いに素な k 個の集合はひまわり（core = 空集合） -/
+theorem isSunflower_of_pairwise_disjoint {α : Type*} [DecidableEq α]
+    (family : List (Finset α))
+    (hdisjoint : ∀ (i j : ℕ) (hi : i < family.length) (hj : j < family.length),
+      i ≠ j → family[i] ∩ family[j] = ∅) :
+    IsSunflower family := by
+  refine ⟨∅, ?_, ?_⟩
+  · intro S _; exact Finset.empty_subset S
+  · intro i j hi hj hij
+    simp only [Finset.sdiff_empty]
+    exact hdisjoint i j hi hj hij

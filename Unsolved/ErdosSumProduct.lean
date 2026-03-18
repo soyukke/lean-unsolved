@@ -667,3 +667,119 @@ theorem card_sumsetFinset2_ge {A B : Finset ℕ} (hA : A.Nonempty) (hB : B.Nonem
     _ = A.card + B.card - 1 := by
         have : B.card ≥ 1 := Finset.Nonempty.card_pos hB
         omega
+
+-- =============================================================================
+-- 一般化 productset: A · B = {a * b : a ∈ A, b ∈ B}
+-- =============================================================================
+
+/-! ## 一般化 productset
+
+2つの有限正整数集合 A, B に対して A · B = {a * b : a ∈ A, b ∈ B} を定義し、
+|A · B| ≥ |A| + |B| - 1 を証明する。
+これは |A · A| ≥ 2|A| - 1 の一般化。
+-/
+
+/-- 2集合の一般化 productset: A·B = {a*b : a ∈ A, b ∈ B} -/
+noncomputable def prodsetFinset2 (A B : Finset ℕ) : Finset ℕ :=
+  (A ×ˢ B).image (fun p => p.1 * p.2)
+
+/-- prodsetFinset2 の要素の特徴付け -/
+theorem mem_prodsetFinset2 {A B : Finset ℕ} {x : ℕ} :
+    x ∈ prodsetFinset2 A B ↔ ∃ a ∈ A, ∃ b ∈ B, a * b = x := by
+  unfold prodsetFinset2
+  simp only [Finset.mem_image, Finset.mem_product]
+  constructor
+  · rintro ⟨⟨a, b⟩, ⟨ha, hb⟩, heq⟩
+    exact ⟨a, ha, b, hb, heq⟩
+  · rintro ⟨a, ha, b, hb, heq⟩
+    exact ⟨⟨a, b⟩, ⟨ha, hb⟩, heq⟩
+
+/-- prodsetFinset は prodsetFinset2 の特殊ケース: prodsetFinset A = prodsetFinset2 A A -/
+theorem prodsetFinset_eq_prodsetFinset2 (A : Finset ℕ) :
+    prodsetFinset A = prodsetFinset2 A A := by
+  ext x
+  rw [mem_prodsetFinset, mem_prodsetFinset2]
+
+/-- |A·B| ≥ |A| + |B| - 1（A, B は正整数の集合） -/
+theorem card_prodsetFinset2_ge {A B : Finset ℕ}
+    (hA : A.Nonempty) (hB : B.Nonempty)
+    (hposA : ∀ a ∈ A, a > 0) (hposB : ∀ b ∈ B, b > 0) :
+    (prodsetFinset2 A B).card ≥ A.card + B.card - 1 := by
+  -- min(B) と max(A) を取る
+  let m := B.min' hB
+  let M := A.max' hA
+  have hm : m ∈ B := Finset.min'_mem B hB
+  have hM : M ∈ A := Finset.max'_mem A hA
+  have hm_pos : m > 0 := hposB m hm
+  have hM_pos : M > 0 := hposA M hM
+  -- S₁ = A.image (· * m): |A| 個の元、全元 ≤ M * m
+  let S₁ := A.image (· * m)
+  -- S₂' = (B.erase m).image (M * ·): |B| - 1 個の元、全元 > M * m
+  let S₂' := (B.erase m).image (M * ·)
+  -- S₁ ⊆ prodsetFinset2 A B
+  have hS₁_sub : S₁ ⊆ prodsetFinset2 A B := by
+    intro x hx
+    rw [Finset.mem_image] at hx
+    obtain ⟨a, ha, rfl⟩ := hx
+    rw [mem_prodsetFinset2]
+    exact ⟨a, ha, m, hm, rfl⟩
+  -- S₂' ⊆ prodsetFinset2 A B
+  have hS₂'_sub : S₂' ⊆ prodsetFinset2 A B := by
+    intro x hx
+    rw [Finset.mem_image] at hx
+    obtain ⟨b, hb_erase, rfl⟩ := hx
+    have hb : b ∈ B := Finset.mem_of_mem_erase hb_erase
+    rw [mem_prodsetFinset2]
+    exact ⟨M, hM, b, hb, rfl⟩
+  -- S₁ の元は ≤ M * m
+  have hS₁_le : ∀ x ∈ S₁, x ≤ M * m := by
+    intro x hx
+    rw [Finset.mem_image] at hx
+    obtain ⟨a, ha, rfl⟩ := hx
+    have : a ≤ M := Finset.le_max' A a ha
+    exact Nat.mul_le_mul_right m this
+  -- S₂' の元は > M * m
+  have hS₂'_gt : ∀ x ∈ S₂', x > M * m := by
+    intro x hx
+    rw [Finset.mem_image] at hx
+    obtain ⟨b, hb_erase, rfl⟩ := hx
+    have hb : b ∈ B := Finset.mem_of_mem_erase hb_erase
+    have hb_ne : b ≠ m := Finset.ne_of_mem_erase hb_erase
+    have hm_le : m ≤ b := Finset.min'_le B b hb
+    have hm_lt : m < b := Nat.lt_of_le_of_ne hm_le (Ne.symm hb_ne)
+    exact Nat.mul_lt_mul_of_pos_left hm_lt hM_pos
+  -- S₁ と S₂' は disjoint
+  have hdisj : Disjoint S₁ S₂' := by
+    rw [Finset.disjoint_left]
+    intro x hx₁ hx₂
+    have h₁ := hS₁_le x hx₁
+    have h₂ := hS₂'_gt x hx₂
+    omega
+  -- |S₁| = |A|
+  have hcard_S₁ : S₁.card = A.card := by
+    apply Finset.card_image_of_injOn
+    intro a₁ _ a₂ _ h
+    simp only at h
+    exact Nat.mul_right_cancel hm_pos h
+  -- |S₂'| = |B| - 1
+  have hcard_S₂' : S₂'.card = B.card - 1 := by
+    have : S₂'.card = (B.erase m).card := by
+      apply Finset.card_image_of_injOn
+      intro b₁ _ b₂ _ h
+      simp only at h
+      exact Nat.mul_left_cancel hM_pos h
+    rw [this, Finset.card_erase_of_mem hm]
+  -- |S₁ ∪ S₂'| = |S₁| + |S₂'|
+  have hunion : (S₁ ∪ S₂').card = S₁.card + S₂'.card :=
+    Finset.card_union_of_disjoint hdisj
+  -- S₁ ∪ S₂' ⊆ prodsetFinset2 A B
+  have hsub_union : S₁ ∪ S₂' ⊆ prodsetFinset2 A B :=
+    Finset.union_subset hS₁_sub hS₂'_sub
+  -- 結論
+  calc (prodsetFinset2 A B).card
+      ≥ (S₁ ∪ S₂').card := Finset.card_le_card hsub_union
+    _ = S₁.card + S₂'.card := hunion
+    _ = A.card + (B.card - 1) := by rw [hcard_S₁, hcard_S₂']
+    _ = A.card + B.card - 1 := by
+        have : B.card ≥ 1 := Finset.Nonempty.card_pos hB
+        omega
