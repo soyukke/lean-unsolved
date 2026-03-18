@@ -185,3 +185,39 @@ theorem card_le_prodsetFinset_card {A : Finset ℕ} (hA : ∀ a ∈ A, a > 0) :
     calc A.card = (A.image (· * m)).card := by
               rw [Finset.card_image_of_injOn hinj]
          _ ≤ (prodsetFinset A).card := Finset.card_le_card hsub
+
+/-! ## 探索7: sumset/productset の追加性質 -/
+
+/-- 部分集合の sumset は元の sumset の部分集合 -/
+theorem sumsetFinset_mono {A B : Finset ℕ} (h : A ⊆ B) :
+    sumsetFinset A ⊆ sumsetFinset B := by
+  intro x hx
+  rw [mem_sumsetFinset] at hx ⊢
+  obtain ⟨a, ha, b, hb, heq⟩ := hx
+  exact ⟨a, h ha, b, h hb, heq⟩
+
+/-- 部分集合の productset は元の productset の部分集合 -/
+theorem prodsetFinset_mono {A B : Finset ℕ} (h : A ⊆ B) :
+    prodsetFinset A ⊆ prodsetFinset B := by
+  intro x hx
+  rw [mem_prodsetFinset] at hx ⊢
+  obtain ⟨a, ha, b, hb, heq⟩ := hx
+  exact ⟨a, h ha, b, h hb, heq⟩
+
+/-- |A+A| ≤ |A|^2 -/
+theorem sumsetFinset_card_le_sq {A : Finset ℕ} :
+    (sumsetFinset A).card ≤ A.card * A.card := by
+  unfold sumsetFinset
+  have h1 : ((A ×ˢ A).image (fun p => p.1 + p.2)).card ≤ (A ×ˢ A).card :=
+    Finset.card_image_le
+  have h2 : (A ×ˢ A).card = A.card * A.card := Finset.card_product A A
+  omega
+
+/-- |A·A| ≤ |A|^2 -/
+theorem prodsetFinset_card_le_sq {A : Finset ℕ} :
+    (prodsetFinset A).card ≤ A.card * A.card := by
+  unfold prodsetFinset
+  have h1 : ((A ×ˢ A).image (fun p => p.1 * p.2)).card ≤ (A ×ˢ A).card :=
+    Finset.card_image_le
+  have h2 : (A ×ˢ A).card = A.card * A.card := Finset.card_product A A
+  omega

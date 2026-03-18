@@ -11,7 +11,8 @@
 | 1-3 | 基本計算、特殊集合分析 | `scripts/erdos52_sum_product.py`, `erdos52_special_sets.py` | smooth numbers が比率を最も抑える |
 | 4 | 有限体 F_p 上の和積現象 | `scripts/erdos52_finite_field.py` | 部分群で|A*A|=|A|だが|A+A|大、ε≈0.37-0.47 |
 | 5 | 加法/乗法エネルギー分析 | `scripts/erdos52_energy.py` | BSG型関係 E·E*≥|A|^4 全例で成立、トレードオフ確認 |
-| 6 | |A·A|≥|A| の形式証明 | `scripts/erdos52_plunnecke.py` | productset下界とPlünnecke-Ruzsa数値検証 |
+| 6 | |A·A|≥|A| の形式証明 | `scripts/erdos52_plunnecke.py` | productset下界とPlunnecke-Ruzsa数値検証 |
+| 7 | sumset/prodset の単調性・上界 | — | mono補題と|A+A|,|A*A|≤|A|^2をLeanで証明 |
 
 ## 主要発見
 

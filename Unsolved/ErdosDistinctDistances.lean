@@ -182,3 +182,35 @@ theorem numDistinctDist_ge_one {S : Finset Point} (hcard : S.card ≥ 2) :
   unfold numDistinctDist
   have h := distinctDistSqSet_nonempty_of_two_points hcard
   exact Finset.Nonempty.card_pos h
+
+/-! ## 探索7: 共線点集合の異なる距離 -/
+
+/-- 同一直線上の n 点（等間隔）は n-1 個の異なる距離を持つ
+    形式的には: 点 (0,0), (1,0), ..., (n-1, 0) の距離集合 -/
+
+-- 具体例: 3点 (0,0), (1,0), (2,0) の距離²は {1, 4} の2つ
+example : distSq (0, 0) (1, 0) = 1 := by decide
+example : distSq (0, 0) (2, 0) = 4 := by decide
+example : distSq (1, 0) (2, 0) = 1 := by decide
+
+-- 4点 (0,0), (1,0), (2,0), (3,0) の距離²は {1, 4, 9} の3つ
+example : distSq (0, 0) (3, 0) = 9 := by decide
+example : distSq (1, 0) (3, 0) = 4 := by decide
+example : distSq (2, 0) (3, 0) = 1 := by decide
+
+/-! ## 探索8: distSq の座標別分解と基本性質 -/
+
+/-- 同一x座標の2点の距離の二乗は y差の二乗 -/
+theorem distSq_same_x (y1 y2 : ℤ) :
+    distSq (0, y1) (0, y2) = (y1 - y2) ^ 2 := by
+  unfold distSq; ring
+
+/-- 同一y座標の2点の距離の二乗は x差の二乗 -/
+theorem distSq_same_y (x1 x2 : ℤ) :
+    distSq (x1, 0) (x2, 0) = (x1 - x2) ^ 2 := by
+  unfold distSq; ring
+
+/-- 原点からの距離の二乗 -/
+theorem distSq_origin (x y : ℤ) :
+    distSq (0, 0) (x, y) = x ^ 2 + y ^ 2 := by
+  unfold distSq; ring

@@ -63,6 +63,13 @@
 - p%30=23 → 5|(p+2) → p+2=5 だが p>5 で矛盾
 - 30個の剰余類のうち双子素数の p は3個のみ（10%）
 
+### 探索8: Cousin primes と Sexy primes ✅
+- `cousin_prime_mod_six`: p > 3 かつ (p, p+4) がともに素数なら p % 6 = 1
+  - p%6=5 なら (p+4)%6=3 で 3|(p+4) → 矛盾
+- `IsSexyPrime` の定義: p, p+6 がともに素数
+- 検証例: (5,11), (7,13), (11,17), (13,19), (23,29)
+- Twin: p%6=5, Cousin: p%6=1, Sexy: p%6=1 or 5 の対比
+
 ## 次の探索方向
 - Brunの定理の形式化: 双子素数の逆数和 B₂ が収束することの証明（Selberg篩を使う）
 - Twin prime constant C₂ の形式化: Euler積表示の証明

@@ -99,3 +99,21 @@ example : collatzStep 7 % 3 = 1 := by decide
 example : collatzStep 3 % 3 = 1 := by decide
 -- n = 11 (奇数, mod 3 = 2): collatzStep 11 = 34, 34 % 3 = 1 ✓
 example : collatzStep 11 % 3 = 1 := by decide
+
+/-! ## 7. v₂(3n+1) の基本性質 -/
+
+/-- 奇数 n に対して 2 | (3n+1) -/
+theorem two_dvd_three_mul_add_one (n : ℕ) (hodd : n % 2 = 1) : 2 ∣ (3 * n + 1) := by
+  exact ⟨(3 * n + 1) / 2, by omega⟩
+
+/-- n ≡ 1 (mod 4) のとき (3n+1) % 4 = 0 -/
+theorem three_mul_add_one_mod4_of_mod4_eq1 (n : ℕ) (h : n % 4 = 1) :
+    (3 * n + 1) % 4 = 0 := by omega
+
+/-- n ≡ 3 (mod 4) のとき (3n+1) % 4 = 2 だが (3n+1) % 4 ≠ 0 -/
+theorem three_mul_add_one_mod4_of_mod4_eq3 (n : ℕ) (h : n % 4 = 3) :
+    (3 * n + 1) % 4 = 2 := by omega
+
+/-- n ≡ 3 (mod 4) → (3n+1)/2 は奇数 -/
+theorem three_mul_add_one_div2_odd_of_mod4_eq3 (n : ℕ) (h : n % 4 = 3) :
+    ((3 * n + 1) / 2) % 2 = 1 := by omega

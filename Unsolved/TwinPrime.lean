@@ -27,6 +27,14 @@ import Mathlib
 ## 探索7: 双子素数の mod 30 構造
 - p > 5 の双子素数 (p, p+2) は p % 30 ∈ {11, 17, 29}
 - twin_prime_mod30: 5の整除性を使った排除で証明
+
+## 探索8: Cousin primes (差4) の構造
+- p > 3 かつ (p, p+4) がともに素数なら p ≡ 1 (mod 6)
+- p%6=5 なら (p+4)%6=3 で 3|(p+4) → 矛盾
+
+## 探索9: Sexy primes (差6) の定義と検証例
+- IsSexyPrime の定義: p, p+6 がともに素数
+- 5, 7, 11, 13, 23 での検証
 -/
 
 /-- 双子素数予想: 差が2の素数の組は無限に存在する -/
@@ -132,3 +140,30 @@ theorem twin_prime_mod30 {p : ℕ} (hp : Nat.Prime p) (hp2 : Nat.Prime (p + 2)) 
     have := hp2.eq_one_or_self_of_dvd 5 this
     omega
   omega
+
+/-! ## 探索8: Cousin primes (差4) の構造 -/
+
+/-- p > 3 かつ p, p+4 がともに素数なら p % 6 = 1
+    (cousin primes (p, p+4) で p > 3 なら p ≡ 1 mod 6) -/
+theorem cousin_prime_mod_six {p : ℕ} (hp : Nat.Prime p) (hp4 : Nat.Prime (p + 4))
+    (hp3 : p > 3) : p % 6 = 1 := by
+  rcases prime_gt_three_mod_six hp hp3 with h1 | h5
+  · exact h1
+  · -- p % 6 = 5 の場合、(p+4) % 6 = 3 なので 3 ∣ (p+4)
+    exfalso
+    have hmod : (p + 4) % 6 = 3 := by omega
+    have h3dvd : 3 ∣ (p + 4) := ⟨(p + 4) / 3, by omega⟩
+    have := hp4.eq_one_or_self_of_dvd 3 h3dvd
+    omega
+
+/-! ## 探索9: Sexy primes (差6) -/
+
+/-- sexy primes の定義: 差が6の素数ペア -/
+def IsSexyPrime (p : ℕ) : Prop := Nat.Prime p ∧ Nat.Prime (p + 6)
+
+-- 検証例
+example : IsSexyPrime 5 := ⟨by norm_num, by norm_num⟩
+example : IsSexyPrime 7 := ⟨by norm_num, by norm_num⟩
+example : IsSexyPrime 11 := ⟨by norm_num, by norm_num⟩
+example : IsSexyPrime 13 := ⟨by norm_num, by norm_num⟩
+example : IsSexyPrime 23 := ⟨by norm_num, by norm_num⟩

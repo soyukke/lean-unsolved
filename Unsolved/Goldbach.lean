@@ -46,6 +46,14 @@ import Mathlib
 
 ### 探索8: 追加検証例
 - 200 = 3+197, 500 = 13+487, 1000 = 3+997
+
+### 探索9: n ≡ 0 (mod 6) の構造定理
+- n ≡ 0 (mod 6) のとき p+q=n (p,q>3素数) は (p%6=1,q%6=5) ∨ (p%6=5,q%6=1)
+- 1+5=6≡0 ✓, 5+1=6≡0 ✓, 1+1=2≡2 ✗, 5+5=10≡4 ✗
+
+### 探索10: n ≡ 4 (mod 6) の構造定理
+- n ≡ 4 (mod 6) のとき p+q=n (p,q>3素数) は p%6=5 ∧ q%6=5
+- 5+5=10≡4 ✓ のみ
 -/
 
 /-- ゴールドバッハ予想: 2より大きい全ての偶数は2つの素数の和で表せる -/
@@ -179,6 +187,39 @@ theorem goldbach_mod6_implies_both_1 {n p q : ℕ}
   · exfalso; omega
   · exfalso; omega
   · exfalso; omega
+
+/-! ## 探索9: n ≡ 0 (mod 6) の構造定理 -/
+
+/-- n % 6 = 0 のとき、p+q=n かつ p,q > 3 素数ならば
+    (p%6=1 ∧ q%6=5) ∨ (p%6=5 ∧ q%6=1) -/
+theorem goldbach_mod6_zero {n p q : ℕ}
+    (hn : n % 6 = 0) (hpq : p + q = n)
+    (hp : Nat.Prime p) (hq : Nat.Prime q) (hp3 : p > 3) (hq3 : q > 3) :
+    (p % 6 = 1 ∧ q % 6 = 5) ∨ (p % 6 = 5 ∧ q % 6 = 1) := by
+  have hpmod := prime_gt3_mod6 hp hp3
+  have hqmod := prime_gt3_mod6 hq hq3
+  have hsum : (p % 6 + q % 6) % 6 = 0 := by omega
+  rcases hpmod with hp1 | hp5 <;> rcases hqmod with hq1 | hq5
+  · exfalso; omega
+  · left; exact ⟨hp1, hq5⟩
+  · right; exact ⟨hp5, hq1⟩
+  · exfalso; omega
+
+/-! ## 探索10: n ≡ 4 (mod 6) の構造定理 -/
+
+/-- n % 6 = 4 のとき、p+q=n かつ p,q > 3 素数ならば p%6=5 ∧ q%6=5 -/
+theorem goldbach_mod6_four {n p q : ℕ}
+    (hn : n % 6 = 4) (hpq : p + q = n)
+    (hp : Nat.Prime p) (hq : Nat.Prime q) (hp3 : p > 3) (hq3 : q > 3) :
+    p % 6 = 5 ∧ q % 6 = 5 := by
+  have hpmod := prime_gt3_mod6 hp hp3
+  have hqmod := prime_gt3_mod6 hq hq3
+  have hsum : (p % 6 + q % 6) % 6 = 4 := by omega
+  rcases hpmod with hp1 | hp5 <;> rcases hqmod with hq1 | hq5
+  · exfalso; omega
+  · exfalso; omega
+  · exfalso; omega
+  · exact ⟨hp5, hq5⟩
 
 /-! ## 探索8: 追加検証例 -/
 

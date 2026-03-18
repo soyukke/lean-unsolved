@@ -20,6 +20,7 @@ lim_{k→∞} R(k)^{1/k} を求めよ。R(k)は対角ラムゼー数。
 | 4 | Paley graph系列による下界 | 完了 | scripts/erdos77_paley.py | G(5)〜G(61)を構成、ω=α確認、R(4)≥18がtight |
 | 5 | 構成的下界 vs 確率的下界 | 完了 | scripts/erdos77_bounds.py | 上界・下界の歴史的推移、R(k)^{1/k}の数値的証拠を整理 |
 | 6 | R(k)≥2の形式化 + R(3,k)列挙 | 完了 | ErdosRamsey.lean, scripts/erdos77_r3k.py | not_hasRamseyProperty_one_of_ge_two証明、R(3,k)=Θ(k²/log k)の数値確認 |
+| 7 | ラムゼーの基本性質 | 完了 | ErdosRamsey.lean | k=0,k=1の自明なケース証明、C5着色の非隣接性検証 |
 
 ## 主要な知見
 

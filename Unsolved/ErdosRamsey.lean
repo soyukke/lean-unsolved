@@ -170,6 +170,42 @@ def ErdosConjecture_RamseyLimit : Prop :=
 Fin 1 の部分集合は高々1要素なので、|S| = k ≥ 2 は不可能。
 -/
 
+-- =============================================================================
+-- 探索7: ラムゼーの基本性質
+-- =============================================================================
+
+/-! ## 探索7: ラムゼーの基本性質
+
+k=0 や k=1 の場合のラムゼー性質は自明に成り立つ。
+また C5 着色が三角形フリーであることの具体的な検証を行う。
+-/
+
+/-- k=0 のラムゼー性質は自明に成立（空クリーク） -/
+theorem hasRamseyProperty_zero (n : ℕ) : HasRamseyProperty n 0 := by
+  intro col
+  exact ⟨∅, by simp, Or.inl (fun i hi => by simp at hi)⟩
+
+/-- k=1 のラムゼー性質: n ≥ 1 なら成立（任意の1頂点が単色K_1） -/
+theorem hasRamseyProperty_one (n : ℕ) (hn : n ≥ 1) : HasRamseyProperty n 1 := by
+  intro col
+  exact ⟨{⟨0, by omega⟩}, by simp, Or.inl (by
+    intro i hi j hj hij
+    simp [Finset.mem_singleton] at hi hj
+    subst hi; subst hj
+    exact absurd rfl hij)⟩
+
+/-- C5着色で {0,2} は隣接していない (距離2) -/
+theorem c5_not_adjacent_0_2 : c5Coloring.color ⟨0, by omega⟩ ⟨2, by omega⟩ = false := by
+  decide
+
+/-- C5着色で {1,3} は隣接していない (距離2) -/
+theorem c5_not_adjacent_1_3 : c5Coloring.color ⟨1, by omega⟩ ⟨3, by omega⟩ = false := by
+  decide
+
+-- =============================================================================
+-- 探索6: R(k) ≥ 2 for k ≥ 2
+-- =============================================================================
+
 /-- 1頂点グラフにはサイズ2以上のクリークがない -/
 theorem not_hasRamseyProperty_one_of_ge_two (k : ℕ) (hk : k ≥ 2) :
     ¬HasRamseyProperty 1 k := by

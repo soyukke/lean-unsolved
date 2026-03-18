@@ -192,3 +192,36 @@ example : hasMonoAPList [true, false, true] 3 = false := by rfl
 
 /-- N=2 でも 3項単色等差数列を回避可能 -/
 example : hasMonoAPList [false, true] 3 = false := by rfl
+
+-- =============================================================================
+-- 探索7: VdW数の追加性質
+-- =============================================================================
+
+/-! ## 探索7: VdW数の追加性質
+
+N=1, N=2 での等差数列回避の自明なケースと、
+colorClass の要素の有界性に関する補題。
+-/
+
+/-- N=1 では 3-AP を回避可能（1点では公差 ≥ 1 のAPが作れない） -/
+example : hasMonoAPList [false] 3 = false := by rfl
+example : hasMonoAPList [true] 3 = false := by rfl
+
+/-- N=2 でも 3-AP 回避可能（追加の塗り分け） -/
+example : hasMonoAPList [false, true] 3 = false := by rfl
+example : hasMonoAPList [true, false] 3 = false := by rfl
+
+/-- colorClass の要素は n 未満 -/
+theorem colorClass_lt {n : ℕ} {c : Coloring n} {color : Bool} {x : ℕ}
+    (hx : x ∈ colorClass c color) : x < n := by
+  unfold colorClass at hx
+  rw [Finset.mem_image] at hx
+  obtain ⟨i, _, rfl⟩ := hx
+  exact i.isLt
+
+/-- colorClass は {0, ..., n-1} の部分集合 -/
+theorem colorClass_subset_range {n : ℕ} {c : Coloring n} {color : Bool} :
+    colorClass c color ⊆ Finset.range n := by
+  intro x hx
+  rw [Finset.mem_range]
+  exact colorClass_lt hx

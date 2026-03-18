@@ -271,3 +271,11 @@ theorem stoppingTime_odd_ge_two (n : ℕ) (hn : n > 1) (hodd : ¬ 2 ∣ n)
   rcases h01 with h | h
   · rw [h] at hst; exact h0 hst
   · rw [h] at hst; exact h1 hst
+
+/-! ## 9. 探索: collatzStep の合成性質 -/
+
+/-- 偶数 n > 0 の collatzStep は n より小さい -/
+theorem collatzStep_lt_of_even (n : ℕ) (hn : n > 0) (heven : n % 2 = 0) :
+    collatzStep n < n := by
+  rw [collatzStep_even_eq_div2 n heven]
+  omega

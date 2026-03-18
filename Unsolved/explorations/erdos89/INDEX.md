@@ -17,6 +17,9 @@ Guth-Katz (2015) が d(n) ≥ cn/log(n) を証明。
 | 3 | (未実施) | - | - | - |
 | 4 | 最小距離配置の最適化 | ✅ | scripts/erdos89_optimization.py | 焼きなまし法で格子と同等/微改善、d(n)≈n^0.82、格子が最適候補 |
 | 5 | Guth-Katz証明の鍵アイデア数値検証 | ✅ | scripts/erdos89_guth_katz.py | Q=Σt(d)²のスケーリング検証、Q/(n³logn)≈0.17一定、Elekes-Sharir変換の数値的確認 |
+| 6 | n ≥ 2 点 → 異なる距離 ≥ 1 | ✅ | ErdosDistinctDistances.lean | distinctDistSqSet_nonempty_of_two_points, numDistinctDist_ge_one |
+| 7 | 共線点集合の異なる距離 | ✅ | ErdosDistinctDistances.lean | 3点・4点の共線配置で距離²を具体検証、共線配置は n-1 個の異なる距離 |
+| 8 | distSq の座標別分解と基本性質 | ✅ | ErdosDistinctDistances.lean | distSq_same_x, distSq_same_y, distSq_origin（ring で自動証明） |
 
 ## 主要知見
 
@@ -26,6 +29,8 @@ Guth-Katz (2015) が d(n) ≥ cn/log(n) を証明。
   - 格子上で Q/(n³logn) ≈ 0.17 と安定（理論と整合）
 - **Erdős予想との差**: log(n) vs √log(n) のギャップが残る
 - **d(n) のスケーリング**: 小さい n では d(n) ≈ n^0.82 程度（n が小さいため漸近挙動と異なる）
+- **共線配置の非効率性**: 等間隔共線 n 点は n-1 個の異なる距離（二次元格子の Θ(n/√log n) より大）
+- **座標別分解**: distSq の代数的性質を ring で自動証明、高次元への基盤整備
 
 ## 未着手の方向
 

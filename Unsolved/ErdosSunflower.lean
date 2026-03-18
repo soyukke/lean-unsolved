@@ -182,3 +182,27 @@ theorem sunflower_uniform1_singletons {α : Type*} [DecidableEq α]
       intro h
       exact absurd (hnodup.getElem_inj_iff.mp h) hij
     exact disjoint_of_card_one_ne hsi hsj hne
+
+/-! ## 探索7: Erdős-Rado 上界 (n=1) の形式化
+
+空族・単一集合族がひまわりであることの自明な事実。
+これは Erdős-Rado 定理 f(n,k) ≤ (k-1)^n · n! + 1 の n=1 の場合、
+すなわち f(1,k) ≤ k の検証に向けた基礎補題である。
+-/
+
+/-- 空族はひまわり（自明） -/
+theorem isSunflower_nil {α : Type*} [DecidableEq α] :
+    IsSunflower ([] : List (Finset α)) := by
+  refine ⟨∅, ?_, ?_⟩
+  · intro S hS; simp at hS
+  · intro i j hi; exact absurd hi (Nat.not_lt_zero i)
+
+/-- 単一集合はひまわり -/
+theorem isSunflower_singleton {α : Type*} [DecidableEq α] (S : Finset α) :
+    IsSunflower [S] := by
+  refine ⟨S, ?_, ?_⟩
+  · intro T hT; simp at hT; rw [hT]
+  · intro i j hi hj hij
+    have : i < 1 := hi
+    have : j < 1 := hj
+    omega

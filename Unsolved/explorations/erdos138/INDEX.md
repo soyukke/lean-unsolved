@@ -18,6 +18,7 @@ W(k)^{1/k} → ∞ を証明せよ。($500)
 | 4 | Berlekamp構成の拡張 | 完了 | Berlekamp下界 p*2^p の数値検証、Szabo拡張、構成的下界の限界を確認 |
 | 5 | 確率的手法による下界 | 完了 | LLL下界 ≈ 2^k/k の計算、ランダム塗り分けシミュレーション、Moser-Tardos相転移確認 |
 | 6 | N=3での3-AP回避の形式化 | 完了 | RBR/BRB塗り分けで3-AP回避をrflで検証、N=2も追加 |
+| 7 | VdW数の追加性質 | 完了 | N=1,N=2の回避検証追加、colorClass_lt/colorClass_subset_range補題 |
 
 ## 主な発見
 
