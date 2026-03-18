@@ -360,3 +360,35 @@ theorem canAvoid_8_3 : CanAvoid 8 3 := by
   rw [hasMonochromaticAP_iff_bounded (by omega : (3 : ℕ) ≥ 2)] at h
   revert h
   native_decide
+
+-- =============================================================================
+-- W(3) = 9 の完全証明
+-- =============================================================================
+
+/-! ## W(3) = 9 の完全証明
+
+N=9 では全ての2色塗り分けが3項単色等差数列を含み（上界）、
+N=8 では回避可能（下界）なので、Van der Waerden 数 W(3) = 9 が確定する。
+-/
+
+/-- Coloring n は Fintype -/
+instance : Fintype (Coloring n) := show Fintype (Fin n → Bool) from inferInstance
+
+/-- HasMonochromaticAP の有界版は Decidable -/
+instance decidableHasMonochromaticAPBounded (n : ℕ) (c : Coloring n) (k : ℕ) :
+    Decidable (HasMonoAPBounded n c true k ∨ HasMonoAPBounded n c false k) :=
+  inferInstance
+
+/-- N=9 では全ての2色塗り分けが3項単色等差数列を含む（W(3) ≤ 9） -/
+theorem allColorings9_have_3AP : ∀ c : Coloring 9, HasMonochromaticAP c 3 := by
+  intro c
+  rw [hasMonochromaticAP_iff_bounded (by omega : (3 : ℕ) ≥ 2)]
+  revert c
+  native_decide
+
+/-- W(3) = 9 の完全特徴付け -/
+theorem isVanDerWaerden_three : IsVanDerWaerden 3 9 := by
+  constructor
+  · exact allColorings9_have_3AP
+  · intro _
+    exact canAvoid_8_3
