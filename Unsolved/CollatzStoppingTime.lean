@@ -467,3 +467,68 @@ theorem collatzReaches_21 : collatzReaches 21 := ⟨7, by decide⟩
 
 theorem collatzReaches_23 : collatzReaches 23 := ⟨15, by decide⟩
 theorem collatzReaches_25 : collatzReaches 25 := ⟨23, by decide⟩
+
+/-! ## 24. Syracuse 同値定理 -/
+
+/-- 奇数 n > 1 に対して collatzReaches n ↔ collatzReaches ((3*n+1)/2)
+    （Syracuse 関数による簡約） -/
+theorem collatzReaches_syracuse_iff (n : ℕ) (hn : n > 1) (hodd : n % 2 = 1) :
+    collatzReaches n ↔ collatzReaches ((3 * n + 1) / 2) := by
+  -- n → 3n+1 → (3n+1)/2 の2ステップを1つにまとめる
+  have h1 := collatzReaches_odd_iff n hn hodd
+  -- collatzReaches n ↔ collatzReaches (3n+1)
+  have heven : (3 * n + 1) % 2 = 0 := by omega
+  have hpos : 3 * n + 1 > 0 := by omega
+  have h2 := collatzReaches_even_iff (3 * n + 1) hpos heven
+  -- collatzReaches (3n+1) ↔ collatzReaches ((3n+1)/2)
+  exact h1.trans h2
+
+/-! ## 25. 全 n ≤ 25 の体系的検証 -/
+
+/-- collatzReaches 11 -/
+theorem collatzReaches_eleven : collatzReaches 11 := ⟨14, by decide⟩
+
+/-- collatzReaches 12 -/
+theorem collatzReaches_twelve : collatzReaches 12 := ⟨9, by decide⟩
+
+/-- collatzReaches 14 -/
+theorem collatzReaches_fourteen : collatzReaches 14 := ⟨17, by decide⟩
+
+/-- collatzReaches 18 -/
+theorem collatzReaches_eighteen : collatzReaches 18 := ⟨20, by decide⟩
+
+/-- collatzReaches 22 -/
+theorem collatzReaches_twentytwo : collatzReaches 22 := ⟨15, by decide⟩
+
+/-- collatzReaches 24 -/
+theorem collatzReaches_twentyfour : collatzReaches 24 := ⟨10, by decide⟩
+
+/-- 1 ≤ n ≤ 25 の全ての自然数は collatzReaches -/
+theorem collatzReaches_le_25 (n : ℕ) (hn1 : n ≥ 1) (hn25 : n ≤ 25) :
+    collatzReaches n := by
+  interval_cases n <;> first
+    | exact collatzReaches_one
+    | exact collatzReaches_two
+    | exact collatzReaches_three
+    | exact collatzReaches_four
+    | exact collatzReaches_five
+    | exact collatzReaches_six
+    | exact collatzReaches_seven
+    | exact collatzReaches_eight
+    | exact collatzReaches_nine
+    | exact collatzReaches_ten
+    | exact collatzReaches_eleven
+    | exact collatzReaches_twelve
+    | exact collatzReaches_thirteen
+    | exact collatzReaches_fourteen
+    | exact collatzReaches_fifteen
+    | exact collatzReaches_sixteen
+    | exact collatzReaches_17
+    | exact collatzReaches_eighteen
+    | exact collatzReaches_19
+    | exact collatzReaches_twenty
+    | exact collatzReaches_21
+    | exact collatzReaches_twentytwo
+    | exact collatzReaches_23
+    | exact collatzReaches_twentyfour
+    | exact collatzReaches_25
