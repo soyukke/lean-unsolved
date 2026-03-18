@@ -467,3 +467,42 @@ theorem ramsey_three_three : HasRamseyProperty 6 3 := by
   have hcv := colorNeighbors_ne col v c c_vtx hc_vtx
   -- Step 5: 三角形を構成
   exact ramsey_triangle_from_three hab hac hbc hva hvb hvc hav hbv hcv
+
+-- =============================================================================
+-- R(3,3) ≥ 6 の証明: ¬HasRamseyProperty 5 3
+-- =============================================================================
+
+/-! ## R(3,3) ≥ 6: K₅ には単色三角形を含まない2色塗り分けが存在する
+
+C₅着色（5頂点の環状グラフ: 隣接=true, 非隣接=false）において、
+true色の三角形も false色の三角形も存在しない。
+- C₅のクリーク数 = 2（最大クリークは隣接する2頂点）
+- C₅の補グラフもC₅なので、独立数 = 2
+- よってどちらの色でもサイズ3のクリークは存在しない
+-/
+
+/-- R(3,3) ≥ 6: K₅ の2色塗り分けで単色三角形を含まないものが存在する -/
+theorem not_hasRamseyProperty_five_three : ¬HasRamseyProperty 5 3 := by
+  intro h
+  obtain ⟨S, hcard, hmono⟩ := h c5Coloring
+  rw [Finset.card_eq_three] at hcard
+  obtain ⟨a, b, c, hab, hac, hbc, rfl⟩ := hcard
+  cases hmono with
+  | inl htrue =>
+    have h1 := htrue a (by simp) b (by simp) hab
+    have h2 := htrue a (by simp) c (by simp) hac
+    have h3 := htrue b (by simp) c (by simp) hbc
+    fin_cases a <;> fin_cases b <;> fin_cases c <;> simp_all [c5Coloring, c5Adjacent]
+  | inr hfalse =>
+    have h1 := hfalse a (by simp) b (by simp) hab
+    have h2 := hfalse a (by simp) c (by simp) hac
+    have h3 := hfalse b (by simp) c (by simp) hbc
+    fin_cases a <;> fin_cases b <;> fin_cases c <;> simp_all [c5Coloring, c5Adjacent]
+
+-- =============================================================================
+-- R(3,3) = 6 の完全特徴付け
+-- =============================================================================
+
+/-- R(3,3) = 6 の完全特徴付け: HasRamseyProperty 6 3 かつ ¬HasRamseyProperty 5 3 -/
+theorem isRamseyNumber_three : IsRamseyNumber 3 6 := by
+  exact ⟨ramsey_three_three, not_hasRamseyProperty_five_three⟩
