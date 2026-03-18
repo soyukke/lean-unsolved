@@ -279,3 +279,15 @@ theorem sunflower_core1 :
   · intro i j hi hj hij
     have : i < 3 := hi; have : j < 3 := hj
     interval_cases i <;> interval_cases j <;> simp_all <;> decide
+
+/-! ## 探索12: 2-均一族のひまわり検証 -/
+
+/-- {1,5}, {2,6}, {3,7} は互いに素なので3-ひまわり（core=空） -/
+theorem sunflower_disjoint_156 :
+    IsSunflower [({1, 5} : Finset ℕ), {2, 6}, {3, 7}] := by
+  refine ⟨∅, ?_, ?_⟩
+  · intro S hS; exact Finset.empty_subset S
+  · intro i j hi hj hij
+    simp only [Finset.sdiff_empty]
+    have : i < 3 := hi; have : j < 3 := hj
+    interval_cases i <;> interval_cases j <;> simp_all <;> decide

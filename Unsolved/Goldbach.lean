@@ -337,3 +337,19 @@ example : IsGoldbach 14 := ⟨3, 11, by norm_num, by norm_num, by norm_num⟩
 example : IsGoldbach 16 := ⟨3, 13, by norm_num, by norm_num, by norm_num⟩
 -- 18 = 5 + 13
 example : IsGoldbach 18 := ⟨5, 13, by norm_num, by norm_num, by norm_num⟩
+
+/-! ## 探索18: 連続偶数の IsGoldbach -/
+
+-- 22 = 3 + 19
+example : IsGoldbach 22 := ⟨3, 19, by norm_num, by norm_num, by norm_num⟩
+-- 24 = 5 + 19
+example : IsGoldbach 24 := ⟨5, 19, by norm_num, by norm_num, by norm_num⟩
+-- 26 = 3 + 23
+example : IsGoldbach 26 := ⟨3, 23, by norm_num, by norm_num, by norm_num⟩
+-- 28 = 5 + 23
+example : IsGoldbach 28 := ⟨5, 23, by norm_num, by norm_num, by norm_num⟩
+
+/-- 全ての素数 p ≥ 2 に対し 2p は IsGoldbach（isGoldbach_double_prime の系） -/
+-- 既存だが、具体例:
+-- 2·11 = 22
+example : IsGoldbach 22 := isGoldbach_double_prime (by norm_num : Nat.Prime 11)

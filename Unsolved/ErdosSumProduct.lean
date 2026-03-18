@@ -296,3 +296,13 @@ theorem sumset_124_card : (sumsetFinset {1, 2, 4}).card = 6 := by
 
 theorem prodset_124_card : (prodsetFinset {1, 2, 4}).card = 5 := by
   simp only [prodsetFinset]; decide
+
+/-! ## 探索12: 等差数列の sumset = 2n-1 -/
+
+-- {1,...,5}: sumset card = 9 = 2*5-1
+theorem sumset_12345_card : (sumsetFinset {1, 2, 3, 4, 5}).card = 9 := by
+  simp only [sumsetFinset]; decide
+
+-- {1,...,5}: prodset card
+theorem prodset_12345_card : (prodsetFinset {1, 2, 3, 4, 5}).card = 14 := by
+  simp only [prodsetFinset]; decide

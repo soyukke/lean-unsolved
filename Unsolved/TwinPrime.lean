@@ -260,3 +260,10 @@ theorem IsTwinPrime.mod_six {p : ℕ} (h : IsTwinPrime p) (hp3 : p > 3) :
 theorem IsTwinPrime.middle_div6 {p : ℕ} (h : IsTwinPrime p) (hp3 : p > 3) :
     6 ∣ (p + 1) :=
   twin_prime_middle_div6 h.1 h.2 hp3
+
+/-! ## 探索15: 大きい双子素数の検証 -/
+
+-- 59 と 61 は双子素数
+example : IsTwinPrime 59 := ⟨by norm_num, by norm_num⟩
+-- 71 と 73 は双子素数
+example : IsTwinPrime 71 := ⟨by norm_num, by norm_num⟩

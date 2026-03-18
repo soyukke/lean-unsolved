@@ -27,6 +27,7 @@ Guth-Katz (2015) が d(n) ≥ cn/log(n) を証明。
 | 13 | 距離の加法性 | ✅ | ErdosDistinctDistances.lean | distSq_origin_add: 原点からの距離²の二次形式展開 |
 | 14 | Brahmagupta-Fibonacci恒等式の系 | ✅ | ErdosDistinctDistances.lean | distSq_double_origin: 座標2倍で距離²が4倍 |
 | 15 | ピタゴラス三つ組の距離 | ✅ | ErdosDistinctDistances.lean | (3,4,5),(5,12,13),(8,15,17)の距離²をdecideで検証 |
+| 16 | 距離と内積の関係 | ✅ | ErdosDistinctDistances.lean | distSq_expand: |p-q|²=|p|²+|q|²-2⟨p,q⟩をringで証明 |
 
 ## 主要知見
 

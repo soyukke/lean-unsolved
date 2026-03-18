@@ -4,9 +4,9 @@
 
 | 問題 | 探索数 | Leanファイル | ステータス | 詳細 |
 |------|--------|-------------|----------|------|
-| コラッツ予想 | 52 | 10個 (sorry なし) | Phase E | [collatz/INDEX.md](collatz/INDEX.md) |
-| ゴールドバッハ予想 | 17 | 1個 (sorry なし) | Phase E | [goldbach/INDEX.md](goldbach/INDEX.md) |
-| 双子素数予想 | 14 | 1個 (sorry なし) | Phase E | [twinprime/INDEX.md](twinprime/INDEX.md) |
+| コラッツ予想 | 53 | 10個 (sorry なし) | Phase E | [collatz/INDEX.md](collatz/INDEX.md) |
+| ゴールドバッハ予想 | 18 | 1個 (sorry なし) | Phase E | [goldbach/INDEX.md](goldbach/INDEX.md) |
+| 双子素数予想 | 15 | 1個 (sorry なし) | Phase E | [twinprime/INDEX.md](twinprime/INDEX.md) |
 | エルデシュ #138 (Van der Waerden) | 9 | 1個 (sorry なし) | Phase E | [erdos138/INDEX.md](erdos138/INDEX.md) |
 | エルデシュ #89 (異なる距離) | 14 | 1個 (sorry なし) | Phase E | [erdos89/INDEX.md](erdos89/INDEX.md) |
 | エルデシュ #77 (ラムゼー数極限) | 9 | 1個 (sorry なし) | Phase E | [erdos77/INDEX.md](erdos77/INDEX.md) |

@@ -303,3 +303,10 @@ example : distSq (5, 0) (0, 12) = 169 := by decide
 
 -- (8,15,17): 8²+15²=17²
 example : distSq (8, 0) (0, 15) = 289 := by decide
+
+/-! ## 探索16: 距離と内積の関係 -/
+
+/-- 展開公式: |p-q|² = |p|² + |q|² - 2⟨p,q⟩ -/
+theorem distSq_expand (p q : Point) :
+    distSq p q = distSq p (0,0) + distSq q (0,0) - 2 * (p.1 * q.1 + p.2 * q.2) := by
+  unfold distSq; ring

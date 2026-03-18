@@ -344,3 +344,18 @@ theorem collatzReaches_nine : collatzReaches 9 :=
 /-- collatzReaches 10 -/
 theorem collatzReaches_ten : collatzReaches 10 :=
   ⟨6, by decide⟩
+
+/-! ## 14. collatzReaches の合成性質 -/
+
+/-- n が偶数で n > 0 なら collatzReaches n ↔ collatzReaches (n/2) -/
+theorem collatzReaches_even_iff (n : ℕ) (_hn : n > 0) (heven : n % 2 = 0) :
+    collatzReaches n ↔ collatzReaches (n / 2) := by
+  constructor
+  · intro ⟨k, hk⟩
+    cases k with
+    | zero => change n = 1 at hk; omega
+    | succ k =>
+      rw [collatzIter_succ, collatzStep_even_eq_div2 n heven] at hk
+      exact ⟨k, hk⟩
+  · intro ⟨k, hk⟩
+    exact ⟨k + 1, by rw [collatzIter_succ, collatzStep_even_eq_div2 n heven, hk]⟩
