@@ -39,6 +39,10 @@ import Mathlib
 ## 探索10: Sexy primes (差6) の定義と検証例
 - IsSexyPrime の定義: p, p+6 がともに素数
 - 5, 7, 11, 13, 23 での検証
+
+## 探索11: 双子素数の間の数は6の倍数
+- (p, p+2) が双子素数で p > 3 のとき、p+1 は 6 の倍数
+- twin_prime_mod_six から p%6=5 を使い (p+1)%6=0 を導出
 -/
 
 /-- 双子素数予想: 差が2の素数の組は無限に存在する -/
@@ -187,3 +191,12 @@ example : IsSexyPrime 7 := ⟨by norm_num, by norm_num⟩
 example : IsSexyPrime 11 := ⟨by norm_num, by norm_num⟩
 example : IsSexyPrime 13 := ⟨by norm_num, by norm_num⟩
 example : IsSexyPrime 23 := ⟨by norm_num, by norm_num⟩
+
+/-! ## 探索11: 双子素数の間の数は6の倍数 -/
+
+/-- (p, p+2) が双子素数で p > 3 のとき、p+1 は 6 の倍数 -/
+theorem twin_prime_middle_div6 {p : ℕ} (hp : Nat.Prime p) (hp2 : Nat.Prime (p + 2))
+    (hp3 : p > 3) : 6 ∣ (p + 1) := by
+  have h5 := twin_prime_mod_six hp hp2 hp3
+  -- p % 6 = 5 → (p+1) % 6 = 0
+  exact ⟨(p + 1) / 6, by omega⟩

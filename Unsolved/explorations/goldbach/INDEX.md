@@ -23,6 +23,7 @@
 | 9 | n ≡ 0 (mod 6) の構造定理 | ✅完了 | p+q=n (p,q>3素数) は (p%6=1,q%6=5) ∨ (p%6=5,q%6=1)。goldbach_mod6_zero 証明 |
 | 10 | n ≡ 4 (mod 6) の構造定理 | ✅完了 | p+q=n (p,q>3素数) は p%6=5 ∧ q%6=5。goldbach_mod6_four 証明。mod 6 全ケース完成 |
 | 11 | IsGoldbach の偶数性 | ✅完了 | 奇数の IsGoldbach は p=2 の分解を持つ。偶数の IsGoldbach は n≥4 |
+| 12 | 大きい検証例 + isGoldbach_double_prime | ✅完了 | 2000,5000,10000の検証。素数pに対し2pはIsGoldbach |
 
 ## 主な発見
 
@@ -94,6 +95,13 @@
   - even_of_odd_prime_add を活用、Nat.Even.not_odd で矛盾を導出
 - `isGoldbach_even_ge_four`: IsGoldbach n かつ偶数 → n ≥ 4
   - 各素数は ≥ 2 なので和は ≥ 4
+
+### 探索12: 大きい検証例 + isGoldbach_double_prime
+- 2000 = 3 + 1997, 5000 = 7 + 4993, 10000 = 59 + 9941
+- norm_num で4桁素数も問題なく判定（各数秒以内）
+- `isGoldbach_double_prime`: p が素数なら 2p は IsGoldbach
+  - 素数の無限性と合わせて IsGoldbach な偶数が無限に存在
+- 累計検証例: 4, 6, 8, 10, 12, 20, 100, 200, 500, 1000, 2000, 5000, 10000 の13個
 
 ## 未着手の方向
 - Chen's theorem (1+2) の形式化可能性調査

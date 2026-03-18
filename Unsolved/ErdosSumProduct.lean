@@ -256,3 +256,21 @@ theorem sumset_12_card : (sumsetFinset {1, 2}).card = 3 := by
 /-- {1,2} の productset のカード数は 3: {1,2,4} -/
 theorem prodset_12_card : (prodsetFinset {1, 2}).card = 3 := by
   simp only [prodsetFinset]; decide
+
+/-! ## 探索9: 2元集合の和積比較 -/
+
+/-- {1, 3}: sumset = {2, 4, 6}, card = 3 -/
+theorem sumset_13_card : (sumsetFinset {1, 3}).card = 3 := by
+  simp only [sumsetFinset]; decide
+
+/-- {1, 3}: prodset = {1, 3, 9}, card = 3 -/
+theorem prodset_13_card : (prodsetFinset {1, 3}).card = 3 := by
+  simp only [prodsetFinset]; decide
+
+/-- {2, 3}: sumset = {4, 5, 6}, card = 3 -/
+theorem sumset_23_card : (sumsetFinset {2, 3}).card = 3 := by
+  simp only [sumsetFinset]; decide
+
+/-- {2, 3}: prodset = {4, 6, 9}, card = 3 -/
+theorem prodset_23_card : (prodsetFinset {2, 3}).card = 3 := by
+  simp only [prodsetFinset]; decide

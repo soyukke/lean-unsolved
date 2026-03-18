@@ -15,6 +15,7 @@
 | 6 | f(1,k)=k の形式証明 | — | 1-均一族のひまわり定理をLeanで証明 |
 | 7 | 空族・単一族のひまわり性 | — | isSunflower_nil, isSunflower_singleton をLeanで証明 |
 | 8 | 2集合族のひまわり性 | — | isSunflower_pair: [S,T]は常にひまわり（core=S∩T） |
+| 9 | 4つの空集合のひまわり性 | — | sunflower_four_empty: 4×4のinterval_casesが動作確認 |
 
 ## 主要発見
 

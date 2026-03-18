@@ -266,3 +266,16 @@ example : c5Coloring.color ⟨1, by omega⟩ ⟨2, by omega⟩ = true := by deci
 
 /-- C5着色で頂点0,4は隣接（色true） -/
 example : c5Coloring.color ⟨0, by omega⟩ ⟨4, by omega⟩ = true := by decide
+
+/-! ## 探索9: 自明な塗り分けの例 -/
+
+/-- 全て同色（true）の塗り分け -/
+def allTrueColoring (n : ℕ) : TwoColoring n where
+  color := fun _ _ => true
+  symm := fun _ _ => rfl
+
+/-- 全て同色の塗り分けでは、任意の2頂点が単色クリーク -/
+theorem allTrue_mono_clique (n : ℕ) (S : Finset (Fin n)) :
+    IsMonochromaticClique (allTrueColoring n) S true := by
+  intro i _ j _ _
+  rfl

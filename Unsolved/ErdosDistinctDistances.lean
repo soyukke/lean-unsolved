@@ -245,3 +245,29 @@ example : distSq (0, 0) (3, 4) = 25 := by decide
 
 -- 5²+12²=13²
 example : distSq (0, 0) (5, 12) = 169 := by decide
+
+/-! ## 探索11: 距離のスケーリング -/
+
+/-- スケーリング: 全座標を k 倍すると距離² は k² 倍 -/
+theorem distSq_scale (p q : Point) (k : ℤ) :
+    distSq (k * p.1, k * p.2) (k * q.1, k * q.2) = k ^ 2 * distSq p q := by
+  unfold distSq; ring
+
+/-- 点の否定（原点対称）で距離は変わらない -/
+theorem distSq_neg (p q : Point) :
+    distSq (-p.1, -p.2) (-q.1, -q.2) = distSq p q := by
+  unfold distSq; ring
+
+/-! ## 探索12: 正方格子の追加検証 -/
+
+-- 3×3 格子の最大距離: (0,0)-(2,2) = 8
+example : distSq (0, 0) (2, 2) = 8 := by decide
+
+-- 3×3 格子の距離の例
+example : distSq (0, 1) (2, 0) = 5 := by decide
+example : distSq (1, 0) (0, 2) = 5 := by decide
+example : distSq (0, 0) (1, 2) = 5 := by decide
+
+-- 三角格子風: (0,0), (2,0), (1,1) の距離
+example : distSq (0, 0) (2, 0) = 4 := by decide
+example : distSq (2, 0) (1, 1) = 2 := by decide

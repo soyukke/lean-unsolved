@@ -14,6 +14,7 @@
 | 6 | |A·A|≥|A| の形式証明 | `scripts/erdos52_plunnecke.py` | productset下界とPlunnecke-Ruzsa数値検証 |
 | 7 | sumset/prodset の単調性・上界 | — | mono補題と|A+A|,|A*A|≤|A|^2をLeanで証明 |
 | 8 | シングルトンのsumset/prodset | — | sumset({a})={2a}, prodset({a})={a²}, {1,2}の計算例 |
+| 9 | 2元集合の和積比較 | — | {1,3},{2,3}でsumset/prodsetともにcard=3を検証 |
 
 ## 主要発見
 

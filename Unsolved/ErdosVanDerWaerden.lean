@@ -259,3 +259,11 @@ example : hasMonoAPList [false, true, false, true, false, true, true] 4 = false 
 
 /-- N=10 で 4-AP 回避可能: RRRBRRBRRR -/
 example : hasMonoAPList [false, false, false, true, false, false, true, false, false, false] 4 = false := by rfl
+
+/-! ## 探索9: W(k) の自明な下界 -/
+
+/-- k ≥ 2 なら N=1 で k-AP を回避可能（1点に2項以上のAPは存在しない） -/
+example : hasMonoAPList [false] 2 = false := by rfl
+example : hasMonoAPList [true] 2 = false := by rfl
+example : hasMonoAPList [false] 4 = false := by rfl
+example : hasMonoAPList [false] 5 = false := by rfl

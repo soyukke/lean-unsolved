@@ -22,6 +22,8 @@ Guth-Katz (2015) が d(n) ≥ cn/log(n) を証明。
 | 8 | distSq の座標別分解と基本性質 | ✅ | ErdosDistinctDistances.lean | distSq_same_x, distSq_same_y, distSq_origin（ring で自動証明） |
 | 9 | 距離の平行移動不変性 | ✅ | ErdosDistinctDistances.lean | distSq_translate, distSq_rotate90, distSq_reflect_y（等長変換の不変性） |
 | 10 | 格子点距離の追加検証 | ✅ | ErdosDistinctDistances.lean | 2x2格子全距離、ピタゴラス数 (3,4,5), (5,12,13) の検証 |
+| 11 | 距離のスケーリング | ✅ | ErdosDistinctDistances.lean | distSq_scale（k倍で距離²がk²倍）、distSq_neg（原点対称で距離不変） |
+| 12 | 正方格子の追加検証 | ✅ | ErdosDistinctDistances.lean | 3x3格子の距離例、距離²=5の多重出現、三角格子風配置 |
 
 ## 主要知見
 

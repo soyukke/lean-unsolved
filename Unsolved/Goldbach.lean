@@ -58,6 +58,13 @@ import Mathlib
 ### 探索11: IsGoldbach の偶数性
 - IsGoldbach n かつ n が奇数 → p=2 の分解が存在 (isGoldbach_odd_has_two)
 - 偶数の IsGoldbach は4以上 (isGoldbach_even_ge_four)
+
+### 探索12: 大きい検証例
+- 2000 = 3+1997, 5000 = 7+4993, 10000 = 59+9941
+- norm_num で4桁素数も判定可能であることを確認
+
+### 探索13: isGoldbach_double_prime
+- p が素数なら 2p は IsGoldbach (p + p = 2p)
 -/
 
 /-- ゴールドバッハ予想: 2より大きい全ての偶数は2つの素数の和で表せる -/
@@ -259,3 +266,20 @@ example : IsGoldbach 500 := ⟨13, 487, by norm_num, by norm_num, by norm_num⟩
 
 -- 1000 = 3 + 997
 example : IsGoldbach 1000 := ⟨3, 997, by norm_num, by norm_num, by norm_num⟩
+
+/-! ## 探索12: 大きい検証例 -/
+
+-- 2000 = 3 + 1997
+example : IsGoldbach 2000 := ⟨3, 1997, by norm_num, by norm_num, by norm_num⟩
+
+-- 5000 = 7 + 4993
+example : IsGoldbach 5000 := ⟨7, 4993, by norm_num, by norm_num, by norm_num⟩
+
+-- 10000 = 59 + 9941
+example : IsGoldbach 10000 := ⟨59, 9941, by norm_num, by norm_num, by norm_num⟩
+
+/-! ## 探索13: isGoldbach_double_prime -/
+
+/-- p が素数なら 2p は IsGoldbach -/
+theorem isGoldbach_double_prime {p : ℕ} (hp : Nat.Prime p) : IsGoldbach (2 * p) :=
+  ⟨p, p, hp, hp, by ring⟩

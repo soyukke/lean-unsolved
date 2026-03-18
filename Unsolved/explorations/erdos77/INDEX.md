@@ -22,6 +22,7 @@ lim_{k→∞} R(k)^{1/k} を求めよ。R(k)は対角ラムゼー数。
 | 6 | R(k)≥2の形式化 + R(3,k)列挙 | 完了 | ErdosRamsey.lean, scripts/erdos77_r3k.py | not_hasRamseyProperty_one_of_ge_two証明、R(3,k)=Θ(k²/log k)の数値確認 |
 | 7 | ラムゼーの基本性質 | 完了 | ErdosRamsey.lean | k=0,k=1の自明なケース証明、C5着色の非隣接性検証 |
 | 8 | 2色塗り分けの基本性質 | 完了 | ErdosRamsey.lean | 色の場合分け補題、C5着色の全10辺をdecideで網羅検証 |
+| 9 | 自明な塗り分けの例 | 完了 | ErdosRamsey.lean | allTrueColoring定義、任意部分集合が単色クリーク |
 
 ## 主要な知見
 

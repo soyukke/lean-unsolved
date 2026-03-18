@@ -237,3 +237,15 @@ theorem isSunflower_pair {α : Type*} [DecidableEq α] (S T : Finset α) :
       · rintro ⟨⟨hT, hnST⟩, hS, _⟩; exact absurd ⟨hS, hT⟩ hnST
       · tauto
     interval_cases i <;> interval_cases j <;> simp_all
+
+/-! ## 探索9: ひまわりの長さに関する単調性 -/
+
+/-- 4つの空集合はひまわり -/
+theorem sunflower_four_empty :
+    IsSunflower [(∅ : Finset ℕ), ∅, ∅, ∅] := by
+  refine ⟨∅, ?_, ?_⟩
+  · intro S hS; exact Finset.empty_subset S
+  · intro i j hi hj _
+    simp only [Finset.sdiff_empty]
+    have : i < 4 := hi; have : j < 4 := hj
+    interval_cases i <;> interval_cases j <;> simp_all

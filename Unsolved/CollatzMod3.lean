@@ -141,3 +141,35 @@ theorem collatzStep_step_odd (n : ℕ) (hn : n > 0) (hodd : n % 2 = 1) :
   rw [collatzStep_odd_eq n hodd]
   have heven : (3 * n + 1) % 2 = 0 := by omega
   rw [collatzStep_even_eq_div2 (3 * n + 1) heven]
+
+/-! ## 10. (3n+1) mod 16 の完全分類 -/
+
+/-- n ≡ 1 (mod 16) → (3n+1) % 16 = 4 -/
+theorem three_mul_add_one_mod16_1 (n : ℕ) (h : n % 16 = 1) : (3*n+1) % 16 = 4 := by omega
+
+/-- n ≡ 3 (mod 16) → (3n+1) % 16 = 10 -/
+theorem three_mul_add_one_mod16_3 (n : ℕ) (h : n % 16 = 3) : (3*n+1) % 16 = 10 := by omega
+
+/-- n ≡ 5 (mod 16) → (3n+1) % 16 = 0 -/
+theorem three_mul_add_one_mod16_5 (n : ℕ) (h : n % 16 = 5) : (3*n+1) % 16 = 0 := by omega
+
+/-- n ≡ 7 (mod 16) → (3n+1) % 16 = 6 -/
+theorem three_mul_add_one_mod16_7 (n : ℕ) (h : n % 16 = 7) : (3*n+1) % 16 = 6 := by omega
+
+/-- n ≡ 9 (mod 16) → (3n+1) % 16 = 12 -/
+theorem three_mul_add_one_mod16_9 (n : ℕ) (h : n % 16 = 9) : (3*n+1) % 16 = 12 := by omega
+
+/-- n ≡ 11 (mod 16) → (3n+1) % 16 = 2 -/
+theorem three_mul_add_one_mod16_11 (n : ℕ) (h : n % 16 = 11) : (3*n+1) % 16 = 2 := by omega
+
+/-- n ≡ 13 (mod 16) → (3n+1) % 16 = 8 -/
+theorem three_mul_add_one_mod16_13 (n : ℕ) (h : n % 16 = 13) : (3*n+1) % 16 = 8 := by omega
+
+/-- n ≡ 15 (mod 16) → (3n+1) % 16 = 14 -/
+theorem three_mul_add_one_mod16_15 (n : ℕ) (h : n % 16 = 15) : (3*n+1) % 16 = 14 := by omega
+
+/-! ## 11. v₂(3n+1) の正確な値（一部） -/
+
+/-- n ≡ 1 (mod 8) → (3n+1)/4 は奇数、すなわち v₂(3n+1) = 2 -/
+theorem three_mul_add_one_div4_odd_of_mod8_eq1 (n : ℕ) (h : n % 8 = 1) :
+    ((3 * n + 1) / 4) % 2 = 1 := by omega
