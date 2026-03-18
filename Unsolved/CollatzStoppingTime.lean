@@ -374,3 +374,17 @@ theorem collatzReaches_odd_iff (n : ℕ) (hn : n > 1) (hodd : n % 2 = 1) :
       exact ⟨k, hk⟩
   · intro ⟨k, hk⟩
     exact ⟨k + 1, by rw [collatzIter_succ, collatzStep_odd_eq n hodd, hk]⟩
+
+/-! ## 16. collatzReaches の合成 -/
+
+/-- collatzReaches 13 -/
+theorem collatzReaches_thirteen : collatzReaches 13 :=
+  ⟨9, by decide⟩
+
+/-- collatzReaches 15 -/
+theorem collatzReaches_fifteen : collatzReaches 15 :=
+  ⟨17, by decide⟩
+
+/-- collatzReaches 16 -/
+theorem collatzReaches_sixteen : collatzReaches 16 :=
+  collatzReaches_pow_two 4

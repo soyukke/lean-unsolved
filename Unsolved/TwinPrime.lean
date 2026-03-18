@@ -281,3 +281,9 @@ theorem twinPrimeConjecture_iff :
   · intro h N
     obtain ⟨p, hp1, hp2, hp3⟩ := h N
     exact ⟨p, hp1, hp2, hp3⟩
+
+/-! ## 探索17: 大きい双子素数 -/
+
+example : IsTwinPrime 179 := ⟨by norm_num, by norm_num⟩
+example : IsTwinPrime 191 := ⟨by norm_num, by norm_num⟩
+example : IsTwinPrime 197 := ⟨by norm_num, by norm_num⟩

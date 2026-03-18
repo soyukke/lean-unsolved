@@ -291,3 +291,13 @@ theorem sunflower_disjoint_156 :
     simp only [Finset.sdiff_empty]
     have : i < 3 := hi; have : j < 3 := hj
     interval_cases i <;> interval_cases j <;> simp_all <;> decide
+
+/-! ## 探索13: ひまわりの core サイズの性質 -/
+
+-- ひまわりのcore が空でなく族が2以上なら、各集合はcoreを含む非空集合
+-- （IsSunflower の定義の系）
+
+/-- 2つの同一集合のリストはひまわり -/
+theorem isSunflower_repeat {α : Type*} [DecidableEq α] (S : Finset α) :
+    IsSunflower [S, S] := by
+  exact isSunflower_pair S S

@@ -4,7 +4,7 @@
 
 ## 現状
 - TwinPrime.lean に定義、検証例8組+IsTwinPrime検証8組、基本補題（sorry なし）
-- 探索16回完了
+- 探索17回完了
 
 ## 探索記録
 
@@ -98,6 +98,12 @@
 - IsTwinPrime 59, IsTwinPrime 71 の検証例追加
 - norm_num で自動証明
 - 累計 IsTwinPrime 検証: 3, 5, 11, 17, 29, 41, 59, 71 の8個
+
+### 探索17: 大きい双子素数 ✅
+- IsTwinPrime 179, 191, 197 の検証例追加
+- (179,181), (191,193), (197,199) はすべて双子素数
+- norm_num で自動証明
+- 累計 IsTwinPrime 検証: 3, 5, 11, 17, 29, 41, 59, 71, 179, 191, 197 の11個
 
 ### 探索16: TwinPrimeConjecture の同値な定式化 ✅
 - `twinPrimeConjecture_iff`: TwinPrimeConjecture ↔ ∀ N, ∃ p > N, IsTwinPrime p

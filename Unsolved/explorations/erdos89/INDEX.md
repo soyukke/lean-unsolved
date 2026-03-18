@@ -29,6 +29,7 @@ Guth-Katz (2015) が d(n) ≥ cn/log(n) を証明。
 | 15 | ピタゴラス三つ組の距離 | ✅ | ErdosDistinctDistances.lean | (3,4,5),(5,12,13),(8,15,17)の距離²をdecideで検証 |
 | 16 | 距離と内積の関係 | ✅ | ErdosDistinctDistances.lean | distSq_expand: |p-q|²=|p|²+|q|²-2⟨p,q⟩をringで証明 |
 | 17 | 距離の非退化性 | ✅ | ErdosDistinctDistances.lean | distSq_axes: 格子点(a,0)と(0,b)の距離²=a²+b²をringで証明 |
+| 18 | 距離の二乗和恒等式 | ✅ | ErdosDistinctDistances.lean | distSq_explicit: distSq(a,b)(c,d)=(a-c)²+(b-d)²の明示的展開 |
 
 ## 主要知見
 

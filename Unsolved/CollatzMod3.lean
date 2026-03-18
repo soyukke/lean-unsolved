@@ -222,3 +222,9 @@ theorem three_mul_add_one_div4_even_of_mod16_eq5 (n : ℕ) (h : n % 16 = 5) :
 /-- n ≡ 13 (mod 16) → (3n+1)/4 は偶数（(3n+1)%16=8 → (3n+1)/4 %2 = 0） -/
 theorem three_mul_add_one_div4_even_of_mod16_eq13 (n : ℕ) (h : n % 16 = 13) :
     ((3 * n + 1) / 4) % 2 = 0 := by omega
+
+/-! ## 15. コラッツ写像の増減まとめ -/
+
+/-- 奇数 n ≥ 1 に対して (3n+1)/2 ≤ 2n -/
+theorem three_mul_add_one_div2_le_two_mul (n : ℕ) (hn : n ≥ 1) (hodd : n % 2 = 1) :
+    (3 * n + 1) / 2 ≤ 2 * n := by omega

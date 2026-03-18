@@ -362,3 +362,9 @@ example : IsGoldbach 34 := ⟨3, 31, by norm_num, by norm_num, by norm_num⟩
 example : IsGoldbach 36 := ⟨5, 31, by norm_num, by norm_num, by norm_num⟩
 example : IsGoldbach 38 := ⟨7, 31, by norm_num, by norm_num, by norm_num⟩
 example : IsGoldbach 40 := ⟨3, 37, by norm_num, by norm_num, by norm_num⟩
+
+/-! ## 探索20: 3桁の偶数の検証 -/
+
+example : IsGoldbach 102 := ⟨5, 97, by norm_num, by norm_num, by norm_num⟩
+example : IsGoldbach 110 := ⟨3, 107, by norm_num, by norm_num, by norm_num⟩
+example : IsGoldbach 150 := ⟨11, 139, by norm_num, by norm_num, by norm_num⟩

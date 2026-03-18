@@ -18,6 +18,7 @@
 | 10 | A={1,...,n}のsumsetカード=2n-1 | — | {1,2,3,4}でsumset card=7, prodset card=9を検証 |
 | 11 | 3元集合の和積（等比的集合） | — | {1,2,4}: sumset card=6, prodset card=5（等比的集合は積集合が小さい） |
 | 12 | 等差数列の sumset = 2n-1 | — | {1,...,5}: sumset card=9=2·5-1, prodset card=14をdecideで検証 |
+| 13 | sumset の自明な等式 | — | sumsetFinset_empty, prodsetFinset_empty: 空集合のsumset/prodsetは空 |
 
 ## 主要発見
 

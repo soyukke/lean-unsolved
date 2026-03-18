@@ -316,3 +316,12 @@ theorem distSq_expand (p q : Point) :
 /-- 格子点 (a,0) と (0,b) の距離² = a²+b² -/
 theorem distSq_axes (a b : ℤ) : distSq (a, 0) (0, b) = a ^ 2 + b ^ 2 := by
   unfold distSq; ring
+
+/-! ## 探索18: 距離の二乗和恒等式 -/
+
+-- 中点公式は複雑なので、代わりに距離の明示的展開を証明する
+
+/-- 距離の正規化: distSq (a,b) (c,d) = (a-c)²+(b-d)² を明示 -/
+theorem distSq_explicit (a b c d : ℤ) :
+    distSq (a, b) (c, d) = (a - c) ^ 2 + (b - d) ^ 2 := by
+  unfold distSq; ring

@@ -306,3 +306,13 @@ theorem sumset_12345_card : (sumsetFinset {1, 2, 3, 4, 5}).card = 9 := by
 -- {1,...,5}: prodset card
 theorem prodset_12345_card : (prodsetFinset {1, 2, 3, 4, 5}).card = 14 := by
   simp only [prodsetFinset]; decide
+
+/-! ## 探索13: sumset の自明な等式 -/
+
+/-- 空集合の sumset は空 -/
+theorem sumsetFinset_empty : sumsetFinset (∅ : Finset ℕ) = ∅ := by
+  simp [sumsetFinset]
+
+/-- 空集合の productset は空 -/
+theorem prodsetFinset_empty : prodsetFinset (∅ : Finset ℕ) = ∅ := by
+  simp [prodsetFinset]
