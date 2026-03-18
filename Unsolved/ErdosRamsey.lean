@@ -506,3 +506,70 @@ theorem not_hasRamseyProperty_five_three : ¬HasRamseyProperty 5 3 := by
 /-- R(3,3) = 6 の完全特徴付け: HasRamseyProperty 6 3 かつ ¬HasRamseyProperty 5 3 -/
 theorem isRamseyNumber_three : IsRamseyNumber 3 6 := by
   exact ⟨ramsey_three_three, not_hasRamseyProperty_five_three⟩
+
+-- =============================================================================
+-- HasRamseyProperty の n に関する単調性
+-- =============================================================================
+
+/-! ## HasRamseyProperty は n に関して単調
+
+HasRamseyProperty m k かつ n ≥ m ならば HasRamseyProperty n k。
+n 頂点の塗り分けを Fin m → Fin n の自然な埋め込みで m 頂点に制限し、
+m 頂点版のラムゼー性質を適用して得られる単色クリークを Fin n にリフトする。
+-/
+
+/-- Fin m → Fin n の自然な埋め込み（m ≤ n のとき） -/
+private def finEmb (m n : ℕ) (hmn : m ≤ n) : Fin m → Fin n :=
+  fun i => ⟨i.val, by omega⟩
+
+private theorem finEmb_injective {m n : ℕ} (hmn : m ≤ n) :
+    Function.Injective (finEmb m n hmn) := by
+  intro a b hab
+  simp [finEmb] at hab
+  exact Fin.ext hab
+
+/-- HasRamseyProperty は n に関して単調: m ≤ n かつ HasRamseyProperty m k → HasRamseyProperty n k -/
+theorem hasRamseyProperty_mono {m n k : ℕ} (hmn : m ≤ n) (h : HasRamseyProperty m k) :
+    HasRamseyProperty n k := by
+  intro col
+  -- col を m 頂点に制限
+  let emb := finEmb m n hmn
+  let col_m : TwoColoring m := ⟨
+    fun i j => col.color (emb i) (emb j),
+    fun i j => col.symm (emb i) (emb j)⟩
+  -- m 頂点でラムゼー性質を適用
+  obtain ⟨S, hcard, hmono⟩ := h col_m
+  -- S を Fin n にリフト
+  have hinj : Set.InjOn emb (S : Set (Fin m)) := by
+    intro a _ b _ hab
+    exact finEmb_injective hmn hab
+  refine ⟨S.image emb, ?_, ?_⟩
+  · -- card の保存
+    rw [Finset.card_image_of_injOn hinj]
+    exact hcard
+  · -- 単色性の保存
+    cases hmono with
+    | inl ht =>
+      left
+      intro i hi j hj hij
+      rw [Finset.mem_image] at hi hj
+      obtain ⟨i', hi', rfl⟩ := hi
+      obtain ⟨j', hj', rfl⟩ := hj
+      have hij' : i' ≠ j' := by
+        intro heq; apply hij; exact congrArg emb heq
+      change col_m.color i' j' = true
+      exact ht i' hi' j' hj' hij'
+    | inr hf =>
+      right
+      intro i hi j hj hij
+      rw [Finset.mem_image] at hi hj
+      obtain ⟨i', hi', rfl⟩ := hi
+      obtain ⟨j', hj', rfl⟩ := hj
+      have hij' : i' ≠ j' := by
+        intro heq; apply hij; exact congrArg emb heq
+      change col_m.color i' j' = false
+      exact hf i' hi' j' hj' hij'
+
+/-- 系: R(3,3) ≤ 6 から、n ≥ 6 ならば HasRamseyProperty n 3 -/
+theorem hasRamseyProperty_ge_six {n : ℕ} (hn : n ≥ 6) : HasRamseyProperty n 3 :=
+  hasRamseyProperty_mono hn ramsey_three_three

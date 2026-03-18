@@ -530,3 +530,18 @@ theorem card_prodsetFinset_ge_two_mul_sub_one {A : Finset ℕ}
     _ = S₁.card + S₂'.card := hunion
     _ = A.card + (A.card - 1) := by rw [hcard_S₁, hcard_S₂']
     _ = 2 * A.card - 1 := by omega
+
+-- =============================================================================
+-- 等差数列の sumset カード検証の拡充
+-- =============================================================================
+
+/-! ## 等差数列 {1,...,n} の sumset card = 2n-1 の検証
+
+等差数列の sumset は最小の sumset を達成する。
+{1,...,n} + {1,...,n} = {2,...,2n} なのでカードは 2n-1。
+ここでは n=7 の場合を具体的に検証する。
+-/
+
+/-- {1,...,7}: sumset card = 13 = 2*7-1 -/
+theorem sumset_1to7_card : (sumsetFinset {1, 2, 3, 4, 5, 6, 7}).card = 13 := by
+  simp only [sumsetFinset]; decide
