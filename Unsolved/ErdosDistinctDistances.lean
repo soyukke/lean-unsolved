@@ -355,3 +355,9 @@ theorem distSq_nat_valued (p q : Point) :
   have h_nn := distSq_nonneg p q
   exact ⟨(distSq p q).toNat, by
     rw [Int.toNat_of_nonneg h_nn]⟩
+
+/-! ## 探索21: 格子の対角距離 -/
+-- n×n 格子の対角: (0,0)-(n-1,n-1) の距離² = 2(n-1)²
+example : distSq (0, 0) (4, 4) = 32 := by decide
+example : distSq (0, 0) (5, 5) = 50 := by decide
+example : distSq (0, 0) (6, 6) = 72 := by decide

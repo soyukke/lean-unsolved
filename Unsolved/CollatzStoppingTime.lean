@@ -415,3 +415,17 @@ theorem collatzReaches_sixtyfour : collatzReaches 64 :=
 /-- collatzReaches 100 -/
 theorem collatzReaches_hundred : collatzReaches 100 :=
   ⟨25, by decide⟩
+
+/-! ## 20. collatzReaches の基数による分類 -/
+
+/-- collatzReaches 128 = 2^7 -/
+theorem collatzReaches_128 : collatzReaches 128 :=
+  collatzReaches_pow_two 7
+
+/-- collatzReaches 256 = 2^8 -/
+theorem collatzReaches_256 : collatzReaches 256 :=
+  collatzReaches_pow_two 8
+
+/-- collatzReaches 1024 = 2^10 -/
+theorem collatzReaches_1024 : collatzReaches 1024 :=
+  collatzReaches_pow_two 10

@@ -329,3 +329,8 @@ theorem IsTwinPrime.three_le {p : ℕ} (h : IsTwinPrime p) : p ≥ 3 := by
   · exact Nat.not_prime_one h.1
   · have : ¬ Nat.Prime 4 := by decide
     exact this h.2
+
+/-! ## 探索21: 大きい双子素数の検証 -/
+example : IsTwinPrime 227 := ⟨by norm_num, by norm_num⟩
+example : IsTwinPrime 239 := ⟨by norm_num, by norm_num⟩
+example : IsTwinPrime 269 := ⟨by norm_num, by norm_num⟩

@@ -248,3 +248,9 @@ theorem three_mul_add_one_div4_of_mod4_eq1 (n : ℕ) (h : n % 4 = 1) :
 
 /-- 奇数 n に対して 3n+1 > n+1（n ≥ 1 のとき） -/
 theorem three_mul_add_one_gt_succ (n : ℕ) (hn : n ≥ 1) : 3 * n + 1 > n + 1 := by omega
+
+/-! ## 18. (3n+1) と n の大小関係の精密化 -/
+
+/-- 奇数 n ≥ 1 に対して (3n+1)/2 = n + (n+1)/2 -/
+theorem syracuse_eq_n_plus (n : ℕ) (hn : n ≥ 1) (hodd : n % 2 = 1) :
+    (3 * n + 1) / 2 = n + (n + 1) / 2 := by omega

@@ -394,3 +394,11 @@ example : IsGoldbach 72 := ⟨5, 67, by norm_num, by norm_num, by norm_num⟩
 example : IsGoldbach 80 := ⟨7, 73, by norm_num, by norm_num, by norm_num⟩
 -- 90 = 7 + 83
 example : IsGoldbach 90 := ⟨7, 83, by norm_num, by norm_num, by norm_num⟩
+
+/-! ## 探索24: 100の倍数の検証 -/
+-- 600 = 7 + 593
+example : IsGoldbach 600 := ⟨7, 593, by norm_num, by norm_num, by norm_num⟩
+-- 700 = 17 + 683
+example : IsGoldbach 700 := ⟨17, 683, by norm_num, by norm_num, by norm_num⟩
+-- 800 = 3 + 797
+example : IsGoldbach 800 := ⟨3, 797, by norm_num, by norm_num, by norm_num⟩

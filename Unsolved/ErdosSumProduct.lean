@@ -333,3 +333,8 @@ theorem sumset_123456_card : (sumsetFinset {1, 2, 3, 4, 5, 6}).card = 11 := by
 /-- シングルトン {1} の sumset のカードは 1 -/
 theorem sumsetFinset_singleton1_card : (sumsetFinset {1}).card = 1 := by
   simp only [sumsetFinset]; decide
+
+/-! ## 探索16: prodset の等差数列 -/
+-- {1,2,3,4,5,6} の prodset card
+theorem prodset_123456_card : (prodsetFinset {1, 2, 3, 4, 5, 6}).card = 18 := by
+  simp only [prodsetFinset]; decide
