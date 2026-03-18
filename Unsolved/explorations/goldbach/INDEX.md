@@ -24,6 +24,7 @@
 | 10 | n ≡ 4 (mod 6) の構造定理 | ✅完了 | p+q=n (p,q>3素数) は p%6=5 ∧ q%6=5。goldbach_mod6_four 証明。mod 6 全ケース完成 |
 | 11 | IsGoldbach の偶数性 | ✅完了 | 奇数の IsGoldbach は p=2 の分解を持つ。偶数の IsGoldbach は n≥4 |
 | 12 | 大きい検証例 + isGoldbach_double_prime | ✅完了 | 2000,5000,10000の検証。素数pに対し2pはIsGoldbach |
+| 13 | 素数ペアの一意性 + isGoldbach_sum_comm | ✅完了 | 10=5+5の別分解検証。素数和の可換性定理 |
 
 ## 主な発見
 
@@ -102,6 +103,11 @@
 - `isGoldbach_double_prime`: p が素数なら 2p は IsGoldbach
   - 素数の無限性と合わせて IsGoldbach な偶数が無限に存在
 - 累計検証例: 4, 6, 8, 10, 12, 20, 100, 200, 500, 1000, 2000, 5000, 10000 の13個
+
+### 探索13: 素数ペアの一意性 + isGoldbach_sum_comm
+- 10 = 5+5 の別分解（既存の 3+7 と合わせて2通り）
+- `isGoldbach_sum_comm`: 素数 p, q に対して IsGoldbach (q + p) が成立
+- ゴールドバッハ分解の非一意性の具体例を提供
 
 ## 未着手の方向
 - Chen's theorem (1+2) の形式化可能性調査

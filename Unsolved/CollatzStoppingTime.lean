@@ -279,3 +279,25 @@ theorem collatzStep_lt_of_even (n : ℕ) (hn : n > 0) (heven : n % 2 = 0) :
     collatzStep n < n := by
   rw [collatzStep_even_eq_div2 n heven]
   omega
+
+/-! ## 10. collatzIter の追加性質 -/
+
+/-- collatzIter 0 n = n -/
+theorem collatzIter_zero' (n : ℕ) : collatzIter 0 n = n := by
+  rfl
+
+/-- collatzIter の結合法則的性質: collatzIter (a+b) n = collatzIter b (collatzIter a n)
+    つまり「先に a 回適用してから b 回適用」と「まとめて a+b 回適用」は等しい -/
+theorem collatzIter_add' (a b n : ℕ) :
+    collatzIter (a + b) n = collatzIter b (collatzIter a n) := by
+  induction a generalizing n with
+  | zero => simp
+  | succ a ih =>
+    simp only [Nat.succ_add, collatzIter_succ]
+    exact ih (collatzStep n)
+
+/-- collatzReaches は推移的: n が m に到達し m が 1 に到達するなら n も 1 に到達する -/
+theorem collatzReaches_trans (n m : ℕ) (k : ℕ)
+    (hiter : collatzIter k n = m) (hm : collatzReaches m) : collatzReaches n := by
+  obtain ⟨j, hj⟩ := hm
+  exact ⟨k + j, by rw [collatzIter_add', hiter, hj]⟩

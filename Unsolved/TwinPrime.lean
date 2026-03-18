@@ -40,9 +40,10 @@ import Mathlib
 - IsSexyPrime の定義: p, p+6 がともに素数
 - 5, 7, 11, 13, 23 での検証
 
-## 探索11: 双子素数の間の数は6の倍数
+## 探索11: 双子素数の間の数は6の倍数 + 大きい双子素数の検証
 - (p, p+2) が双子素数で p > 3 のとき、p+1 は 6 の倍数
 - twin_prime_mod_six から p%6=5 を使い (p+1)%6=0 を導出
+- 3桁の双子素数検証: (101,103), (107,109), (137,139), (149,151)
 -/
 
 /-- 双子素数予想: 差が2の素数の組は無限に存在する -/
@@ -200,3 +201,17 @@ theorem twin_prime_middle_div6 {p : ℕ} (hp : Nat.Prime p) (hp2 : Nat.Prime (p 
   have h5 := twin_prime_mod_six hp hp2 hp3
   -- p % 6 = 5 → (p+1) % 6 = 0
   exact ⟨(p + 1) / 6, by omega⟩
+
+/-! ## 探索11: 大きい双子素数の検証 -/
+
+-- (101, 103) は双子素数
+example : Nat.Prime 101 ∧ Nat.Prime 103 := by constructor <;> norm_num
+
+-- (107, 109) は双子素数
+example : Nat.Prime 107 ∧ Nat.Prime 109 := by constructor <;> norm_num
+
+-- (137, 139) は双子素数
+example : Nat.Prime 137 ∧ Nat.Prime 139 := by constructor <;> norm_num
+
+-- (149, 151) は双子素数
+example : Nat.Prime 149 ∧ Nat.Prime 151 := by constructor <;> norm_num

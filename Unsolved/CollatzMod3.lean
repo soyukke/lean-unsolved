@@ -173,3 +173,17 @@ theorem three_mul_add_one_mod16_15 (n : ℕ) (h : n % 16 = 15) : (3*n+1) % 16 = 
 /-- n ≡ 1 (mod 8) → (3n+1)/4 は奇数、すなわち v₂(3n+1) = 2 -/
 theorem three_mul_add_one_div4_odd_of_mod8_eq1 (n : ℕ) (h : n % 8 = 1) :
     ((3 * n + 1) / 4) % 2 = 1 := by omega
+
+/-! ## 12. 3n+1 の2進表現に関する性質 -/
+
+/-- 奇数 n ≥ 1 に対して 3n+1 ≥ 4 -/
+theorem three_mul_add_one_ge_four (n : ℕ) (hn : n ≥ 1) (hodd : n % 2 = 1) :
+    3 * n + 1 ≥ 4 := by omega
+
+/-- 奇数 n ≥ 1 に対して (3n+1)/2 ≥ 2 -/
+theorem three_mul_add_one_div2_ge_two (n : ℕ) (hn : n ≥ 1) (hodd : n % 2 = 1) :
+    (3 * n + 1) / 2 ≥ 2 := by omega
+
+/-- 奇数 n ≥ 1 に対して (3n+1)/2 > n（奇数ステップは値を増加させる） -/
+theorem three_mul_add_one_div2_gt (n : ℕ) (hn : n ≥ 1) (hodd : n % 2 = 1) :
+    (3 * n + 1) / 2 > n := by omega

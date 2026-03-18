@@ -65,6 +65,10 @@ import Mathlib
 
 ### 探索13: isGoldbach_double_prime
 - p が素数なら 2p は IsGoldbach (p + p = 2p)
+
+### 探索14: ゴールドバッハ予想と素数ペアの一意性
+- 10 = 5+5 の検証（既存の 3+7 と合わせて2通りの分解）
+- isGoldbach_sum_comm: 素数 p+q → IsGoldbach(q+p)
 -/
 
 /-- ゴールドバッハ予想: 2より大きい全ての偶数は2つの素数の和で表せる -/
@@ -283,3 +287,14 @@ example : IsGoldbach 10000 := ⟨59, 9941, by norm_num, by norm_num, by norm_num
 /-- p が素数なら 2p は IsGoldbach -/
 theorem isGoldbach_double_prime {p : ℕ} (hp : Nat.Prime p) : IsGoldbach (2 * p) :=
   ⟨p, p, hp, hp, by ring⟩
+
+/-! ## 探索14: ゴールドバッハ予想と素数ペアの一意性 -/
+
+/-- p+q = p'+q' = n で (p,q) ≠ (p',q') の具体例: 10 = 3+7 = 5+5 -/
+example : IsGoldbach 10 := ⟨5, 5, by norm_num, by norm_num, by norm_num⟩
+-- (既存の 3+7 と合わせて2通りの分解)
+
+/-- 素数 + 素数 = 偶数 の系 -/
+theorem isGoldbach_sum_comm {p q : ℕ} (hp : Nat.Prime p) (hq : Nat.Prime q) :
+    IsGoldbach (q + p) :=
+  ⟨q, p, hq, hp, rfl⟩
