@@ -279,3 +279,15 @@ theorem allTrue_mono_clique (n : ℕ) (S : Finset (Fin n)) :
     IsMonochromaticClique (allTrueColoring n) S true := by
   intro i _ j _ _
   rfl
+
+/-! ## 探索10: allFalseColoring -/
+
+/-- 全て色false の塗り分け -/
+def allFalseColoring (n : ℕ) : TwoColoring n where
+  color := fun _ _ => false
+  symm := fun _ _ => rfl
+
+/-- 全て色false の塗り分けでは任意の部分集合が false 単色クリーク -/
+theorem allFalse_mono_clique (n : ℕ) (S : Finset (Fin n)) :
+    IsMonochromaticClique (allFalseColoring n) S false := by
+  intro i _ j _ _; rfl

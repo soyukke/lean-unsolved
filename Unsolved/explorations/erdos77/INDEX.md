@@ -23,6 +23,7 @@ lim_{k→∞} R(k)^{1/k} を求めよ。R(k)は対角ラムゼー数。
 | 7 | ラムゼーの基本性質 | 完了 | ErdosRamsey.lean | k=0,k=1の自明なケース証明、C5着色の非隣接性検証 |
 | 8 | 2色塗り分けの基本性質 | 完了 | ErdosRamsey.lean | 色の場合分け補題、C5着色の全10辺をdecideで網羅検証 |
 | 9 | 自明な塗り分けの例 | 完了 | ErdosRamsey.lean | allTrueColoring定義、任意部分集合が単色クリーク |
+| 10 | allFalseColoring | 完了 | ErdosRamsey.lean | allFalseColoring定義、false単色クリークの証明 |
 
 ## 主要な知見
 

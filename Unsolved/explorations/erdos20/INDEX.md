@@ -16,6 +16,7 @@
 | 7 | 空族・単一族のひまわり性 | — | isSunflower_nil, isSunflower_singleton をLeanで証明 |
 | 8 | 2集合族のひまわり性 | — | isSunflower_pair: [S,T]は常にひまわり（core=S∩T） |
 | 9 | 4つの空集合のひまわり性 | — | sunflower_four_empty: 4×4のinterval_casesが動作確認 |
+| 10 | ContainsSunflowerの自明なケース | — | k=0,k=1でContainsSunflowerが成立することを形式証明 |
 
 ## 主要発見
 

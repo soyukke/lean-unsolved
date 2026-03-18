@@ -25,6 +25,8 @@
 | 11 | IsGoldbach の偶数性 | ✅完了 | 奇数の IsGoldbach は p=2 の分解を持つ。偶数の IsGoldbach は n≥4 |
 | 12 | 大きい検証例 + isGoldbach_double_prime | ✅完了 | 2000,5000,10000の検証。素数pに対し2pはIsGoldbach |
 | 13 | 素数ペアの一意性 + isGoldbach_sum_comm | ✅完了 | 10=5+5の別分解検証。素数和の可換性定理 |
+| 14 | ゴールドバッハ予想の同値な定式化 | ✅完了 | goldbachConjecture_iff_ge4 証明 |
+| 15 | ゴールドバッハ分解の検証例追加 | ✅完了 | 30=7+23, 50=3+47, 42=5+37 の検証 |
 
 ## 主な発見
 

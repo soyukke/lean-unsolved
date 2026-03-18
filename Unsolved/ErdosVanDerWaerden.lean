@@ -267,3 +267,19 @@ example : hasMonoAPList [false] 2 = false := by rfl
 example : hasMonoAPList [true] 2 = false := by rfl
 example : hasMonoAPList [false] 4 = false := by rfl
 example : hasMonoAPList [false] 5 = false := by rfl
+
+/-! ## 探索10: 2-AP は常に存在（N ≥ 2 のとき） -/
+
+-- N=2 で 2-AP は回避不可能
+-- 位置 0,1 で公差1の2-AP: {0,1}、どちらかは同色
+-- hasMonoAPList で確認:
+example : hasMonoAPList [false, false] 2 = true := by rfl
+example : hasMonoAPList [true, true] 2 = true := by rfl
+example : hasMonoAPList [false, true] 2 = false := by rfl
+example : hasMonoAPList [true, false] 2 = false := by rfl
+
+-- N=3 では 3-AP を回避可能（W(3)=9 なので 3 < 9）
+example : allColoringsHaveAP3 3 = false := by native_decide
+
+-- N=4 でも 3-AP を回避可能
+example : allColoringsHaveAP3 4 = false := by native_decide

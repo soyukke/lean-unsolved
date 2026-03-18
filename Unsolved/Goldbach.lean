@@ -309,3 +309,14 @@ theorem goldbachConjecture_iff_ge4 :
     exact hG n (by omega) heven
   · intro h n hn heven
     exact h n (by omega) heven
+
+/-! ## 探索16: ゴールドバッハ分解の最小素数 -/
+
+-- 30 = 7 + 23
+example : IsGoldbach 30 := ⟨7, 23, by norm_num, by norm_num, by norm_num⟩
+
+-- 50 = 3 + 47
+example : IsGoldbach 50 := ⟨3, 47, by norm_num, by norm_num, by norm_num⟩
+
+-- 42 = 5 + 37
+example : IsGoldbach 42 := ⟨5, 37, by norm_num, by norm_num, by norm_num⟩

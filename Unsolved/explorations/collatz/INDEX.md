@@ -97,6 +97,7 @@
 | 53 | 生成関数 | ✅ | scripts/collatz_generating_function.py | ★Z変換極が全て単位円内 | A |
 | 54 | Rauzy fractal | ✅ | scripts/collatz_rauzy.py | U頻度≈log₂(3)-1, 冗長度74% | B |
 | 55 | パターンマイニング | ✅ | scripts/collatz_pattern_mining.py | carry chain平均長2.0 | B |
+| 65 | 小さい値の到達可能性 | ✅ | CollatzStoppingTime.lean | collatzReaches 5,6,7 を decide で証明 | B |
 
 ## フェーズ12: 深堀り (探索56-59)
 

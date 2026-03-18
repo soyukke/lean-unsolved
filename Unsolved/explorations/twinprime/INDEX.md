@@ -83,6 +83,12 @@
 - 3桁の双子素数検証: (101,103), (107,109), (137,139), (149,151)
 - 累計検証例: 8+4=12組
 
+### 探索13: IsTwinPrime の基本性質 ✅
+- `IsTwinPrime.prime_left`: IsTwinPrime p → Nat.Prime p
+- `IsTwinPrime.prime_right`: IsTwinPrime p → Nat.Prime (p+2)
+- `IsTwinPrime.two_le`: IsTwinPrime p → p ≥ 2
+- IsTwinPrime 述語に対するドット記法アクセサの提供
+
 ### 探索12: 双子素数ペアの対称性 ✅
 - `IsTwinPrime` 定義述語の導入: `Nat.Prime p ∧ Nat.Prime (p + 2)`
 - `twin_prime_second`: 自明だが明示的な p+2 の素数性

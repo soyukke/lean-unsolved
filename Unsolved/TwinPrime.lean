@@ -237,3 +237,14 @@ example : IsTwinPrime 11 := ⟨by norm_num, by norm_num⟩
 example : IsTwinPrime 17 := ⟨by norm_num, by norm_num⟩
 example : IsTwinPrime 29 := ⟨by norm_num, by norm_num⟩
 example : IsTwinPrime 41 := ⟨by norm_num, by norm_num⟩
+
+/-! ## 探索13: IsTwinPrime の基本性質 -/
+
+/-- IsTwinPrime p → Nat.Prime p -/
+theorem IsTwinPrime.prime_left {p : ℕ} (h : IsTwinPrime p) : Nat.Prime p := h.1
+
+/-- IsTwinPrime p → Nat.Prime (p+2) -/
+theorem IsTwinPrime.prime_right {p : ℕ} (h : IsTwinPrime p) : Nat.Prime (p + 2) := h.2
+
+/-- IsTwinPrime p → p ≥ 2 -/
+theorem IsTwinPrime.two_le {p : ℕ} (h : IsTwinPrime p) : p ≥ 2 := h.1.two_le

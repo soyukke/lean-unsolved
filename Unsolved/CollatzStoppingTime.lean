@@ -316,3 +316,17 @@ example : collatzStep 5 = 16 := by decide
 /-- 3 はコラッツ操作で1に到達する -/
 theorem collatzReaches_three : collatzReaches 3 :=
   ⟨7, by decide⟩
+
+/-! ## 12. 小さい値の到達可能性 -/
+
+/-- 5 はコラッツ操作で1に到達する -/
+theorem collatzReaches_five : collatzReaches 5 :=
+  ⟨5, by decide⟩
+
+/-- 6 はコラッツ操作で1に到達する -/
+theorem collatzReaches_six : collatzReaches 6 :=
+  ⟨8, by decide⟩
+
+/-- 7 はコラッツ操作で1に到達する -/
+theorem collatzReaches_seven : collatzReaches 7 :=
+  ⟨16, by decide⟩

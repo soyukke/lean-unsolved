@@ -249,3 +249,20 @@ theorem sunflower_four_empty :
     simp only [Finset.sdiff_empty]
     have : i < 4 := hi; have : j < 4 := hj
     interval_cases i <;> interval_cases j <;> simp_all
+
+/-! ## 探索10: ContainsSunflower の自明なケース -/
+
+/-- 任意の族は 0-ひまわりを含む（空の部分族） -/
+theorem containsSunflower_zero {α : Type*} [DecidableEq α]
+    (family : List (Finset α)) : ContainsSunflower family 0 := by
+  refine ⟨[], rfl, ?_, isSunflower_nil⟩
+  intro S hS; simp at hS
+
+/-- 任意の非空族は 1-ひまわりを含む -/
+theorem containsSunflower_one {α : Type*} [DecidableEq α]
+    (family : List (Finset α)) (hne : family ≠ []) :
+    ContainsSunflower family 1 := by
+  match family, hne with
+  | S :: _, _ =>
+    refine ⟨[S], rfl, ?_, isSunflower_singleton S⟩
+    intro T hT; simp at hT; rw [hT]; simp
