@@ -360,3 +360,157 @@ theorem isSunflower_of_pairwise_disjoint {α : Type*} [DecidableEq α]
   · intro i j hi hj hij
     simp only [Finset.sdiff_empty]
     exact hdisjoint i j hi hj hij
+
+-- =============================================================================
+-- Erdős-Rado 上界 (n=2, k=3): 9個以上の異なる2元集合の族は3-ひまわりを含む
+-- =============================================================================
+
+/-! ## Erdős-Rado n=2, k=3
+
+f(2,3) ≤ (3-1)^2 · 2! + 1 = 9 の証明。
+9個以上の異なる2元集合の族は必ず3-ひまわりを含む。
+
+### 証明戦略
+- Case 1: ある要素が3個以上の集合に含まれる → core = {x} のスターひまわり
+- Case 2: 全要素が高々2個の集合にしか含まれない → 貪欲法で3つの互いに素な集合を選ぶ
+
+ここでは、まず Case 1 に対応するスター補題を証明し、
+次に具体例として9個の2元集合族での3-ひまわり存在を示す。
+-/
+
+section ErdosRadoN2K3
+
+/-! ### 補題: 共通要素を持つ3つの異なる2元集合はひまわり -/
+
+/-- x ∈ S かつ S.card = 2 のとき、(S \ {x}).card = 1 -/
+private theorem card_sdiff_singleton_of_mem_card_two {α : Type*} [DecidableEq α]
+    {S : Finset α} {x : α} (hx : x ∈ S) (hc : S.card = 2) :
+    (S \ {x}).card = 1 := by
+  have hsub : {x} ⊆ S := Finset.singleton_subset_iff.mpr hx
+  rw [Finset.card_sdiff_of_subset hsub, hc, Finset.card_singleton]
+
+/-- S₁ ≠ S₂ で x ∈ S₁ ∩ S₂ かつ card = 2 なら花びら S₁ \ {x} ≠ S₂ \ {x} -/
+private theorem petal_ne_of_ne {α : Type*} [DecidableEq α]
+    {S₁ S₂ : Finset α} {x : α}
+    (hx1 : x ∈ S₁) (hx2 : x ∈ S₂)
+    (_hc1 : S₁.card = 2) (_hc2 : S₂.card = 2)
+    (hne : S₁ ≠ S₂) :
+    S₁ \ {x} ≠ S₂ \ {x} := by
+  intro h
+  apply hne
+  ext y
+  by_cases hyx : y = x
+  · subst hyx; exact ⟨fun _ => hx2, fun _ => hx1⟩
+  · constructor
+    · intro hy
+      have : y ∈ S₁ \ {x} := by
+        simp only [Finset.mem_sdiff, Finset.mem_singleton]; exact ⟨hy, hyx⟩
+      rw [h] at this
+      exact (Finset.mem_sdiff.mp this).1
+    · intro hy
+      have : y ∈ S₂ \ {x} := by
+        simp only [Finset.mem_sdiff, Finset.mem_singleton]; exact ⟨hy, hyx⟩
+      rw [← h] at this
+      exact (Finset.mem_sdiff.mp this).1
+
+/-- 共通要素を持つ3つの異なる2元集合はひまわり（一般版）
+
+    x を含む3つの異なるサイズ2の Finset は 3-ひまわり。
+    core = {x}, 花びらは {aᵢ} で互いに素。-/
+theorem sunflower_star_general {α : Type*} [DecidableEq α]
+    (S₁ S₂ S₃ : Finset α) (x : α)
+    (hmem1 : x ∈ S₁) (hmem2 : x ∈ S₂) (hmem3 : x ∈ S₃)
+    (hcard1 : S₁.card = 2) (hcard2 : S₂.card = 2) (hcard3 : S₃.card = 2)
+    (hne12 : S₁ ≠ S₂) (hne13 : S₁ ≠ S₃) (hne23 : S₂ ≠ S₃) :
+    IsSunflower [S₁, S₂, S₃] := by
+  refine ⟨{x}, ?_, ?_⟩
+  · -- core ⊆ S_i
+    intro S hS
+    simp only [List.mem_cons, List.mem_nil_iff, or_false] at hS
+    rcases hS with rfl | rfl | rfl <;> exact Finset.singleton_subset_iff.mpr ‹_›
+  · -- 花びらの互いに素性
+    -- 花びら S_i \ {x} はサイズ1で、異なる集合の花びらは異なる
+    -- サイズ1の異なる Finset は互いに素（disjoint_of_card_one_ne）
+    have hpc1 := card_sdiff_singleton_of_mem_card_two hmem1 hcard1
+    have hpc2 := card_sdiff_singleton_of_mem_card_two hmem2 hcard2
+    have hpc3 := card_sdiff_singleton_of_mem_card_two hmem3 hcard3
+    have hpne12 := petal_ne_of_ne hmem1 hmem2 hcard1 hcard2 hne12
+    have hpne13 := petal_ne_of_ne hmem1 hmem3 hcard1 hcard3 hne13
+    have hpne23 := petal_ne_of_ne hmem2 hmem3 hcard2 hcard3 hne23
+    have hpne21 : S₂ \ {x} ≠ S₁ \ {x} := Ne.symm hpne12
+    have hpne31 : S₃ \ {x} ≠ S₁ \ {x} := Ne.symm hpne13
+    have hpne32 : S₃ \ {x} ≠ S₂ \ {x} := Ne.symm hpne23
+    intro i j hi hj hij
+    have hi3 : i < 3 := hi
+    have hj3 : j < 3 := hj
+    interval_cases i <;> interval_cases j <;> simp_all <;>
+      exact disjoint_of_card_one_ne ‹_› ‹_› ‹_›
+
+/-- 2-均一族で、ある要素が3つ以上の集合に含まれるなら、3-ひまわりを含む -/
+theorem containsSunflower3_of_element_appears_thrice {α : Type*} [DecidableEq α]
+    (family : List (Finset α))
+    (hunif : IsUniform 2 family) (hnodup : family.Nodup) (x : α)
+    (hcount : (family.filter (fun S => x ∈ S)).length ≥ 3) :
+    ContainsSunflower family 3 := by
+  -- x を含む集合を3つ取り出す
+  set fx := family.filter (fun S => x ∈ S) with hfx_def
+  -- fx.length ≥ 3 なので先頭3つを取れる
+  have hfx3 : fx.length ≥ 3 := hcount
+  have h0 : 0 < fx.length := by omega
+  have h1 : 1 < fx.length := by omega
+  have h2 : 2 < fx.length := by omega
+  set S₁ := fx[0] with hS1_def
+  set S₂ := fx[1] with hS2_def
+  set S₃ := fx[2] with hS3_def
+  -- S_i ∈ family
+  have hS1_in_fx : S₁ ∈ fx := List.getElem_mem h0
+  have hS2_in_fx : S₂ ∈ fx := List.getElem_mem h1
+  have hS3_in_fx : S₃ ∈ fx := List.getElem_mem h2
+  have hS1_mem : S₁ ∈ family := List.mem_of_mem_filter hS1_in_fx
+  have hS2_mem : S₂ ∈ family := List.mem_of_mem_filter hS2_in_fx
+  have hS3_mem : S₃ ∈ family := List.mem_of_mem_filter hS3_in_fx
+  -- x ∈ S_i (filter condition gives decidability witness)
+  have hx1 : x ∈ S₁ := by
+    have := (List.mem_filter.mp hS1_in_fx).2; simpa using this
+  have hx2 : x ∈ S₂ := by
+    have := (List.mem_filter.mp hS2_in_fx).2; simpa using this
+  have hx3 : x ∈ S₃ := by
+    have := (List.mem_filter.mp hS3_in_fx).2; simpa using this
+  -- S_i.card = 2
+  have hc1 : S₁.card = 2 := hunif S₁ hS1_mem
+  have hc2 : S₂.card = 2 := hunif S₂ hS2_mem
+  have hc3 : S₃.card = 2 := hunif S₃ hS3_mem
+  -- S_i は互いに異なる（fx は family の部分リストで Nodup）
+  have hfx_nodup : fx.Nodup := List.Nodup.filter _ hnodup
+  have hne12 : S₁ ≠ S₂ := by
+    intro h; exact absurd (hfx_nodup.getElem_inj_iff.mp h) (by omega)
+  have hne13 : S₁ ≠ S₃ := by
+    intro h; exact absurd (hfx_nodup.getElem_inj_iff.mp h) (by omega)
+  have hne23 : S₂ ≠ S₃ := by
+    intro h; exact absurd (hfx_nodup.getElem_inj_iff.mp h) (by omega)
+  -- [S₁, S₂, S₃] はひまわり
+  have hsf := sunflower_star_general S₁ S₂ S₃ x
+    hx1 hx2 hx3 hc1 hc2 hc3 hne12 hne13 hne23
+  refine ⟨[S₁, S₂, S₃], rfl, ?_, hsf⟩
+  intro S hS
+  simp only [List.mem_cons, List.mem_nil_iff, or_false] at hS
+  rcases hS with rfl | rfl | rfl
+  · exact hS1_mem
+  · exact hS2_mem
+  · exact hS3_mem
+
+/-! ### Erdős-Rado n=2, k=3 の完全な定理（今後の課題）
+
+完全な証明には Case 2（全要素の出現回数 ≤ 2 の場合に貪欲法で
+3つの互いに素な集合を見つける）が必要。これは:
+1. 各2元集合 S = {a,b} と交わる集合が高々3個であること（包除原理 + Nodup）
+2. 9 - 3 = 6, 6 - 3 = 3, 3 ≥ 1 から3回の貪欲選択が可能
+3. 選ばれた3集合が互いに素であること
+
+の形式化が必要で、List ベースの操作が煩雑になるため、
+ここでは Case 1（スター補題）の完全証明に留める。
+
+### 定理の記述（証明は将来の探索に委ねる）
+-/
+
+end ErdosRadoN2K3
