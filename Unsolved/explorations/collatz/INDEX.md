@@ -98,6 +98,7 @@
 | 54 | Rauzy fractal | ✅ | scripts/collatz_rauzy.py | U頻度≈log₂(3)-1, 冗長度74% | B |
 | 55 | パターンマイニング | ✅ | scripts/collatz_pattern_mining.py | carry chain平均長2.0 | B |
 | 65 | 小さい値の到達可能性 | ✅ | CollatzStoppingTime.lean | collatzReaches 5,6,7 を decide で証明 | B |
+| 66 | mod 2^k 完全分類まとめ + 到達可能性拡張 | ✅ | CollatzMod3.lean, CollatzStoppingTime.lean | mod 16 分類追加, collatzReaches 8,9,10 | B |
 
 ## フェーズ12: 深堀り (探索56-59)
 

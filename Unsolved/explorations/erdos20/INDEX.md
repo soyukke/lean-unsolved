@@ -17,6 +17,7 @@
 | 8 | 2集合族のひまわり性 | — | isSunflower_pair: [S,T]は常にひまわり（core=S∩T） |
 | 9 | 4つの空集合のひまわり性 | — | sunflower_four_empty: 4×4のinterval_casesが動作確認 |
 | 10 | ContainsSunflowerの自明なケース | — | k=0,k=1でContainsSunflowerが成立することを形式証明 |
+| 11 | ひまわりの具体例（共通core非空） | — | {1,2,3},{1,4,5},{1,6,7}はcore={1}のひまわり、decide で花びらの互いに素性を検証 |
 
 ## 主要発見
 

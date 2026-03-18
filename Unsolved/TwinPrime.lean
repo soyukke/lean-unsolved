@@ -248,3 +248,15 @@ theorem IsTwinPrime.prime_right {p : ℕ} (h : IsTwinPrime p) : Nat.Prime (p + 2
 
 /-- IsTwinPrime p → p ≥ 2 -/
 theorem IsTwinPrime.two_le {p : ℕ} (h : IsTwinPrime p) : p ≥ 2 := h.1.two_le
+
+/-! ## 探索14: IsTwinPrime と twin_prime_mod_six の連携 -/
+
+/-- IsTwinPrime p かつ p > 3 → p % 6 = 5 -/
+theorem IsTwinPrime.mod_six {p : ℕ} (h : IsTwinPrime p) (hp3 : p > 3) :
+    p % 6 = 5 :=
+  twin_prime_mod_six h.1 h.2 hp3
+
+/-- IsTwinPrime p かつ p > 3 → (p+1) は 6 の倍数 -/
+theorem IsTwinPrime.middle_div6 {p : ℕ} (h : IsTwinPrime p) (hp3 : p > 3) :
+    6 ∣ (p + 1) :=
+  twin_prime_middle_div6 h.1 h.2 hp3

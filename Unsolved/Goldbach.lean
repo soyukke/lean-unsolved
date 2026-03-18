@@ -320,3 +320,20 @@ example : IsGoldbach 50 := ⟨3, 47, by norm_num, by norm_num, by norm_num⟩
 
 -- 42 = 5 + 37
 example : IsGoldbach 42 := ⟨5, 37, by norm_num, by norm_num, by norm_num⟩
+
+/-! ## 探索17: IsGoldbach の合成 -/
+
+-- IsGoldbach n かつ IsGoldbach m → IsGoldbach は和に関して閉じない（一般には）
+-- しかし以下の特殊ケースは成り立つ:
+
+/-- 4 は IsGoldbach (2+2) -/
+example : IsGoldbach 4 := ⟨2, 2, by norm_num, by norm_num, by norm_num⟩
+-- 既存だが明示的に再確認
+
+/-- 偶数 + 偶数 = 偶数 の場合は可能性がある -/
+-- 14 = 3 + 11
+example : IsGoldbach 14 := ⟨3, 11, by norm_num, by norm_num, by norm_num⟩
+-- 16 = 3 + 13
+example : IsGoldbach 16 := ⟨3, 13, by norm_num, by norm_num, by norm_num⟩
+-- 18 = 5 + 13
+example : IsGoldbach 18 := ⟨5, 13, by norm_num, by norm_num, by norm_num⟩

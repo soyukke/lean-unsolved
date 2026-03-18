@@ -201,3 +201,24 @@ theorem syracuse_mod4_of_mod8_eq3 (n : ℕ) (h : n % 8 = 3) :
 /-- n ≡ 7 (mod 8) → (3n+1)/2 ≡ 3 (mod 4) -/
 theorem syracuse_mod4_of_mod8_eq7 (n : ℕ) (h : n % 8 = 7) :
     ((3 * n + 1) / 2) % 4 = 3 := by omega
+
+/-! ## 14. コラッツ写像の mod 2^k 完全分類のまとめ -/
+
+/-- 3n+1 は常に偶数（n が奇数のとき）: 再確認用 -/
+theorem three_mul_add_one_even' (n : ℕ) (h : n % 2 = 1) : 2 ∣ (3 * n + 1) := by
+  exact ⟨(3 * n + 1) / 2, by omega⟩
+
+/-- n ≡ 5 (mod 8) → (3n+1)/2 は偶数（v₂≥2 なので (3n+1)/2 も偶数） -/
+theorem syracuse_even_of_mod8_eq5 (n : ℕ) (h : n % 8 = 5) :
+    ((3 * n + 1) / 2) % 2 = 0 := by omega
+
+-- n ≡ 1 (mod 8) → (3n+1)/4 は奇数（v₂=2）
+-- 既存: three_mul_add_one_div4_odd_of_mod8_eq1
+
+/-- n ≡ 5 (mod 16) → (3n+1)/4 は偶数 -/
+theorem three_mul_add_one_div4_even_of_mod16_eq5 (n : ℕ) (h : n % 16 = 5) :
+    ((3 * n + 1) / 4) % 2 = 0 := by omega
+
+/-- n ≡ 13 (mod 16) → (3n+1)/4 は偶数（(3n+1)%16=8 → (3n+1)/4 %2 = 0） -/
+theorem three_mul_add_one_div4_even_of_mod16_eq13 (n : ℕ) (h : n % 16 = 13) :
+    ((3 * n + 1) / 4) % 2 = 0 := by omega

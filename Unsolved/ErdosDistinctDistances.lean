@@ -292,3 +292,14 @@ theorem distSq_origin_add (x1 y1 x2 y2 : ℤ) :
 theorem distSq_double_origin (x y : ℤ) :
     distSq (2*x, 2*y) (0, 0) = 4 * distSq (x, y) (0, 0) := by
   unfold distSq; ring
+
+/-! ## 探索15: ピタゴラス三つ組の距離 -/
+
+-- (3,4,5): 3²+4²=5²
+example : distSq (3, 0) (0, 4) = 25 := by decide
+
+-- (5,12,13): 5²+12²=13²
+example : distSq (5, 0) (0, 12) = 169 := by decide
+
+-- (8,15,17): 8²+15²=17²
+example : distSq (8, 0) (0, 15) = 289 := by decide

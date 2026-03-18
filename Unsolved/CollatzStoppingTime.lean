@@ -330,3 +330,17 @@ theorem collatzReaches_six : collatzReaches 6 :=
 /-- 7 はコラッツ操作で1に到達する -/
 theorem collatzReaches_seven : collatzReaches 7 :=
   ⟨16, by decide⟩
+
+/-! ## 13. 小さい値の stoppingTime 検証 -/
+
+/-- collatzReaches 8 -/
+theorem collatzReaches_eight : collatzReaches 8 :=
+  ⟨3, by decide⟩
+
+/-- collatzReaches 9 -/
+theorem collatzReaches_nine : collatzReaches 9 :=
+  ⟨19, by decide⟩
+
+/-- collatzReaches 10 -/
+theorem collatzReaches_ten : collatzReaches 10 :=
+  ⟨6, by decide⟩

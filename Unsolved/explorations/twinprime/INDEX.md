@@ -4,7 +4,7 @@
 
 ## 現状
 - TwinPrime.lean に定義、検証例8組+IsTwinPrime検証6組、基本補題（sorry なし）
-- 探索12回完了
+- 探索14回完了
 
 ## 探索記録
 
@@ -88,6 +88,11 @@
 - `IsTwinPrime.prime_right`: IsTwinPrime p → Nat.Prime (p+2)
 - `IsTwinPrime.two_le`: IsTwinPrime p → p ≥ 2
 - IsTwinPrime 述語に対するドット記法アクセサの提供
+
+### 探索14: IsTwinPrime と twin_prime_mod_six の連携 ✅
+- `IsTwinPrime.mod_six`: IsTwinPrime p かつ p > 3 → p % 6 = 5（twin_prime_mod_six のラッパー）
+- `IsTwinPrime.middle_div6`: IsTwinPrime p かつ p > 3 → 6 ∣ (p+1)（twin_prime_middle_div6 のラッパー）
+- IsTwinPrime 述語に対するドット記法で既存定理を呼べるようにした
 
 ### 探索12: 双子素数ペアの対称性 ✅
 - `IsTwinPrime` 定義述語の導入: `Nat.Prime p ∧ Nat.Prime (p + 2)`

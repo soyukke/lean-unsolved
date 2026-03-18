@@ -266,3 +266,16 @@ theorem containsSunflower_one {α : Type*} [DecidableEq α]
   | S :: _, _ =>
     refine ⟨[S], rfl, ?_, isSunflower_singleton S⟩
     intro T hT; simp at hT; rw [hT]; simp
+
+/-! ## 探索11: ひまわりの具体例（共通coreが非空） -/
+
+/-- {1,2,3}, {1,4,5}, {1,6,7} はひまわり（core = {1}） -/
+theorem sunflower_core1 :
+    IsSunflower [({1, 2, 3} : Finset ℕ), {1, 4, 5}, {1, 6, 7}] := by
+  refine ⟨{1}, ?_, ?_⟩
+  · intro S hS
+    simp at hS
+    rcases hS with rfl | rfl | rfl <;> simp [Finset.subset_iff] <;> omega
+  · intro i j hi hj hij
+    have : i < 3 := hi; have : j < 3 := hj
+    interval_cases i <;> interval_cases j <;> simp_all <;> decide

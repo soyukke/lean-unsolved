@@ -16,6 +16,7 @@
 | 8 | シングルトンのsumset/prodset | — | sumset({a})={2a}, prodset({a})={a²}, {1,2}の計算例 |
 | 9 | 2元集合の和積比較 | — | {1,3},{2,3}でsumset/prodsetともにcard=3を検証 |
 | 10 | A={1,...,n}のsumsetカード=2n-1 | — | {1,2,3,4}でsumset card=7, prodset card=9を検証 |
+| 11 | 3元集合の和積（等比的集合） | — | {1,2,4}: sumset card=6, prodset card=5（等比的集合は積集合が小さい） |
 
 ## 主要発見
 

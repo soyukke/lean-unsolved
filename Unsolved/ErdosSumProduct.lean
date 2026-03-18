@@ -287,3 +287,12 @@ theorem sumset_1234_card : (sumsetFinset {1, 2, 3, 4}).card = 7 := by
 -- {1,2,3,4} の productset カード = 9
 theorem prodset_1234_card : (prodsetFinset {1, 2, 3, 4}).card = 9 := by
   simp only [prodsetFinset]; decide
+
+/-! ## 探索11: 3元集合の和積 -/
+
+-- {1,2,4} (等比的): sumset card = 6, prodset card = 5
+theorem sumset_124_card : (sumsetFinset {1, 2, 4}).card = 6 := by
+  simp only [sumsetFinset]; decide
+
+theorem prodset_124_card : (prodsetFinset {1, 2, 4}).card = 5 := by
+  simp only [prodsetFinset]; decide
