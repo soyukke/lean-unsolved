@@ -8,3 +8,10 @@ import Unsolved.CollatzFormula
 import Unsolved.CollatzMinimal
 import Unsolved.Goldbach
 import Unsolved.TwinPrime
+import Unsolved.CollatzStoppingTime
+import Unsolved.CollatzMod3
+import Unsolved.ErdosVanDerWaerden
+import Unsolved.ErdosDistinctDistances
+import Unsolved.ErdosRamsey
+import Unsolved.ErdosSunflower
+import Unsolved.ErdosSumProduct

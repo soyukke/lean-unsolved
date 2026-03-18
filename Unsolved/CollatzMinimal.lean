@@ -333,3 +333,205 @@ theorem minimal_counterexample_not_mod16_eq3 (n : ℕ) (h : isMinimalCounterexam
   have hlt := syracuse2_lt_of_mod16_eq3 n h16
   -- 最小性との矛盾
   exact minimal_contradiction_of_syracuse2_lt n h hlt hnr_syr2 hpos2
+
+/-! ## 15. 最小反例は n ≡ 11 (mod 32) ではない -/
+
+/-! ### 補助定理: n ≡ 11 (mod 32) に対する Syracuse の計算 -/
+
+/-- n ≡ 11 (mod 32) → T(n) の明示式: n = 32q+11 → T(n) = 48q+17 -/
+private theorem syracuse_of_mod32_eq11 (n q : ℕ) (hq : n = 32 * q + 11) :
+    syracuse n = 48 * q + 17 := by
+  rw [syracuse_mod4_eq3 n (by omega)]
+  omega
+
+/-- n ≡ 11 (mod 32) → T(n) ≡ 1 (mod 4) -/
+private theorem syracuse_mod4_of_mod32_eq11 (n : ℕ) (h : n % 32 = 11) :
+    syracuse n % 4 = 1 := by
+  rw [syracuse_mod4_eq3 n (by omega)]
+  omega
+
+/-- n ≡ 11 (mod 32) → T(n) ≡ 1 (mod 8) -/
+private theorem syracuse_mod8_of_mod32_eq11 (n : ℕ) (h : n % 32 = 11) :
+    syracuse n % 8 = 1 := by
+  rw [syracuse_mod4_eq3 n (by omega)]
+  omega
+
+/-- n ≡ 11 (mod 32) → T(n) > 1 -/
+private theorem syracuse_gt1_of_mod32_eq11 (n : ℕ) (h : n % 32 = 11) :
+    syracuse n > 1 := by
+  rw [syracuse_mod4_eq3 n (by omega)]
+  omega
+
+/-- n ≡ 11 (mod 32) → T²(n) の明示式: T²(n) = 36q+13 -/
+private theorem syracuse2_of_mod32_eq11 (n q : ℕ) (hq : n = 32 * q + 11) :
+    syracuse (syracuse n) = 36 * q + 13 := by
+  have hsyr : syracuse n = 48 * q + 17 := syracuse_of_mod32_eq11 n q hq
+  rw [hsyr]
+  rw [syracuse_of_mod8_eq1 (48 * q + 17) (by omega)]
+  omega
+
+/-- n ≡ 11 (mod 32) → T²(n) ≡ 1 (mod 4) -/
+private theorem syracuse2_mod4_of_mod32_eq11 (n q : ℕ) (hq : n = 32 * q + 11) :
+    syracuse (syracuse n) % 4 = 1 := by
+  rw [syracuse2_of_mod32_eq11 n q hq]
+  omega
+
+/-- n ≡ 11 (mod 32) → T²(n) > 1 -/
+private theorem syracuse2_gt1_of_mod32_eq11 (n q : ℕ) (hq : n = 32 * q + 11) :
+    syracuse (syracuse n) > 1 := by
+  rw [syracuse2_of_mod32_eq11 n q hq]
+  omega
+
+/-- n ≡ 11 (mod 32) → T³(n) ≤ 27q+10 -/
+private theorem syracuse3_le_of_mod32_eq11 (n q : ℕ) (hq : n = 32 * q + 11) :
+    syracuse (syracuse (syracuse n)) ≤ 27 * q + 10 := by
+  have hsyr2 : syracuse (syracuse n) = 36 * q + 13 := syracuse2_of_mod32_eq11 n q hq
+  rw [hsyr2]
+  have hle := syracuse_le_of_mod4_eq1 (36 * q + 13) (by omega) (by omega)
+  -- (3*(36q+13)+1)/4 = (108q+40)/4 = 27q+10
+  have : (3 * (36 * q + 13) + 1) / 4 = 27 * q + 10 := by omega
+  omega
+
+/-- n ≡ 11 (mod 32) → T³(n) < n -/
+private theorem syracuse3_lt_of_mod32_eq11 (n : ℕ) (h : n % 32 = 11) :
+    syracuse (syracuse (syracuse n)) < n := by
+  obtain ⟨q, hq⟩ : ∃ q, n = 32 * q + 11 := ⟨n / 32, by omega⟩
+  calc syracuse (syracuse (syracuse n))
+      ≤ 27 * q + 10 := syracuse3_le_of_mod32_eq11 n q hq
+    _ < n := by omega
+
+/-- **最小反例は n ≡ 11 (mod 32) ではない**
+
+    証明の骨格:
+    1. n = 32q+11 と仮定
+    2. T(n) = 48q+17 (mod 8 ≡ 1)
+    3. T²(n) = 36q+13 (mod 4 ≡ 1)
+    4. T³(n) ≤ 27q+10 < 32q+11 = n
+    5. ¬reachesOne の3段伝播と最小性の矛盾 -/
+theorem minimal_counterexample_not_mod32_eq11 (n : ℕ) (h : isMinimalCounterexample n) :
+    n % 32 ≠ 11 := by
+  intro h32
+  obtain ⟨q, hq⟩ : ∃ q, n = 32 * q + 11 := ⟨n / 32, by omega⟩
+  have hge := h.1
+  have hnr := h.2.1
+  have hmin := h.2.2
+  have hodd := minimal_counterexample_odd n h
+  -- syracuse n の性質
+  have hsyr_odd : syracuse n % 2 = 1 := syracuse_odd_of_mod4_eq3 n (by omega)
+  have hsyr_ge1 : syracuse n ≥ 1 := syracuse_pos_of_mod4_eq3 n (by omega)
+  -- syracuse(syracuse n) の性質
+  have hsyr2 := syracuse2_of_mod32_eq11 n q hq
+  have hsyr2_mod4 := syracuse2_mod4_of_mod32_eq11 n q hq
+  have hsyr2_gt1 := syracuse2_gt1_of_mod32_eq11 n q hq
+  have hsyr2_odd : syracuse (syracuse n) % 2 = 1 := by omega
+  have hsyr2_ge1 : syracuse (syracuse n) ≥ 1 := by omega
+  -- ¬reachesOne の伝播 (3段)
+  have hnr_syr : ¬reachesOne (syracuse n) :=
+    not_reachesOne_syracuse n hge hodd hnr
+  have hnr_syr2 : ¬reachesOne (syracuse (syracuse n)) :=
+    not_reachesOne_syracuse (syracuse n) hsyr_ge1 hsyr_odd hnr_syr
+  have hnr_syr3 : ¬reachesOne (syracuse (syracuse (syracuse n))) :=
+    not_reachesOne_syracuse (syracuse (syracuse n)) hsyr2_ge1 hsyr2_odd hnr_syr2
+  -- T³(n) < n
+  have hlt := syracuse3_lt_of_mod32_eq11 n h32
+  -- T³(n) ≥ 1
+  have hpos3 : syracuse (syracuse (syracuse n)) ≥ 1 :=
+    syracuse_pos (syracuse (syracuse n)) hsyr2_ge1 hsyr2_odd
+  -- 最小性との矛盾
+  exact hnr_syr3 (hmin (syracuse (syracuse (syracuse n))) hpos3 hlt)
+
+/-! ## 16. 最小反例は n ≡ 23 (mod 32) ではない -/
+
+/-! ### 補助定理: n ≡ 23 (mod 32) に対する Syracuse の計算 -/
+
+/-- n ≡ 23 (mod 32) → T(n) の明示式: n = 32q+23 → T(n) = 48q+35 -/
+private theorem syracuse_of_mod32_eq23 (n q : ℕ) (hq : n = 32 * q + 23) :
+    syracuse n = 48 * q + 35 := by
+  rw [syracuse_mod4_eq3 n (by omega)]
+  omega
+
+/-- n ≡ 23 (mod 32) → T(n) ≡ 3 (mod 4) -/
+private theorem syracuse_mod4_of_mod32_eq23 (n : ℕ) (h : n % 32 = 23) :
+    syracuse n % 4 = 3 := by
+  rw [syracuse_mod4_eq3 n (by omega)]
+  omega
+
+/-- n ≡ 23 (mod 32) → T(n) ≡ 3 (mod 8) -/
+private theorem syracuse_mod8_of_mod32_eq23 (n : ℕ) (h : n % 32 = 23) :
+    syracuse n % 8 = 3 := by
+  rw [syracuse_mod4_eq3 n (by omega)]
+  omega
+
+/-- n ≡ 23 (mod 32) → T²(n) の明示式: T²(n) = 72q+53 -/
+private theorem syracuse2_of_mod32_eq23 (n q : ℕ) (hq : n = 32 * q + 23) :
+    syracuse (syracuse n) = 72 * q + 53 := by
+  have hsyr : syracuse n = 48 * q + 35 := syracuse_of_mod32_eq23 n q hq
+  rw [hsyr]
+  rw [syracuse_mod4_eq3 (48 * q + 35) (by omega)]
+  omega
+
+/-- n ≡ 23 (mod 32) → T²(n) ≡ 5 (mod 8) -/
+private theorem syracuse2_mod8_of_mod32_eq23 (n q : ℕ) (hq : n = 32 * q + 23) :
+    syracuse (syracuse n) % 8 = 5 := by
+  rw [syracuse2_of_mod32_eq23 n q hq]
+  omega
+
+/-- n ≡ 23 (mod 32) → T³(n) ≤ 27q+20 -/
+private theorem syracuse3_le_of_mod32_eq23 (n q : ℕ) (hq : n = 32 * q + 23) :
+    syracuse (syracuse (syracuse n)) ≤ 27 * q + 20 := by
+  have hsyr2 : syracuse (syracuse n) = 72 * q + 53 := syracuse2_of_mod32_eq23 n q hq
+  rw [hsyr2]
+  have hle := syracuse_le_of_mod8_eq5 (72 * q + 53) (by omega)
+  -- (3*(72q+53)+1)/8 = (216q+160)/8 = 27q+20
+  have : (3 * (72 * q + 53) + 1) / 8 = 27 * q + 20 := by omega
+  omega
+
+/-- n ≡ 23 (mod 32) → T³(n) < n -/
+private theorem syracuse3_lt_of_mod32_eq23 (n : ℕ) (h : n % 32 = 23) :
+    syracuse (syracuse (syracuse n)) < n := by
+  obtain ⟨q, hq⟩ : ∃ q, n = 32 * q + 23 := ⟨n / 32, by omega⟩
+  calc syracuse (syracuse (syracuse n))
+      ≤ 27 * q + 20 := syracuse3_le_of_mod32_eq23 n q hq
+    _ < n := by omega
+
+/-- **最小反例は n ≡ 23 (mod 32) ではない**
+
+    証明の骨格:
+    1. n = 32q+23 と仮定 (mod 16 ≡ 7)
+    2. T(n) = 48q+35 (mod 8 ≡ 3, mod 4 ≡ 3)
+    3. T²(n) = 72q+53 (mod 8 ≡ 5)
+    4. T³(n) ≤ (216q+160)/8 = 27q+20 < 32q+23 = n
+    5. ¬reachesOne の3段伝播と最小性の矛盾 -/
+theorem minimal_counterexample_not_mod32_eq23 (n : ℕ) (h : isMinimalCounterexample n) :
+    n % 32 ≠ 23 := by
+  intro h32
+  obtain ⟨q, hq⟩ : ∃ q, n = 32 * q + 23 := ⟨n / 32, by omega⟩
+  have hge := h.1
+  have hnr := h.2.1
+  have hmin := h.2.2
+  have hodd := minimal_counterexample_odd n h
+  -- syracuse n の性質
+  have hsyr_odd : syracuse n % 2 = 1 := syracuse_odd_of_mod4_eq3 n (by omega)
+  have hsyr_ge1 : syracuse n ≥ 1 := syracuse_pos_of_mod4_eq3 n (by omega)
+  -- T(n) ≡ 3 (mod 4) → T(n) は奇数かつ T²(n) も奇数
+  have hsyr_mod4 := syracuse_mod4_of_mod32_eq23 n h32
+  -- syracuse(syracuse n) の性質
+  have hsyr2 := syracuse2_of_mod32_eq23 n q hq
+  have hsyr2_odd : syracuse (syracuse n) % 2 = 1 := by
+    rw [hsyr2]; omega
+  have hsyr2_ge1 : syracuse (syracuse n) ≥ 1 := by
+    rw [hsyr2]; omega
+  -- ¬reachesOne の伝播 (3段)
+  have hnr_syr : ¬reachesOne (syracuse n) :=
+    not_reachesOne_syracuse n hge hodd hnr
+  have hnr_syr2 : ¬reachesOne (syracuse (syracuse n)) :=
+    not_reachesOne_syracuse (syracuse n) hsyr_ge1 hsyr_odd hnr_syr
+  have hnr_syr3 : ¬reachesOne (syracuse (syracuse (syracuse n))) :=
+    not_reachesOne_syracuse (syracuse (syracuse n)) hsyr2_ge1 hsyr2_odd hnr_syr2
+  -- T³(n) < n
+  have hlt := syracuse3_lt_of_mod32_eq23 n h32
+  -- T³(n) ≥ 1
+  have hpos3 : syracuse (syracuse (syracuse n)) ≥ 1 :=
+    syracuse_pos (syracuse (syracuse n)) hsyr2_ge1 hsyr2_odd
+  -- 最小性との矛盾
+  exact hnr_syr3 (hmin (syracuse (syracuse (syracuse n))) hpos3 hlt)

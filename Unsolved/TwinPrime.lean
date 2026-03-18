@@ -23,6 +23,10 @@ import Mathlib
 - Brunの定数 B₂ ≈ 1.711 (10⁶までの部分和)
 
 ## 探索3: Lean検証例と基本補題
+
+## 探索7: 双子素数の mod 30 構造
+- p > 5 の双子素数 (p, p+2) は p % 30 ∈ {11, 17, 29}
+- twin_prime_mod30: 5の整除性を使った排除で証明
 -/
 
 /-- 双子素数予想: 差が2の素数の組は無限に存在する -/
@@ -102,4 +106,29 @@ theorem twin_prime_mod_six {p : ℕ} (hp : Nat.Prime p) (hp2 : Nat.Prime (p + 2)
 theorem twin_prime_plus_two_mod_six {p : ℕ} (hp : Nat.Prime p) (hp2 : Nat.Prime (p + 2))
     (hp3 : p > 3) : (p + 2) % 6 = 1 := by
   have h5 := twin_prime_mod_six hp hp2 hp3
+  omega
+
+/-! ## 探索7: 双子素数の mod 30 構造 -/
+
+/-- 5より大きい双子素数 (p, p+2) の p は p % 30 ∈ {11, 17, 29} -/
+theorem twin_prime_mod30 {p : ℕ} (hp : Nat.Prime p) (hp2 : Nat.Prime (p + 2)) (hp5 : p > 5) :
+    p % 30 = 11 ∨ p % 30 = 17 ∨ p % 30 = 29 := by
+  have h6 := twin_prime_mod_six hp hp2 (by omega)
+  -- p % 6 = 5 なので p % 30 ∈ {5, 11, 17, 23, 29}
+  have hmod30 : p % 30 < 30 := Nat.mod_lt p (by norm_num)
+  -- p % 30 % 6 = 5
+  have h630 : p % 30 % 6 = 5 := by omega
+  -- p % 30 ≠ 5: p ≡ 5 (mod 30) → 5 ∣ p → p = 5 だが p > 5
+  have h5 : p % 30 ≠ 5 := by
+    intro heq
+    have : 5 ∣ p := ⟨p / 30 * 6 + 1, by omega⟩
+    have := hp.eq_one_or_self_of_dvd 5 this
+    omega
+  -- p % 30 ≠ 23: (p+2) % 30 = 25, so 5 ∣ (p+2), p+2 > 5 → 矛盾
+  have h23 : p % 30 ≠ 23 := by
+    intro heq
+    have hmod2 : (p + 2) % 30 = 25 := by omega
+    have : 5 ∣ (p + 2) := ⟨(p + 2) / 30 * 6 + 5, by omega⟩
+    have := hp2.eq_one_or_self_of_dvd 5 this
+    omega
   omega

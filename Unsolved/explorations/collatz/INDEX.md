@@ -66,13 +66,54 @@
 | 28 | 連分数 | ✅ | scripts/collatz_continued_fraction.py | ★d/u>log₂(3)が常に成立(調査範囲), 2^a·3^b-1型は長st |
 | 29 | 数論的壁 | ✅ | scripts/collatz_number_wall.py | 壁は全てmod4≡3, 2進1密度0.75 |
 
+## フェーズ9: Stopping Time の深堀り
+
+| # | 探索 | ステータス | 成果物 | 主要発見 |
+|---|------|----------|--------|---------|
+| 42 | StoppingTime追加補題 | ✅ | CollatzStoppingTime.lean | s(4n)=s(n)+2, s(8n)=s(n)+3, 2^k·n到達⟺n到達, s(2^k)=k, collatzIter合成律 |
+
+## フェーズ10: 解析的手法
+
+| # | 探索 | ステータス | 成果物 | 主要発見 |
+|---|------|----------|--------|---------|
+| 52 | IFS(反復関数系)解析 | ✅ | scripts/collatz_ifs.py | 臨界確率p_c≈0.369, 実軌道λ≈-0.147≈λ(0.5), BC次元≈0.71, 全軌道でλ<0 |
+| 53 | 形式的冪級数の有理性テスト | ✅ | scripts/collatz_generating_function.py | 生成関数の過渡部分は非有理、Z変換の極が全て単位円内(|z|≈0.93)、支配的極に普遍性 |
+
+## フェーズ11: 大規模並列探索 (探索42-55)
+
+| # | 探索 | ステータス | 成果物 | 主要発見 | 評価 |
+|---|------|----------|--------|---------|------|
+| 42 | 大規模d/u最小値 | ✅ | scripts/collatz_du_large.py | 10^7まで全奇数でd/u>log₂(3), 差分縮小は減速 | B |
+| 43 | 行列表現 | ✅ | scripts/collatz_matrix.py | Aff(Q)ランダムウォーク, リアプノフ指数全て負 | B |
+| 44 | 2-adic解析 | ✅ | scripts/collatz_padic.py | ★Lipschitz反復不変性, 不動点は1のみ | A |
+| 45 | SAT制約探索 | ✅ | scripts/collatz_sat.py | ★k≤9,k≥13で全排除, k=10-12のみ窓 | A |
+| 46 | v2独立性 | ✅ | scripts/collatz_v2_independence.py | ★v2依存はビット共有由来, 正の相関は予想に有利 | A |
+| 47 | 転送作用素 | ✅ | scripts/collatz_transfer_operator.py | ★★E[v₂]=2.0(k≤9), 全kでE[v₂]>log₂(3) | S |
+| 48 | 3n+d変種比較 | ✅ | scripts/collatz_variants.py | ★a=3→4の鋭い相転移, v2分布の普遍性 | A |
+| 49 | 逆木密度 | ✅ | scripts/collatz_inverse_density.py | 成長率4/3確認, 定数2.69 | B |
+| 50 | ビットエントロピー | ✅ | scripts/collatz_bit_entropy.py | ★ビット長連続増加≤2ステップ | A |
+| 51 | delay record | ✅ | scripts/collatz_delay_records.py | 成長定数≈4/3, 末尾1-bits | B |
+| 52 | IFS | ✅ | scripts/collatz_ifs.py | 全軌道でリアプノフ指数負 | B |
+| 53 | 生成関数 | ✅ | scripts/collatz_generating_function.py | ★Z変換極が全て単位円内 | A |
+| 54 | Rauzy fractal | ✅ | scripts/collatz_rauzy.py | U頻度≈log₂(3)-1, 冗長度74% | B |
+| 55 | パターンマイニング | ✅ | scripts/collatz_pattern_mining.py | carry chain平均長2.0 | B |
+
+## フェーズ12: 深堀り (探索56-59)
+
+| # | 探索 | ステータス | 成果物 | 主要発見 | 評価 |
+|---|------|----------|--------|---------|------|
+| 56 | E[v₂]=2の証明 | ✅ | scripts/collatz_ev2_proof.py | v2=2滞在率25%, 幾何分布メカニズム | A |
+| 57 | k=10-12拡大周期 | ✅ | scripts/collatz_expansion_window.py | 大偏差レートI=0.055で消滅を説明 | A |
+| 58 | mod32 Lean形式化 | ✅ | CollatzMinimal.lean拡張 | ★mod32≡11,23排除(sorry無し) | S |
+| 59 | v2分布の厳密証明 | ✅ | scripts/collatz_v2_distribution_proof.py | ★★P(v2=j)=1/2^j厳密証明, E[v₂]=2.0 | S |
+
 ## 未着手の方向
 
 | 方向 | 概要 | 優先度 |
 |------|------|--------|
 | ★d/u > log₂(3) の証明 | 証明できればコラッツと同値 | ★★★ |
 | T(n) ≢ 0 (mod 3) のLean証明 | 形式化は容易そう | ★★ |
-| s(2n) = s(n) + 1 のLean証明 | 形式化容易、探索26で発見 | ★★ |
+| ~~s(2n) = s(n) + 1 のLean証明~~ | ✅探索36で完了、探索42で拡張 | ~~★★~~ |
 | Syracuseが奇数mod2^K上の全単射 | v2独立性の形式証明 | ★★ |
 | 逆コラッツ木の全整数包含の形式化 | 予想と同値な言い換え | ★★ |
 | 一般k Hensel帰納法 | 技術的に可能だが大労力 | ★ |

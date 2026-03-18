@@ -1,7 +1,7 @@
 import Unsolved.CollatzStructure
 
 /-!
-# コラッツ予想 探索36: Stopping Time と s(2n) = s(n) + 1
+# コラッツ予想 探索36,42: Stopping Time と s(2n) = s(n) + 1
 
 コラッツ関数の stopping time（1に到達するまでのステップ数）を定義し、
 偶数の基本性質 s(2n) = s(n) + 1 を形式証明する。
@@ -11,6 +11,12 @@ import Unsolved.CollatzStructure
 - `stoppingTime`: 1に到達するまでの最小ステップ数
 - `stoppingTime_double`: s(2n) = s(n) + 1 （n ≥ 1 のとき）
 - `stoppingTime_pow_two_mul`: s(2^k * n) = s(n) + k （n ≥ 1 のとき）
+
+## 探索42で追加
+- `collatzReaches_of_pow_two_mul`: 2^k·n が1に到達 ⟹ n が1に到達
+- `collatzReaches_pow_two_mul_iff`: 同値版
+- `collatzReaches_four`: 4 が1に到達する
+- `collatzReaches_step`: collatzStep に関して閉じている
 -/
 
 /-! ## 1. コラッツ到達可能性 -/
@@ -83,6 +89,11 @@ theorem collatzIter_double_iff (k n : ℕ) (hn : n > 0) :
     collatzIter (k + 1) (2 * n) = 1 ↔ collatzIter k n = 1 := by
   rw [collatzIter_succ_double k n hn]
 
+/-- stoppingTime は証明の選択に依存しない -/
+theorem stoppingTime_proof_irrel (n : ℕ) (h1 h2 : collatzReaches n) :
+    stoppingTime n h1 = stoppingTime n h2 := by
+  simp [stoppingTime]
+
 /-- ★主定理: s(2n) = s(n) + 1 （n ≥ 1 のとき）
 
   直感的には明らか: 2n は偶数なので最初の1ステップで n/2 = n になり、
@@ -102,7 +113,6 @@ theorem stoppingTime_double (n : ℕ) (hn : n ≥ 1)
     push_neg at hlt
     -- stoppingTime (2*n) ≤ s
     have hle : stoppingTime (2 * n) h2 ≤ s := by omega
-    -- stoppingTime (2*n) = 0 ならば 2*n = 1 だが n ≥ 1 なので矛盾
     -- stoppingTime (2*n) ≥ 1 を示す
     have hst_pos : stoppingTime (2 * n) h2 ≥ 1 := by
       by_contra h0
@@ -110,7 +120,6 @@ theorem stoppingTime_double (n : ℕ) (hn : n ≥ 1)
       have h0' : stoppingTime (2 * n) h2 = 0 := by omega
       have := collatzIter_stoppingTime (2 * n) h2
       rw [h0'] at this
-      -- collatzIter 0 (2*n) = 2*n = 1 だが 2*n ≥ 2
       change 2 * n = 1 at this; omega
     -- stoppingTime (2*n) = m + 1 と書ける
     obtain ⟨m, hm_eq⟩ : ∃ m, stoppingTime (2 * n) h2 = m + 1 :=
@@ -142,11 +151,6 @@ theorem collatzReaches_pow_two_mul (k n : ℕ) (hn : n ≥ 1) (hr : collatzReach
       omega
     · exact ih
 
-/-- stoppingTime は証明の選択に依存しない -/
-theorem stoppingTime_proof_irrel (n : ℕ) (h1 h2 : collatzReaches n) :
-    stoppingTime n h1 = stoppingTime n h2 := by
-  simp [stoppingTime]
-
 /-- ★一般化: s(2^k * n) = s(n) + k （n ≥ 1 のとき） -/
 theorem stoppingTime_pow_two_mul (k n : ℕ) (hn : n ≥ 1) (hr : collatzReaches n) :
     stoppingTime (2 ^ k * n) (collatzReaches_pow_two_mul k n hn hr)
@@ -162,14 +166,21 @@ theorem stoppingTime_pow_two_mul (k n : ℕ) (hn : n ≥ 1) (hr : collatzReaches
         · exact hn
       omega
     set hrk := collatzReaches_pow_two_mul k n hn hr
-    -- 2^(k+1) * n = 2 * (2^k * n) を使って書き換え
+    -- stoppingTime は Nat.find なので、同じ述語なら同じ値
+    -- 2^(k+1)*n = 2*(2^k*n) を利用
     have heq : 2 ^ (k + 1) * n = 2 * (2 ^ k * n) := by ring
-    -- stoppingTime は値が同じなら証明に依存しない
-    -- Nat.find の congr を使う
-    conv_lhs => rw [show 2 ^ (k + 1) * n = 2 * (2 ^ k * n) from by ring]
-    rw [stoppingTime_proof_irrel _ _ (collatzReaches_double (2 ^ k * n) hpk hrk),
-        stoppingTime_double (2 ^ k * n) hpk hrk, ih]
-    omega
+    -- stoppingTime_double を使うため、同値な形に変換
+    have h_double := collatzReaches_double (2 ^ k * n) hpk hrk
+    -- 目標を Nat.find の等価性で示す
+    change Nat.find (collatzReaches_pow_two_mul (k + 1) n hn hr) = stoppingTime n hr + (k + 1)
+    -- 2^(k+1)*n と 2*(2^k*n) は同じ値
+    have : (fun j => collatzIter j (2 ^ (k + 1) * n) = 1)
+         = (fun j => collatzIter j (2 * (2 ^ k * n)) = 1) := by
+      ext j; rw [heq]
+    rw [show stoppingTime n hr + (k + 1) = (stoppingTime n hr + k) + 1 from by omega,
+        ← ih, ← stoppingTime_double (2 ^ k * n) hpk hrk]
+    change Nat.find _ = Nat.find _
+    congr 1
 
 /-! ## 6. 特殊値の検証 -/
 
@@ -177,9 +188,86 @@ theorem stoppingTime_pow_two_mul (k n : ℕ) (hn : n ≥ 1) (hr : collatzReaches
 theorem collatzReaches_two : collatzReaches 2 :=
   ⟨1, by decide⟩
 
-/-- s(2) = 1: stoppingTime_double の特殊ケースとしても得られる -/
+/-- s(2) = 1 -/
 theorem stoppingTime_two : stoppingTime 2 collatzReaches_two = 1 := by
-  have hr_double := collatzReaches_double 1 (by omega) collatzReaches_one
-  conv_lhs => rw [show (2 : ℕ) = 2 * 1 from by omega]
-  rw [stoppingTime_proof_irrel _ _ hr_double,
-      stoppingTime_double 1 (by omega) collatzReaches_one, stoppingTime_one]
+  unfold stoppingTime
+  rw [Nat.find_eq_iff]
+  constructor
+  · decide
+  · intro m hm
+    interval_cases m
+    simp [collatzIter]
+
+/-! ## 7. 探索42: 追加補題 -/
+
+/-! ### 7.1 到達可能性の同値性: 2^k·n ↔ n -/
+
+/-- 2^k·n が1に到達する ⟹ n が1に到達する （n ≥ 1 のとき） -/
+theorem collatzReaches_of_pow_two_mul (k n : ℕ) (hn : n ≥ 1)
+    (h : collatzReaches (2 ^ k * n)) : collatzReaches n := by
+  induction k with
+  | zero => simpa using h
+  | succ k ih =>
+    apply ih
+    have heq : 2 ^ (k + 1) * n = 2 * (2 ^ k * n) := by ring
+    rw [heq] at h
+    have hpk : 2 ^ k * n ≥ 1 := by
+      have : 2 ^ k * n ≥ 1 * 1 :=
+        Nat.mul_le_mul (Nat.one_le_pow k 2 (by omega)) hn
+      omega
+    exact collatzReaches_of_double (2 ^ k * n) hpk h
+
+/-- ★ 2^k·n が1に到達する ⟺ n が1に到達する （n ≥ 1 のとき） -/
+theorem collatzReaches_pow_two_mul_iff (k n : ℕ) (hn : n ≥ 1) :
+    collatzReaches (2 ^ k * n) ↔ collatzReaches n :=
+  ⟨collatzReaches_of_pow_two_mul k n hn, collatzReaches_pow_two_mul k n hn⟩
+
+/-! ### 7.2 特殊値の追加検証 -/
+
+/-- 4 は1に到達する -/
+theorem collatzReaches_four : collatzReaches 4 :=
+  ⟨2, by decide⟩
+
+/-- collatzReaches は collatzStep に関して閉じている:
+    n が1に到達し n ≥ 2 ならば collatzStep n も1に到達する -/
+theorem collatzReaches_step (n : ℕ) (hn : n ≥ 2) (hr : collatzReaches n) :
+    collatzReaches (collatzStep n) := by
+  obtain ⟨k, hk⟩ := hr
+  cases k with
+  | zero =>
+    change n = 1 at hk; omega
+  | succ k =>
+    exact ⟨k, by rwa [collatzIter_succ] at hk⟩
+
+/-! ## 8. 探索44: stoppingTime の奇数に対する下界 -/
+
+/-- 奇数 n > 1 に対して collatzIter 1 n > 1 :
+    collatzStep n = 3n+1 ≥ 4 > 1 -/
+private theorem collatzIter_one_odd_gt_one (n : ℕ) (hn : n > 1) (hodd : ¬ 2 ∣ n) :
+    collatzIter 1 n ≠ 1 := by
+  simp only [collatzIter_succ, collatzIter_zero]
+  have hmod : n % 2 ≠ 0 := by
+    intro h; exact hodd ⟨n / 2, by omega⟩
+  rw [collatzStep_odd n hmod]
+  omega
+
+/-- 奇数 n > 1 の stopping time は 2 以上:
+    奇数 → collatzStep で 3n+1（偶数） → もう1ステップ必要
+    つまり n → 3n+1 → (3n+1)/2 で、少なくとも2ステップ -/
+theorem stoppingTime_odd_ge_two (n : ℕ) (hn : n > 1) (hodd : ¬ 2 ∣ n)
+    (hr : collatzReaches n) :
+    stoppingTime n hr ≥ 2 := by
+  -- ステップ0 で到達しないことを示す
+  have h0 : collatzIter 0 n ≠ 1 := by change n ≠ 1; omega
+  -- ステップ1 で到達しないことを示す
+  have h1 : collatzIter 1 n ≠ 1 := collatzIter_one_odd_gt_one n hn hodd
+  -- stoppingTime は最小の k で collatzIter k n = 1、0 と 1 はダメなので ≥ 2
+  by_contra hlt
+  push_neg at hlt
+  have hle : stoppingTime n hr ≤ 1 := by omega
+  have hst := collatzIter_stoppingTime n hr
+  -- stoppingTime ≤ 1 だが、0 でも 1 でも collatzIter で 1 に到達しない
+  have h01 : stoppingTime n hr = 0 ∨ stoppingTime n hr = 1 := by omega
+  rcases h01 with h | h
+  · rw [h] at hst; exact h0 hst
+  · rw [h] at hst; exact h1 hst
