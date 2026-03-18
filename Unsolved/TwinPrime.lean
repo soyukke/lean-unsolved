@@ -346,3 +346,8 @@ example : IsTwinPrime 347 := ⟨by norm_num, by norm_num⟩
 -- ただし否定の形式証明は複雑なので、代わりに大きい双子素数:
 example : IsTwinPrime 419 := ⟨by norm_num, by norm_num⟩
 example : IsTwinPrime 431 := ⟨by norm_num, by norm_num⟩
+
+/-! ## 探索24: 500台の双子素数 -/
+example : IsTwinPrime 461 := ⟨by norm_num, by norm_num⟩
+example : IsTwinPrime 521 := ⟨by norm_num, by norm_num⟩
+example : IsTwinPrime 569 := ⟨by norm_num, by norm_num⟩

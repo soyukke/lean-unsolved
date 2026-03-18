@@ -415,3 +415,13 @@ example : IsGoldbach 44 := ⟨3, 41, by norm_num, by norm_num, by norm_num⟩
 example : IsGoldbach 46 := ⟨3, 43, by norm_num, by norm_num, by norm_num⟩
 -- 48 = 5 + 43
 example : IsGoldbach 48 := ⟨5, 43, by norm_num, by norm_num, by norm_num⟩
+
+/-! ## 探索27: 偶数の系統的検証（続き） -/
+
+example : IsGoldbach 52 := ⟨5, 47, by norm_num, by norm_num, by norm_num⟩
+example : IsGoldbach 56 := ⟨3, 53, by norm_num, by norm_num, by norm_num⟩
+example : IsGoldbach 58 := ⟨5, 53, by norm_num, by norm_num, by norm_num⟩
+example : IsGoldbach 62 := ⟨3, 59, by norm_num, by norm_num, by norm_num⟩
+example : IsGoldbach 64 := ⟨3, 61, by norm_num, by norm_num, by norm_num⟩
+example : IsGoldbach 68 := ⟨7, 61, by norm_num, by norm_num, by norm_num⟩
+example : IsGoldbach 70 := ⟨3, 67, by norm_num, by norm_num, by norm_num⟩

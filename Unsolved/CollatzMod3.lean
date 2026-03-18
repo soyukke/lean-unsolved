@@ -271,3 +271,11 @@ theorem syracuse_ge_succ (n : ℕ) (hn : n ≥ 3) (hodd : n % 2 = 1) :
 -- つまり奇数 n に対して (3n+1)%6 = 4 が常に成立!
 theorem three_mul_add_one_mod6 (n : ℕ) (hodd : n % 2 = 1) :
     (3 * n + 1) % 6 = 4 := by omega
+
+/-! ## 21. コラッツ写像の (3n+1) % 12 完全分類 -/
+
+-- 奇数 n に対して (3n+1) % 12 を分類:
+-- n%12=1: 4, n%12=3: 10, n%12=5: 4, n%12=7: 10, n%12=9: 4, n%12=11: 10
+-- つまり (3n+1) % 12 ∈ {4, 10}
+theorem three_mul_add_one_mod12_cases (n : ℕ) (hodd : n % 2 = 1) :
+    (3 * n + 1) % 12 = 4 ∨ (3 * n + 1) % 12 = 10 := by omega

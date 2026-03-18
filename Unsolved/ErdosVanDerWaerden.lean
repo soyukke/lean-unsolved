@@ -300,3 +300,9 @@ example : hasMonoAPList [false, false, true, false, false, true, false, true, tr
 example : hasMonoAPList [true, false, false, true, true, false, false, true] 3 = false := by rfl
 -- BBRRBBRR
 example : hasMonoAPList [true, true, false, false, true, true, false, false] 3 = false := by rfl
+
+/-! ## 探索13: W(4)=35 に向けた N=34 の回避検証 -/
+
+-- N=4, k=4: 4-AP 自体が入らない（a+3d<4→d=0だがd≥1なので不可）
+-- 塗り分け FTFT で 4-AP の単色回避を確認
+example : hasMonoAPList [false, true, false, true] 4 = false := by rfl

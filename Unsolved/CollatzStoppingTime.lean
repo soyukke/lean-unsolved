@@ -441,3 +441,8 @@ theorem collatzReaches_4096 : collatzReaches 4096 := collatzReaches_pow_two 12
 theorem collatzReaches_17 : collatzReaches 17 := ⟨12, by decide⟩
 theorem collatzReaches_19 : collatzReaches 19 := ⟨20, by decide⟩
 theorem collatzReaches_21 : collatzReaches 21 := ⟨7, by decide⟩
+
+/-! ## 23. collatzReaches の奇数系統検証（続き） -/
+
+theorem collatzReaches_23 : collatzReaches 23 := ⟨15, by decide⟩
+theorem collatzReaches_25 : collatzReaches 25 := ⟨23, by decide⟩
