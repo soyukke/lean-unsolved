@@ -54,6 +54,10 @@ import Mathlib
 ### 探索10: n ≡ 4 (mod 6) の構造定理
 - n ≡ 4 (mod 6) のとき p+q=n (p,q>3素数) は p%6=5 ∧ q%6=5
 - 5+5=10≡4 ✓ のみ
+
+### 探索11: IsGoldbach の偶数性
+- IsGoldbach n かつ n が奇数 → p=2 の分解が存在 (isGoldbach_odd_has_two)
+- 偶数の IsGoldbach は4以上 (isGoldbach_even_ge_four)
 -/
 
 /-- ゴールドバッハ予想: 2より大きい全ての偶数は2つの素数の和で表せる -/
@@ -220,6 +224,30 @@ theorem goldbach_mod6_four {n p q : ℕ}
   · exfalso; omega
   · exfalso; omega
   · exact ⟨hp5, hq5⟩
+
+/-! ## 探索11: IsGoldbach の偶数性 -/
+
+/-- IsGoldbach n かつ n が奇数ならば、p=2 の分解が存在する -/
+theorem isGoldbach_odd_has_two {n : ℕ} (hg : IsGoldbach n) (hodd : n % 2 = 1) :
+    ∃ q : ℕ, Nat.Prime q ∧ n = 2 + q := by
+  obtain ⟨p, q, hp, hq, heq⟩ := hg
+  by_cases hp2 : p = 2
+  · exact ⟨q, hq, by omega⟩
+  · by_cases hq2 : q = 2
+    · exact ⟨p, hp, by omega⟩
+    · -- p,q ともに奇数素数 → p+q は偶数 → 矛盾
+      exfalso
+      have heven := even_of_odd_prime_add hp hq hp2 hq2
+      obtain ⟨k, hk⟩ := heven
+      omega
+
+/-- 偶数の IsGoldbach は4以上 -/
+theorem isGoldbach_even_ge_four {n : ℕ} (hg : IsGoldbach n) (heven : n % 2 = 0) :
+    n ≥ 4 := by
+  obtain ⟨p, q, hp, hq, heq⟩ := hg
+  have := hp.two_le
+  have := hq.two_le
+  omega
 
 /-! ## 探索8: 追加検証例 -/
 

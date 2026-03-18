@@ -217,3 +217,52 @@ theorem not_hasRamseyProperty_one_of_ge_two (k : ℕ) (hk : k ≥ 2) :
   have hsle : S.card ≤ Fintype.card (Fin 1) := S.card_le_univ
   simp [Fintype.card_fin] at hsle
   omega
+
+-- =============================================================================
+-- 探索8: 2色塗り分けの基本的な性質
+-- =============================================================================
+
+/-! ## 探索8: 2色塗り分けの基本的な性質
+
+2色塗り分けにおいて、各辺の色は true か false のいずれかである。
+また C5 着色の具体的な辺の色を decide で網羅的に検証する。
+-/
+
+/-- 2色塗り分けの色は true か false -/
+theorem two_coloring_color_cases {n : ℕ} (col : TwoColoring n) (i j : Fin n) :
+    col.color i j = true ∨ col.color i j = false := by
+  cases col.color i j <;> simp
+
+/-- 自己ループの色は対称性から任意（反射の特殊ケース） -/
+theorem two_coloring_self {n : ℕ} (col : TwoColoring n) (i : Fin n) :
+    col.color i i = col.color i i := rfl
+
+/-- C5着色で頂点0,1は隣接（色true） -/
+example : c5Coloring.color ⟨0, by omega⟩ ⟨1, by omega⟩ = true := by decide
+
+/-- C5着色で頂点0,2は非隣接（色false） -/
+example : c5Coloring.color ⟨0, by omega⟩ ⟨2, by omega⟩ = false := by decide
+
+/-- C5着色で頂点1,4は非隣接（距離3 mod 5 = 距離2） -/
+example : c5Coloring.color ⟨1, by omega⟩ ⟨4, by omega⟩ = false := by decide
+
+/-- C5着色で頂点2,3は隣接（色true） -/
+example : c5Coloring.color ⟨2, by omega⟩ ⟨3, by omega⟩ = true := by decide
+
+/-- C5着色で頂点0,3は非隣接（色false） -/
+example : c5Coloring.color ⟨0, by omega⟩ ⟨3, by omega⟩ = false := by decide
+
+/-- C5着色で頂点1,3は非隣接（色false） -/
+example : c5Coloring.color ⟨1, by omega⟩ ⟨3, by omega⟩ = false := by decide
+
+/-- C5着色で頂点3,4は隣接（色true） -/
+example : c5Coloring.color ⟨3, by omega⟩ ⟨4, by omega⟩ = true := by decide
+
+/-- C5着色で頂点2,4は非隣接（色false） -/
+example : c5Coloring.color ⟨2, by omega⟩ ⟨4, by omega⟩ = false := by decide
+
+/-- C5着色で頂点1,2は隣接（色true） -/
+example : c5Coloring.color ⟨1, by omega⟩ ⟨2, by omega⟩ = true := by decide
+
+/-- C5着色で頂点0,4は隣接（色true） -/
+example : c5Coloring.color ⟨0, by omega⟩ ⟨4, by omega⟩ = true := by decide

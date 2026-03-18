@@ -117,3 +117,27 @@ theorem three_mul_add_one_mod4_of_mod4_eq3 (n : ℕ) (h : n % 4 = 3) :
 /-- n ≡ 3 (mod 4) → (3n+1)/2 は奇数 -/
 theorem three_mul_add_one_div2_odd_of_mod4_eq3 (n : ℕ) (h : n % 4 = 3) :
     ((3 * n + 1) / 2) % 2 = 1 := by omega
+
+/-! ## 8. (3n+1) mod 8 の完全分類 -/
+
+/-- n ≡ 1 (mod 8) → (3n+1) % 8 = 4 -/
+theorem three_mul_add_one_mod8_1 (n : ℕ) (h : n % 8 = 1) : (3 * n + 1) % 8 = 4 := by omega
+
+/-- n ≡ 3 (mod 8) → (3n+1) % 8 = 2 -/
+theorem three_mul_add_one_mod8_3 (n : ℕ) (h : n % 8 = 3) : (3 * n + 1) % 8 = 2 := by omega
+
+/-- n ≡ 5 (mod 8) → (3n+1) % 8 = 0 -/
+theorem three_mul_add_one_mod8_5 (n : ℕ) (h : n % 8 = 5) : (3 * n + 1) % 8 = 0 := by omega
+
+/-- n ≡ 7 (mod 8) → (3n+1) % 8 = 6 -/
+theorem three_mul_add_one_mod8_7 (n : ℕ) (h : n % 8 = 7) : (3 * n + 1) % 8 = 6 := by omega
+
+/-! ## 9. 2ステップ合成: 奇数 n の collatzStep(collatzStep(n)) -/
+
+/-- 奇数 n に対して collatzStep(n) = 3n+1 は偶数なので、
+    collatzStep(collatzStep(n)) = (3n+1)/2 -/
+theorem collatzStep_step_odd (n : ℕ) (hn : n > 0) (hodd : n % 2 = 1) :
+    collatzStep (collatzStep n) = (3 * n + 1) / 2 := by
+  rw [collatzStep_odd_eq n hodd]
+  have heven : (3 * n + 1) % 2 = 0 := by omega
+  rw [collatzStep_even_eq_div2 (3 * n + 1) heven]

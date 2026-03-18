@@ -206,3 +206,34 @@ theorem isSunflower_singleton {α : Type*} [DecidableEq α] (S : Finset α) :
     have : i < 1 := hi
     have : j < 1 := hj
     omega
+
+/-! ## 探索8: 2集合族のひまわり性
+
+任意の2つの集合 S, T からなる族 [S, T] は必ずひまわりである。
+core = S ∩ T とすれば、花びら S \ (S∩T) と T \ (S∩T) は互いに素。
+これは IsSunflower の定義に対する基本的な検証。
+-/
+
+/-- 2つの集合からなる族は必ずひまわり（core = 共通部分） -/
+theorem isSunflower_pair {α : Type*} [DecidableEq α] (S T : Finset α) :
+    IsSunflower [S, T] := by
+  refine ⟨S ∩ T, ?_, ?_⟩
+  · intro U hU
+    simp at hU
+    rcases hU with rfl | rfl
+    · exact Finset.inter_subset_left
+    · exact Finset.inter_subset_right
+  · intro i j hi hj hij
+    have hi' : i < 2 := hi
+    have hj' : j < 2 := hj
+    have h01 : (S \ (S ∩ T)) ∩ (T \ (S ∩ T)) = ∅ := by
+      ext x; simp only [Finset.mem_sdiff, Finset.mem_inter]
+      constructor
+      · rintro ⟨⟨hS, hnST⟩, hT, _⟩; exact absurd ⟨hS, hT⟩ hnST
+      · tauto
+    have h10 : (T \ (S ∩ T)) ∩ (S \ (S ∩ T)) = ∅ := by
+      ext x; simp only [Finset.mem_sdiff, Finset.mem_inter]
+      constructor
+      · rintro ⟨⟨hT, hnST⟩, hS, _⟩; exact absurd ⟨hS, hT⟩ hnST
+      · tauto
+    interval_cases i <;> interval_cases j <;> simp_all

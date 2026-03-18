@@ -214,3 +214,34 @@ theorem distSq_same_y (x1 x2 : ℤ) :
 theorem distSq_origin (x y : ℤ) :
     distSq (0, 0) (x, y) = x ^ 2 + y ^ 2 := by
   unfold distSq; ring
+
+/-! ## 探索9: 距離の平行移動不変性 -/
+
+/-- 平行移動しても距離は変わらない -/
+theorem distSq_translate (p q : Point) (v : Point) :
+    distSq (p.1 + v.1, p.2 + v.2) (q.1 + v.1, q.2 + v.2) = distSq p q := by
+  unfold distSq; ring
+
+/-- 回転前後で距離保存（90度回転: (x,y) → (-y,x)） -/
+theorem distSq_rotate90 (p q : Point) :
+    distSq (-p.2, p.1) (-q.2, q.1) = distSq p q := by
+  unfold distSq; ring
+
+/-- 反射で距離保存: (x,y) → (x,-y) -/
+theorem distSq_reflect_y (p q : Point) :
+    distSq (p.1, -p.2) (q.1, -q.2) = distSq p q := by
+  unfold distSq; ring
+
+/-! ## 探索10: 格子点距離の追加検証 -/
+
+-- 2×2 格子の全距離
+example : distSq (0, 0) (1, 0) = 1 := by decide
+example : distSq (0, 0) (0, 1) = 1 := by decide
+example : distSq (0, 0) (1, 1) = 2 := by decide
+example : distSq (1, 0) (0, 1) = 2 := by decide
+
+-- ピタゴラス数: 3²+4²=5²
+example : distSq (0, 0) (3, 4) = 25 := by decide
+
+-- 5²+12²=13²
+example : distSq (0, 0) (5, 12) = 169 := by decide

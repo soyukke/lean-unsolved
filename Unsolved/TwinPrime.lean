@@ -32,7 +32,11 @@ import Mathlib
 - p > 3 かつ (p, p+4) がともに素数なら p ≡ 1 (mod 6)
 - p%6=5 なら (p+4)%6=3 で 3|(p+4) → 矛盾
 
-## 探索9: Sexy primes (差6) の定義と検証例
+## 探索9: Cousin prime の mod 30 構造
+- p > 5 の cousin prime (p, p+4) は p%30 ∈ {1, 7, 13, 19}
+- p%6=1 から p%30 ∈ {1, 7, 13, 19, 25} を導出、25 は 5|p で矛盾
+
+## 探索10: Sexy primes (差6) の定義と検証例
 - IsSexyPrime の定義: p, p+6 がともに素数
 - 5, 7, 11, 13, 23 での検証
 -/
@@ -156,7 +160,23 @@ theorem cousin_prime_mod_six {p : ℕ} (hp : Nat.Prime p) (hp4 : Nat.Prime (p + 
     have := hp4.eq_one_or_self_of_dvd 3 h3dvd
     omega
 
-/-! ## 探索9: Sexy primes (差6) -/
+/-! ## 探索9: Cousin prime の mod 30 構造 -/
+
+/-- p > 5 の cousin prime (p, p+4) は p%30 ∈ {1, 7, 13, 19} -/
+theorem cousin_prime_mod30 {p : ℕ} (hp : Nat.Prime p) (hp4 : Nat.Prime (p + 4))
+    (hp5 : p > 5) : p % 30 = 1 ∨ p % 30 = 7 ∨ p % 30 = 13 ∨ p % 30 = 19 := by
+  have h6 := cousin_prime_mod_six hp hp4 (by omega)
+  have hmod30 : p % 30 < 30 := Nat.mod_lt p (by norm_num)
+  have h630 : p % 30 % 6 = 1 := by omega
+  -- p%30 ∈ {1, 7, 13, 19, 25} から 25 を除外
+  have h25 : p % 30 ≠ 25 := by
+    intro heq
+    have : 5 ∣ p := ⟨p / 30 * 6 + 5, by omega⟩
+    have := hp.eq_one_or_self_of_dvd 5 this
+    omega
+  omega
+
+/-! ## 探索10: Sexy primes (差6) -/
 
 /-- sexy primes の定義: 差が6の素数ペア -/
 def IsSexyPrime (p : ℕ) : Prop := Nat.Prime p ∧ Nat.Prime (p + 6)

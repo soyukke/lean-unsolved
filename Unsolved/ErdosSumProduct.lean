@@ -221,3 +221,38 @@ theorem prodsetFinset_card_le_sq {A : Finset ℕ} :
     Finset.card_image_le
   have h2 : (A ×ˢ A).card = A.card * A.card := Finset.card_product A A
   omega
+
+/-! ## 探索8: 特殊集合の sumset/productset
+
+シングルトン集合 {a} の sumset は {2a}、productset は {a²} である。
+これは和積問題において自明な等号ケース: max(|A+A|, |A·A|) = 1 = |A|。
+また {1,2} での計算例も確認する。
+-/
+
+/-- シングルトン {a} の sumset は {a+a} -/
+theorem sumsetFinset_singleton (a : ℕ) :
+    sumsetFinset {a} = {a + a} := by
+  ext x
+  rw [mem_sumsetFinset]
+  simp only [Finset.mem_singleton]
+  constructor
+  · rintro ⟨b, rfl, c, rfl, rfl⟩; rfl
+  · intro hx; exact ⟨a, rfl, a, rfl, hx.symm⟩
+
+/-- シングルトン {a} の productset は {a*a} -/
+theorem prodsetFinset_singleton (a : ℕ) :
+    prodsetFinset {a} = {a * a} := by
+  ext x
+  rw [mem_prodsetFinset]
+  simp only [Finset.mem_singleton]
+  constructor
+  · rintro ⟨b, rfl, c, rfl, rfl⟩; rfl
+  · intro hx; exact ⟨a, rfl, a, rfl, hx.symm⟩
+
+/-- {1,2} の sumset のカード数は 3: {2,3,4} -/
+theorem sumset_12_card : (sumsetFinset {1, 2}).card = 3 := by
+  simp only [sumsetFinset]; decide
+
+/-- {1,2} の productset のカード数は 3: {1,2,4} -/
+theorem prodset_12_card : (prodsetFinset {1, 2}).card = 3 := by
+  simp only [prodsetFinset]; decide

@@ -225,3 +225,37 @@ theorem colorClass_subset_range {n : ℕ} {c : Coloring n} {color : Bool} :
   intro x hx
   rw [Finset.mem_range]
   exact colorClass_lt hx
+
+-- =============================================================================
+-- 探索8: N=4,5,6,7 での 3-AP 回避検証と 4-AP の検証
+-- =============================================================================
+
+/-! ## 探索8: 小さい N での等差数列回避の系統的検証
+
+N=4,5,6,7 での 3-AP 回避可能な塗り分けの具体例と、
+4-AP (k=4) に関する基本的な検証を行う。
+-/
+
+/-- N=4: RBRB は 3-AP を含まない -/
+example : hasMonoAPList [false, true, false, true] 3 = false := by rfl
+
+/-- N=5: RBRBB は 3-AP を含まない -/
+example : hasMonoAPList [false, true, false, true, true] 3 = false := by rfl
+
+/-- N=6: RBBRRB は 3-AP を含まない -/
+example : hasMonoAPList [false, true, true, false, false, true] 3 = false := by rfl
+
+/-- N=7: RBBRRBB は 3-AP を含まない -/
+example : hasMonoAPList [false, true, true, false, false, true, true] 3 = false := by rfl
+
+/-- N=3 で 4-AP は自明に回避可能（3点に4項APは入らない） -/
+example : hasMonoAPList [false, true, false] 4 = false := by rfl
+
+/-- N=5 で 4-AP 回避可能 -/
+example : hasMonoAPList [false, true, false, true, false] 4 = false := by rfl
+
+/-- N=7 で 4-AP 回避可能: RBRBRBB -/
+example : hasMonoAPList [false, true, false, true, false, true, true] 4 = false := by rfl
+
+/-- N=10 で 4-AP 回避可能: RRRBRRBRRR -/
+example : hasMonoAPList [false, false, false, true, false, false, true, false, false, false] 4 = false := by rfl

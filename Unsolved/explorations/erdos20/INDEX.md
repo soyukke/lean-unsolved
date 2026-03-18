@@ -14,6 +14,7 @@
 | 5 | ALWZ(2019)上界の数値検証 | `scripts/erdos20_alwz.py` | BLW(C=1)がERより桁違いにタイト、log(n)因子が課題 |
 | 6 | f(1,k)=k の形式証明 | — | 1-均一族のひまわり定理をLeanで証明 |
 | 7 | 空族・単一族のひまわり性 | — | isSunflower_nil, isSunflower_singleton をLeanで証明 |
+| 8 | 2集合族のひまわり性 | — | isSunflower_pair: [S,T]は常にひまわり（core=S∩T） |
 
 ## 主要発見
 

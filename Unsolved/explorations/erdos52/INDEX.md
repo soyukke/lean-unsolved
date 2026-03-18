@@ -13,6 +13,7 @@
 | 5 | 加法/乗法エネルギー分析 | `scripts/erdos52_energy.py` | BSG型関係 E·E*≥|A|^4 全例で成立、トレードオフ確認 |
 | 6 | |A·A|≥|A| の形式証明 | `scripts/erdos52_plunnecke.py` | productset下界とPlunnecke-Ruzsa数値検証 |
 | 7 | sumset/prodset の単調性・上界 | — | mono補題と|A+A|,|A*A|≤|A|^2をLeanで証明 |
+| 8 | シングルトンのsumset/prodset | — | sumset({a})={2a}, prodset({a})={a²}, {1,2}の計算例 |
 
 ## 主要発見
 
