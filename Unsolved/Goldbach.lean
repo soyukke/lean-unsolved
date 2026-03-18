@@ -425,3 +425,16 @@ example : IsGoldbach 62 := ⟨3, 59, by norm_num, by norm_num, by norm_num⟩
 example : IsGoldbach 64 := ⟨3, 61, by norm_num, by norm_num, by norm_num⟩
 example : IsGoldbach 68 := ⟨7, 61, by norm_num, by norm_num, by norm_num⟩
 example : IsGoldbach 70 := ⟨3, 67, by norm_num, by norm_num, by norm_num⟩
+example : IsGoldbach 74 := ⟨3, 71, by norm_num, by norm_num, by norm_num⟩
+example : IsGoldbach 76 := ⟨3, 73, by norm_num, by norm_num, by norm_num⟩
+example : IsGoldbach 78 := ⟨5, 73, by norm_num, by norm_num, by norm_num⟩
+example : IsGoldbach 82 := ⟨3, 79, by norm_num, by norm_num, by norm_num⟩
+example : IsGoldbach 84 := ⟨5, 79, by norm_num, by norm_num, by norm_num⟩
+example : IsGoldbach 86 := ⟨3, 83, by norm_num, by norm_num, by norm_num⟩
+example : IsGoldbach 88 := ⟨5, 83, by norm_num, by norm_num, by norm_num⟩
+example : IsGoldbach 92 := ⟨3, 89, by norm_num, by norm_num, by norm_num⟩
+example : IsGoldbach 94 := ⟨5, 89, by norm_num, by norm_num, by norm_num⟩
+example : IsGoldbach 96 := ⟨7, 89, by norm_num, by norm_num, by norm_num⟩
+example : IsGoldbach 98 := ⟨19, 79, by norm_num, by norm_num, by norm_num⟩
+
+/-! ## 探索28: 偶数 74-100 の個別 Goldbach 検証（4-72は既出） -/

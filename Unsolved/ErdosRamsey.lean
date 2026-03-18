@@ -503,6 +503,10 @@ theorem not_hasRamseyProperty_five_three : ¬HasRamseyProperty 5 3 := by
 -- R(3,3) = 6 の完全特徴付け
 -- =============================================================================
 
+/-- R(2,2) = 2 の完全特徴付け: HasRamseyProperty 2 2 かつ ¬HasRamseyProperty 1 2 -/
+theorem isRamseyNumber_two : IsRamseyNumber 2 2 :=
+  ⟨ramsey_2_holds, not_hasRamseyProperty_one_of_ge_two 2 (by omega)⟩
+
 /-- R(3,3) = 6 の完全特徴付け: HasRamseyProperty 6 3 かつ ¬HasRamseyProperty 5 3 -/
 theorem isRamseyNumber_three : IsRamseyNumber 3 6 := by
   exact ⟨ramsey_three_three, not_hasRamseyProperty_five_three⟩

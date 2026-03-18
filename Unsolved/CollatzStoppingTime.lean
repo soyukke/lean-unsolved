@@ -182,6 +182,53 @@ theorem stoppingTime_pow_two_mul (k n : ℕ) (hn : n ≥ 1) (hr : collatzReaches
     change Nat.find _ = Nat.find _
     congr 1
 
+/-- 補助補題: m ≤ n のとき collatzIter m (2^n) = 2^(n-m) -/
+private theorem collatzIter_pow_two_eq (m n : ℕ) (hmn : m ≤ n) :
+    collatzIter m (2 ^ n) = 2 ^ (n - m) := by
+  induction m generalizing n with
+  | zero => simp
+  | succ m ih =>
+    cases n with
+    | zero => omega
+    | succ n =>
+      rw [collatzIter_succ]
+      have : m ≤ n := by omega
+      have ihm := ih n this
+      -- collatzStep (2^(n+1)) = 2^n
+      have heven : (2 ^ (n + 1)) % 2 = 0 := by
+        rw [Nat.pow_mod]; simp
+      rw [collatzStep_even_eq_div2 _ heven]
+      rw [show 2 ^ (n + 1) / 2 = 2 ^ n from by
+        rw [pow_succ]; omega]
+      rw [ihm]
+      congr 1; omega
+
+/-- ★ s(2^k) = k: 2のべき乗の stopping time はべき指数に等しい
+
+    2^k は k ステップの半減で1に到達し、これが最小ステップ数。 -/
+theorem stoppingTime_pow_two' (k : ℕ) :
+    stoppingTime (2 ^ k) (collatzReaches_pow_two k) = k := by
+  unfold stoppingTime
+  apply le_antisymm
+  · -- ≤ k: k ステップで到達するから
+    exact Nat.find_le (collatz_pow_two k)
+  · -- ≥ k: k 未満では到達しないから
+    by_contra hlt
+    push_neg at hlt
+    set m := Nat.find (collatzReaches_pow_two k)
+    have hfind := Nat.find_spec (collatzReaches_pow_two k)
+    cases k with
+    | zero => simp at hlt
+    | succ k =>
+      have hm_le : m ≤ k + 1 := by omega
+      rw [collatzIter_pow_two_eq m (k + 1) hm_le] at hfind
+      -- hfind : 2 ^ (k + 1 - m) = 1
+      -- k + 1 - m ≥ 1 なので 2^(k+1-m) ≥ 2, 矛盾
+      have hge1 : k + 1 - m ≥ 1 := by omega
+      have : 2 ^ (k + 1 - m) ≥ 2 ^ 1 := Nat.pow_le_pow_right (by omega : 0 < 2) hge1
+      simp at this
+      omega
+
 /-! ## 6. 特殊値の検証 -/
 
 /-- 2 は1に到達する -/
