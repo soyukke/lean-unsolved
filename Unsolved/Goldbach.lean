@@ -402,3 +402,7 @@ example : IsGoldbach 600 := ⟨7, 593, by norm_num, by norm_num, by norm_num⟩
 example : IsGoldbach 700 := ⟨17, 683, by norm_num, by norm_num, by norm_num⟩
 -- 800 = 3 + 797
 example : IsGoldbach 800 := ⟨3, 797, by norm_num, by norm_num, by norm_num⟩
+
+/-! ## 探索25: 1000台の検証 -/
+-- 1100 = 3 + 1097
+example : IsGoldbach 1100 := ⟨3, 1097, by norm_num, by norm_num, by norm_num⟩

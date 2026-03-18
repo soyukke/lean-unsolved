@@ -429,3 +429,8 @@ theorem collatzReaches_256 : collatzReaches 256 :=
 /-- collatzReaches 1024 = 2^10 -/
 theorem collatzReaches_1024 : collatzReaches 1024 :=
   collatzReaches_pow_two 10
+
+/-! ## 21. 大きな2のべき乗の到達性 -/
+
+theorem collatzReaches_2048 : collatzReaches 2048 := collatzReaches_pow_two 11
+theorem collatzReaches_4096 : collatzReaches 4096 := collatzReaches_pow_two 12

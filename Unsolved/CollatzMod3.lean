@@ -254,3 +254,12 @@ theorem three_mul_add_one_gt_succ (n : ℕ) (hn : n ≥ 1) : 3 * n + 1 > n + 1 :
 /-- 奇数 n ≥ 1 に対して (3n+1)/2 = n + (n+1)/2 -/
 theorem syracuse_eq_n_plus (n : ℕ) (hn : n ≥ 1) (hodd : n % 2 = 1) :
     (3 * n + 1) / 2 = n + (n + 1) / 2 := by omega
+
+/-! ## 19. コラッツ軌道の mod 2 交代性 -/
+
+-- 奇数 n に対して collatzStep n = 3n+1 は偶数
+-- （CollatzStructure.collatzStep_odd_gives_even として既存）
+
+/-- 奇数 n ≥ 3 に対して (3n+1)/2 ≥ n+1 -/
+theorem syracuse_ge_succ (n : ℕ) (hn : n ≥ 3) (hodd : n % 2 = 1) :
+    (3 * n + 1) / 2 ≥ n + 1 := by omega
