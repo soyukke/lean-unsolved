@@ -327,3 +327,9 @@ theorem prodsetFinset_empty : prodsetFinset (∅ : Finset ℕ) = ∅ := by
 -- {1,...,6}: card = 11 = 2*6-1
 theorem sumset_123456_card : (sumsetFinset {1, 2, 3, 4, 5, 6}).card = 11 := by
   simp only [sumsetFinset]; decide
+
+/-! ## 探索15: シングルトンの sumset/prodset -/
+
+/-- シングルトン {1} の sumset のカードは 1 -/
+theorem sumsetFinset_singleton1_card : (sumsetFinset {1}).card = 1 := by
+  simp only [sumsetFinset]; decide

@@ -317,3 +317,15 @@ example : IsCousinPrime 67 := ⟨by norm_num, by norm_num⟩
 theorem IsCousinPrime.mod_six {p : ℕ} (h : IsCousinPrime p) (hp3 : p > 3) :
     p % 6 = 1 :=
   cousin_prime_mod_six h.1 h.2 hp3
+
+/-! ## 探索20: IsTwinPrime p → p ≥ 3 -/
+
+/-- IsTwinPrime p → p ≥ 3 -/
+theorem IsTwinPrime.three_le {p : ℕ} (h : IsTwinPrime p) : p ≥ 3 := by
+  by_contra hp
+  push_neg at hp
+  interval_cases p
+  · exact Nat.not_prime_zero h.1
+  · exact Nat.not_prime_one h.1
+  · have : ¬ Nat.Prime 4 := by decide
+    exact this h.2

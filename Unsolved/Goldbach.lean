@@ -385,3 +385,12 @@ example : IsGoldbach 66 := ⟨5, 61, by norm_num, by norm_num, by norm_num⟩
 example : IsGoldbach 300 := ⟨7, 293, by norm_num, by norm_num, by norm_num⟩
 -- 400 = 11 + 389
 example : IsGoldbach 400 := ⟨11, 389, by norm_num, by norm_num, by norm_num⟩
+
+/-! ## 探索23: 500未満の偶数検証例の補充 -/
+
+-- 72 = 5 + 67
+example : IsGoldbach 72 := ⟨5, 67, by norm_num, by norm_num, by norm_num⟩
+-- 80 = 7 + 73
+example : IsGoldbach 80 := ⟨7, 73, by norm_num, by norm_num, by norm_num⟩
+-- 90 = 7 + 83
+example : IsGoldbach 90 := ⟨7, 83, by norm_num, by norm_num, by norm_num⟩

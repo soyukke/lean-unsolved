@@ -116,6 +116,12 @@
 - `IsCousinPrime.mod_six`: p > 3 → p % 6 = 1（cousin_prime_mod_six のラッパー）
 - IsTwinPrime (差2) との対比: Twin→p%6=5, Cousin→p%6=1
 
+### 探索20: IsTwinPrime p → p ≥ 3 ✅
+- `IsTwinPrime.three_le`: IsTwinPrime p → p ≥ 3
+- by_contra + interval_cases で p=0,1,2 を排除
+- p=0: Nat.not_prime_zero、p=1: Nat.not_prime_one、p=2: 4は素数でない
+- IsTwinPrime の最小値が 3 であることを確定
+
 ### 探索16: TwinPrimeConjecture の同値な定式化 ✅
 - `twinPrimeConjecture_iff`: TwinPrimeConjecture ↔ ∀ N, ∃ p > N, IsTwinPrime p
 - TwinPrimeConjecture の定義を IsTwinPrime 述語で書き直せることを形式証明

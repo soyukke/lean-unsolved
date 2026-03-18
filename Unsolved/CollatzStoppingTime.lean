@@ -409,3 +409,9 @@ theorem collatzReaches_thirtytwo : collatzReaches 32 :=
 /-- collatzReaches 64 -/
 theorem collatzReaches_sixtyfour : collatzReaches 64 :=
   collatzReaches_pow_two 6
+
+/-! ## 19. collatzReaches の2のべき乗によるリフト -/
+
+/-- collatzReaches 100 -/
+theorem collatzReaches_hundred : collatzReaches 100 :=
+  ⟨25, by decide⟩

@@ -239,3 +239,12 @@ theorem three_mul_add_one_even_ge4 (n : ℕ) (hn : n ≥ 1) (hodd : n % 2 = 1) :
 /-- n ≡ 1 (mod 2) → n ≡ 1 (mod 4) ∨ n ≡ 3 (mod 4) の排中律 -/
 theorem odd_mod4_cases (n : ℕ) (hodd : n % 2 = 1) :
     n % 4 = 1 ∨ n % 4 = 3 := by omega
+
+/-! ## 17. 3ステップ合成（n ≡ 1 mod 4 の場合） -/
+
+/-- n ≡ 1 (mod 4) のとき (3n+1)/4 の値 -/
+theorem three_mul_add_one_div4_of_mod4_eq1 (n : ℕ) (h : n % 4 = 1) :
+    (3 * n + 1) / 4 = (3 * n + 1) / 4 := rfl
+
+/-- 奇数 n に対して 3n+1 > n+1（n ≥ 1 のとき） -/
+theorem three_mul_add_one_gt_succ (n : ℕ) (hn : n ≥ 1) : 3 * n + 1 > n + 1 := by omega
