@@ -312,3 +312,29 @@ theorem sunflower_core12 :
   · intro i j hi hj hij
     have : i < 3 := hi; have : j < 3 := hj
     interval_cases i <;> interval_cases j <;> simp_all <;> decide
+
+/-! ## Erdős-Rado 上界 (n=1) の一般化
+
+1-均一族（各集合がシングルトン）で重複なし・k個以上あるなら、
+k-ひまわりを含む。先頭 k 個を取れば、それ自体が k-ひまわりとなる。
+
+証明: sunflower_uniform1_singletons を部分リスト family.take k に適用する。
+-/
+
+/-- 1-均一族でサイズ ≥ k なら k-ひまわりを含む（Erdős-Rado n=1 ケース） -/
+theorem erdosRado_uniform1 {α : Type*} [DecidableEq α]
+    (family : List (Finset α)) (hunif : IsUniform 1 family) (hnodup : family.Nodup)
+    (hlen : family.length ≥ k) : ContainsSunflower family k := by
+  refine ⟨family.take k, ?_, ?_, ?_⟩
+  · -- length
+    exact List.length_take_of_le (by omega)
+  · -- membership
+    intro S hS
+    exact List.mem_of_mem_take hS
+  · -- sunflower
+    apply sunflower_uniform1_singletons
+    · -- IsUniform 1
+      intro S hS
+      exact hunif S (List.mem_of_mem_take hS)
+    · -- Nodup
+      exact List.Nodup.sublist (List.take_sublist k family) hnodup
