@@ -344,3 +344,93 @@ theorem prodset_123456_card : (prodsetFinset {1, 2, 3, 4, 5, 6}).card = 18 := by
 -- {1,2,4,8}: prodset card
 theorem prodset_1248_card : (prodsetFinset {1, 2, 4, 8}).card = 7 := by
   simp only [prodsetFinset]; decide
+
+/-! ## |A+A| ≥ 2|A| - 1: Cauchy-Davenport 型の下界
+
+等差数列 {1,...,n} で |A+A| = 2n-1 が達成される。
+一般の有限集合 A に対しても |A+A| ≥ 2|A| - 1 が成り立つ。
+
+証明のアイデア:
+- m = min(A), M = max(A)
+- S₁ = A.image (· + m) ⊆ A+A: 全元 ≤ M + m
+- S₂' = (A.erase m).image (· + M) ⊆ A+A: 全元 > m + M（a > m なので a + M > m + M）
+- S₁ と S₂' は disjoint
+- |A+A| ≥ |S₁| + |S₂'| = |A| + (|A| - 1) = 2|A| - 1
+-/
+
+/-- |A+A| ≥ 2|A| - 1: sumset の精密な下界 -/
+theorem card_sumsetFinset_ge_two_mul_sub_one {A : Finset ℕ} (hA : A.Nonempty) :
+    (sumsetFinset A).card ≥ 2 * A.card - 1 := by
+  -- min と max を取る
+  let m := A.min' hA
+  let M := A.max' hA
+  have hm : m ∈ A := Finset.min'_mem A hA
+  have hM : M ∈ A := Finset.max'_mem A hA
+  -- S₁ = A.image (· + m)
+  let S₁ := A.image (· + m)
+  -- S₂' = (A.erase m).image (· + M)
+  let S₂' := (A.erase m).image (· + M)
+  -- S₁ ⊆ sumsetFinset A
+  have hS₁_sub : S₁ ⊆ sumsetFinset A := by
+    intro x hx
+    rw [Finset.mem_image] at hx
+    obtain ⟨a, ha, rfl⟩ := hx
+    rw [mem_sumsetFinset]
+    exact ⟨a, ha, m, hm, rfl⟩
+  -- S₂' ⊆ sumsetFinset A
+  have hS₂'_sub : S₂' ⊆ sumsetFinset A := by
+    intro x hx
+    rw [Finset.mem_image] at hx
+    obtain ⟨a, ha_erase, rfl⟩ := hx
+    have ha : a ∈ A := Finset.mem_of_mem_erase ha_erase
+    rw [mem_sumsetFinset]
+    exact ⟨a, ha, M, hM, rfl⟩
+  -- S₁ の元は ≤ M + m
+  have hS₁_le : ∀ x ∈ S₁, x ≤ M + m := by
+    intro x hx
+    rw [Finset.mem_image] at hx
+    obtain ⟨a, ha, rfl⟩ := hx
+    have : a ≤ M := Finset.le_max' A a ha
+    omega
+  -- S₂' の元は > m + M (つまり ≥ m + M + 1)
+  have hS₂'_gt : ∀ x ∈ S₂', x > m + M := by
+    intro x hx
+    rw [Finset.mem_image] at hx
+    obtain ⟨a, ha_erase, rfl⟩ := hx
+    have ha : a ∈ A := Finset.mem_of_mem_erase ha_erase
+    have ha_ne : a ≠ m := Finset.ne_of_mem_erase ha_erase
+    have : m ≤ a := Finset.min'_le A a ha
+    omega
+  -- S₁ と S₂' は disjoint
+  have hdisj : Disjoint S₁ S₂' := by
+    rw [Finset.disjoint_left]
+    intro x hx₁ hx₂
+    have h₁ := hS₁_le x hx₁
+    have h₂ := hS₂'_gt x hx₂
+    omega
+  -- |S₁| = |A|
+  have hcard_S₁ : S₁.card = A.card := by
+    apply Finset.card_image_of_injOn
+    intro a₁ _ a₂ _ h
+    simp only at h
+    omega
+  -- |S₂'| = |A| - 1
+  have hcard_S₂' : S₂'.card = A.card - 1 := by
+    have : S₂'.card = (A.erase m).card := by
+      apply Finset.card_image_of_injOn
+      intro a₁ _ a₂ _ h
+      simp only at h
+      omega
+    rw [this, Finset.card_erase_of_mem hm]
+  -- |S₁ ∪ S₂'| = |S₁| + |S₂'|
+  have hunion : (S₁ ∪ S₂').card = S₁.card + S₂'.card :=
+    Finset.card_union_of_disjoint hdisj
+  -- S₁ ∪ S₂' ⊆ sumsetFinset A
+  have hsub_union : S₁ ∪ S₂' ⊆ sumsetFinset A :=
+    Finset.union_subset hS₁_sub hS₂'_sub
+  -- 結論
+  calc (sumsetFinset A).card
+      ≥ (S₁ ∪ S₂').card := Finset.card_le_card hsub_union
+    _ = S₁.card + S₂'.card := hunion
+    _ = A.card + (A.card - 1) := by rw [hcard_S₁, hcard_S₂']
+    _ = 2 * A.card - 1 := by omega
