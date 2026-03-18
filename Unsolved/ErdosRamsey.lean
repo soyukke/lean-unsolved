@@ -573,3 +573,33 @@ theorem hasRamseyProperty_mono {m n k : ℕ} (hmn : m ≤ n) (h : HasRamseyPrope
 /-- 系: R(3,3) ≤ 6 から、n ≥ 6 ならば HasRamseyProperty n 3 -/
 theorem hasRamseyProperty_ge_six {n : ℕ} (hn : n ≥ 6) : HasRamseyProperty n 3 :=
   hasRamseyProperty_mono hn ramsey_three_three
+
+-- =============================================================================
+-- 単色クリークの部分集合性
+-- =============================================================================
+
+/-- 単色クリークの部分集合も単色クリーク -/
+theorem isMonochromaticClique_subset {n : ℕ} {col : TwoColoring n}
+    {S T : Finset (Fin n)} {c : Bool}
+    (h : IsMonochromaticClique col S c) (hTS : T ⊆ S) :
+    IsMonochromaticClique col T c :=
+  fun i hi j hj hij => h i (hTS hi) j (hTS hj) hij
+
+-- =============================================================================
+-- HasRamseyProperty の k に関する単調性（下方）
+-- =============================================================================
+
+/-- HasRamseyProperty n (k+1) → HasRamseyProperty n k (k ≥ 1) -/
+theorem hasRamseyProperty_k_mono {n k : ℕ} (hk : k ≥ 1)
+    (h : HasRamseyProperty n (k + 1)) : HasRamseyProperty n k := by
+  intro col
+  obtain ⟨S, hcard, hmono⟩ := h col
+  -- S から1元を除いて k 元部分集合を作る
+  have hne : S.Nonempty := by
+    rw [Finset.nonempty_iff_ne_empty]; intro he; rw [he] at hcard; simp at hcard
+  obtain ⟨x, hx⟩ := hne
+  refine ⟨S.erase x, ?_, ?_⟩
+  · rw [Finset.card_erase_of_mem hx, hcard]; omega
+  · cases hmono with
+    | inl ht => exact Or.inl (isMonochromaticClique_subset ht (Finset.erase_subset x S))
+    | inr hf => exact Or.inr (isMonochromaticClique_subset hf (Finset.erase_subset x S))

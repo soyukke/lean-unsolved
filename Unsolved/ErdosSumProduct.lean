@@ -545,3 +545,14 @@ theorem card_prodsetFinset_ge_two_mul_sub_one {A : Finset ℕ}
 /-- {1,...,7}: sumset card = 13 = 2*7-1 -/
 theorem sumset_1to7_card : (sumsetFinset {1, 2, 3, 4, 5, 6, 7}).card = 13 := by
   simp only [sumsetFinset]; decide
+
+-- =============================================================================
+-- sum-product の下界: max(|A+A|, |A·A|) ≥ 2|A|-1
+-- =============================================================================
+
+/-- sum-product の下界: max(|A+A|, |A·A|) ≥ 2|A|-1 -/
+theorem max_sumset_prodset_ge {A : Finset ℕ} (hA : A.Nonempty) :
+    max (sumsetFinset A).card (prodsetFinset A).card ≥ 2 * A.card - 1 := by
+  have h1 := card_sumsetFinset_ge_two_mul_sub_one hA
+  calc 2 * A.card - 1 ≤ (sumsetFinset A).card := h1
+    _ ≤ max (sumsetFinset A).card (prodsetFinset A).card := le_max_left _ _
