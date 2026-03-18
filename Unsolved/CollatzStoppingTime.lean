@@ -239,6 +239,18 @@ theorem collatzReaches_step (n : ℕ) (hn : n ≥ 2) (hr : collatzReaches n) :
   | succ k =>
     exact ⟨k, by rwa [collatzIter_succ] at hk⟩
 
+/-- collatzStep n が1に到達するならば n も1に到達する（n ≥ 2 のとき） -/
+theorem collatzReaches_of_step (n : ℕ) (hn : n ≥ 2) (hr : collatzReaches (collatzStep n)) :
+    collatzReaches n := by
+  obtain ⟨k, hk⟩ := hr
+  exact ⟨k + 1, by rw [collatzIter_succ]; exact hk⟩
+
+/-- n ≥ 2 なら collatzReaches n ↔ collatzReaches (collatzStep n)
+    collatzReaches_step と collatzReaches_of_step の統合 -/
+theorem collatzReaches_step_iff (n : ℕ) (hn : n ≥ 2) :
+    collatzReaches n ↔ collatzReaches (collatzStep n) :=
+  ⟨collatzReaches_step n hn, collatzReaches_of_step n hn⟩
+
 /-! ## 8. 探索44: stoppingTime の奇数に対する下界 -/
 
 /-- 奇数 n > 1 に対して collatzIter 1 n > 1 :
@@ -301,6 +313,15 @@ theorem collatzReaches_trans (n m : ℕ) (k : ℕ)
     (hiter : collatzIter k n = m) (hm : collatzReaches m) : collatzReaches n := by
   obtain ⟨j, hj⟩ := hm
   exact ⟨k + j, by rw [collatzIter_add', hiter, hj]⟩
+
+/-- n が1に到達するなら、k ステップ後の点も1に到達する（k が到達ステップ数以下のとき）
+    軌道上の全ての中間点は1に到達する -/
+theorem collatzReaches_of_iter_le (n : ℕ) (k j : ℕ)
+    (hj : collatzIter j n = 1) (hk : k ≤ j) : collatzReaches (collatzIter k n) :=
+  ⟨j - k, by
+    have h := collatzIter_add' k (j - k) n
+    rw [Nat.add_sub_cancel' hk] at h
+    rw [← h, hj]⟩
 
 /-! ## 11. stoppingTime の追加性質 -/
 

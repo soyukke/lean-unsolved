@@ -306,3 +306,57 @@ example : hasMonoAPList [true, true, false, false, true, true, false, false] 3 =
 -- N=4, k=4: 4-AP 自体が入らない（a+3d<4→d=0だがd≥1なので不可）
 -- 塗り分け FTFT で 4-AP の単色回避を確認
 example : hasMonoAPList [false, true, false, true] 4 = false := by rfl
+
+/-! ## 探索: CanAvoid の Prop 証明 -/
+
+/-- HasArithProgInSet は Decidable -/
+instance decidableHasArithProgInSet (S : Finset ℕ) (k a d : ℕ) :
+    Decidable (HasArithProgInSet S k a d) :=
+  inferInstanceAs (Decidable (d ≥ 1 ∧ ∀ i : ℕ, i < k → a + i * d ∈ S))
+
+/-- 有界版 HasMonoAP: a, d が n 未満に制限 -/
+def HasMonoAPBounded (n : ℕ) (c : Coloring n) (color : Bool) (k : ℕ) : Prop :=
+  ∃ a : Fin n, ∃ d : Fin n, HasArithProgInSet (colorClass c color) k a.val d.val
+
+instance decidableHasMonoAPBounded (n : ℕ) (c : Coloring n) (color : Bool) (k : ℕ) :
+    Decidable (HasMonoAPBounded n c color k) :=
+  inferInstanceAs (Decidable (∃ a : Fin n, ∃ d : Fin n,
+    HasArithProgInSet (colorClass c color) k a.val d.val))
+
+/-- HasMonoAPBounded → HasMonoAP -/
+theorem HasMonoAPBounded.toHasMonoAP {n : ℕ} {c : Coloring n} {color : Bool} {k : ℕ}
+    (h : HasMonoAPBounded n c color k) : HasMonoAP c color k := by
+  obtain ⟨a, d, hap⟩ := h
+  exact ⟨a.val, d.val, hap⟩
+
+/-- HasMonoAP → HasMonoAPBounded（k ≥ 2 のとき、a < n かつ d < n が必要） -/
+theorem HasMonoAP.toHasMonoAPBounded {n : ℕ} {c : Coloring n} {color : Bool} {k : ℕ}
+    (hk : k ≥ 2) (h : HasMonoAP c color k) : HasMonoAPBounded n c color k := by
+  obtain ⟨a, d, hd, hap⟩ := h
+  have ha_mem := hap 0 (by omega)
+  simp only [Nat.zero_mul, Nat.add_zero] at ha_mem
+  have ha_lt : a < n := colorClass_lt ha_mem
+  have had_mem := hap 1 (by omega)
+  simp only [Nat.one_mul] at had_mem
+  have had_lt : a + d < n := colorClass_lt had_mem
+  have hd_lt : d < n := by omega
+  exact ⟨⟨a, ha_lt⟩, ⟨d, hd_lt⟩, hd, hap⟩
+
+/-- HasMonoAP ↔ HasMonoAPBounded（k ≥ 2 のとき） -/
+theorem hasMonoAP_iff_bounded {n : ℕ} {c : Coloring n} {color : Bool} {k : ℕ}
+    (hk : k ≥ 2) : HasMonoAP c color k ↔ HasMonoAPBounded n c color k :=
+  ⟨HasMonoAP.toHasMonoAPBounded hk, HasMonoAPBounded.toHasMonoAP⟩
+
+/-- HasMonochromaticAP ↔ 有界版（k ≥ 2 のとき） -/
+theorem hasMonochromaticAP_iff_bounded {n : ℕ} {c : Coloring n} {k : ℕ}
+    (hk : k ≥ 2) : HasMonochromaticAP c k ↔
+    (HasMonoAPBounded n c true k ∨ HasMonoAPBounded n c false k) := by
+  unfold HasMonochromaticAP
+  rw [hasMonoAP_iff_bounded hk, hasMonoAP_iff_bounded hk]
+
+/-- N=8 で 3-AP を回避する塗り分けが存在する（CanAvoid の Prop 証明） -/
+theorem canAvoid_8_3 : CanAvoid 8 3 := by
+  refine ⟨coloring_RRBBRRBB, fun h => ?_⟩
+  rw [hasMonochromaticAP_iff_bounded (by omega : (3 : ℕ) ≥ 2)] at h
+  revert h
+  native_decide
