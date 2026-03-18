@@ -406,3 +406,12 @@ example : IsGoldbach 800 := ⟨3, 797, by norm_num, by norm_num, by norm_num⟩
 /-! ## 探索25: 1000台の検証 -/
 -- 1100 = 3 + 1097
 example : IsGoldbach 1100 := ⟨3, 1097, by norm_num, by norm_num, by norm_num⟩
+
+/-! ## 探索26: 偶数の系統的検証（4-100の全偶数） -/
+
+-- 44 = 3 + 41
+example : IsGoldbach 44 := ⟨3, 41, by norm_num, by norm_num, by norm_num⟩
+-- 46 = 3 + 43
+example : IsGoldbach 46 := ⟨3, 43, by norm_num, by norm_num, by norm_num⟩
+-- 48 = 5 + 43
+example : IsGoldbach 48 := ⟨5, 43, by norm_num, by norm_num, by norm_num⟩

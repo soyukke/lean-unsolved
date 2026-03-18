@@ -301,3 +301,14 @@ theorem sunflower_disjoint_156 :
 theorem isSunflower_repeat {α : Type*} [DecidableEq α] (S : Finset α) :
     IsSunflower [S, S] := by
   exact isSunflower_pair S S
+
+/-! ## 探索15: 3-均一族のひまわり -/
+
+-- {1,2,3}, {1,2,4}, {1,2,5} はひまわり（core={1,2}）
+theorem sunflower_core12 :
+    IsSunflower [({1, 2, 3} : Finset ℕ), {1, 2, 4}, {1, 2, 5}] := by
+  refine ⟨{1, 2}, ?_, ?_⟩
+  · intro S hS; simp at hS; rcases hS with rfl | rfl | rfl <;> simp [Finset.subset_iff] <;> omega
+  · intro i j hi hj hij
+    have : i < 3 := hi; have : j < 3 := hj
+    interval_cases i <;> interval_cases j <;> simp_all <;> decide

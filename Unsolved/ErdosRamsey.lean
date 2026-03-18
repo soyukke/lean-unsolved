@@ -318,3 +318,12 @@ theorem hasRamseyProperty_pos {n k : ℕ} (hk : k ≥ 1) (h : HasRamseyProperty 
   have hsle : S.card ≤ Fintype.card (Fin 0) := Finset.card_le_univ S
   rw [hcard, Fintype.card_fin] at hsle
   omega
+
+/-! ## 探索14: C5着色の独立集合検証 -/
+
+-- {0, 2} は C5 で独立集合（false色）
+example : c5Coloring.color ⟨0, by omega⟩ ⟨2, by omega⟩ = false := by decide
+-- {1, 3} は C5 で独立集合
+example : c5Coloring.color ⟨1, by omega⟩ ⟨3, by omega⟩ = false := by decide
+-- {0, 4} は隣接
+example : c5Coloring.color ⟨0, by omega⟩ ⟨4, by omega⟩ = true := by decide

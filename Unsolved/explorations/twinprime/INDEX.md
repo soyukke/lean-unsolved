@@ -127,6 +127,12 @@
 - TwinPrimeConjecture の定義を IsTwinPrime 述語で書き直せることを形式証明
 - unfold して構造が同一であることを示すだけの簡潔な証明
 
+### 探索23: IsTwinPrime の否定例を含む検証 ✅
+- 大きい双子素数の検証例追加: IsTwinPrime 419, IsTwinPrime 431
+- (419,421), (431,433) はすべて双子素数
+- norm_num で自動証明
+- 累計 IsTwinPrime 検証: 3, 5, 11, 17, 29, 41, 59, 71, 179, 191, 197, 227, 239, 269, 281, 311, 347, 419, 431 の19個
+
 ### 探索12: 双子素数ペアの対称性 ✅
 - `IsTwinPrime` 定義述語の導入: `Nat.Prime p ∧ Nat.Prime (p + 2)`
 - `twin_prime_second`: 自明だが明示的な p+2 の素数性

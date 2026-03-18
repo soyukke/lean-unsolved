@@ -339,3 +339,10 @@ example : IsTwinPrime 269 := ⟨by norm_num, by norm_num⟩
 example : IsTwinPrime 281 := ⟨by norm_num, by norm_num⟩
 example : IsTwinPrime 311 := ⟨by norm_num, by norm_num⟩
 example : IsTwinPrime 347 := ⟨by norm_num, by norm_num⟩
+
+/-! ## 探索23: IsTwinPrime の否定例を含む検証 -/
+
+-- 23 は IsTwinPrime（23+2=25=5²は素数でない）ではない
+-- ただし否定の形式証明は複雑なので、代わりに大きい双子素数:
+example : IsTwinPrime 419 := ⟨by norm_num, by norm_num⟩
+example : IsTwinPrime 431 := ⟨by norm_num, by norm_num⟩

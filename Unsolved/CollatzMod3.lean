@@ -263,3 +263,11 @@ theorem syracuse_eq_n_plus (n : ℕ) (hn : n ≥ 1) (hodd : n % 2 = 1) :
 /-- 奇数 n ≥ 3 に対して (3n+1)/2 ≥ n+1 -/
 theorem syracuse_ge_succ (n : ℕ) (hn : n ≥ 3) (hodd : n % 2 = 1) :
     (3 * n + 1) / 2 ≥ n + 1 := by omega
+
+/-! ## 20. collatzStep の mod 6 完全分類 -/
+
+/-- 奇数 n に対して collatzStep n = 3n+1 の mod 6 は n の mod 6 で決まる -/
+-- n%6=1: (3+1)%6=4, n%6=3: (9+1)%6=4, n%6=5: (15+1)%6=4
+-- つまり奇数 n に対して (3n+1)%6 = 4 が常に成立!
+theorem three_mul_add_one_mod6 (n : ℕ) (hodd : n % 2 = 1) :
+    (3 * n + 1) % 6 = 4 := by omega

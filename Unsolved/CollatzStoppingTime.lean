@@ -434,3 +434,10 @@ theorem collatzReaches_1024 : collatzReaches 1024 :=
 
 theorem collatzReaches_2048 : collatzReaches 2048 := collatzReaches_pow_two 11
 theorem collatzReaches_4096 : collatzReaches 4096 := collatzReaches_pow_two 12
+
+/-! ## 22. collatzReaches の系統的検証 -/
+
+-- 奇数の到達性（小さい値の系統的検証）
+theorem collatzReaches_17 : collatzReaches 17 := ⟨12, by decide⟩
+theorem collatzReaches_19 : collatzReaches 19 := ⟨20, by decide⟩
+theorem collatzReaches_21 : collatzReaches 21 := ⟨7, by decide⟩
