@@ -859,3 +859,42 @@ theorem collatzIter_five_periodic (n : ℕ) (h : collatzIter 5 n = n) :
     n = 0 ∨ n = 1 ∨ n = 2 ∨ n = 4 := by
   simp [collatzStep] at h
   split at h <;> split at h <;> split at h <;> split at h <;> split at h <;> omega
+
+/-! ## 35. 6-サイクルの完全分類 -/
+
+-- 6ステップでの周期点の完全分類（2^6 = 64 通りの場合分け）
+-- simp のデフォルトステップ上限を超えるため、段階的に展開する
+set_option maxHeartbeats 4000000 in
+/-- 6ステップでの周期点は {0, 1, 2, 4} のみ。 -/
+theorem collatzIter_six_periodic (n : ℕ) (h : collatzIter 6 n = n) :
+    n = 0 ∨ n = 1 ∨ n = 2 ∨ n = 4 := by
+  -- 6 = 3 + 3 として、まず3ステップ分展開
+  have h6 : collatzIter 3 (collatzIter 3 n) = n := by
+    rw [← collatzIter_add' 3 3 n]; exact h
+  -- collatzIter 3 n を m とおいて collatzIter_three_periodic を使う
+  set m := collatzIter 3 n with hm_def
+  -- collatzIter 3 m = n なので m も周期3の方程式に関与
+  -- m の候補: collatzIter 3 m = n を使って n を復元
+  -- まず collatzIter 3 n を展開して m の範囲を絞る
+  simp [collatzStep] at hm_def
+  -- hm_def は n の偶奇で分岐した m の定義
+  split at hm_def <;> split at hm_def <;> split at hm_def
+  -- 8通りの場合、それぞれで m が n の関数として表現される
+  -- h6: collatzIter 3 m = n を使って omega で解く
+  all_goals (simp [collatzStep] at h6; split at h6 <;> split at h6 <;> split at h6 <;> omega)
+
+/-! ## 36. 7-サイクルの完全分類 -/
+
+-- 7ステップでの周期点の完全分類
+-- 7 = 3 + 4 として段階的に展開
+set_option maxHeartbeats 8000000 in
+/-- 7ステップでの周期点は {0, 1, 2, 4} のみ。 -/
+theorem collatzIter_seven_periodic (n : ℕ) (h : collatzIter 7 n = n) :
+    n = 0 ∨ n = 1 ∨ n = 2 ∨ n = 4 := by
+  -- 7 = 3 + 4 として展開
+  have h7 : collatzIter 4 (collatzIter 3 n) = n := by
+    rw [← collatzIter_add' 3 4 n]; exact h
+  set m := collatzIter 3 n with hm_def
+  simp [collatzStep] at hm_def
+  split at hm_def <;> split at hm_def <;> split at hm_def
+  all_goals (simp [collatzStep] at h7; split at h7 <;> split at h7 <;> split at h7 <;> split at h7 <;> omega)

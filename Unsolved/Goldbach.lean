@@ -515,3 +515,63 @@ theorem isGoldbach_small_prime {n : ℕ} (hg : IsGoldbach n) :
 theorem isGoldbach_with_two {n : ℕ} (hp : Nat.Prime (n - 2)) (hn : n ≥ 4) :
     IsGoldbach n := by
   exact ⟨2, n - 2, by norm_num, hp, by omega⟩
+
+/-! ## 有界検証: 全偶数 4 ≤ n ≤ 1000 の Goldbach 性 -/
+
+/-- isGoldbachBool: n がゴールドバッハ性を持つかをブール判定する関数
+    p を 2 から n/2 まで走査し、p が素数かつ n-p が素数であるか確認 -/
+def isGoldbachBool (n : ℕ) : Bool :=
+  if n < 4 then false
+  else if n % 2 ≠ 0 then false
+  else
+    (List.range (n / 2 - 1)).any fun i =>
+      let p := i + 2
+      decide (Nat.Prime p) && decide (Nat.Prime (n - p))
+
+/-- isGoldbachBool が true ならば IsGoldbach -/
+theorem isGoldbach_of_bool {n : ℕ} (h : isGoldbachBool n = true) : IsGoldbach n := by
+  simp only [isGoldbachBool] at h
+  split at h
+  · simp at h
+  · rename_i h_ge
+    push_neg at h_ge
+    split at h
+    · simp at h
+    · rename_i h_even
+      push_neg at h_even
+      have heven : n % 2 = 0 := by omega
+      simp only [List.any_eq_true, List.mem_range] at h
+      obtain ⟨i, hi_range, hi⟩ := h
+      simp only [Bool.and_eq_true, decide_eq_true_eq] at hi
+      have hp := hi.1
+      have hq := hi.2
+      have : i + 2 ≤ n := by omega
+      exact ⟨i + 2, n - (i + 2), hp, hq, by omega⟩
+
+/-- goldbachCheck: bound 以下の全偶数 ≥ 4 が isGoldbachBool で true かを判定 -/
+def goldbachCheck (bound : ℕ) : Bool :=
+  (List.range (bound + 1)).all fun n =>
+    if n < 4 then true
+    else if n % 2 ≠ 0 then true
+    else isGoldbachBool n
+
+/-- goldbachCheck が true ならば、bound 以下の全偶数 ≥ 4 で IsGoldbach -/
+theorem isGoldbach_of_check {bound : ℕ} (hcheck : goldbachCheck bound = true)
+    (n : ℕ) (hn4 : n ≥ 4) (hn : n ≤ bound) (heven : n % 2 = 0) : IsGoldbach n := by
+  simp only [goldbachCheck, List.all_eq_true, List.mem_range, Bool.ite_eq_true_distrib] at hcheck
+  have hmem : n < bound + 1 := by omega
+  have := hcheck n hmem
+  split at this
+  · omega
+  · split at this
+    · omega
+    · exact isGoldbach_of_bool this
+
+set_option maxHeartbeats 8000000 in
+set_option linter.style.nativeDecide false in
+-- 1000以下の全偶数(≥4)について native_decide で isGoldbachBool を評価
+/-- 全ての偶数 n (4 ≤ n ≤ 1000) は2つの素数の和で表せる -/
+theorem isGoldbach_even_le_1000 (n : ℕ) (hn4 : n ≥ 4) (hn1000 : n ≤ 1000) (heven : n % 2 = 0) :
+    IsGoldbach n := by
+  have hcheck : goldbachCheck 1000 = true := by native_decide
+  exact isGoldbach_of_check hcheck n hn4 hn1000 heven
