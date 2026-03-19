@@ -783,3 +783,27 @@ theorem card_prodsetFinset2_ge {A B : Finset ℕ}
     _ = A.card + B.card - 1 := by
         have : B.card ≥ 1 := Finset.Nonempty.card_pos hB
         omega
+
+/-! ## 探索: sumset/prodset の交換則 -/
+
+/-- sumsetFinset2 は対称: A+B = B+A -/
+theorem sumsetFinset2_comm (A B : Finset ℕ) :
+    sumsetFinset2 A B = sumsetFinset2 B A := by
+  ext x
+  simp only [sumsetFinset2, Finset.mem_image, Finset.mem_product]
+  constructor
+  · rintro ⟨⟨a, b⟩, ⟨ha, hb⟩, heq⟩
+    exact ⟨⟨b, a⟩, ⟨hb, ha⟩, by omega⟩
+  · rintro ⟨⟨b, a⟩, ⟨hb, ha⟩, heq⟩
+    exact ⟨⟨a, b⟩, ⟨ha, hb⟩, by omega⟩
+
+/-- prodsetFinset2 は対称: A·B = B·A -/
+theorem prodsetFinset2_comm (A B : Finset ℕ) :
+    prodsetFinset2 A B = prodsetFinset2 B A := by
+  ext x
+  simp only [prodsetFinset2, Finset.mem_image, Finset.mem_product]
+  constructor
+  · rintro ⟨⟨a, b⟩, ⟨ha, hb⟩, heq⟩
+    exact ⟨⟨b, a⟩, ⟨hb, ha⟩, by rw [Nat.mul_comm]; exact heq⟩
+  · rintro ⟨⟨b, a⟩, ⟨hb, ha⟩, heq⟩
+    exact ⟨⟨a, b⟩, ⟨ha, hb⟩, by rw [Nat.mul_comm]; exact heq⟩

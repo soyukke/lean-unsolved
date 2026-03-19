@@ -630,3 +630,9 @@ theorem hasRamseyProperty_k_mono {n k : ℕ} (hk : k ≥ 1)
   · cases hmono with
     | inl ht => exact Or.inl (isMonochromaticClique_subset ht (Finset.erase_subset x S))
     | inr hf => exact Or.inr (isMonochromaticClique_subset hf (Finset.erase_subset x S))
+
+/-! ## 探索: HasRamseyProperty の系 -/
+
+/-- n ≥ 2 なら任意の2色塗り分けに単色辺が存在 -/
+theorem hasRamseyProperty_ge_two (n : ℕ) (hn : n ≥ 2) : HasRamseyProperty n 2 :=
+  hasRamseyProperty_mono hn ramsey_2_holds

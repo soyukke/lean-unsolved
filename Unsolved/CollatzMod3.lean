@@ -279,3 +279,19 @@ theorem three_mul_add_one_mod6 (n : ℕ) (hodd : n % 2 = 1) :
 -- つまり (3n+1) % 12 ∈ {4, 10}
 theorem three_mul_add_one_mod12_cases (n : ℕ) (hodd : n % 2 = 1) :
     (3 * n + 1) % 12 = 4 ∨ (3 * n + 1) % 12 = 10 := by omega
+
+/-! ## 22. コラッツ写像の増加率 -/
+
+/-- 任意の n ≥ 1 に対して 3n+1 ≤ 4n（増加率は4倍以下） -/
+theorem three_mul_add_one_le_four_mul (n : ℕ) (hn : n ≥ 1) :
+    3 * n + 1 ≤ 4 * n := by omega
+
+/-- n ≥ 2 に対して 3n+1 < 4n（増加率は4倍未満） -/
+theorem three_mul_add_one_lt_four_mul (n : ℕ) (hn : n ≥ 2) :
+    3 * n + 1 < 4 * n := by omega
+
+-- 奇数 n に対して (3n+1)/2 = n + (n+1)/2（再掲：増加分は (n+1)/2）
+-- 既存: syracuse_eq_n_plus
+
+-- 奇数 n ≥ 3 に対して (3n+1) % 8 ∈ {2, 4, 6, 0} (偶数であることの精密化)
+-- 既存の mod 8 分類から自明。

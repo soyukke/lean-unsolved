@@ -351,3 +351,12 @@ example : IsTwinPrime 431 := ⟨by norm_num, by norm_num⟩
 example : IsTwinPrime 461 := ⟨by norm_num, by norm_num⟩
 example : IsTwinPrime 521 := ⟨by norm_num, by norm_num⟩
 example : IsTwinPrime 569 := ⟨by norm_num, by norm_num⟩
+
+/-! ## 探索: 双子素数と cousin prime の関係 -/
+
+/-- p が IsTwinPrime かつ IsCousinPrime (p+2) なら p, p+2, p+6 が全て素数
+    （素数の3つ組 (p, p+2, p+6)） -/
+theorem prime_triple_from_twin_cousin {p : ℕ}
+    (ht : IsTwinPrime p) (hc : IsCousinPrime (p + 2)) :
+    Nat.Prime p ∧ Nat.Prime (p + 2) ∧ Nat.Prime (p + 6) := by
+  exact ⟨ht.1, ht.2, by rw [show p + 6 = (p + 2) + 4 from by omega]; exact hc.2⟩
