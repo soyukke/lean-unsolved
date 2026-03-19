@@ -711,3 +711,35 @@ theorem stoppingTime_ge_one (n : ℕ) (hn : n ≥ 2)
   have := collatzIter_stoppingTime n hr
   rw [h0'] at this
   change n = 1 at this; omega
+
+/-! ## 32. 有界ステップ判定と n ≤ 1000 の検証 -/
+
+/-- collatzReachesBounded: steps ステップ以内に 1 に到達するか判定する補助関数 -/
+def collatzReachesBounded (steps n : ℕ) : Bool :=
+  match steps with
+  | 0 => n == 1
+  | k + 1 => n == 1 || collatzReachesBounded k (collatzStep n)
+
+/-- collatzReachesBounded が true ならば collatzReaches が成り立つ -/
+theorem collatzReaches_of_bounded (steps n : ℕ) (h : collatzReachesBounded steps n = true) :
+    collatzReaches n := by
+  induction steps generalizing n with
+  | zero =>
+    simp only [collatzReachesBounded, beq_iff_eq] at h
+    exact ⟨0, by simp only [collatzIter_zero]; exact h⟩
+  | succ k ih =>
+    simp only [collatzReachesBounded, Bool.or_eq_true, beq_iff_eq] at h
+    rcases h with h | h
+    · exact ⟨0, by simp only [collatzIter_zero]; exact h⟩
+    · obtain ⟨j, hj⟩ := ih _ h
+      exact ⟨j + 1, by rw [collatzIter_succ]; exact hj⟩
+
+set_option linter.style.nativeDecide false in
+set_option maxHeartbeats 400000 in
+-- native_decide で 1000×200 ステップの有界探索を実行するため heartbeats を増加
+/-- 1 ≤ n ≤ 1000 の全自然数はコラッツ操作で1に到達する -/
+theorem collatzReaches_le_1000 (n : ℕ) (hn1 : n ≥ 1) (hn : n ≤ 1000) :
+    collatzReaches n := by
+  apply collatzReaches_of_bounded 200
+  revert n
+  native_decide
