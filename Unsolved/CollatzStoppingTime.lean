@@ -982,3 +982,13 @@ private theorem collatzIter_cycle_aux (k : ℕ) :
 theorem collatzIter_one_in_cycle (k : ℕ) :
     collatzIter k 1 = 1 ∨ collatzIter k 1 = 2 ∨ collatzIter k 1 = 4 :=
   (collatzIter_cycle_aux k).1
+
+/-- collatzIter k 2 ∈ {1, 2, 4}: 2 から始まる軌道も {1,2,4} サイクルに留まる -/
+theorem collatzIter_two_in_cycle (k : ℕ) :
+    collatzIter k 2 = 1 ∨ collatzIter k 2 = 2 ∨ collatzIter k 2 = 4 :=
+  (collatzIter_cycle_aux k).2.1
+
+/-- collatzIter k 4 ∈ {1, 2, 4}: 4 から始まる軌道も {1,2,4} サイクルに留まる -/
+theorem collatzIter_four_in_cycle (k : ℕ) :
+    collatzIter k 4 = 1 ∨ collatzIter k 4 = 2 ∨ collatzIter k 4 = 4 :=
+  (collatzIter_cycle_aux k).2.2

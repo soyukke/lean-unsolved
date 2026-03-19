@@ -649,3 +649,15 @@ theorem hasRamseyProperty_ge_two (n : ℕ) (hn : n ≥ 2) : HasRamseyProperty n 
 /-- n < k → ¬HasRamseyProperty n k（hasRamseyProperty_card_le の対偶） -/
 theorem not_hasRamseyProperty_of_lt {n k : ℕ} (h : n < k) : ¬HasRamseyProperty n k := by
   intro hr; exact absurd (hasRamseyProperty_card_le hr) (by omega)
+
+/-- ¬HasRamseyProperty 3 3: R(3)=6 なので K_3 には単色三角形を回避する塗り分けが存在する。
+    hasRamseyProperty_mono の対偶: HasRamseyProperty 3 3 → HasRamseyProperty 5 3 だが
+    ¬HasRamseyProperty 5 3 なので矛盾。 -/
+theorem not_hasRamseyProperty_three_three : ¬HasRamseyProperty 3 3 := by
+  intro h
+  exact not_hasRamseyProperty_five_three (hasRamseyProperty_mono (by omega : 3 ≤ 5) h)
+
+/-- ¬HasRamseyProperty 4 3: 同様に R(3)=6 > 4 -/
+theorem not_hasRamseyProperty_four_three : ¬HasRamseyProperty 4 3 := by
+  intro h
+  exact not_hasRamseyProperty_five_three (hasRamseyProperty_mono (by omega : 4 ≤ 5) h)

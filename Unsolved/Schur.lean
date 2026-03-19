@@ -115,3 +115,9 @@ set_option linter.style.nativeDecide false in
 /-- N=4, r=2 でも Schur triple は回避可能（S(2) > 4） -/
 theorem schur_avoidable_four_two : ∃ c : SchurColoring 4 2, ¬HasMonoSchurTriple c := by
   native_decide
+
+set_option linter.style.nativeDecide false in
+/-- S(1) > 1: N=1 で r=1 色の Schur triple 回避が可能。
+    {1} のみなので x+y=z を満たす三つ組は存在しない。 -/
+theorem schur_avoidable_one_one : ∃ c : SchurColoring 1 1, ¬HasMonoSchurTriple c := by
+  native_decide

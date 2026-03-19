@@ -590,3 +590,13 @@ theorem isGoldbach_even_le_10000 (n : ℕ) (hn4 : n ≥ 4) (hn : n ≤ 10000) (h
 /-- p + q = n で p ≤ q なら q ≥ n/2 -/
 theorem goldbach_larger_prime {n p q : ℕ} (_hp : Nat.Prime p) (_hq : Nat.Prime q)
     (heq : n = p + q) (hle : p ≤ q) : q ≥ n / 2 := by omega
+
+/-! ## 有界検証: 全偶数 4 ≤ n ≤ 50000 の Goldbach 性 -/
+
+set_option maxHeartbeats 400000000 in
+set_option linter.style.nativeDecide false in
+/-- 全ての偶数 n (4 ≤ n ≤ 50000) は2つの素数の和で表せる -/
+theorem isGoldbach_even_le_50000 (n : ℕ) (hn4 : n ≥ 4) (hn : n ≤ 50000) (heven : n % 2 = 0) :
+    IsGoldbach n := by
+  have hcheck : goldbachCheck 50000 = true := by native_decide
+  exact isGoldbach_of_check hcheck n hn4 hn heven
