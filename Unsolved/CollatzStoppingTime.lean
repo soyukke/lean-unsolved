@@ -1216,3 +1216,68 @@ theorem collatzReaches_le_1000000 (n : ℕ) (hn1 : n ≥ 1) (hn : n ≤ 1000000)
                     by_cases h950 : n ≤ 950000
                     · exact collatzReaches_of_allReachBounded collatzAllReach_900001_950000 n (by omega) h950
                     · exact collatzReaches_of_allReachBounded collatzAllReach_950001_1000000 n (by omega) hn
+
+/-! ## 周期軌道の完全分類定理 -/
+
+/-- 周期性の帰結: collatzIter (m*k) n = n
+    k ステップで n に戻るなら、m*k ステップでも n に戻る -/
+theorem collatzIter_mul_periodic (n k : ℕ) (hcycle : collatzIter k n = n) (m : ℕ) :
+    collatzIter (m * k) n = n := by
+  induction m with
+  | zero => simp [collatzIter]
+  | succ m ih =>
+    rw [show (m + 1) * k = m * k + k from by ring]
+    rw [collatzIter_add', hcycle]
+    exact ih
+
+/-- ★ コラッツ予想の下での周期軌道の完全分類:
+    collatzReaches n かつ collatzIter k n = n (k ≥ 1) ならば n ∈ {0, 1, 2, 4}。
+
+    これは k=1,...,7 の個別証明（collatzStep_ne_self, collatzStep_step_ne_self,
+    collatzIter_three_periodic, ..., collatzIter_seven_periodic）を完全に包含する一般定理。
+
+    証明の核心:
+    1. collatzReaches n より ∃ j, collatzIter j n = 1
+    2. j = q*k + r (0 ≤ r < k) と割る
+    3. 周期性から collatzIter (q*k) n = n
+    4. よって collatzIter r n = 1
+    5. n = collatzIter k n = collatzIter (k-r) (collatzIter r n) = collatzIter (k-r) 1
+    6. collatzIter_one_in_cycle より collatzIter (k-r) 1 ∈ {1, 2, 4}
+    7. よって n ∈ {1, 2, 4}。n = 0 は not_collatzReaches_zero で除外。 -/
+theorem collatzReaches_periodic_trivial (n k : ℕ) (hk : k ≥ 1)
+    (hr : collatzReaches n) (hcycle : collatzIter k n = n) :
+    n = 0 ∨ n = 1 ∨ n = 2 ∨ n = 4 := by
+  -- n = 0 のケース
+  by_cases hn0 : n = 0
+  · left; exact hn0
+  · -- n ≥ 1
+    right
+    obtain ⟨j, hj⟩ := hr  -- collatzIter j n = 1
+    -- j を k で割る: j = q*k + r, 0 ≤ r < k
+    have hk_pos : k > 0 := by omega
+    set q := j / k
+    set r := j % k
+    have hr_lt : r < k := Nat.mod_lt j hk_pos
+    -- j = q*k + r を使って collatzIter j n を書き換え
+    have hmod : j = q * k + r := by
+      rw [Nat.div_add_mod]
+    -- collatzIter (q*k + r) n = 1
+    have hqkr : collatzIter (q * k + r) n = 1 := by rw [hmod] at hj; exact hj
+    -- 周期性から collatzIter (q*k) n = n
+    have hqk : collatzIter (q * k) n = n := collatzIter_mul_periodic n k hcycle q
+    -- collatzIter_add' で分解: collatzIter (q*k + r) n = collatzIter r (collatzIter (q*k) n)
+    have hr1 : collatzIter r n = 1 := by
+      rw [collatzIter_add'] at hqkr
+      rw [hqk] at hqkr
+      exact hqkr
+    -- n = collatzIter k n = collatzIter (r + (k-r)) n = collatzIter (k-r) (collatzIter r n) = collatzIter (k-r) 1
+    have hkr : r + (k - r) = k := by omega
+    have hn_eq : n = collatzIter (k - r) 1 := by
+      calc n = collatzIter k n := hcycle.symm
+        _ = collatzIter (r + (k - r)) n := by rw [hkr]
+        _ = collatzIter (k - r) (collatzIter r n) := collatzIter_add' r (k - r) n
+        _ = collatzIter (k - r) 1 := by rw [hr1]
+    -- collatzIter (k-r) 1 ∈ {1, 2, 4}
+    have h124 := collatzIter_one_in_cycle (k - r)
+    rw [← hn_eq] at h124
+    exact h124
