@@ -375,3 +375,16 @@ theorem numDistinctDist_pair {p q : Point} (hne : p ≠ q) :
     numDistinctDist {p, q} ≥ 1 :=
   numDistinctDist_ge_one (by
     rw [Finset.card_pair hne])
+
+/-! ## 距離の追加性質 -/
+
+/-- distSq は座標差の二乗和（distSq_explicit の Point 版） -/
+theorem distSq_sub (p q : Point) :
+    distSq p q = (p.1 - q.1) ^ 2 + (p.2 - q.2) ^ 2 := by
+  unfold distSq; ring
+
+/-- distSq の平行四辺形法則: distSq(a,c) ≤ 2·distSq(a,b) + 2·distSq(b,c) -/
+theorem distSq_parallelogram (a b c : Point) :
+    distSq a c ≤ 2 * distSq a b + 2 * distSq b c := by
+  unfold distSq
+  nlinarith [sq_nonneg (a.1 - 2 * b.1 + c.1), sq_nonneg (a.2 - 2 * b.2 + c.2)]

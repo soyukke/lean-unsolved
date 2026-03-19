@@ -448,3 +448,9 @@ theorem weakGoldbach_of_goldbach_sub3 {n : ℕ} (hn : n > 7) (hodd : n % 2 = 1)
     (hg : IsGoldbach (n - 3)) : IsWeakGoldbach n := by
   obtain ⟨p, q, hp, hq, heq⟩ := hg
   exact ⟨3, p, q, by norm_num, hp, hq, by omega⟩
+
+/-! ## 探索: IsGoldbach の追加性質 -/
+
+/-- 偶数 n の IsGoldbach で p = q の場合、n = 2p -/
+theorem isGoldbach_eq_double {n p : ℕ} (_hp : Nat.Prime p) (heq : n = p + p) :
+    n = 2 * p := by omega

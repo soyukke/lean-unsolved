@@ -634,7 +634,12 @@ theorem collatzReaches_le_100 (n : ℕ) (hn1 : n ≥ 1) (hn100 : n ≤ 100) :
     | exact ⟨115, by native_decide⟩
     | exact ⟨118, by native_decide⟩
 
-/-! ## 27. コラッツ予想は奇数で十分 -/
+/-! ## 27. CollatzConjecture ↔ SyracuseConjecture -/
+
+-- CollatzConjecture と SyracuseConjecture は Collatz.lean で定義済み。
+-- ここでは同値性を証明する（collatzReaches_of_all_odd が先に必要なので後置）。
+
+/-! ## 28. コラッツ予想は奇数で十分 -/
 
 /-- コラッツ予想は奇数で十分:
     全奇数 n ≥ 1 が1に到達するならば、全自然数 n ≥ 1 が1に到達する。
@@ -666,3 +671,18 @@ theorem collatzReaches_of_all_odd_gt1
   by_cases h1 : n = 1
   · rw [h1]; exact collatzReaches_one
   · exact h n (by omega) hodd
+
+/-! ## 30. collatzReaches 版のコラッツ予想の同値形式化 -/
+
+/-- collatzReaches 版コラッツ予想 -/
+def CollatzConjectureR : Prop := ∀ n : ℕ, n ≥ 1 → collatzReaches n
+
+/-- collatzReaches 版 Syracuse 予想 -/
+def SyracuseConjectureR : Prop := ∀ n : ℕ, n ≥ 1 → n % 2 = 1 → collatzReaches n
+
+/-- collatzReaches 版: コラッツ予想と Syracuse 予想は同値 -/
+theorem collatzR_iff_syracuseR : CollatzConjectureR ↔ SyracuseConjectureR := by
+  constructor
+  · intro h n hn _hodd; exact h n hn
+  · intro h n hn
+    exact collatzReaches_of_all_odd (fun m hm hodd => h m hm hodd) n hn
