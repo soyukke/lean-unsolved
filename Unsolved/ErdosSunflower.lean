@@ -602,3 +602,74 @@ theorem containsSunflower3_of_freq_le_one
   refine ⟨sub, hsub_len, hsub_mem, isSunflower_of_pairwise_disjoint sub hdisjoint⟩
 
 end FrequencyLemmas
+
+-- =============================================================================
+-- スター補題の k 一般化
+-- =============================================================================
+
+/-! ## スター補題の一般化
+
+2-均一族で要素 x が k 回以上出現するなら k-ひまわりを含む。
+k=3 の `containsSunflower3_of_element_appears_thrice` の一般化。
+
+証明方針:
+- x を含む集合を k 個取り出す（先頭 k 個）
+- core = {x} で、花びら S_i \ {x} はサイズ1
+- 異なる2元集合の花びらは異なるサイズ1集合 → 互いに素
+-/
+
+section StarGeneralization
+
+variable {α : Type*} [DecidableEq α]
+
+/-- x を含む異なる2元集合のリストは {x} を core とするひまわり -/
+private theorem isSunflower_star_uniform2
+    (family : List (Finset α)) (x : α)
+    (hunif : ∀ S ∈ family, S.card = 2)
+    (hmem : ∀ S ∈ family, x ∈ S)
+    (hnodup : family.Nodup) :
+    IsSunflower family := by
+  refine ⟨{x}, ?_, ?_⟩
+  · intro S hS
+    exact Finset.singleton_subset_iff.mpr (hmem S hS)
+  · intro i j hi hj hij
+    have hci := hunif _ (List.getElem_mem hi)
+    have hcj := hunif _ (List.getElem_mem hj)
+    have hne : family[i] ≠ family[j] := by
+      intro h; exact absurd (hnodup.getElem_inj_iff.mp h) hij
+    have hpi := card_sdiff_singleton_of_mem_card_two (hmem _ (List.getElem_mem hi)) hci
+    have hpj := card_sdiff_singleton_of_mem_card_two (hmem _ (List.getElem_mem hj)) hcj
+    have hpne := petal_ne_of_ne (hmem _ (List.getElem_mem hi)) (hmem _ (List.getElem_mem hj))
+      hci hcj hne
+    exact disjoint_of_card_one_ne hpi hpj hpne
+
+/-- 2-均一族で要素 x が k 回以上出現するなら k-ひまわりを含む -/
+theorem containsSunflower_of_element_appears_k
+    (family : List (Finset α)) (k : ℕ)
+    (hunif : IsUniform 2 family) (hnodup : family.Nodup)
+    (x : α) (hfreq : (family.filter (fun S => x ∈ S)).length ≥ k) :
+    ContainsSunflower family k := by
+  set fx := family.filter (fun S => x ∈ S) with hfx_def
+  set sub := fx.take k with hsub_def
+  have hsub_len : sub.length = k := List.length_take_of_le (by omega)
+  -- sub の各要素は family のメンバー
+  have hsub_mem_family : ∀ S ∈ sub, S ∈ family := by
+    intro S hS
+    exact List.mem_of_mem_filter (List.mem_of_mem_take hS)
+  -- sub の各要素は x を含む
+  have hsub_has_x : ∀ S ∈ sub, x ∈ S := by
+    intro S hS
+    have hS_fx : S ∈ fx := List.mem_of_mem_take hS
+    have := (List.mem_filter.mp hS_fx).2
+    simpa using this
+  -- sub の各要素は 2元集合
+  have hsub_unif : ∀ S ∈ sub, S.card = 2 := by
+    intro S hS; exact hunif S (hsub_mem_family S hS)
+  -- sub は Nodup
+  have hfx_nodup : fx.Nodup := List.Nodup.filter _ hnodup
+  have hsub_nodup : sub.Nodup := List.Nodup.sublist (List.take_sublist k fx) hfx_nodup
+  -- sub はひまわり
+  have hsf := isSunflower_star_uniform2 sub x hsub_unif hsub_has_x hsub_nodup
+  exact ⟨sub, hsub_len, hsub_mem_family, hsf⟩
+
+end StarGeneralization

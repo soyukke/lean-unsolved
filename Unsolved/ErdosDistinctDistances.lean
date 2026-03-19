@@ -395,6 +395,11 @@ theorem distSq_sub (p q : Point) :
     distSq p q = (p.1 - q.1) ^ 2 + (p.2 - q.2) ^ 2 := by
   unfold distSq; ring
 
+/-- 軸に平行な辺を持つ直角三角形の距離関係（ピタゴラス） -/
+theorem distSq_right_triangle (x y : ℤ) :
+    distSq (0, 0) (x, y) = distSq (0, 0) (x, 0) + distSq (0, 0) (0, y) := by
+  unfold distSq; ring
+
 /-- distSq の平行四辺形法則: distSq(a,c) ≤ 2·distSq(a,b) + 2·distSq(b,c) -/
 theorem distSq_parallelogram (a b c : Point) :
     distSq a c ≤ 2 * distSq a b + 2 * distSq b c := by

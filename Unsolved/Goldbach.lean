@@ -451,6 +451,22 @@ theorem weakGoldbach_of_goldbach_sub3 {n : ℕ} (hn : n > 7) (hodd : n % 2 = 1)
 
 /-! ## 探索: IsGoldbach の追加性質 -/
 
+/-- 6以上の偶数が IsGoldbach なら、少なくとも1つの奇素数を含む分解が存在 -/
+theorem isGoldbach_has_odd_prime {n : ℕ} (hg : IsGoldbach n) (hn : n ≥ 6) (heven : n % 2 = 0) :
+    ∃ p q : ℕ, Nat.Prime p ∧ Nat.Prime q ∧ n = p + q ∧ p % 2 = 1 := by
+  obtain ⟨p, q, hp, hq, heq⟩ := hg
+  by_cases hp2 : p = 2
+  · -- p = 2 → q = n - 2 ≥ 4 > 2 → q は奇素数
+    subst hp2
+    have hq_gt2 : q ≠ 2 := by omega
+    have hodd_q := hq.odd_of_ne_two hq_gt2
+    have hq_mod : q % 2 = 1 := Nat.odd_iff.mp hodd_q
+    exact ⟨q, 2, hq, by norm_num, by omega, hq_mod⟩
+  · -- p ≠ 2 → p は奇素数
+    have hodd_p := hp.odd_of_ne_two hp2
+    have hp_mod : p % 2 = 1 := Nat.odd_iff.mp hodd_p
+    exact ⟨p, q, hp, hq, heq, hp_mod⟩
+
 /-- 偶数 n の IsGoldbach で p = q の場合、n = 2p -/
 theorem isGoldbach_eq_double {n p : ℕ} (_hp : Nat.Prime p) (heq : n = p + p) :
     n = 2 * p := by omega
