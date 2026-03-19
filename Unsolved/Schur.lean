@@ -11,6 +11,7 @@ Schur数 S(r): {1,...,N} を r 色で塗り分けたとき、
 ## 主要結果
 - S(1) = 2 の完全特徴付け
 - S(2) = 5 の完全特徴付け
+- S(3) ≥ 14 の下界（具体的回避塗り分けによる証明）
 -/
 
 -- =============================================================================
@@ -127,3 +128,37 @@ set_option linter.style.nativeDecide false in
     {1} のみなので x+y=z を満たす三つ組は存在しない。 -/
 theorem schur_avoidable_one_three : ∃ c : SchurColoring 1 3, ¬HasMonoSchurTriple c := by
   native_decide
+
+-- =============================================================================
+-- S(3) ≥ 14
+-- =============================================================================
+
+/-- S(3) ≥ 14 の回避塗り分け（具体的構成）。
+    色0: {1,4,10,13}, 色1: {5,6,7,8,9}, 色2: {2,3,11,12}
+    この塗り分けは {1,...,13} 上で単色 Schur triple x+y=z を回避する。 -/
+def schurThreeWitness : SchurColoring 13 3 :=
+  fun i => match i.val with
+    | 0 => 0   -- 1 → 色0
+    | 1 => 2   -- 2 → 色2
+    | 2 => 2   -- 3 → 色2
+    | 3 => 0   -- 4 → 色0
+    | 4 => 1   -- 5 → 色1
+    | 5 => 1   -- 6 → 色1
+    | 6 => 1   -- 7 → 色1
+    | 7 => 1   -- 8 → 色1
+    | 8 => 1   -- 9 → 色1
+    | 9 => 0   -- 10 → 色0
+    | 10 => 2  -- 11 → 色2
+    | 11 => 2  -- 12 → 色2
+    | 12 => 0  -- 13 → 色0
+    | _ => 0
+
+set_option linter.style.nativeDecide false in
+/-- schurThreeWitness が Schur triple を持たないことの検証 -/
+theorem schurThreeWitness_avoids : ¬HasMonoSchurTriple schurThreeWitness := by
+  native_decide
+
+set_option linter.style.nativeDecide false in
+/-- S(3) ≥ 14: {1,...,13} で3色塗り分けにより Schur triple 回避可能 -/
+theorem schur_three_lower : ∃ c : SchurColoring 13 3, ¬HasMonoSchurTriple c :=
+  ⟨schurThreeWitness, schurThreeWitness_avoids⟩

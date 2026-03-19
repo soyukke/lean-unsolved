@@ -12,3 +12,4 @@
 | エルデシュ #77 (ラムゼー数極限) | 11 | 1個 (sorry なし) | Phase E | [erdos77/INDEX.md](erdos77/INDEX.md) |
 | エルデシュ #20 (ひまわり予想) | 9 | 1個 (sorry なし) | Phase E | [erdos20/INDEX.md](erdos20/INDEX.md) |
 | エルデシュ #52 (和積問題) | 16 | 1個 (sorry なし) | Phase E | [erdos52/INDEX.md](erdos52/INDEX.md) |
+| Schur数 | - | 1個 (sorry なし) | Phase E | - |
