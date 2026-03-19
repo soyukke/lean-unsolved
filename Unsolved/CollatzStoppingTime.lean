@@ -292,6 +292,55 @@ theorem collatzReaches_of_step (n : ℕ) (hn : n ≥ 2) (hr : collatzReaches (co
   obtain ⟨k, hk⟩ := hr
   exact ⟨k + 1, by rw [collatzIter_succ]; exact hk⟩
 
+/-! ## 短いサイクルの非存在 -/
+
+/-- collatzStep に不動点はない（n ≥ 1 のとき）: collatzStep n ≠ n -/
+theorem collatzStep_ne_self (n : ℕ) (hn : n ≥ 1) : collatzStep n ≠ n := by
+  intro h
+  by_cases hodd : n % 2 = 1
+  · -- 奇数: collatzStep n = 3n+1 ≠ n (3n+1 > n for n ≥ 1)
+    rw [collatzStep_odd_eq n hodd] at h
+    omega
+  · -- 偶数: collatzStep n = n/2 ≠ n (n/2 < n for n ≥ 1, even)
+    have heven : n % 2 = 0 := by omega
+    rw [collatzStep_even_eq_div2 n heven] at h
+    omega
+
+/-- 2-サイクルの非存在: collatzStep (collatzStep n) = n → n ≤ 2 -/
+theorem collatzStep_step_ne_self (n : ℕ) (hn : n > 2) :
+    collatzStep (collatzStep n) ≠ n := by
+  intro h
+  by_cases hodd : n % 2 = 1
+  · -- n 奇数 → collatzStep n = 3n+1（偶数） → collatzStep(3n+1) = (3n+1)/2
+    rw [collatzStep_odd_eq n hodd] at h
+    have heven : (3 * n + 1) % 2 = 0 := by omega
+    rw [collatzStep_even_eq_div2 (3 * n + 1) heven] at h
+    -- (3n+1)/2 = n → 3n+1 = 2n → n = -1 (impossible in ℕ)
+    omega
+  · -- n 偶数 → collatzStep n = n/2
+    have heven : n % 2 = 0 := by omega
+    rw [collatzStep_even_eq_div2 n heven] at h
+    by_cases hodd2 : (n / 2) % 2 = 1
+    · -- n/2 奇数 → collatzStep(n/2) = 3(n/2)+1 = n → omega
+      rw [collatzStep_odd_eq (n / 2) hodd2] at h
+      omega
+    · -- n/2 偶数 → collatzStep(n/2) = n/4 = n → omega
+      have heven2 : (n / 2) % 2 = 0 := by omega
+      rw [collatzStep_even_eq_div2 (n / 2) heven2] at h
+      omega
+
+/-- collatzStep 1 = 4 -/
+theorem collatzStep_one_eq : collatzStep 1 = 4 := by decide
+
+/-- collatzStep 4 = 2 -/
+theorem collatzStep_four_eq : collatzStep 4 = 2 := by decide
+
+/-- collatzStep 2 = 1 -/
+theorem collatzStep_two_eq : collatzStep 2 = 1 := by decide
+
+/-- 唯一の周期軌道 {1, 2, 4}: 1 → 4 → 2 → 1 の3ステップサイクル -/
+theorem collatzIter_three_cycle : collatzIter 3 1 = 1 := by decide
+
 /-- n ≥ 2 なら collatzReaches n ↔ collatzReaches (collatzStep n)
     collatzReaches_step と collatzReaches_of_step の統合 -/
 theorem collatzReaches_step_iff (n : ℕ) (hn : n ≥ 2) :
