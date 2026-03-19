@@ -15,3 +15,4 @@ import Unsolved.ErdosDistinctDistances
 import Unsolved.ErdosRamsey
 import Unsolved.ErdosSunflower
 import Unsolved.ErdosSumProduct
+import Unsolved.Schur
