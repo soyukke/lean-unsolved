@@ -686,3 +686,28 @@ theorem collatzR_iff_syracuseR : CollatzConjectureR ↔ SyracuseConjectureR := b
   · intro h n hn _hodd; exact h n hn
   · intro h n hn
     exact collatzReaches_of_all_odd (fun m hm hodd => h m hm hodd) n hn
+
+/-! ## 31. 偶数の stoppingTime ≥ 1 -/
+
+/-- 偶数 n ≥ 2 の stopping time は 1 以上:
+    偶数 n ≥ 2 ≠ 1 なので 0 ステップでは到達しない -/
+theorem stoppingTime_even_ge_one (n : ℕ) (hn : n ≥ 2) (heven : n % 2 = 0)
+    (hr : collatzReaches n) :
+    stoppingTime n hr ≥ 1 := by
+  by_contra h0
+  push_neg at h0
+  have h0' : stoppingTime n hr = 0 := by omega
+  have := collatzIter_stoppingTime n hr
+  rw [h0'] at this
+  change n = 1 at this; omega
+
+/-- n ≥ 2 の stopping time は 1 以上 -/
+theorem stoppingTime_ge_one (n : ℕ) (hn : n ≥ 2)
+    (hr : collatzReaches n) :
+    stoppingTime n hr ≥ 1 := by
+  by_contra h0
+  push_neg at h0
+  have h0' : stoppingTime n hr = 0 := by omega
+  have := collatzIter_stoppingTime n hr
+  rw [h0'] at this
+  change n = 1 at this; omega

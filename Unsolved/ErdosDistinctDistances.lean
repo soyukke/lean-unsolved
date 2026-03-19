@@ -378,6 +378,10 @@ theorem numDistinctDist_pair {p q : Point} (hne : p ≠ q) :
 
 /-! ## 距離の追加性質 -/
 
+/-- 自分自身との距離の二乗は 0 -/
+theorem distSq_self_zero (p : Point) : distSq p p = 0 := by
+  unfold distSq; ring
+
 /-- distSq は座標差の二乗和（distSq_explicit の Point 版） -/
 theorem distSq_sub (p q : Point) :
     distSq p q = (p.1 - q.1) ^ 2 + (p.2 - q.2) ^ 2 := by

@@ -423,3 +423,79 @@ theorem isVanDerWaerden_two : IsVanDerWaerden 2 3 := by
   · exact allColorings3_have_2AP
   · intro _
     exact canAvoid_2_2
+
+-- =============================================================================
+-- W(1) = 1 の完全証明
+-- =============================================================================
+
+/-! ## W(1) = 1 の完全証明
+
+W(1) = 1: {0} の任意の2色塗り分けに単色1項等差数列が存在する。
+1-AP は初項 a, 公差 d ≥ 1 で 1項のみ（i < 1 なら i = 0）なので、
+色クラスに属する任意の点が 1-AP を構成する。
+
+N=0 では位置が存在しないため、どの色クラスも空で 1-AP を回避可能。
+-/
+
+/-- 1-AP の存在は「色クラスが非空」と同値。
+    HasArithProgInSet S 1 a d ⟺ d ≥ 1 ∧ a ∈ S -/
+theorem hasArithProgInSet_one_iff (S : Finset ℕ) (a d : ℕ) :
+    HasArithProgInSet S 1 a d ↔ d ≥ 1 ∧ a ∈ S := by
+  unfold HasArithProgInSet
+  constructor
+  · intro ⟨hd, hap⟩
+    have h0 := hap 0 (by omega)
+    simp only [Nat.zero_mul, Nat.add_zero] at h0
+    exact ⟨hd, h0⟩
+  · intro ⟨hd, ha⟩
+    exact ⟨hd, fun i hi => by
+      have : i = 0 := by omega
+      subst this
+      simp only [Nat.zero_mul, Nat.add_zero]
+      exact ha⟩
+
+/-- N=1 では全ての塗り分けが1項単色等差数列を含む -/
+theorem allColorings1_have_1AP : ∀ c : Coloring 1, HasMonochromaticAP c 1 := by
+  intro c
+  -- c ⟨0, by omega⟩ が true か false で場合分け
+  by_cases h : c ⟨0, by omega⟩ = true
+  · -- 色 true のクラスに 0 が属する → true 色に 1-AP 存在
+    left
+    refine ⟨0, 1, ?_⟩
+    rw [hasArithProgInSet_one_iff]
+    exact ⟨by omega, by
+      unfold colorClass
+      rw [Finset.mem_image]
+      exact ⟨⟨0, by omega⟩, Finset.mem_filter.mpr ⟨Finset.mem_univ _, h⟩, rfl⟩⟩
+  · -- c ⟨0, by omega⟩ = false
+    have hf : c ⟨0, by omega⟩ = false := by
+      cases hb : c ⟨0, by omega⟩ <;> simp_all
+    right
+    refine ⟨0, 1, ?_⟩
+    rw [hasArithProgInSet_one_iff]
+    exact ⟨by omega, by
+      unfold colorClass
+      rw [Finset.mem_image]
+      exact ⟨⟨0, by omega⟩, Finset.mem_filter.mpr ⟨Finset.mem_univ _, hf⟩, rfl⟩⟩
+
+/-- N=0 では Coloring 0 は空関数で、色クラスが空なため 1-AP を回避可能 -/
+theorem canAvoid_0_1 : CanAvoid 0 1 := by
+  refine ⟨Fin.elim0, fun h => ?_⟩
+  cases h with
+  | inl h =>
+    obtain ⟨a, d, ⟨_, hap⟩⟩ := h
+    have := hap 0 (by omega)
+    simp only [Nat.zero_mul, Nat.add_zero] at this
+    exact absurd (colorClass_lt this) (by omega)
+  | inr h =>
+    obtain ⟨a, d, ⟨_, hap⟩⟩ := h
+    have := hap 0 (by omega)
+    simp only [Nat.zero_mul, Nat.add_zero] at this
+    exact absurd (colorClass_lt this) (by omega)
+
+/-- W(1) = 1 の完全特徴付け -/
+theorem isVanDerWaerden_one : IsVanDerWaerden 1 1 := by
+  constructor
+  · exact allColorings1_have_1AP
+  · intro _
+    exact canAvoid_0_1
