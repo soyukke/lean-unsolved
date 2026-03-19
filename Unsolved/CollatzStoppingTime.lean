@@ -839,3 +839,23 @@ theorem collatzIter_three_periodic (n : ℕ) (h : collatzIter 3 n = n) :
   -- collatzStep の if 分岐を simp で展開、split で場合分け、omega で算術処理
   simp [collatzStep] at h
   split at h <;> split at h <;> split at h <;> omega
+
+/-! ## 33. 4-サイクルの完全分類 -/
+
+-- 4ステップでの周期点の完全分類（2^4 = 16 通りの場合分け）
+set_option maxHeartbeats 400000 in
+/-- 4ステップでの周期点は {0, 1, 2, 4} のみ。 -/
+theorem collatzIter_four_periodic (n : ℕ) (h : collatzIter 4 n = n) :
+    n = 0 ∨ n = 1 ∨ n = 2 ∨ n = 4 := by
+  simp [collatzStep] at h
+  split at h <;> split at h <;> split at h <;> split at h <;> omega
+
+/-! ## 34. 5-サイクルの完全分類 -/
+
+-- 5ステップでの周期点の完全分類（2^5 = 32 通りの場合分け）
+set_option maxHeartbeats 800000 in
+/-- 5ステップでの周期点は {0, 1, 2, 4} のみ。 -/
+theorem collatzIter_five_periodic (n : ℕ) (h : collatzIter 5 n = n) :
+    n = 0 ∨ n = 1 ∨ n = 2 ∨ n = 4 := by
+  simp [collatzStep] at h
+  split at h <;> split at h <;> split at h <;> split at h <;> split at h <;> omega
