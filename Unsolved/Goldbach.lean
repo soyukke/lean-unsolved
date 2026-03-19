@@ -610,6 +610,68 @@ theorem isGoldbach_even_le_100000 (n : ℕ) (hn4 : n ≥ 4) (hn : n ≤ 100000) 
   have hcheck : goldbachCheck 100000 = true := by native_decide
   exact isGoldbach_of_check hcheck n hn4 hn heven
 
+/-! ## 有界検証: 全偶数 4 ≤ n ≤ 500000 の Goldbach 性 -/
+
+/-- goldbachCheckRange: [lo, hi] の全偶数 ≥ 4 が isGoldbachBool で true かを判定 -/
+def goldbachCheckRange (lo hi : ℕ) : Bool :=
+  (List.range (hi - lo + 1)).all fun i =>
+    let n := lo + i
+    if n < 4 then true
+    else if n % 2 ≠ 0 then true
+    else isGoldbachBool n
+
+/-- goldbachCheckRange が true ならば、範囲内の全偶数 ≥ 4 で IsGoldbach -/
+theorem isGoldbach_of_checkRange {lo hi : ℕ} (hcheck : goldbachCheckRange lo hi = true)
+    (n : ℕ) (hn4 : n ≥ 4) (hlo : n ≥ lo) (hhi : n ≤ hi) (heven : n % 2 = 0) :
+    IsGoldbach n := by
+  simp only [goldbachCheckRange, List.all_eq_true, List.mem_range, Bool.ite_eq_true_distrib] at hcheck
+  have hmem : n - lo < hi - lo + 1 := by omega
+  have := hcheck (n - lo) hmem
+  simp only [Nat.add_sub_cancel' (by omega : lo ≤ n)] at this
+  split at this
+  · omega
+  · split at this
+    · omega
+    · exact isGoldbach_of_bool this
+
+set_option linter.style.nativeDecide false in
+/-- 100001 ≤ n ≤ 200000 の全偶数は IsGoldbach -/
+theorem goldbachCheckRange_100001_200000 : goldbachCheckRange 100001 200000 = true := by
+  native_decide
+
+set_option linter.style.nativeDecide false in
+/-- 200001 ≤ n ≤ 300000 の全偶数は IsGoldbach -/
+theorem goldbachCheckRange_200001_300000 : goldbachCheckRange 200001 300000 = true := by
+  native_decide
+
+set_option linter.style.nativeDecide false in
+/-- 300001 ≤ n ≤ 400000 の全偶数は IsGoldbach -/
+theorem goldbachCheckRange_300001_400000 : goldbachCheckRange 300001 400000 = true := by
+  native_decide
+
+set_option linter.style.nativeDecide false in
+/-- 400001 ≤ n ≤ 500000 の全偶数は IsGoldbach -/
+theorem goldbachCheckRange_400001_500000 : goldbachCheckRange 400001 500000 = true := by
+  native_decide
+
+/-- 全ての偶数 n (4 ≤ n ≤ 500000) は2つの素数の和で表せる
+    250000個の偶数の検証。100000 までは既存の定理を再利用し、
+    残りは100000ずつ4分割して検証。 -/
+theorem isGoldbach_even_le_500000 (n : ℕ) (hn4 : n ≥ 4) (hn : n ≤ 500000) (heven : n % 2 = 0) :
+    IsGoldbach n := by
+  by_cases h100 : n ≤ 100000
+  · exact isGoldbach_even_le_100000 n hn4 h100 heven
+  · push_neg at h100
+    by_cases h200 : n ≤ 200000
+    · exact isGoldbach_of_checkRange goldbachCheckRange_100001_200000 n hn4 (by omega) h200 heven
+    · push_neg at h200
+      by_cases h300 : n ≤ 300000
+      · exact isGoldbach_of_checkRange goldbachCheckRange_200001_300000 n hn4 (by omega) h300 heven
+      · push_neg at h300
+        by_cases h400 : n ≤ 400000
+        · exact isGoldbach_of_checkRange goldbachCheckRange_300001_400000 n hn4 (by omega) h400 heven
+        · exact isGoldbach_of_checkRange goldbachCheckRange_400001_500000 n hn4 (by omega) hn heven
+
 /-! ## Goldbach予想が偶数 ≤ N まで成立するなら弱Goldbach予想も奇数 ≤ N+3 まで成立 -/
 
 /-- Goldbach予想が偶数 ≤ N まで成立するなら、弱Goldbach予想も奇数 ≤ N+3 まで成立 -/

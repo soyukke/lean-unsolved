@@ -1056,3 +1056,75 @@ theorem collatzReachesBounded_complete {n : ℕ} (h : collatzReaches n) :
       by_cases h1 : n = 1
       · simp [h1]
       · right; exact ih (by rw [collatzIter_succ] at hk; exact hk)⟩
+
+/-! ## collatzReaches n ≤ 500000 の検証 -/
+
+set_option linter.style.nativeDecide false in
+/-- 100001 ≤ n ≤ 150000 の全自然数はコラッツ操作で1に到達する -/
+theorem collatzAllReach_100001_150000 : collatzAllReachBounded 500 100001 150000 = true := by
+  native_decide
+
+set_option linter.style.nativeDecide false in
+/-- 150001 ≤ n ≤ 200000 の全自然数はコラッツ操作で1に到達する -/
+theorem collatzAllReach_150001_200000 : collatzAllReachBounded 500 150001 200000 = true := by
+  native_decide
+
+set_option linter.style.nativeDecide false in
+/-- 200001 ≤ n ≤ 250000 の全自然数はコラッツ操作で1に到達する -/
+theorem collatzAllReach_200001_250000 : collatzAllReachBounded 500 200001 250000 = true := by
+  native_decide
+
+set_option linter.style.nativeDecide false in
+/-- 250001 ≤ n ≤ 300000 の全自然数はコラッツ操作で1に到達する -/
+theorem collatzAllReach_250001_300000 : collatzAllReachBounded 500 250001 300000 = true := by
+  native_decide
+
+set_option linter.style.nativeDecide false in
+/-- 300001 ≤ n ≤ 350000 の全自然数はコラッツ操作で1に到達する -/
+theorem collatzAllReach_300001_350000 : collatzAllReachBounded 500 300001 350000 = true := by
+  native_decide
+
+set_option linter.style.nativeDecide false in
+/-- 350001 ≤ n ≤ 400000 の全自然数はコラッツ操作で1に到達する -/
+theorem collatzAllReach_350001_400000 : collatzAllReachBounded 500 350001 400000 = true := by
+  native_decide
+
+set_option linter.style.nativeDecide false in
+/-- 400001 ≤ n ≤ 450000 の全自然数はコラッツ操作で1に到達する -/
+theorem collatzAllReach_400001_450000 : collatzAllReachBounded 500 400001 450000 = true := by
+  native_decide
+
+set_option linter.style.nativeDecide false in
+/-- 450001 ≤ n ≤ 500000 の全自然数はコラッツ操作で1に到達する -/
+theorem collatzAllReach_450001_500000 : collatzAllReachBounded 500 450001 500000 = true := by
+  native_decide
+
+/-- 1 ≤ n ≤ 500000 の全自然数はコラッツ操作で1に到達する
+    n ≤ 500000 で最大のステップ数は n=410011 の448ステップ。上界500で十分。
+    100000 までは既存の定理を再利用し、残りは50000ずつ8分割して検証。 -/
+theorem collatzReaches_le_500000 (n : ℕ) (hn1 : n ≥ 1) (hn : n ≤ 500000) :
+    collatzReaches n := by
+  by_cases h100 : n ≤ 100000
+  · exact collatzReaches_le_100000 n hn1 h100
+  · push_neg at h100
+    by_cases h150 : n ≤ 150000
+    · exact collatzReaches_of_allReachBounded collatzAllReach_100001_150000 n (by omega) h150
+    · push_neg at h150
+      by_cases h200 : n ≤ 200000
+      · exact collatzReaches_of_allReachBounded collatzAllReach_150001_200000 n (by omega) h200
+      · push_neg at h200
+        by_cases h250 : n ≤ 250000
+        · exact collatzReaches_of_allReachBounded collatzAllReach_200001_250000 n (by omega) h250
+        · push_neg at h250
+          by_cases h300 : n ≤ 300000
+          · exact collatzReaches_of_allReachBounded collatzAllReach_250001_300000 n (by omega) h300
+          · push_neg at h300
+            by_cases h350 : n ≤ 350000
+            · exact collatzReaches_of_allReachBounded collatzAllReach_300001_350000 n (by omega) h350
+            · push_neg at h350
+              by_cases h400 : n ≤ 400000
+              · exact collatzReaches_of_allReachBounded collatzAllReach_350001_400000 n (by omega) h400
+              · push_neg at h400
+                by_cases h450 : n ≤ 450000
+                · exact collatzReaches_of_allReachBounded collatzAllReach_400001_450000 n (by omega) h450
+                · exact collatzReaches_of_allReachBounded collatzAllReach_450001_500000 n (by omega) hn
