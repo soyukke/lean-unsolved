@@ -162,3 +162,43 @@ set_option linter.style.nativeDecide false in
 /-- S(3) ≥ 14: {1,...,13} で3色塗り分けにより Schur triple 回避可能 -/
 theorem schur_three_lower : ∃ c : SchurColoring 13 3, ¬HasMonoSchurTriple c :=
   ⟨schurThreeWitness, schurThreeWitness_avoids⟩
+
+-- =============================================================================
+-- Sum-free 集合
+-- =============================================================================
+
+/-! ## Sum-free 集合
+
+集合 A が sum-free: ∀ x y z ∈ A, x + y ≠ z
+これは Schur triple の不在と同値。
+-/
+
+/-- 集合 A ⊆ {1,...,n} が sum-free: A 内に x + y = z となる組がない -/
+def IsSumFree (A : Finset ℕ) : Prop :=
+  ∀ x ∈ A, ∀ y ∈ A, ∀ z ∈ A, x + y ≠ z
+
+/-- 奇数の集合は sum-free: 奇数+奇数=偶数 なので和は集合に入らない -/
+theorem isSumFree_odds (A : Finset ℕ) (hA : ∀ a ∈ A, a % 2 = 1) : IsSumFree A := by
+  intro x hx y hy z hz heq
+  have hxo := hA x hx
+  have hyo := hA y hy
+  have hzo := hA z hz
+  -- x + y は偶数だが z は奇数
+  omega
+
+/-- {1, 4} は sum-free -/
+example : IsSumFree {1, 4} := by
+  intro x hx y hy z hz heq
+  fin_cases hx <;> fin_cases hy <;> fin_cases hz <;> omega
+
+/-- 空集合は sum-free -/
+theorem isSumFree_empty : IsSumFree ∅ := by
+  intro x hx
+  simp at hx
+
+/-- 単元集合は sum-free: {a} で a + a ≠ a（a > 0 のとき） -/
+theorem isSumFree_singleton (a : ℕ) (ha : a > 0) : IsSumFree {a} := by
+  intro x hx y hy z hz heq
+  rw [Finset.mem_singleton] at hx hy hz
+  subst hx; subst hy; subst hz
+  omega
