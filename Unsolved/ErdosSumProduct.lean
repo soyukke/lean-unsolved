@@ -813,6 +813,16 @@ theorem prodsetFinset2_mono {A A' B B' : Finset ℕ} (hA : A ⊆ A') (hB : B ⊆
   obtain ⟨a, ha, b, hb, heq⟩ := hx
   exact ⟨a, hA ha, b, hB hb, heq⟩
 
+/-- sumsetFinset2 A ∅ = ∅ -/
+theorem sumsetFinset2_empty_right (A : Finset ℕ) :
+    sumsetFinset2 A ∅ = ∅ := by
+  simp [sumsetFinset2]
+
+/-- sumsetFinset2 ∅ B = ∅ -/
+theorem sumsetFinset2_empty_left (B : Finset ℕ) :
+    sumsetFinset2 ∅ B = ∅ := by
+  simp [sumsetFinset2]
+
 /-- prodsetFinset2 は対称: A·B = B·A -/
 theorem prodsetFinset2_comm (A B : Finset ℕ) :
     prodsetFinset2 A B = prodsetFinset2 B A := by

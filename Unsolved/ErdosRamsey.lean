@@ -633,6 +633,15 @@ theorem hasRamseyProperty_k_mono {n k : ℕ} (hk : k ≥ 1)
 
 /-! ## 探索: HasRamseyProperty の系 -/
 
+/-- HasRamseyProperty n k かつ k ≥ 1 → n ≥ k（鳩の巣原理の系） -/
+theorem hasRamseyProperty_card_le {n k : ℕ} (h : HasRamseyProperty n k) :
+    k ≤ n := by
+  -- 全色 true の塗り分けを使う
+  obtain ⟨S, hcard, _⟩ := h (allTrueColoring n)
+  rw [← hcard]
+  have : S.card ≤ Fintype.card (Fin n) := Finset.card_le_univ S
+  rwa [Fintype.card_fin] at this
+
 /-- n ≥ 2 なら任意の2色塗り分けに単色辺が存在 -/
 theorem hasRamseyProperty_ge_two (n : ℕ) (hn : n ≥ 2) : HasRamseyProperty n 2 :=
   hasRamseyProperty_mono hn ramsey_2_holds

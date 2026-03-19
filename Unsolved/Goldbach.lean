@@ -467,6 +467,13 @@ theorem isGoldbach_has_odd_prime {n : ℕ} (hg : IsGoldbach n) (hn : n ≥ 6) (h
     have hp_mod : p % 2 = 1 := Nat.odd_iff.mp hodd_p
     exact ⟨p, q, hp, hq, heq, hp_mod⟩
 
+/-- IsGoldbach 4 の唯一の分解は 2+2 -/
+theorem isGoldbach_four_unique {p q : ℕ} (hp : Nat.Prime p) (hq : Nat.Prime q)
+    (heq : 4 = p + q) : p = 2 ∧ q = 2 := by
+  have hp2 := hp.two_le
+  have hq2 := hq.two_le
+  omega
+
 /-- 偶数 n の IsGoldbach で p = q の場合、n = 2p -/
 theorem isGoldbach_eq_double {n p : ℕ} (_hp : Nat.Prime p) (heq : n = p + p) :
     n = 2 * p := by omega

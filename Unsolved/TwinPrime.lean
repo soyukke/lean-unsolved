@@ -352,6 +352,15 @@ example : IsTwinPrime 461 := ⟨by norm_num, by norm_num⟩
 example : IsTwinPrime 521 := ⟨by norm_num, by norm_num⟩
 example : IsTwinPrime 569 := ⟨by norm_num, by norm_num⟩
 
+/-! ## IsTwinPrime p → p は奇数 -/
+
+/-- IsTwinPrime p → p は奇数 (p ≥ 3 なので) -/
+theorem IsTwinPrime.odd {p : ℕ} (h : IsTwinPrime p) : p % 2 = 1 := by
+  have h3 := h.three_le
+  have hp := h.prime_left
+  have : p ≠ 2 := by omega
+  exact Nat.odd_iff.mp (hp.odd_of_ne_two this)
+
 /-! ## 探索: 双子素数と cousin prime の関係 -/
 
 /-- p が IsTwinPrime かつ IsCousinPrime (p+2) なら p, p+2, p+6 が全て素数
