@@ -1128,3 +1128,91 @@ theorem collatzReaches_le_500000 (n : ℕ) (hn1 : n ≥ 1) (hn : n ≤ 500000) :
                 by_cases h450 : n ≤ 450000
                 · exact collatzReaches_of_allReachBounded collatzAllReach_400001_450000 n (by omega) h450
                 · exact collatzReaches_of_allReachBounded collatzAllReach_450001_500000 n (by omega) hn
+
+/-! ## collatzReaches n ≤ 1000000 の検証 -/
+
+set_option linter.style.nativeDecide false in
+/-- 500001 ≤ n ≤ 550000 の全自然数はコラッツ操作で1に到達する -/
+theorem collatzAllReach_500001_550000 : collatzAllReachBounded 600 500001 550000 = true := by
+  native_decide
+
+set_option linter.style.nativeDecide false in
+/-- 550001 ≤ n ≤ 600000 の全自然数はコラッツ操作で1に到達する -/
+theorem collatzAllReach_550001_600000 : collatzAllReachBounded 600 550001 600000 = true := by
+  native_decide
+
+set_option linter.style.nativeDecide false in
+/-- 600001 ≤ n ≤ 650000 の全自然数はコラッツ操作で1に到達する -/
+theorem collatzAllReach_600001_650000 : collatzAllReachBounded 600 600001 650000 = true := by
+  native_decide
+
+set_option linter.style.nativeDecide false in
+/-- 650001 ≤ n ≤ 700000 の全自然数はコラッツ操作で1に到達する -/
+theorem collatzAllReach_650001_700000 : collatzAllReachBounded 600 650001 700000 = true := by
+  native_decide
+
+set_option linter.style.nativeDecide false in
+/-- 700001 ≤ n ≤ 750000 の全自然数はコラッツ操作で1に到達する -/
+theorem collatzAllReach_700001_750000 : collatzAllReachBounded 600 700001 750000 = true := by
+  native_decide
+
+set_option linter.style.nativeDecide false in
+/-- 750001 ≤ n ≤ 800000 の全自然数はコラッツ操作で1に到達する -/
+theorem collatzAllReach_750001_800000 : collatzAllReachBounded 600 750001 800000 = true := by
+  native_decide
+
+set_option linter.style.nativeDecide false in
+/-- 800001 ≤ n ≤ 850000 の全自然数はコラッツ操作で1に到達する -/
+theorem collatzAllReach_800001_850000 : collatzAllReachBounded 600 800001 850000 = true := by
+  native_decide
+
+set_option linter.style.nativeDecide false in
+/-- 850001 ≤ n ≤ 900000 の全自然数はコラッツ操作で1に到達する -/
+theorem collatzAllReach_850001_900000 : collatzAllReachBounded 600 850001 900000 = true := by
+  native_decide
+
+set_option linter.style.nativeDecide false in
+/-- 900001 ≤ n ≤ 950000 の全自然数はコラッツ操作で1に到達する -/
+theorem collatzAllReach_900001_950000 : collatzAllReachBounded 600 900001 950000 = true := by
+  native_decide
+
+set_option linter.style.nativeDecide false in
+/-- 950001 ≤ n ≤ 1000000 の全自然数はコラッツ操作で1に到達する -/
+theorem collatzAllReach_950001_1000000 : collatzAllReachBounded 600 950001 1000000 = true := by
+  native_decide
+
+/-- 1 ≤ n ≤ 1000000 の全自然数はコラッツ操作で1に到達する
+    n ≤ 1000000 で最大のステップ数は約525ステップ。上界600で十分。
+    500000 までは既存の定理を再利用し、残りは50000ずつ10分割して検証。 -/
+theorem collatzReaches_le_1000000 (n : ℕ) (hn1 : n ≥ 1) (hn : n ≤ 1000000) :
+    collatzReaches n := by
+  by_cases h500 : n ≤ 500000
+  · exact collatzReaches_le_500000 n hn1 h500
+  · push_neg at h500
+    by_cases h550 : n ≤ 550000
+    · exact collatzReaches_of_allReachBounded collatzAllReach_500001_550000 n (by omega) h550
+    · push_neg at h550
+      by_cases h600 : n ≤ 600000
+      · exact collatzReaches_of_allReachBounded collatzAllReach_550001_600000 n (by omega) h600
+      · push_neg at h600
+        by_cases h650 : n ≤ 650000
+        · exact collatzReaches_of_allReachBounded collatzAllReach_600001_650000 n (by omega) h650
+        · push_neg at h650
+          by_cases h700 : n ≤ 700000
+          · exact collatzReaches_of_allReachBounded collatzAllReach_650001_700000 n (by omega) h700
+          · push_neg at h700
+            by_cases h750 : n ≤ 750000
+            · exact collatzReaches_of_allReachBounded collatzAllReach_700001_750000 n (by omega) h750
+            · push_neg at h750
+              by_cases h800 : n ≤ 800000
+              · exact collatzReaches_of_allReachBounded collatzAllReach_750001_800000 n (by omega) h800
+              · push_neg at h800
+                by_cases h850 : n ≤ 850000
+                · exact collatzReaches_of_allReachBounded collatzAllReach_800001_850000 n (by omega) h850
+                · push_neg at h850
+                  by_cases h900 : n ≤ 900000
+                  · exact collatzReaches_of_allReachBounded collatzAllReach_850001_900000 n (by omega) h900
+                  · push_neg at h900
+                    by_cases h950 : n ≤ 950000
+                    · exact collatzReaches_of_allReachBounded collatzAllReach_900001_950000 n (by omega) h950
+                    · exact collatzReaches_of_allReachBounded collatzAllReach_950001_1000000 n (by omega) hn

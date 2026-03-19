@@ -672,6 +672,54 @@ theorem isGoldbach_even_le_500000 (n : ℕ) (hn4 : n ≥ 4) (hn : n ≤ 500000) 
         · exact isGoldbach_of_checkRange goldbachCheckRange_300001_400000 n hn4 (by omega) h400 heven
         · exact isGoldbach_of_checkRange goldbachCheckRange_400001_500000 n hn4 (by omega) hn heven
 
+/-! ## 有界検証: 全偶数 4 ≤ n ≤ 1000000 の Goldbach 性 -/
+
+set_option linter.style.nativeDecide false in
+/-- 500001 ≤ n ≤ 600000 の全偶数は IsGoldbach -/
+theorem goldbachCheckRange_500001_600000 : goldbachCheckRange 500001 600000 = true := by
+  native_decide
+
+set_option linter.style.nativeDecide false in
+/-- 600001 ≤ n ≤ 700000 の全偶数は IsGoldbach -/
+theorem goldbachCheckRange_600001_700000 : goldbachCheckRange 600001 700000 = true := by
+  native_decide
+
+set_option linter.style.nativeDecide false in
+/-- 700001 ≤ n ≤ 800000 の全偶数は IsGoldbach -/
+theorem goldbachCheckRange_700001_800000 : goldbachCheckRange 700001 800000 = true := by
+  native_decide
+
+set_option linter.style.nativeDecide false in
+/-- 800001 ≤ n ≤ 900000 の全偶数は IsGoldbach -/
+theorem goldbachCheckRange_800001_900000 : goldbachCheckRange 800001 900000 = true := by
+  native_decide
+
+set_option linter.style.nativeDecide false in
+/-- 900001 ≤ n ≤ 1000000 の全偶数は IsGoldbach -/
+theorem goldbachCheckRange_900001_1000000 : goldbachCheckRange 900001 1000000 = true := by
+  native_decide
+
+/-- 全ての偶数 n (4 ≤ n ≤ 1000000) は2つの素数の和で表せる
+    500000個の偶数の検証。500000 までは既存の定理を再利用し、
+    残りは100000ずつ5分割して検証。 -/
+theorem isGoldbach_even_le_1000000 (n : ℕ) (hn4 : n ≥ 4) (hn : n ≤ 1000000) (heven : n % 2 = 0) :
+    IsGoldbach n := by
+  by_cases h500 : n ≤ 500000
+  · exact isGoldbach_even_le_500000 n hn4 h500 heven
+  · push_neg at h500
+    by_cases h600 : n ≤ 600000
+    · exact isGoldbach_of_checkRange goldbachCheckRange_500001_600000 n hn4 (by omega) h600 heven
+    · push_neg at h600
+      by_cases h700 : n ≤ 700000
+      · exact isGoldbach_of_checkRange goldbachCheckRange_600001_700000 n hn4 (by omega) h700 heven
+      · push_neg at h700
+        by_cases h800 : n ≤ 800000
+        · exact isGoldbach_of_checkRange goldbachCheckRange_700001_800000 n hn4 (by omega) h800 heven
+        · push_neg at h800
+          by_cases h900 : n ≤ 900000
+          · exact isGoldbach_of_checkRange goldbachCheckRange_800001_900000 n hn4 (by omega) h900 heven
+          · exact isGoldbach_of_checkRange goldbachCheckRange_900001_1000000 n hn4 (by omega) hn heven
+
 /-! ## Goldbach予想が偶数 ≤ N まで成立するなら弱Goldbach予想も奇数 ≤ N+3 まで成立 -/
 
 /-- Goldbach予想が偶数 ≤ N まで成立するなら、弱Goldbach予想も奇数 ≤ N+3 まで成立 -/
