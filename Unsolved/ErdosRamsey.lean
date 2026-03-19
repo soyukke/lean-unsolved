@@ -645,3 +645,7 @@ theorem hasRamseyProperty_card_le {n k : ℕ} (h : HasRamseyProperty n k) :
 /-- n ≥ 2 なら任意の2色塗り分けに単色辺が存在 -/
 theorem hasRamseyProperty_ge_two (n : ℕ) (hn : n ≥ 2) : HasRamseyProperty n 2 :=
   hasRamseyProperty_mono hn ramsey_2_holds
+
+/-- n < k → ¬HasRamseyProperty n k（hasRamseyProperty_card_le の対偶） -/
+theorem not_hasRamseyProperty_of_lt {n k : ℕ} (h : n < k) : ¬HasRamseyProperty n k := by
+  intro hr; exact absurd (hasRamseyProperty_card_le hr) (by omega)

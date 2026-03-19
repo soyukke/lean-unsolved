@@ -100,3 +100,18 @@ theorem schurTwoWitness_avoids : ¬HasMonoSchurTriple schurTwoWitness := by
 /-- S(r) の定義で N=1 は r=2 色で常に回避可能（{1} で x+y=z を満たす三つ組なし） -/
 theorem schur_avoidable_one_two : ∃ c : SchurColoring 1 2, ¬HasMonoSchurTriple c := by
   native_decide
+
+set_option linter.style.nativeDecide false in
+/-- N=2, r=2 でも Schur triple は回避可能（S(2) > 2） -/
+theorem schur_avoidable_two_two : ∃ c : SchurColoring 2 2, ¬HasMonoSchurTriple c := by
+  native_decide
+
+set_option linter.style.nativeDecide false in
+/-- N=3, r=2 でも Schur triple は回避可能（S(2) > 3） -/
+theorem schur_avoidable_three_two : ∃ c : SchurColoring 3 2, ¬HasMonoSchurTriple c := by
+  native_decide
+
+set_option linter.style.nativeDecide false in
+/-- N=4, r=2 でも Schur triple は回避可能（S(2) > 4） -/
+theorem schur_avoidable_four_two : ∃ c : SchurColoring 4 2, ¬HasMonoSchurTriple c := by
+  native_decide

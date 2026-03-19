@@ -314,3 +314,8 @@ theorem three_mul_add_one_div2_pos (n : ℕ) (hn : n ≥ 1) (hodd : n % 2 = 1) :
     すなわち Syracuse ステップの増加は 2n-1 で抑えられる -/
 theorem syracuse_le_two_mul_sub_one (n : ℕ) (hn : n ≥ 3) (hodd : n % 2 = 1) :
     (3 * n + 1) / 2 ≤ 2 * n - 1 := by omega
+
+/-- 奇数 n に対して collatzStep n > n（奇数ステップは値を厳密に増加させる） -/
+theorem collatzStep_odd_gt (n : ℕ) (hn : n ≥ 1) (hodd : n % 2 = 1) :
+    collatzStep n > n := by
+  rw [collatzStep_odd_eq n hodd]; omega

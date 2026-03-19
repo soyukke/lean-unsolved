@@ -946,3 +946,39 @@ theorem noCycleBelow_nine : noCycleBelow 9 19684 = true := by native_decide
 -- k=10: 3^10 = 59049
 set_option linter.style.nativeDecide false in
 theorem noCycleBelow_ten : noCycleBelow 10 59050 = true := by native_decide
+
+/-! ## collatzIter の {1,2,4} サイクル -/
+
+/-- {1,2,4} の各値に対して collatzIter k の結果が {1,2,4} に留まる -/
+private theorem collatzIter_cycle_aux (k : ℕ) :
+    (collatzIter k 1 = 1 ∨ collatzIter k 1 = 2 ∨ collatzIter k 1 = 4) ∧
+    (collatzIter k 2 = 1 ∨ collatzIter k 2 = 2 ∨ collatzIter k 2 = 4) ∧
+    (collatzIter k 4 = 1 ∨ collatzIter k 4 = 2 ∨ collatzIter k 4 = 4) := by
+  induction k with
+  | zero => exact ⟨Or.inl rfl, Or.inr (Or.inl rfl), Or.inr (Or.inr rfl)⟩
+  | succ k ih =>
+    obtain ⟨ih1, ih2, ih4⟩ := ih
+    have h14 : collatzStep 1 = 4 := by decide
+    have h21 : collatzStep 2 = 1 := by decide
+    have h42 : collatzStep 4 = 2 := by decide
+    refine ⟨?_, ?_, ?_⟩
+    · rw [collatzIter_succ, h14]
+      rcases ih4 with h | h | h
+      · left; exact h
+      · right; left; exact h
+      · right; right; exact h
+    · rw [collatzIter_succ, h21]
+      rcases ih1 with h | h | h
+      · left; exact h
+      · right; left; exact h
+      · right; right; exact h
+    · rw [collatzIter_succ, h42]
+      rcases ih2 with h | h | h
+      · left; exact h
+      · right; left; exact h
+      · right; right; exact h
+
+/-- collatzIter k 1 = 1 ∨ collatzIter k 1 = 2 ∨ collatzIter k 1 = 4 (軌道は{1,2,4}に留まる) -/
+theorem collatzIter_one_in_cycle (k : ℕ) :
+    collatzIter k 1 = 1 ∨ collatzIter k 1 = 2 ∨ collatzIter k 1 = 4 :=
+  (collatzIter_cycle_aux k).1

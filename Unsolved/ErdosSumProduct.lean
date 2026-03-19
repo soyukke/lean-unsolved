@@ -813,6 +813,13 @@ theorem prodsetFinset2_mono {A A' B B' : Finset ℕ} (hA : A ⊆ A') (hB : B ⊆
   obtain ⟨a, ha, b, hb, heq⟩ := hx
   exact ⟨a, hA ha, b, hB hb, heq⟩
 
+/-- |A+A| + |A·A| ≥ 3|A| - 2 (A正整数、A非空) -/
+theorem sum_card_ge {A : Finset ℕ} (hA : A.Nonempty) (hpos : ∀ a ∈ A, a > 0) :
+    (sumsetFinset A).card + (prodsetFinset A).card ≥ 3 * A.card - 2 := by
+  have h1 := card_sumsetFinset_ge_two_mul_sub_one hA
+  have h2 := card_prodsetFinset_ge_two_mul_sub_one hA hpos
+  omega
+
 /-- sumsetFinset2 A ∅ = ∅ -/
 theorem sumsetFinset2_empty_right (A : Finset ℕ) :
     sumsetFinset2 A ∅ = ∅ := by

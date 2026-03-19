@@ -361,6 +361,16 @@ theorem IsTwinPrime.odd {p : ℕ} (h : IsTwinPrime p) : p % 2 = 1 := by
   have : p ≠ 2 := by omega
   exact Nat.odd_iff.mp (hp.odd_of_ne_two this)
 
+/-- IsTwinPrime p → p+1 は偶数 -/
+theorem IsTwinPrime.succ_even {p : ℕ} (h : IsTwinPrime p) : (p + 1) % 2 = 0 := by
+  have := h.odd; omega
+
+/-- IsCousinPrime p → p+2 は偶数ではない（p+2 は奇数）（p > 3 のとき） -/
+theorem IsCousinPrime.add_two_odd {p : ℕ} (h : IsCousinPrime p) (hp3 : p > 3) :
+    (p + 2) % 2 = 1 := by
+  have h6 := h.mod_six hp3
+  omega
+
 /-! ## 探索: 双子素数と cousin prime の関係 -/
 
 /-- p が IsTwinPrime かつ IsCousinPrime (p+2) なら p, p+2, p+6 が全て素数
