@@ -813,6 +813,42 @@ theorem collatzReaches_le_50000 (n : ℕ) (hn1 : n ≥ 1) (hn : n ≤ 50000) :
   revert n
   native_decide
 
+/-- collatzReachesBounded の範囲検証用ヘルパー: range [lo, hi] の全要素が bounded steps で到達 -/
+def collatzAllReachBounded (steps lo hi : ℕ) : Bool :=
+  (List.range (hi - lo + 1)).all fun i => collatzReachesBounded steps (lo + i)
+
+/-- collatzAllReachBounded が true ならば範囲内の全 n は collatzReaches -/
+theorem collatzReaches_of_allReachBounded {steps lo hi : ℕ}
+    (h : collatzAllReachBounded steps lo hi = true)
+    (n : ℕ) (hlo : n ≥ lo) (hhi : n ≤ hi) :
+    collatzReaches n := by
+  apply collatzReaches_of_bounded steps
+  simp only [collatzAllReachBounded, List.all_eq_true, List.mem_range] at h
+  have := h (n - lo) (by omega)
+  simp only [Nat.add_sub_cancel' (by omega : lo ≤ n)] at this
+  exact this
+
+set_option linter.style.nativeDecide false in
+/-- 50001 ≤ n ≤ 75000 の全自然数はコラッツ操作で1に到達する -/
+theorem collatzAllReach_50001_75000 : collatzAllReachBounded 400 50001 75000 = true := by
+  native_decide
+
+set_option linter.style.nativeDecide false in
+/-- 75001 ≤ n ≤ 100000 の全自然数はコラッツ操作で1に到達する -/
+theorem collatzAllReach_75001_100000 : collatzAllReachBounded 400 75001 100000 = true := by
+  native_decide
+
+/-- 1 ≤ n ≤ 100000 の全自然数はコラッツ操作で1に到達する
+    n ≤ 100000 で最大のステップ数は n=77031 の350ステップ。上界400で十分。
+    50000 までは既存の定理を再利用し、残りは2分割して検証。 -/
+theorem collatzReaches_le_100000 (n : ℕ) (hn1 : n ≥ 1) (hn : n ≤ 100000) :
+    collatzReaches n := by
+  by_cases h50 : n ≤ 50000
+  · exact collatzReaches_le_50000 n hn1 h50
+  · by_cases h75 : n ≤ 75000
+    · exact collatzReaches_of_allReachBounded collatzAllReach_50001_75000 n (by omega) h75
+    · exact collatzReaches_of_allReachBounded collatzAllReach_75001_100000 n (by omega) hn
+
 /-! ## コラッツ到達性のリフト -/
 
 /-- collatzReaches 0 は偽: collatzStep 0 = 0 なので 0 は永遠に 0 のまま -/

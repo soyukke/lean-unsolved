@@ -121,3 +121,9 @@ set_option linter.style.nativeDecide false in
     {1} のみなので x+y=z を満たす三つ組は存在しない。 -/
 theorem schur_avoidable_one_one : ∃ c : SchurColoring 1 1, ¬HasMonoSchurTriple c := by
   native_decide
+
+set_option linter.style.nativeDecide false in
+/-- S(r) ≥ 2 for r=3: N=1 では3色で Schur triple を回避可能。
+    {1} のみなので x+y=z を満たす三つ組は存在しない。 -/
+theorem schur_avoidable_one_three : ∃ c : SchurColoring 1 3, ¬HasMonoSchurTriple c := by
+  native_decide
