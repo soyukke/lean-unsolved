@@ -840,3 +840,15 @@ theorem prodsetFinset2_comm (A B : Finset ℕ) :
     exact ⟨⟨b, a⟩, ⟨hb, ha⟩, by rw [Nat.mul_comm]; exact heq⟩
   · rintro ⟨⟨b, a⟩, ⟨hb, ha⟩, heq⟩
     exact ⟨⟨a, b⟩, ⟨ha, hb⟩, by rw [Nat.mul_comm]; exact heq⟩
+
+-- =============================================================================
+-- |A+A| · |A·A| の下界
+-- =============================================================================
+
+/-- |A+A| · |A·A| ≥ (2|A|-1)² (正整数集合) -/
+theorem prod_card_sumset_prodset_ge {A : Finset ℕ}
+    (hA : A.Nonempty) (hpos : ∀ a ∈ A, a > 0) :
+    (sumsetFinset A).card * (prodsetFinset A).card ≥ (2 * A.card - 1) ^ 2 := by
+  have h1 := card_sumsetFinset_ge_two_mul_sub_one hA
+  have h2 := card_prodsetFinset_ge_two_mul_sub_one hA hpos
+  nlinarith [h1, h2]

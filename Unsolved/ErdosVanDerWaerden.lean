@@ -607,3 +607,16 @@ theorem allColorings_have_3AP_iff (N : ℕ) :
   · -- (←) N ≥ 9 → vdw_mono で allColorings9_have_3AP を拡張
     intro hN
     exact vdw_mono hN allColorings9_have_3AP
+
+-- =============================================================================
+-- W(2) の iff 特徴付け
+-- =============================================================================
+
+/-- W(2) の iff: (∀ c : Coloring N, HasMonochromaticAP c 2) ↔ N ≥ 3 -/
+theorem allColorings_have_2AP_iff (N : ℕ) :
+    (∀ c : Coloring N, HasMonochromaticAP c 2) ↔ N ≥ 3 := by
+  constructor
+  · intro h; by_contra hlt; push_neg at hlt
+    have := canAvoid_of_le (show N ≤ 2 by omega) canAvoid_2_2
+    obtain ⟨c, hc⟩ := this; exact hc (h c)
+  · intro hN; exact vdw_mono (show 3 ≤ N by omega) allColorings3_have_2AP

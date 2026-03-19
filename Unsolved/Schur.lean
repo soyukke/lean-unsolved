@@ -282,3 +282,16 @@ theorem no_schur_triple_of_all_sumfree {n r : ℕ} (c : SchurColoring n r)
     ¬HasMonoSchurTriple c := by
   intro ⟨i, j, k, heq, hij, hik⟩
   exact h (c i) i j k rfl hij.symm hik.symm heq
+
+-- =============================================================================
+-- S(1) の iff 特徴付け
+-- =============================================================================
+
+/-- S(1) の iff: (∀ c : SchurColoring N 1, HasMonoSchurTriple c) ↔ N ≥ 2 -/
+theorem schur_one_iff (N : ℕ) :
+    (∀ c : SchurColoring N 1, HasMonoSchurTriple c) ↔ N ≥ 2 := by
+  constructor
+  · intro h; by_contra hlt; push_neg at hlt
+    have := schur_avoidable_of_le (show N ≤ 1 by omega) schur_avoidable_one_one
+    obtain ⟨c, hc⟩ := this; exact hc (h c)
+  · intro hN; exact schur_mono (show 2 ≤ N by omega) schur_one_upper
