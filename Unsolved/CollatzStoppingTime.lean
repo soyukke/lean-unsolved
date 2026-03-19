@@ -1039,3 +1039,20 @@ theorem collatzReaches_pos {n : ℕ} (h : collatzReaches n) : n > 0 := by
   have : n = 0 := by omega
   subst this
   exact not_collatzReaches_zero h
+
+/-! ## collatzReachesBounded の完全性 -/
+
+/-- collatzReachesBounded の完全性: collatzReaches n → ∃ k, collatzReachesBounded k n -/
+theorem collatzReachesBounded_complete {n : ℕ} (h : collatzReaches n) :
+    ∃ k, collatzReachesBounded k n = true := by
+  obtain ⟨k, hk⟩ := h
+  exact ⟨k, by induction k generalizing n with
+    | zero =>
+      simp [collatzReachesBounded]
+      change n = 1 at hk
+      exact hk
+    | succ k ih =>
+      simp [collatzReachesBounded]
+      by_cases h1 : n = 1
+      · simp [h1]
+      · right; exact ih (by rw [collatzIter_succ] at hk; exact hk)⟩

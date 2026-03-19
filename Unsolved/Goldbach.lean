@@ -609,3 +609,16 @@ theorem isGoldbach_even_le_100000 (n : ℕ) (hn4 : n ≥ 4) (hn : n ≤ 100000) 
     IsGoldbach n := by
   have hcheck : goldbachCheck 100000 = true := by native_decide
   exact isGoldbach_of_check hcheck n hn4 hn heven
+
+/-! ## Goldbach予想が偶数 ≤ N まで成立するなら弱Goldbach予想も奇数 ≤ N+3 まで成立 -/
+
+/-- Goldbach予想が偶数 ≤ N まで成立するなら、弱Goldbach予想も奇数 ≤ N+3 まで成立 -/
+theorem weakGoldbach_of_goldbach_le {N : ℕ}
+    (hG : ∀ n, n ≥ 4 → n ≤ N → n % 2 = 0 → IsGoldbach n)
+    (m : ℕ) (hm : m > 7) (hm_le : m ≤ N + 3) (hodd : m % 2 = 1) :
+    IsWeakGoldbach m := by
+  have hm3 : m - 3 ≥ 4 := by omega
+  have hm3_le : m - 3 ≤ N := by omega
+  have hm3_even : (m - 3) % 2 = 0 := by omega
+  obtain ⟨p, q, hp, hq, heq⟩ := hG (m - 3) hm3 hm3_le hm3_even
+  exact ⟨3, p, q, by norm_num, hp, hq, by omega⟩

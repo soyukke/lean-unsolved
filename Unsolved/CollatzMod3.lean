@@ -319,3 +319,12 @@ theorem syracuse_le_two_mul_sub_one (n : ℕ) (hn : n ≥ 3) (hodd : n % 2 = 1) 
 theorem collatzStep_odd_gt (n : ℕ) (hn : n ≥ 1) (hodd : n % 2 = 1) :
     collatzStep n > n := by
   rw [collatzStep_odd_eq n hodd]; omega
+
+/-! ## 25. 奇数 n に対して 3n+1 は 4 の倍数 ⟺ n ≡ 1 (mod 4) -/
+
+/-- 奇数 n に対して 3n+1 は 4 の倍数 ⟺ n ≡ 1 (mod 4) -/
+theorem three_mul_add_one_div4_iff (n : ℕ) (hodd : n % 2 = 1) :
+    4 ∣ (3 * n + 1) ↔ n % 4 = 1 := by
+  constructor
+  · intro ⟨k, hk⟩; omega
+  · intro h; exact Nat.dvd_of_mod_eq_zero (by omega)
