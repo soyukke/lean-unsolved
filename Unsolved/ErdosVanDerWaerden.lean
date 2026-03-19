@@ -504,3 +504,106 @@ theorem isVanDerWaerden_one : IsVanDerWaerden 1 1 := by
 
 /-- 1点では 6項単色等差数列を回避可能 -/
 example : hasMonoAPList [false] 6 = false := by rfl
+
+-- =============================================================================
+-- VdW 単調性と W(3) の iff 特徴付け
+-- =============================================================================
+
+/-! ## 等差数列の部分集合による保存 -/
+
+/-- 等差数列が集合 S に含まれ、S ⊆ T ならば T にも含まれる -/
+theorem hasArithProgInSet_mono {S T : Finset ℕ} {k a d : ℕ}
+    (h : HasArithProgInSet S k a d) (hST : S ⊆ T) : HasArithProgInSet T k a d :=
+  ⟨h.1, fun i hi => hST (h.2 i hi)⟩
+
+/-! ## colorClass の制限写像に関する補題 -/
+
+/-- Coloring M を先頭 N 要素に制限した Coloring N の colorClass は
+    元の colorClass の部分集合 -/
+theorem colorClass_restrict_subset {N M : ℕ} (hNM : N ≤ M) (c : Coloring M) (color : Bool) :
+    colorClass (fun (i : Fin N) => c ⟨i.val, by omega⟩) color ⊆ colorClass c color := by
+  intro x hx
+  unfold colorClass at hx ⊢
+  rw [Finset.mem_image] at hx ⊢
+  obtain ⟨i, hi, rfl⟩ := hx
+  rw [Finset.mem_filter] at hi
+  exact ⟨⟨i.val, by omega⟩, Finset.mem_filter.mpr ⟨Finset.mem_univ _, hi.2⟩, rfl⟩
+
+/-! ## VdW の N に関する単調性 -/
+
+/-- VdW の単調性: 小さい N で全塗り分けが k-AP を含むなら、大きい M でも含む -/
+theorem vdw_mono {N M k : ℕ} (hNM : N ≤ M)
+    (h : ∀ c : Coloring N, HasMonochromaticAP c k) :
+    ∀ c : Coloring M, HasMonochromaticAP c k := by
+  intro c
+  -- c : Coloring M を先頭 N 要素に制限して h を適用
+  have hmono := h (fun i => c ⟨i.val, by omega⟩)
+  cases hmono with
+  | inl htrue =>
+    left
+    obtain ⟨a, d, hap⟩ := htrue
+    exact ⟨a, d, hasArithProgInSet_mono hap (colorClass_restrict_subset hNM c true)⟩
+  | inr hfalse =>
+    right
+    obtain ⟨a, d, hap⟩ := hfalse
+    exact ⟨a, d, hasArithProgInSet_mono hap (colorClass_restrict_subset hNM c false)⟩
+
+/-! ## CanAvoid の逆単調性 -/
+
+/-- CanAvoid の逆単調性: 小さい方で回避不可能なら大きい方でも回避不可能（対偶） -/
+theorem not_canAvoid_of_le {N M k : ℕ} (hNM : N ≤ M) (h : ¬CanAvoid N k) :
+    ¬CanAvoid M k := by
+  intro ⟨c, hc⟩
+  apply h
+  refine ⟨fun i => c ⟨i.val, by omega⟩, fun hmono => ?_⟩
+  apply hc
+  cases hmono with
+  | inl htrue =>
+    left
+    obtain ⟨a, d, hap⟩ := htrue
+    exact ⟨a, d, hasArithProgInSet_mono hap (colorClass_restrict_subset hNM c true)⟩
+  | inr hfalse =>
+    right
+    obtain ⟨a, d, hap⟩ := hfalse
+    exact ⟨a, d, hasArithProgInSet_mono hap (colorClass_restrict_subset hNM c false)⟩
+
+/-! ## W(3) の iff 特徴付け -/
+
+/-- CanAvoid の下方単調性: 大きい N で回避可能なら、小さい M でも回避可能
+    （塗り分けを先頭 M 要素に制限） -/
+theorem canAvoid_of_le {M N k : ℕ} (hMN : M ≤ N) (h : CanAvoid N k) :
+    CanAvoid M k := by
+  obtain ⟨c, hc⟩ := h
+  refine ⟨fun i => c ⟨i.val, by omega⟩, fun hmono => ?_⟩
+  apply hc
+  cases hmono with
+  | inl htrue =>
+    left
+    obtain ⟨a, d, hap⟩ := htrue
+    exact ⟨a, d, hasArithProgInSet_mono hap
+      (colorClass_restrict_subset hMN c true)⟩
+  | inr hfalse =>
+    right
+    obtain ⟨a, d, hap⟩ := hfalse
+    exact ⟨a, d, hasArithProgInSet_mono hap
+      (colorClass_restrict_subset hMN c false)⟩
+
+/-- N ≤ 8 → CanAvoid N 3: canAvoid_8_3 と下方単調性から -/
+theorem canAvoid_le_8_3 {N : ℕ} (hN : N ≤ 8) : CanAvoid N 3 :=
+  canAvoid_of_le hN canAvoid_8_3
+
+/-- W(3) の iff 特徴付け: N ≥ 9 ↔ 全塗り分けが3-APを含む -/
+theorem allColorings_have_3AP_iff (N : ℕ) :
+    (∀ c : Coloring N, HasMonochromaticAP c 3) ↔ N ≥ 9 := by
+  constructor
+  · -- (→) 対偶: N < 9 なら回避可能
+    intro h
+    by_contra hlt
+    push_neg at hlt
+    -- N ≤ 8 なので CanAvoid N 3
+    have hav := canAvoid_le_8_3 (by omega : N ≤ 8)
+    obtain ⟨c, hc⟩ := hav
+    exact hc (h c)
+  · -- (←) N ≥ 9 → vdw_mono で allColorings9_have_3AP を拡張
+    intro hN
+    exact vdw_mono hN allColorings9_have_3AP
