@@ -391,3 +391,7 @@ theorem IsTwinPrime.mod30 {p : ℕ} (h : IsTwinPrime p) (hp5 : p > 5) :
 theorem IsCousinPrime.mod30 {p : ℕ} (h : IsCousinPrime p) (hp5 : p > 5) :
     p % 30 = 1 ∨ p % 30 = 7 ∨ p % 30 = 13 ∨ p % 30 = 19 :=
   cousin_prime_mod30 h.1 h.2 hp5
+
+/-- 双子素数の積+1 は特別な形: (p)(p+2)+1 = p²+2p+1 = (p+1)² -/
+theorem twin_prime_product_succ {p : ℕ} (_h : IsTwinPrime p) :
+    p * (p + 2) + 1 = (p + 1) ^ 2 := by ring

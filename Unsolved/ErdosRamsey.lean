@@ -672,3 +672,10 @@ theorem hasRamseyProperty_three_iff (n : ℕ) : HasRamseyProperty n 3 ↔ n ≥ 
     exact not_hasRamseyProperty_five_three (hasRamseyProperty_mono (by omega : n ≤ 5) h)
   · intro h
     exact hasRamseyProperty_mono h ramsey_three_three
+
+/-- R(2) の iff: HasRamseyProperty n 2 ↔ n ≥ 2 -/
+theorem hasRamseyProperty_two_iff (n : ℕ) : HasRamseyProperty n 2 ↔ n ≥ 2 := by
+  constructor
+  · intro h; by_contra hlt; push_neg at hlt
+    exact not_hasRamseyProperty_of_lt (by omega : n < 2) h
+  · intro h; exact hasRamseyProperty_mono h ramsey_2_holds

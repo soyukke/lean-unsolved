@@ -688,3 +688,15 @@ theorem containsSunflower_nil_iff {α : Type*} [DecidableEq α] {k : ℕ} :
     have := hmem S hS
     simp at this
   · intro h; subst h; exact containsSunflower_zero []
+
+/-- ContainsSunflower family k かつ k ≥ 1 → family は非空 -/
+theorem family_nonempty_of_containsSunflower {α : Type*} [DecidableEq α]
+    {family : List (Finset α)} {k : ℕ} (hk : k ≥ 1)
+    (h : ContainsSunflower family k) : family ≠ [] := by
+  obtain ⟨sub, hlen, hmem, _⟩ := h
+  intro he; rw [he] at hmem
+  have hsub_ne : sub ≠ [] := by
+    intro hsub_e; rw [hsub_e] at hlen; simp at hlen; omega
+  obtain ⟨S, hS⟩ := List.exists_mem_of_ne_nil sub hsub_ne
+  have := hmem S hS
+  simp at this

@@ -416,3 +416,10 @@ theorem distSq_sq_nonneg (p q : Point) : 0 ≤ distSq p q * distSq p q :=
 theorem distSq_translate_origin (a b c d : ℤ) :
     distSq (a + c, b + d) (c, d) = distSq (a, b) (0, 0) := by
   unfold distSq; ring
+
+/-- 距離の積: distSq p q * distSq r s は二乗和で表せる -/
+theorem distSq_product_is_sum_sq (p q r s : Point) :
+    ∃ a b : ℤ, distSq p q * distSq r s = a ^ 2 + b ^ 2 := by
+  obtain ⟨px, py, hpq⟩ := distSq_is_sum_of_squares p q
+  obtain ⟨rx, ry, hrs⟩ := distSq_is_sum_of_squares r s
+  exact ⟨px * rx - py * ry, px * ry + py * rx, by rw [hpq, hrs, sum_sq_mul_sum_sq]⟩
