@@ -234,6 +234,44 @@ example : IsSumFree {2, 3} := by
 これは HasMonoSchurTriple の定義から直接従う。
 -/
 
+-- =============================================================================
+-- Schur 単調性
+-- =============================================================================
+
+/-- Schur の N-単調性: 小さい N で全 r-coloring に Schur triple → 大きい M でも -/
+theorem schur_mono {N M r : ℕ} (hNM : N ≤ M)
+    (h : ∀ c : SchurColoring N r, HasMonoSchurTriple c) :
+    ∀ c : SchurColoring M r, HasMonoSchurTriple c := by
+  intro c
+  let c' : SchurColoring N r := fun i => c ⟨i.val, by omega⟩
+  obtain ⟨x, y, z, hsum, hcx, hcz⟩ := h c'
+  exact ⟨⟨x.val, by omega⟩, ⟨y.val, by omega⟩, ⟨z.val, by omega⟩, hsum, hcx, hcz⟩
+
+/-- 回避塗り分けの下方単調性: 大きい M で回避可能なら小さい N でも回避可能 -/
+theorem schur_avoidable_of_le {N M r : ℕ} (hNM : N ≤ M)
+    (h : ∃ c : SchurColoring M r, ¬HasMonoSchurTriple c) :
+    ∃ c : SchurColoring N r, ¬HasMonoSchurTriple c := by
+  obtain ⟨c, hc⟩ := h
+  refine ⟨fun i => c ⟨i.val, by omega⟩, ?_⟩
+  intro ⟨x, y, z, hsum, hcx, hcz⟩
+  exact hc ⟨⟨x.val, by omega⟩, ⟨y.val, by omega⟩, ⟨z.val, by omega⟩, hsum, hcx, hcz⟩
+
+/-- S(2) の iff 特徴付け: 全2色塗りに Schur triple が存在する ⟺ N ≥ 5 -/
+theorem schur_two_iff (N : ℕ) :
+    (∀ c : SchurColoring N 2, HasMonoSchurTriple c) ↔ N ≥ 5 := by
+  constructor
+  · intro h
+    by_contra hlt; push_neg at hlt
+    have := schur_avoidable_of_le (show N ≤ 4 by omega) schur_avoidable_four_two
+    obtain ⟨c, hc⟩ := this
+    exact hc (h c)
+  · intro hN
+    exact schur_mono (show 5 ≤ N by omega) schur_two_upper
+
+-- =============================================================================
+-- Sum-free 集合の追加性質
+-- =============================================================================
+
 /-- 全色クラスが sum-free ならば Schur triple は存在しない:
     塗り分け c に対して、任意の色 a のクラス上で x+y≠z が成り立つならば
     HasMonoSchurTriple c は偽 -/
