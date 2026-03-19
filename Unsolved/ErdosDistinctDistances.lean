@@ -382,6 +382,14 @@ theorem numDistinctDist_pair {p q : Point} (hne : p ≠ q) :
 theorem distSq_self_zero (p : Point) : distSq p p = 0 := by
   unfold distSq; ring
 
+/-- distSq (0,0) (n,0) = n^2（x軸上の距離） -/
+theorem distSq_origin_x (n : ℤ) : distSq (0, 0) (n, 0) = n ^ 2 := by
+  unfold distSq; ring
+
+/-- distSq (0,0) (0,n) = n^2（y軸上の距離） -/
+theorem distSq_origin_y (n : ℤ) : distSq (0, 0) (0, n) = n ^ 2 := by
+  unfold distSq; ring
+
 /-- distSq は座標差の二乗和（distSq_explicit の Point 版） -/
 theorem distSq_sub (p q : Point) :
     distSq p q = (p.1 - q.1) ^ 2 + (p.2 - q.2) ^ 2 := by

@@ -743,3 +743,13 @@ theorem collatzReaches_le_1000 (n : ℕ) (hn1 : n ≥ 1) (hn : n ≤ 1000) :
   apply collatzReaches_of_bounded 200
   revert n
   native_decide
+
+set_option maxHeartbeats 4000000 in
+set_option linter.style.nativeDecide false in
+/-- 1 ≤ n ≤ 10000 の全自然数はコラッツ操作で1に到達する
+    n ≤ 10000 で最大のステップ数は n=6171 の261ステップ。上界300で十分。 -/
+theorem collatzReaches_le_10000 (n : ℕ) (hn1 : n ≥ 1) (hn : n ≤ 10000) :
+    collatzReaches n := by
+  apply collatzReaches_of_bounded 300
+  revert n
+  native_decide

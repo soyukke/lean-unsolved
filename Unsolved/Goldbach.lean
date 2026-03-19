@@ -472,3 +472,16 @@ theorem isGoldbach_both_odd_implies_even {n p q : ℕ}
   have heven := even_of_odd_prime_add hp hq hp2 hq2
   obtain ⟨k, hk⟩ := heven
   omega
+
+/-! ## IsGoldbach の小さい素数による分解 -/
+
+/-- IsGoldbach n なら n/2 以下の素数 p で分解可能:
+    p + q = n で p > n/2 なら q < n/2 なので p, q を入れ替えればよい -/
+theorem isGoldbach_small_prime {n : ℕ} (hg : IsGoldbach n) :
+    ∃ p q : ℕ, Nat.Prime p ∧ Nat.Prime q ∧ n = p + q ∧ p ≤ n / 2 := by
+  obtain ⟨p, q, hp, hq, heq⟩ := hg
+  by_cases hle : p ≤ n / 2
+  · exact ⟨p, q, hp, hq, heq, hle⟩
+  · push_neg at hle
+    have hq_le : q ≤ n / 2 := by omega
+    exact ⟨q, p, hq, hp, by omega, hq_le⟩
