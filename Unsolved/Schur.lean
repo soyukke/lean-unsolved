@@ -202,3 +202,45 @@ theorem isSumFree_singleton (a : ℕ) (ha : a > 0) : IsSumFree {a} := by
   rw [Finset.mem_singleton] at hx hy hz
   subst hx; subst hy; subst hz
   omega
+
+-- =============================================================================
+-- Sum-free 集合の最大サイズ検証
+-- =============================================================================
+
+/-! ## Sum-free 集合の追加例と最大サイズ -/
+
+/-- {3, 4, 5} は sum-free（奇数集合の特殊ケース） -/
+example : IsSumFree {3, 4, 5} := by
+  intro x hx y hy z hz heq
+  fin_cases hx <;> fin_cases hy <;> fin_cases hz <;> omega
+
+/-- {1, 3, 5} は sum-free（奇数の部分集合） -/
+example : IsSumFree {1, 3, 5} := by
+  intro x hx y hy z hz heq
+  fin_cases hx <;> fin_cases hy <;> fin_cases hz <;> omega
+
+/-- {2, 3} は sum-free -/
+example : IsSumFree {2, 3} := by
+  intro x hx y hy z hz heq
+  fin_cases hx <;> fin_cases hy <;> fin_cases hz <;> omega
+
+-- =============================================================================
+-- Schur 数と Sum-free の関係
+-- =============================================================================
+
+/-! ## Schur triple なし ⟺ 全色クラスが sum-free
+
+2色塗り分けの各色クラスが sum-free であれば、Schur triple は存在しない。
+これは HasMonoSchurTriple の定義から直接従う。
+-/
+
+/-- 全色クラスが sum-free ならば Schur triple は存在しない:
+    塗り分け c に対して、任意の色 a のクラス上で x+y≠z が成り立つならば
+    HasMonoSchurTriple c は偽 -/
+theorem no_schur_triple_of_all_sumfree {n r : ℕ} (c : SchurColoring n r)
+    (h : ∀ (a : Fin r), ∀ (i j k : Fin n),
+      c i = a → c j = a → c k = a →
+      (i.val + 1) + (j.val + 1) ≠ k.val + 1) :
+    ¬HasMonoSchurTriple c := by
+  intro ⟨i, j, k, heq, hij, hik⟩
+  exact h (c i) i j k rfl hij.symm hik.symm heq

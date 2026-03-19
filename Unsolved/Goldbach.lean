@@ -732,3 +732,11 @@ theorem weakGoldbach_of_goldbach_le {N : ℕ}
   have hm3_even : (m - 3) % 2 = 0 := by omega
   obtain ⟨p, q, hp, hq, heq⟩ := hG (m - 3) hm3 hm3_le hm3_even
   exact ⟨3, p, q, by norm_num, hp, hq, by omega⟩
+
+/-- Goldbach予想が100万まで成立 + weakGoldbach_of_goldbach_le の系:
+    全奇数 8 ≤ m ≤ 1000003 は3つの素数の和（弱Goldbach） -/
+theorem weakGoldbach_le_1000003 (m : ℕ) (hm : m > 7) (hm_le : m ≤ 1000003) (hodd : m % 2 = 1) :
+    IsWeakGoldbach m :=
+  weakGoldbach_of_goldbach_le
+    (fun n hn4 hn_le heven => isGoldbach_even_le_1000000 n hn4 (by omega) heven)
+    m hm hm_le hodd
