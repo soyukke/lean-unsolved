@@ -992,3 +992,14 @@ theorem collatzIter_two_in_cycle (k : ℕ) :
 theorem collatzIter_four_in_cycle (k : ℕ) :
     collatzIter k 4 = 1 ∨ collatzIter k 4 = 2 ∨ collatzIter k 4 = 4 :=
   (collatzIter_cycle_aux k).2.2
+
+/-! ## collatzReaches n → n > 0 -/
+
+/-- collatzReaches n ならば n > 0:
+    n = 0 では collatzStep 0 = 0 が永遠に続くため 1 に到達しない -/
+theorem collatzReaches_pos {n : ℕ} (h : collatzReaches n) : n > 0 := by
+  by_contra hle
+  push_neg at hle
+  have : n = 0 := by omega
+  subst this
+  exact not_collatzReaches_zero h

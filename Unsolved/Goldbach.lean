@@ -600,3 +600,12 @@ theorem isGoldbach_even_le_50000 (n : ℕ) (hn4 : n ≥ 4) (hn : n ≤ 50000) (h
     IsGoldbach n := by
   have hcheck : goldbachCheck 50000 = true := by native_decide
   exact isGoldbach_of_check hcheck n hn4 hn heven
+
+set_option maxHeartbeats 4000000000 in
+set_option linter.style.nativeDecide false in
+/-- 全ての偶数 n (4 ≤ n ≤ 100000) は2つの素数の和で表せる
+    50000偶数の検証。native_decide で素数判定を実行。 -/
+theorem isGoldbach_even_le_100000 (n : ℕ) (hn4 : n ≥ 4) (hn : n ≤ 100000) (heven : n % 2 = 0) :
+    IsGoldbach n := by
+  have hcheck : goldbachCheck 100000 = true := by native_decide
+  exact isGoldbach_of_check hcheck n hn4 hn heven
