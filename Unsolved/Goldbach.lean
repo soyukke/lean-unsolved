@@ -584,3 +584,9 @@ theorem isGoldbach_even_le_10000 (n : ℕ) (hn4 : n ≥ 4) (hn : n ≤ 10000) (h
     IsGoldbach n := by
   have hcheck : goldbachCheck 10000 = true := by native_decide
   exact isGoldbach_of_check hcheck n hn4 hn heven
+
+/-! ## Goldbach と素数分布 -/
+
+/-- p + q = n で p ≤ q なら q ≥ n/2 -/
+theorem goldbach_larger_prime {n p q : ℕ} (_hp : Nat.Prime p) (_hq : Nat.Prime q)
+    (heq : n = p + q) (hle : p ≤ q) : q ≥ n / 2 := by omega

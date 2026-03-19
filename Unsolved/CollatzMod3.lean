@@ -307,3 +307,10 @@ theorem collatzStep_step_odd_pos (n : ℕ) (hn : n ≥ 1) (hodd : n % 2 = 1) :
 /-- 奇数 n ≥ 1 に対して (3n+1)/2 > 0 -/
 theorem three_mul_add_one_div2_pos (n : ℕ) (hn : n ≥ 1) (hodd : n % 2 = 1) :
     (3 * n + 1) / 2 > 0 := by omega
+
+/-! ## 24. 奇数→偶数の2ステップでの増加上界 -/
+
+/-- 奇数 n ≥ 3 に対して (3n+1)/2 ≤ 2n - 1
+    すなわち Syracuse ステップの増加は 2n-1 で抑えられる -/
+theorem syracuse_le_two_mul_sub_one (n : ℕ) (hn : n ≥ 3) (hodd : n % 2 = 1) :
+    (3 * n + 1) / 2 ≤ 2 * n - 1 := by omega

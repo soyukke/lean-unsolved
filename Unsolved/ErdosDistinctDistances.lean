@@ -409,3 +409,10 @@ theorem distSq_parallelogram (a b c : Point) :
 /-- distSq の二乗は非負 -/
 theorem distSq_sq_nonneg (p q : Point) : 0 ≤ distSq p q * distSq p q :=
   mul_self_nonneg (distSq p q)
+
+/-! ## 距離の平行移動と原点 -/
+
+/-- 距離の正則性: distSq (a+c, b+d) (c, d) = distSq (a, b) (0, 0) -/
+theorem distSq_translate_origin (a b c d : ℤ) :
+    distSq (a + c, b + d) (c, d) = distSq (a, b) (0, 0) := by
+  unfold distSq; ring

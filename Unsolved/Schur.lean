@@ -92,3 +92,11 @@ def schurTwoWitness : SchurColoring 4 2 :=
 /-- schurTwoWitness が Schur triple を持たないことの検証 -/
 theorem schurTwoWitness_avoids : ¬HasMonoSchurTriple schurTwoWitness := by
   native_decide
+
+-- =============================================================================
+-- Schur 数の追加性質
+-- =============================================================================
+
+/-- S(r) の定義で N=1 は r=2 色で常に回避可能（{1} で x+y=z を満たす三つ組なし） -/
+theorem schur_avoidable_one_two : ∃ c : SchurColoring 1 2, ¬HasMonoSchurTriple c := by
+  native_decide
