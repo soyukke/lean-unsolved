@@ -392,3 +392,34 @@ theorem isVanDerWaerden_three : IsVanDerWaerden 3 9 := by
   · exact allColorings9_have_3AP
   · intro _
     exact canAvoid_8_3
+
+-- =============================================================================
+-- W(2) = 3 の完全証明
+-- =============================================================================
+
+/-! ## W(2) = 3 の完全証明
+
+W(2) = 3: {0,1,2} の任意の2色塗り分けに単色2-AP（= 同色の2点、d≥1）が存在する。
+N=2 では回避可能（交互塗り分け false, true で同色2点がない）。
+-/
+
+/-- N=3 では全ての2色塗り分けが2項単色等差数列を含む -/
+theorem allColorings3_have_2AP : ∀ c : Coloring 3, HasMonochromaticAP c 2 := by
+  intro c
+  rw [hasMonochromaticAP_iff_bounded (by omega : (2 : ℕ) ≥ 2)]
+  revert c
+  native_decide
+
+/-- N=2 で 2-AP 回避可能 (W(2) ≥ 3 の下界) -/
+theorem canAvoid_2_2 : CanAvoid 2 2 := by
+  refine ⟨fun i => match i.val with | 0 => false | _ => true, fun h => ?_⟩
+  rw [hasMonochromaticAP_iff_bounded (by omega : (2 : ℕ) ≥ 2)] at h
+  revert h
+  native_decide
+
+/-- W(2) = 3 の完全特徴付け -/
+theorem isVanDerWaerden_two : IsVanDerWaerden 2 3 := by
+  constructor
+  · exact allColorings3_have_2AP
+  · intro _
+    exact canAvoid_2_2

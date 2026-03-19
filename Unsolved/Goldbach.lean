@@ -454,3 +454,21 @@ theorem weakGoldbach_of_goldbach_sub3 {n : ℕ} (hn : n > 7) (hodd : n % 2 = 1)
 /-- 偶数 n の IsGoldbach で p = q の場合、n = 2p -/
 theorem isGoldbach_eq_double {n p : ℕ} (_hp : Nat.Prime p) (heq : n = p + p) :
     n = 2 * p := by omega
+
+-- =============================================================================
+-- 2つの奇素数の和の偶数性（精密版）
+-- =============================================================================
+
+/-! ## 2つの奇素数の和は偶数
+
+IsGoldbach の分解 n = p + q において p, q がともに奇素数（≠ 2）ならば
+n は偶数である。even_of_odd_prime_add の系として n % 2 = 0 を直接示す。
+-/
+
+/-- 2つの奇素数の和は mod 2 で 0 -/
+theorem isGoldbach_both_odd_implies_even {n p q : ℕ}
+    (hp : Nat.Prime p) (hq : Nat.Prime q) (hp2 : p ≠ 2) (hq2 : q ≠ 2)
+    (heq : n = p + q) : n % 2 = 0 := by
+  have heven := even_of_odd_prime_add hp hq hp2 hq2
+  obtain ⟨k, hk⟩ := heven
+  omega

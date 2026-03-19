@@ -593,6 +593,29 @@ theorem isMonochromaticClique_subset {n : ℕ} {col : TwoColoring n}
 -- HasRamseyProperty の k に関する単調性（下方）
 -- =============================================================================
 
+-- =============================================================================
+-- R(1) = 1 の完全特徴付け
+-- =============================================================================
+
+/-! ## R(1) = 1 の完全特徴付け
+
+R(1) = 1: K_1 の任意の2色塗り分けにサイズ1の単色クリークが存在し（ramsey_1_holds）、
+K_0 にはサイズ1の単色クリークが存在しない（0頂点にはサイズ1の部分集合がない）。
+-/
+
+/-- R(1) = 1 の完全特徴付け -/
+theorem isRamseyNumber_one : IsRamseyNumber 1 1 := by
+  constructor
+  · exact ramsey_1_holds
+  · -- ¬HasRamseyProperty 0 1
+    intro h
+    have col : TwoColoring 0 :=
+      ⟨fun i => Fin.elim0 i, fun i => Fin.elim0 i⟩
+    obtain ⟨S, hcard, _⟩ := h col
+    have hsle : S.card ≤ Fintype.card (Fin 0) := Finset.card_le_univ S
+    rw [hcard, Fintype.card_fin] at hsle
+    omega
+
 /-- HasRamseyProperty n (k+1) → HasRamseyProperty n k (k ≥ 1) -/
 theorem hasRamseyProperty_k_mono {n k : ℕ} (hk : k ≥ 1)
     (h : HasRamseyProperty n (k + 1)) : HasRamseyProperty n k := by
