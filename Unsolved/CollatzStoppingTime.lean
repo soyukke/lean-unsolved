@@ -898,3 +898,51 @@ theorem collatzIter_seven_periodic (n : ℕ) (h : collatzIter 7 n = n) :
   simp [collatzStep] at hm_def
   split at hm_def <;> split at hm_def <;> split at hm_def
   all_goals (simp [collatzStep] at h7; split at h7 <;> split at h7 <;> split at h7 <;> split at h7 <;> omega)
+
+/-! ## 37. k-サイクルの有界検証アプローチ -/
+
+/-- noCycleBelow k bound: n < bound で collatzIter k n = n となる n は
+    {0,1,2,4} のみであることを判定するブール関数 -/
+def noCycleBelow (k bound : ℕ) : Bool :=
+  (List.range bound).all fun n =>
+    if n == 0 || n == 1 || n == 2 || n == 4 then true
+    else collatzIter k n != n
+
+/-- noCycleBelow が true なら、n < bound かつ collatzIter k n = n → n ∈ {0,1,2,4} -/
+theorem noCycle_of_check {k bound : ℕ} (hcheck : noCycleBelow k bound = true)
+    (n : ℕ) (hn : n < bound) (hcycle : collatzIter k n = n) :
+    n = 0 ∨ n = 1 ∨ n = 2 ∨ n = 4 := by
+  simp only [noCycleBelow, List.all_eq_true, List.mem_range] at hcheck
+  have hn_check := hcheck n hn
+  simp only [Bool.ite_eq_true_distrib] at hn_check
+  by_cases h0 : n = 0
+  · left; exact h0
+  · by_cases h1 : n = 1
+    · right; left; exact h1
+    · by_cases h2 : n = 2
+      · right; right; left; exact h2
+      · by_cases h4 : n = 4
+        · right; right; right; exact h4
+        · -- n ∉ {0,1,2,4} なので collatzIter k n ≠ n のはず
+          exfalso
+          have : (n == 0 || n == 1 || n == 2 || n == 4) = false := by
+            simp [beq_iff_eq, h0, h1, h2, h4]
+          rw [this, if_neg (by simp)] at hn_check
+          simp [bne_iff_ne] at hn_check
+          exact hn_check hcycle
+
+-- k=8 の場合: 3^8 = 6561 なので bound = 6562 で十分
+set_option linter.style.nativeDecide false in
+-- 8ステップでの周期点の有界探索
+/-- 8ステップでの周期点は {0, 1, 2, 4} のみ（n < 6562 の範囲で検証）。
+    collatzIter 8 n = n ならば k ステップの間に n は最大で約 (3/2)^8 ≈ 25.6 倍になるので
+    n ≥ 5 なら 8 ステップで n に戻ることは 6562 未満ではあり得ない。 -/
+theorem noCycleBelow_eight : noCycleBelow 8 6562 = true := by native_decide
+
+-- k=9: 3^9 = 19683
+set_option linter.style.nativeDecide false in
+theorem noCycleBelow_nine : noCycleBelow 9 19684 = true := by native_decide
+
+-- k=10: 3^10 = 59049
+set_option linter.style.nativeDecide false in
+theorem noCycleBelow_ten : noCycleBelow 10 59050 = true := by native_decide
