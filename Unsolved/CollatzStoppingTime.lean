@@ -826,3 +826,16 @@ theorem not_collatzReaches_zero : ¬collatzReaches 0 := by
       simp [collatzStep]
     rw [hstep] at hk
     exact ih hk
+
+/-! ## 3-サイクルの完全分類 -/
+
+/-- collatzIter 3 n = n となる n は {0, 1, 2, 4} のみ。
+    唯一の非自明な3-サイクルは 1→4→2→1。
+    n = 0 は不動点（collatzStep 0 = 0）、n ∈ {1,2,4} はサイクル。
+    n > 4 では collatzStep の場合分け（偶奇の3段展開、8通り）により矛盾。 -/
+theorem collatzIter_three_periodic (n : ℕ) (h : collatzIter 3 n = n) :
+    n = 0 ∨ n = 1 ∨ n = 2 ∨ n = 4 := by
+  -- collatzIter 3 n = collatzStep (collatzStep (collatzStep n)) を展開し、
+  -- collatzStep の if 分岐を simp で展開、split で場合分け、omega で算術処理
+  simp [collatzStep] at h
+  split at h <;> split at h <;> split at h <;> omega
