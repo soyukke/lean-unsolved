@@ -797,6 +797,22 @@ theorem sumsetFinset2_comm (A B : Finset ℕ) :
   · rintro ⟨⟨b, a⟩, ⟨hb, ha⟩, heq⟩
     exact ⟨⟨a, b⟩, ⟨ha, hb⟩, by omega⟩
 
+/-- sumsetFinset2 の単調性: A ⊆ A' かつ B ⊆ B' → A+B ⊆ A'+B' -/
+theorem sumsetFinset2_mono {A A' B B' : Finset ℕ} (hA : A ⊆ A') (hB : B ⊆ B') :
+    sumsetFinset2 A B ⊆ sumsetFinset2 A' B' := by
+  intro x hx
+  rw [mem_sumsetFinset2] at hx ⊢
+  obtain ⟨a, ha, b, hb, heq⟩ := hx
+  exact ⟨a, hA ha, b, hB hb, heq⟩
+
+/-- prodsetFinset2 の単調性: A ⊆ A' かつ B ⊆ B' → A·B ⊆ A'·B' -/
+theorem prodsetFinset2_mono {A A' B B' : Finset ℕ} (hA : A ⊆ A') (hB : B ⊆ B') :
+    prodsetFinset2 A B ⊆ prodsetFinset2 A' B' := by
+  intro x hx
+  rw [mem_prodsetFinset2] at hx ⊢
+  obtain ⟨a, ha, b, hb, heq⟩ := hx
+  exact ⟨a, hA ha, b, hB hb, heq⟩
+
 /-- prodsetFinset2 は対称: A·B = B·A -/
 theorem prodsetFinset2_comm (A B : Finset ℕ) :
     prodsetFinset2 A B = prodsetFinset2 B A := by
