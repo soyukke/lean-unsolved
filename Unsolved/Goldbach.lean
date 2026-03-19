@@ -508,3 +508,10 @@ theorem isGoldbach_small_prime {n : ℕ} (hg : IsGoldbach n) :
   · push_neg at hle
     have hq_le : q ≤ n / 2 := by omega
     exact ⟨q, p, hq, hp, by omega, hq_le⟩
+
+/-! ## 2つの素数の和で一方が2の場合 -/
+
+/-- n - 2 が素数かつ n ≥ 4 なら IsGoldbach n -/
+theorem isGoldbach_with_two {n : ℕ} (hp : Nat.Prime (n - 2)) (hn : n ≥ 4) :
+    IsGoldbach n := by
+  exact ⟨2, n - 2, by norm_num, hp, by omega⟩

@@ -763,3 +763,17 @@ theorem collatzReaches_le_50000 (n : ℕ) (hn1 : n ≥ 1) (hn : n ≤ 50000) :
   apply collatzReaches_of_bounded 400
   revert n
   native_decide
+
+/-! ## コラッツ到達性のリフト -/
+
+/-- collatzReaches 0 は偽: collatzStep 0 = 0 なので 0 は永遠に 0 のまま -/
+theorem not_collatzReaches_zero : ¬collatzReaches 0 := by
+  intro ⟨k, hk⟩
+  induction k with
+  | zero => change 0 = 1 at hk; omega
+  | succ k ih =>
+    rw [collatzIter_succ] at hk
+    have hstep : collatzStep 0 = 0 := by
+      simp [collatzStep]
+    rw [hstep] at hk
+    exact ih hk

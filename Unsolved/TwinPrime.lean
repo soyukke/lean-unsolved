@@ -369,3 +369,15 @@ theorem prime_triple_from_twin_cousin {p : ℕ}
     (ht : IsTwinPrime p) (hc : IsCousinPrime (p + 2)) :
     Nat.Prime p ∧ Nat.Prime (p + 2) ∧ Nat.Prime (p + 6) := by
   exact ⟨ht.1, ht.2, by rw [show p + 6 = (p + 2) + 4 from by omega]; exact hc.2⟩
+
+/-! ## 構造定理のラッパー -/
+
+/-- IsTwinPrime p かつ p > 5 → p % 30 ∈ {11, 17, 29} -/
+theorem IsTwinPrime.mod30 {p : ℕ} (h : IsTwinPrime p) (hp5 : p > 5) :
+    p % 30 = 11 ∨ p % 30 = 17 ∨ p % 30 = 29 :=
+  twin_prime_mod30 h.1 h.2 hp5
+
+/-- IsCousinPrime p かつ p > 5 → p % 30 ∈ {1, 7, 13, 19} -/
+theorem IsCousinPrime.mod30 {p : ℕ} (h : IsCousinPrime p) (hp5 : p > 5) :
+    p % 30 = 1 ∨ p % 30 = 7 ∨ p % 30 = 13 ∨ p % 30 = 19 :=
+  cousin_prime_mod30 h.1 h.2 hp5
