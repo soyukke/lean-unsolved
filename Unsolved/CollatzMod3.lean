@@ -295,3 +295,15 @@ theorem three_mul_add_one_lt_four_mul (n : ℕ) (hn : n ≥ 2) :
 
 -- 奇数 n ≥ 3 に対して (3n+1) % 8 ∈ {2, 4, 6, 0} (偶数であることの精密化)
 -- 既存の mod 8 分類から自明。
+
+/-! ## 23. コラッツ写像の完全な mod 2 記述 -/
+
+/-- 奇数 n ≥ 1 に対して collatzStep(collatzStep(n)) > 0 -/
+theorem collatzStep_step_odd_pos (n : ℕ) (hn : n ≥ 1) (hodd : n % 2 = 1) :
+    collatzStep (collatzStep n) > 0 := by
+  rw [collatzStep_step_odd n (by omega) hodd]
+  omega
+
+/-- 奇数 n ≥ 1 に対して (3n+1)/2 > 0 -/
+theorem three_mul_add_one_div2_pos (n : ℕ) (hn : n ≥ 1) (hodd : n % 2 = 1) :
+    (3 * n + 1) / 2 > 0 := by omega

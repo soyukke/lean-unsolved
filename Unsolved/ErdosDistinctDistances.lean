@@ -405,3 +405,7 @@ theorem distSq_parallelogram (a b c : Point) :
     distSq a c ≤ 2 * distSq a b + 2 * distSq b c := by
   unfold distSq
   nlinarith [sq_nonneg (a.1 - 2 * b.1 + c.1), sq_nonneg (a.2 - 2 * b.2 + c.2)]
+
+/-- distSq の二乗は非負 -/
+theorem distSq_sq_nonneg (p q : Point) : 0 ≤ distSq p q * distSq p q :=
+  mul_self_nonneg (distSq p q)

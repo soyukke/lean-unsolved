@@ -673,3 +673,18 @@ theorem containsSunflower_of_element_appears_k
   exact ⟨sub, hsub_len, hsub_mem_family, hsf⟩
 
 end StarGeneralization
+
+/-! ## family が空なら ContainsSunflower は k = 0 のときのみ -/
+
+/-- family が空なら ContainsSunflower family k は k = 0 のときのみ -/
+theorem containsSunflower_nil_iff {α : Type*} [DecidableEq α] {k : ℕ} :
+    ContainsSunflower ([] : List (Finset α)) k ↔ k = 0 := by
+  constructor
+  · intro ⟨sub, hlen, hmem, _⟩
+    by_contra hk
+    have hk_pos : k > 0 := by omega
+    have hlen_pos : sub.length > 0 := by omega
+    have ⟨S, hS⟩ := List.exists_mem_of_length_pos hlen_pos
+    have := hmem S hS
+    simp at this
+  · intro h; subst h; exact containsSunflower_zero []

@@ -499,3 +499,8 @@ theorem isVanDerWaerden_one : IsVanDerWaerden 1 1 := by
   · exact allColorings1_have_1AP
   · intro _
     exact canAvoid_0_1
+
+/-! ## k=6 の回避例 -/
+
+/-- 1点では 6項単色等差数列を回避可能 -/
+example : hasMonoAPList [false] 6 = false := by rfl
