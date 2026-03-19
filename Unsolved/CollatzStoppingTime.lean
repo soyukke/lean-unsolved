@@ -1226,9 +1226,8 @@ theorem collatzIter_mul_periodic (n k : ℕ) (hcycle : collatzIter k n = n) (m :
   induction m with
   | zero => simp [collatzIter]
   | succ m ih =>
-    rw [show (m + 1) * k = m * k + k from by ring]
-    rw [collatzIter_add', hcycle]
-    exact ih
+    have heq : (m + 1) * k = m * k + k := by ring
+    rw [heq, collatzIter_add' (m * k) k n, ih, hcycle]
 
 /-- ★ コラッツ予想の下での周期軌道の完全分類:
     collatzReaches n かつ collatzIter k n = n (k ≥ 1) ならば n ∈ {0, 1, 2, 4}。
@@ -1260,7 +1259,7 @@ theorem collatzReaches_periodic_trivial (n k : ℕ) (hk : k ≥ 1)
     have hr_lt : r < k := Nat.mod_lt j hk_pos
     -- j = q*k + r を使って collatzIter j n を書き換え
     have hmod : j = q * k + r := by
-      rw [Nat.div_add_mod]
+      rw [mul_comm]; exact (Nat.div_add_mod j k).symm
     -- collatzIter (q*k + r) n = 1
     have hqkr : collatzIter (q * k + r) n = 1 := by rw [hmod] at hj; exact hj
     -- 周期性から collatzIter (q*k) n = n
@@ -1281,3 +1280,19 @@ theorem collatzReaches_periodic_trivial (n k : ℕ) (hk : k ≥ 1)
     have h124 := collatzIter_one_in_cycle (k - r)
     rw [← hn_eq] at h124
     exact h124
+
+/-! ## コラッツ予想の3つの同値形式のまとめ
+
+(1) 全 n ≥ 1 が1に到達 (CollatzConjectureR)
+(2) 全奇数 n ≥ 1 が1に到達 (SyracuseConjectureR)
+(3) 唯一の周期軌道は {1,2,4}
+
+- (1) ↔ (2) は collatzR_iff_syracuseR で証明済み
+- (1) → (3) は collatzReaches_periodic_trivial で証明済み
+-/
+
+/-- コラッツ予想が成り立つなら、全ての n ≥ 1 は最終的に {1,2,4} サイクルに入る -/
+theorem collatzReaches_enters_cycle (n : ℕ) (hn : n ≥ 1) (hr : collatzReaches n) :
+    ∃ k, collatzIter k n = 1 ∨ collatzIter k n = 2 ∨ collatzIter k n = 4 := by
+  obtain ⟨j, hj⟩ := hr
+  exact ⟨j, Or.inl hj⟩

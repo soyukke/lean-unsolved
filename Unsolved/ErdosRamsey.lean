@@ -661,3 +661,14 @@ theorem not_hasRamseyProperty_three_three : ¬HasRamseyProperty 3 3 := by
 theorem not_hasRamseyProperty_four_three : ¬HasRamseyProperty 4 3 := by
   intro h
   exact not_hasRamseyProperty_five_three (hasRamseyProperty_mono (by omega : 4 ≤ 5) h)
+
+/-- R(3) の正確な値の特徴付け: HasRamseyProperty n 3 ↔ n ≥ 6
+    R(3,3) = 6 なので、n ≥ 6 なら任意の2色塗り分けに単色三角形が存在し、
+    n ≤ 5 なら単色三角形を回避する塗り分けが存在する。 -/
+theorem hasRamseyProperty_three_iff (n : ℕ) : HasRamseyProperty n 3 ↔ n ≥ 6 := by
+  constructor
+  · intro h
+    by_contra hlt; push_neg at hlt
+    exact not_hasRamseyProperty_five_three (hasRamseyProperty_mono (by omega : n ≤ 5) h)
+  · intro h
+    exact hasRamseyProperty_mono h ramsey_three_three
