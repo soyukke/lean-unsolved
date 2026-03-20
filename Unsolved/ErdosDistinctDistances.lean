@@ -442,3 +442,6 @@ theorem distSq_same_snd (a c b : ℤ) : distSq (a, b) (c, b) = (a - c) ^ 2 := by
 /-- distSq (a, 0) (0, b) = a² + b²（直角の2辺の端点距離） -/
 theorem distSq_axes_origin (a b : ℤ) : distSq (a, 0) (0, b) = a ^ 2 + b ^ 2 := by
   unfold distSq; ring
+
+/-- 原点から (n, n) への距離² = 2n² -/
+theorem distSq_diagonal (n : ℤ) : distSq (0, 0) (n, n) = 2 * n ^ 2 := by unfold distSq; ring

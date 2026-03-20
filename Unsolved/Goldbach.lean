@@ -883,3 +883,9 @@ theorem isGoldbach_thirty_cases {p q : ℕ} (hp : Nat.Prime p) (hq : Nat.Prime q
   have hq_val : q = 30 - p := by omega
   subst hq_val; have : p ≤ 30 := by omega
   interval_cases p <;> (first | exact Or.inl ⟨rfl, rfl⟩ | exact Or.inr (Or.inl ⟨rfl, rfl⟩) | exact Or.inr (Or.inr ⟨rfl, rfl⟩) | exact ⟨rfl, rfl⟩ | exact absurd hp (by decide) | exact absurd hq (by decide) | omega)
+
+/-- IsGoldbach 32 の分解 -/
+theorem isGoldbach_thirtytwo_cases {p q : ℕ} (hp : Nat.Prime p) (hq : Nat.Prime q)
+    (heq : 32 = p + q) (hle : p ≤ q) :
+    (p = 3 ∧ q = 29) ∨ (p = 13 ∧ q = 19) := by
+  have := hp.two_le; have := hq.two_le; interval_cases p <;> omega

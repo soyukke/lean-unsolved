@@ -925,3 +925,13 @@ theorem card_sumsetFinset2_ge_max {A B : Finset ℕ} (hA : A.Nonempty) (hB : B.N
 theorem card_sumsetFinset2_comm (A B : Finset ℕ) :
     (sumsetFinset2 A B).card = (sumsetFinset2 B A).card := by
   rw [sumsetFinset2_comm]
+
+/-- |A · B| ≥ max(|A|, |B|) for positive sets -/
+theorem card_prodsetFinset2_ge_max {A B : Finset ℕ}
+    (hA : A.Nonempty) (hB : B.Nonempty)
+    (hposA : ∀ a ∈ A, a > 0) (hposB : ∀ b ∈ B, b > 0) :
+    (prodsetFinset2 A B).card ≥ max A.card B.card := by
+  have h1 := card_prodsetFinset2_ge hA hB hposA hposB
+  have h2 : A.card ≥ 1 := Finset.Nonempty.card_pos hA
+  have h3 : B.card ≥ 1 := Finset.Nonempty.card_pos hB
+  omega
