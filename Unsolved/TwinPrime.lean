@@ -407,3 +407,10 @@ theorem twin_prime_mean_composite {p : ℕ} (h : IsTwinPrime p) (hp3 : p > 3) :
   have h2dvd : 2 ∣ (p + 1) := ⟨(p + 1) / 2, by omega⟩
   have := hp1.eq_one_or_self_of_dvd 2 h2dvd
   omega
+
+/-! ## IsCousinPrime の追加性質 -/
+
+/-- IsCousinPrime p かつ p > 5 → p は奇数 -/
+theorem IsCousinPrime.odd {p : ℕ} (h : IsCousinPrime p) (hp5 : p > 5) : p % 2 = 1 := by
+  have h6 := h.mod_six (by omega)
+  omega

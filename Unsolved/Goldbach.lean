@@ -766,3 +766,10 @@ theorem isGoldbach_six_unique {p q : ℕ} (hp : Nat.Prime p) (hq : Nat.Prime q)
     have hq4 : q = 4 := by omega
     subst hq4; exact absurd hq (by decide)
   · exact ⟨rfl, by omega⟩
+
+/-! ## n-3 が素数の場合の Goldbach 分解 -/
+
+/-- 偶数 n ≥ 6 で n-3 が素数なら、n = 3 + (n-3) の分解を持つ -/
+theorem isGoldbach_with_three {n : ℕ} (hp : Nat.Prime (n - 3)) (hn : n ≥ 6) (heven : n % 2 = 0) :
+    IsGoldbach n := by
+  exact ⟨3, n - 3, by norm_num, hp, by omega⟩

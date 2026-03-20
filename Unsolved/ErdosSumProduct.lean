@@ -870,3 +870,17 @@ theorem card_prodsetFinset2_le_mul {A B : Finset ℕ} :
     Finset.card_image_le
   have h2 : (A ×ˢ B).card = A.card * B.card := Finset.card_product A B
   omega
+
+/-! ## Prodset の空集合性質 -/
+
+/-- prodsetFinset2 の空集合: ∅ · B = ∅ -/
+theorem prodsetFinset2_empty_left (B : Finset ℕ) :
+    prodsetFinset2 ∅ B = ∅ := by
+  unfold prodsetFinset2
+  simp
+
+/-- prodsetFinset2 の空集合: A · ∅ = ∅ -/
+theorem prodsetFinset2_empty_right (A : Finset ℕ) :
+    prodsetFinset2 A ∅ = ∅ := by
+  unfold prodsetFinset2
+  simp

@@ -346,3 +346,8 @@ theorem syracuse_mod3_of_mod6_eq1 (n : ℕ) (h : n % 6 = 1) :
 /-- 奇数 n ≥ 1 → (3n+1)/2 - n ≥ 1 -/
 theorem syracuse_minus_n_ge_one (n : ℕ) (hn : n ≥ 1) (hodd : n % 2 = 1) :
     (3 * n + 1) / 2 - n ≥ 1 := by omega
+
+/-! ## 偶数の半分 -/
+
+/-- 偶数 n ≥ 2 に対して n/2 ≥ 1 -/
+theorem half_ge_one (n : ℕ) (hn : n ≥ 2) (heven : n % 2 = 0) : n / 2 ≥ 1 := by omega

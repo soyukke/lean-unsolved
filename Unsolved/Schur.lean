@@ -466,3 +466,10 @@ Schur (加法的), VdW (算術的), Ramsey (グラフ的) の3分野の接続を
 theorem ramsey_thresholds_ordered :
     (2 : ℕ) ≤ 5 ∧ (3 : ℕ) ≤ 9 ∧ (2 : ℕ) ≤ 6 ∧
     (2 : ℕ) ≤ 3 ∧ (5 : ℕ) ≤ 9 ∧ (5 : ℕ) ≤ 6 := by omega
+
+/-! ## IsSumFree の追加性質 -/
+
+/-- IsSumFree A → A' ⊆ A → IsSumFree A'（部分集合は sum-free を保存） -/
+theorem isSumFree_subset {A A' : Finset ℕ} (h : IsSumFree A) (hsub : A' ⊆ A) : IsSumFree A' := by
+  intro x hx y hy z hz
+  exact h x (hsub hx) y (hsub hy) z (hsub hz)
