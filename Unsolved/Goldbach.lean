@@ -801,7 +801,9 @@ theorem isGoldbach_ten_two_ways :
 theorem isGoldbach_twelve_unique {p q : ℕ} (hp : Nat.Prime p) (hq : Nat.Prime q)
     (heq : 12 = p + q) (hle : p ≤ q) : p = 5 ∧ q = 7 := by
   have := hp.two_le; have := hq.two_le
-  interval_cases p <;> omega
+  have hq_val : q = 12 - p := by omega
+  subst hq_val; have : p ≤ 12 := by omega
+  interval_cases p <;> (first | exact Or.inl ⟨rfl, rfl⟩ | exact Or.inr (Or.inl ⟨rfl, rfl⟩) | exact Or.inr (Or.inr ⟨rfl, rfl⟩) | exact ⟨rfl, rfl⟩ | exact absurd hp (by decide) | exact absurd hq (by decide) | omega)
 
 /-- 偶数 n で n/2 が素数なら IsGoldbach n -/
 theorem isGoldbach_of_half_prime {n : ℕ} (hn : n ≥ 4) (heven : n % 2 = 0)
@@ -812,25 +814,45 @@ theorem isGoldbach_of_half_prime {n : ℕ} (hn : n ≥ 4) (heven : n % 2 = 0)
 theorem isGoldbach_fourteen_cases {p q : ℕ} (hp : Nat.Prime p) (hq : Nat.Prime q)
     (heq : 14 = p + q) (hle : p ≤ q) : (p = 3 ∧ q = 11) ∨ (p = 7 ∧ q = 7) := by
   have := hp.two_le; have := hq.two_le
-  interval_cases p <;> omega
+  have hq_val : q = 14 - p := by omega
+  subst hq_val; have : p ≤ 14 := by omega
+  interval_cases p <;> (first | exact Or.inl ⟨rfl, rfl⟩ | exact Or.inr (Or.inl ⟨rfl, rfl⟩) | exact Or.inr (Or.inr ⟨rfl, rfl⟩) | exact ⟨rfl, rfl⟩ | exact absurd hp (by decide) | exact absurd hq (by decide) | omega)
 
 /-- IsGoldbach 16 の分解列挙: 16=3+13 か 16=5+11 -/
 theorem isGoldbach_sixteen_cases {p q : ℕ} (hp : Nat.Prime p) (hq : Nat.Prime q)
     (heq : 16 = p + q) (hle : p ≤ q) : (p = 3 ∧ q = 13) ∨ (p = 5 ∧ q = 11) := by
   have := hp.two_le; have := hq.two_le
-  interval_cases p <;> omega
+  have hq_val : q = 16 - p := by omega
+  subst hq_val; have : p ≤ 16 := by omega
+  interval_cases p <;> (first | exact Or.inl ⟨rfl, rfl⟩ | exact Or.inr (Or.inl ⟨rfl, rfl⟩) | exact Or.inr (Or.inr ⟨rfl, rfl⟩) | exact ⟨rfl, rfl⟩ | exact absurd hp (by decide) | exact absurd hq (by decide) | omega)
 
 /-- IsGoldbach 18 の分解: 18=5+13 か 18=7+11 -/
 theorem isGoldbach_eighteen_cases {p q : ℕ} (hp : Nat.Prime p) (hq : Nat.Prime q)
     (heq : 18 = p + q) (hle : p ≤ q) : (p = 5 ∧ q = 13) ∨ (p = 7 ∧ q = 11) := by
-  have := hp.two_le; have := hq.two_le; interval_cases p <;> omega
+  have := hp.two_le; have := hq.two_le
+  have hq_val : q = 18 - p := by omega
+  subst hq_val; have : p ≤ 18 := by omega
+  interval_cases p <;> (first | exact Or.inl ⟨rfl, rfl⟩ | exact Or.inr (Or.inl ⟨rfl, rfl⟩) | exact Or.inr (Or.inr ⟨rfl, rfl⟩) | exact ⟨rfl, rfl⟩ | exact absurd hp (by decide) | exact absurd hq (by decide) | omega)
 
 /-- IsGoldbach 20 の分解: 20=3+17 か 20=7+13 -/
 theorem isGoldbach_twenty_cases {p q : ℕ} (hp : Nat.Prime p) (hq : Nat.Prime q)
     (heq : 20 = p + q) (hle : p ≤ q) : (p = 3 ∧ q = 17) ∨ (p = 7 ∧ q = 13) := by
-  have := hp.two_le; have := hq.two_le; interval_cases p <;> omega
+  have := hp.two_le; have := hq.two_le
+  have hq_val : q = 20 - p := by omega
+  subst hq_val; have : p ≤ 20 := by omega
+  interval_cases p <;> (first | exact Or.inl ⟨rfl, rfl⟩ | exact Or.inr (Or.inl ⟨rfl, rfl⟩) | exact Or.inr (Or.inr ⟨rfl, rfl⟩) | exact ⟨rfl, rfl⟩ | exact absurd hp (by decide) | exact absurd hq (by decide) | omega)
 
 /-- 22のゴールドバッハ分解: 3+19, 5+17, 11+11 -/
 theorem isGoldbach_twentytwo_cases {p q : ℕ} (hp : Nat.Prime p) (hq : Nat.Prime q)
     (heq : 22 = p + q) (hle : p ≤ q) : (p = 3 ∧ q = 19) ∨ (p = 5 ∧ q = 17) ∨ (p = 11 ∧ q = 11) := by
-  have := hp.two_le; have := hq.two_le; interval_cases p <;> omega
+  have := hp.two_le; have := hq.two_le
+  have hq_val : q = 22 - p := by omega
+  subst hq_val; have : p ≤ 22 := by omega
+  interval_cases p <;> (first | exact Or.inl ⟨rfl, rfl⟩ | exact Or.inr (Or.inl ⟨rfl, rfl⟩) | exact Or.inr (Or.inr ⟨rfl, rfl⟩) | exact ⟨rfl, rfl⟩ | exact absurd hp (by decide) | exact absurd hq (by decide) | omega)
+
+theorem isGoldbach_twentyfour_cases {p q : ℕ} (hp : Nat.Prime p) (hq : Nat.Prime q)
+    (heq : 24 = p + q) (hle : p ≤ q) : (p = 5 ∧ q = 19) ∨ (p = 7 ∧ q = 17) ∨ (p = 11 ∧ q = 13) := by
+  have := hp.two_le; have := hq.two_le
+  have hq_val : q = 24 - p := by omega
+  subst hq_val; have : p ≤ 24 := by omega
+  interval_cases p <;> (first | exact Or.inl ⟨rfl, rfl⟩ | exact Or.inr (Or.inl ⟨rfl, rfl⟩) | exact Or.inr (Or.inr ⟨rfl, rfl⟩) | exact ⟨rfl, rfl⟩ | exact absurd hp (by decide) | exact absurd hq (by decide) | omega)

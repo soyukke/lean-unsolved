@@ -519,3 +519,7 @@ theorem not_isSumFree_12 : ¬IsSumFree ({1, 2} : Finset ℕ) := by
 example : IsSumFree ({6, 7, 8, 9, 10} : Finset ℕ) := by
   intro x hx y hy z hz h; simp at hx hy hz
   rcases hx with rfl|rfl|rfl|rfl|rfl <;> rcases hy with rfl|rfl|rfl|rfl|rfl <;> rcases hz with rfl|rfl|rfl|rfl|rfl <;> omega
+
+/-- IsSumFree A → 0 ∉ A（0+0=0 で sum-free 違反） -/
+theorem zero_not_mem_of_isSumFree {A : Finset ℕ} (h : IsSumFree A) : 0 ∉ A := by
+  intro h0; exact h 0 h0 0 h0 0 h0 rfl

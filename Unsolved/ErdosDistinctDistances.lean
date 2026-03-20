@@ -432,3 +432,6 @@ theorem distSq_double (a b : ℤ) :
 /-- distSq (a, b) (c, d) = distSq (a-c, b-d) (0, 0) -/
 theorem distSq_diff_origin (a b c d : ℤ) :
     distSq (a, b) (c, d) = distSq (a - c, b - d) (0, 0) := by unfold distSq; ring
+
+/-- distSq (a,b) (a,d) = (b-d)²（x座標一致→y差のみ） -/
+theorem distSq_same_fst (a b d : ℤ) : distSq (a, b) (a, d) = (b - d) ^ 2 := by unfold distSq; ring

@@ -1364,3 +1364,6 @@ theorem collatzReaches_not_constant : collatzReaches 1 ∧ ¬collatzReaches 0 :=
 /-- 奇数 n ≥ 1 → (3n+1)/2 + n = (5n+1)/2 -/
 theorem syracuse_plus_n (n : ℕ) (hn : n ≥ 1) (hodd : n % 2 = 1) :
     (3 * n + 1) / 2 + n = (5 * n + 1) / 2 := by omega
+
+/-- 奇数 n に対して 3n+1 ≠ n（不動点非存在の算術版） -/
+theorem three_mul_add_one_ne (n : ℕ) : 3 * n + 1 ≠ n := by omega

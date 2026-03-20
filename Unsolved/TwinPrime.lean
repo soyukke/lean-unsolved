@@ -451,3 +451,6 @@ example : IsTwinPrime 599 := ⟨by norm_num, by norm_num⟩
 
 /-- IsTwinPrime p → p + (p + 2) > 2 * p（自明だが明示） -/
 theorem twin_prime_sum_gt_double {p : ℕ} (h : IsTwinPrime p) : p + (p + 2) > 2 * p := by omega
+
+/-- IsTwinPrime 809（809+2=811は素数） -/
+example : IsTwinPrime 809 := ⟨by norm_num, by norm_num⟩
