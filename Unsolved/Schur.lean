@@ -552,3 +552,8 @@ theorem isSumFree_not_both_one_two {A : Finset ℕ} (h : IsSumFree A) :
     1 ∉ A ∨ 2 ∉ A := by
   by_contra hne; push_neg at hne
   exact h 1 hne.1 1 hne.1 2 hne.2 rfl
+
+/-- IsSumFree A → ∀ a ∈ A, 2*a ∉ A（sum-free なら自身との和は集合に入らない） -/
+theorem isSumFree_no_double {A : Finset ℕ} (h : IsSumFree A) {a : ℕ} (ha : a ∈ A) :
+    2 * a ∉ A := by
+  intro h2a; exact h a ha a ha (2 * a) h2a (by omega)

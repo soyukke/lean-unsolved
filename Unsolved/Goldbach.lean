@@ -959,3 +959,8 @@ theorem isGoldbach_ne_two {n : ℕ} (h : IsGoldbach n) : n ≠ 2 := by
   intro h2; subst h2
   obtain ⟨p, q, hp, hq, heq⟩ := h
   have := hp.two_le; have := hq.two_le; omega
+
+/-- IsGoldbach n → n ≠ 1（1は2つの素数の和で表せない: 最小の素数は2であり 2+2=4>1） -/
+theorem isGoldbach_ne_one {n : ℕ} (h : IsGoldbach n) : n ≠ 1 := by
+  intro h1; subst h1; obtain ⟨p, q, hp, hq, heq⟩ := h
+  have := hp.two_le; have := hq.two_le; omega

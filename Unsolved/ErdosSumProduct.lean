@@ -945,3 +945,8 @@ theorem card_prodsetFinset2_comm (A B : Finset ℕ) :
 theorem card_prodsetFinset2_singletons (a b : ℕ) :
     (prodsetFinset2 {a} {b}).card = 1 := by
   unfold prodsetFinset2; simp
+
+/-- sumsetFinset2 A B = ∅ ↔ A = ∅ ∨ B = ∅ -/
+theorem sumsetFinset2_eq_empty_iff {A B : Finset ℕ} :
+    sumsetFinset2 A B = ∅ ↔ A = ∅ ∨ B = ∅ := by
+  unfold sumsetFinset2; simp [Finset.image_eq_empty, Finset.product_eq_empty]

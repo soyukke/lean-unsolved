@@ -1399,3 +1399,12 @@ theorem collatzReaches_eventually_decreases (n : ℕ) (hn : n ≥ 2) (hr : colla
     by_contra h; push_neg at h; have : j = 0 := by omega
     subst this; change n = 1 at hj; omega
   exact ⟨j, hj_pos, by omega⟩
+
+/-! ## collatzStep の正値性 -/
+
+/-- collatzStep n > 0 for n > 0（コラッツ操作は正値を保つ） -/
+theorem collatzStep_pos (n : ℕ) (hn : n > 0) : collatzStep n > 0 := by
+  by_cases hodd : n % 2 = 1
+  · rw [collatzStep_odd_eq n hodd]; omega
+  · have heven : n % 2 = 0 := by omega
+    rw [collatzStep_even_eq_div2 n heven]; omega

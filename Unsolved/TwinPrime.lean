@@ -488,3 +488,10 @@ theorem twin_prime_product_mod3 {p : ℕ} (h : IsTwinPrime p) (hp3 : p > 3) :
 /-- IsTwinPrime p → p + 2 ≥ 5 -/
 theorem IsTwinPrime.plus_two_ge_five {p : ℕ} (h : IsTwinPrime p) : p + 2 ≥ 5 := by
   have := h.three_le; omega
+
+/-- 双子素数 (p, p+2) → p*(p+2) は奇数 -/
+theorem twin_prime_product_odd {p : ℕ} (h : IsTwinPrime p) : p * (p + 2) % 2 = 1 := by
+  have hp := h.odd
+  rw [Nat.mul_mod]
+  have : (p + 2) % 2 = 1 := by omega
+  rw [hp, this]
