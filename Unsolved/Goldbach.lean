@@ -861,10 +861,25 @@ theorem isGoldbach_twentyfour_cases {p q : ℕ} (hp : Nat.Prime p) (hq : Nat.Pri
 theorem isGoldbach_twentysix_cases {p q : ℕ} (hp : Nat.Prime p) (hq : Nat.Prime q)
     (heq : 26 = p + q) (hle : p ≤ q) :
     (p = 3 ∧ q = 23) ∨ (p = 7 ∧ q = 19) ∨ (p = 13 ∧ q = 13) := by
-  have := hp.two_le; have := hq.two_le; interval_cases p <;> omega
+  have := hp.two_le; have := hq.two_le
+  have hq_val : q = 26 - p := by omega
+  subst hq_val; have : p ≤ 26 := by omega
+  interval_cases p <;> (first | exact Or.inl ⟨rfl, rfl⟩ | exact Or.inr (Or.inl ⟨rfl, rfl⟩) | exact Or.inr (Or.inr ⟨rfl, rfl⟩) | exact ⟨rfl, rfl⟩ | exact absurd hp (by decide) | exact absurd hq (by decide) | omega)
 
 /-- 28のゴールドバッハ分解: 28 = 5 + 23 または 28 = 11 + 17 -/
 theorem isGoldbach_twentyeight_cases {p q : ℕ} (hp : Nat.Prime p) (hq : Nat.Prime q)
     (heq : 28 = p + q) (hle : p ≤ q) :
     (p = 5 ∧ q = 23) ∨ (p = 11 ∧ q = 17) := by
-  have := hp.two_le; have := hq.two_le; interval_cases p <;> omega
+  have := hp.two_le; have := hq.two_le
+  have hq_val : q = 28 - p := by omega
+  subst hq_val; have : p ≤ 28 := by omega
+  interval_cases p <;> (first | exact Or.inl ⟨rfl, rfl⟩ | exact Or.inr (Or.inl ⟨rfl, rfl⟩) | exact Or.inr (Or.inr ⟨rfl, rfl⟩) | exact ⟨rfl, rfl⟩ | exact absurd hp (by decide) | exact absurd hq (by decide) | omega)
+
+/-- 30 のゴールドバッハ分解: 30 = 7+23 = 11+19 = 13+17 -/
+theorem isGoldbach_thirty_cases {p q : ℕ} (hp : Nat.Prime p) (hq : Nat.Prime q)
+    (heq : 30 = p + q) (hle : p ≤ q) :
+    (p = 7 ∧ q = 23) ∨ (p = 11 ∧ q = 19) ∨ (p = 13 ∧ q = 17) := by
+  have := hp.two_le; have := hq.two_le
+  have hq_val : q = 30 - p := by omega
+  subst hq_val; have : p ≤ 30 := by omega
+  interval_cases p <;> (first | exact Or.inl ⟨rfl, rfl⟩ | exact Or.inr (Or.inl ⟨rfl, rfl⟩) | exact Or.inr (Or.inr ⟨rfl, rfl⟩) | exact ⟨rfl, rfl⟩ | exact absurd hp (by decide) | exact absurd hq (by decide) | omega)

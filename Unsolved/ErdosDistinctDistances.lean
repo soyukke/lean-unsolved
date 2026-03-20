@@ -438,3 +438,7 @@ theorem distSq_same_fst (a b d : ℤ) : distSq (a, b) (a, d) = (b - d) ^ 2 := by
 
 /-- distSq (a,b) (c,b) = (a-c)²（y座標一致→x差のみ） -/
 theorem distSq_same_snd (a c b : ℤ) : distSq (a, b) (c, b) = (a - c) ^ 2 := by unfold distSq; ring
+
+/-- distSq (a, 0) (0, b) = a² + b²（直角の2辺の端点距離） -/
+theorem distSq_axes_origin (a b : ℤ) : distSq (a, 0) (0, b) = a ^ 2 + b ^ 2 := by
+  unfold distSq; ring

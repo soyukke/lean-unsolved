@@ -527,3 +527,9 @@ theorem zero_not_mem_of_isSumFree {A : Finset ℕ} (h : IsSumFree A) : 0 ∉ A :
 /-- n ≥ 1 なら {n} は sum-free -/
 theorem isSumFree_singleton_pos {n : ℕ} (hn : n ≥ 1) : IsSumFree ({n} : Finset ℕ) :=
   isSumFree_singleton n hn
+
+/-- {7, 8, 9, 10} は sum-free -/
+theorem isSumFree_seven_to_ten : IsSumFree ({7, 8, 9, 10} : Finset ℕ) := by
+  intro x hx y hy z hz h
+  simp [Finset.mem_insert, Finset.mem_singleton] at hx hy hz
+  omega

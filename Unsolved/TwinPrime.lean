@@ -458,3 +458,7 @@ example : IsTwinPrime 809 := ⟨by norm_num, by norm_num⟩
 /-- (p+1)² - 1 = p² + 2p（twin_prime_product_eq の系） -/
 theorem succ_sq_sub_one (p : ℕ) : (p + 1) ^ 2 - 1 = p ^ 2 + 2 * p := by
   cases p <;> ring_nf <;> omega
+
+/-- 双子素数 (p, p+2) の和は 8 以上 -/
+theorem twin_prime_sum_ge_eight {p : ℕ} (h : IsTwinPrime p) : p + (p + 2) ≥ 8 := by
+  have := h.three_le; omega

@@ -1374,3 +1374,7 @@ theorem three_mul_add_one_sub_succ (n : ℕ) : 3 * n + 1 - (n + 1) = 2 * n := by
 /-- 奇数 n ≥ 3 に対して (3n+1)/2 ≥ 5 -/
 theorem syracuse_ge_five (n : ℕ) (hn : n ≥ 3) (hodd : n % 2 = 1) :
     (3 * n + 1) / 2 ≥ 5 := by omega
+
+/-- 奇数 n ≥ 5 に対して (3n+1)/2 ≥ 8 -/
+theorem syracuse_ge_eight (n : ℕ) (hn : n ≥ 5) (hodd : n % 2 = 1) :
+    (3 * n + 1) / 2 ≥ 8 := by omega
