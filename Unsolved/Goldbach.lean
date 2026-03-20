@@ -752,3 +752,17 @@ theorem goldbachConjecture_verified_le_1000000 :
 theorem weakGoldbachConjecture_verified_le_1000003 :
     ∀ m : ℕ, m > 7 → m ≤ 1000003 → m % 2 = 1 → IsWeakGoldbach m :=
   fun m hm hm_le hodd => weakGoldbach_le_1000003 m hm hm_le hodd
+
+/-! ## IsGoldbach 6 の全分解の列挙 -/
+
+/-- IsGoldbach 6 の全分解の列挙: 6 = 3+3 のみ -/
+theorem isGoldbach_six_unique {p q : ℕ} (hp : Nat.Prime p) (hq : Nat.Prime q)
+    (heq : 6 = p + q) (hle : p ≤ q) : p = 3 ∧ q = 3 := by
+  have hp2 := hp.two_le
+  have hq2 := hq.two_le
+  have hpub : p ≤ 3 := by omega
+  interval_cases p
+  · -- p = 2 → q = 4, 4 は素数でないので矛盾
+    have hq4 : q = 4 := by omega
+    subst hq4; exact absurd hq (by decide)
+  · exact ⟨rfl, by omega⟩

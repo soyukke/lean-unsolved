@@ -395,3 +395,15 @@ theorem IsCousinPrime.mod30 {p : ℕ} (h : IsCousinPrime p) (hp5 : p > 5) :
 /-- 双子素数の積+1 は特別な形: (p)(p+2)+1 = p²+2p+1 = (p+1)² -/
 theorem twin_prime_product_succ {p : ℕ} (_h : IsTwinPrime p) :
     p * (p + 2) + 1 = (p + 1) ^ 2 := by ring
+
+/-! ## 双子素数の平均は合成数 -/
+
+/-- 双子素数の平均は合成数（p+1 は偶数で > 2 なので素数でない） -/
+theorem twin_prime_mean_composite {p : ℕ} (h : IsTwinPrime p) (hp3 : p > 3) :
+    ¬Nat.Prime (p + 1) := by
+  have heven := h.succ_even
+  -- p+1 は偶数かつ p+1 > 4 > 2 なので 2 | (p+1)
+  intro hp1
+  have h2dvd : 2 ∣ (p + 1) := ⟨(p + 1) / 2, by omega⟩
+  have := hp1.eq_one_or_self_of_dvd 2 h2dvd
+  omega
