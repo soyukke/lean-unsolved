@@ -474,3 +474,13 @@ theorem twin_prime_sq_mod24 {p : ℕ} (h : IsTwinPrime p) (hp3 : p > 3) :
 
 /-- IsTwinPrime 1049（1049+2=1051、両方素数） -/
 example : IsTwinPrime 1049 := ⟨by norm_num, by norm_num⟩
+
+/-- 双子素数 p > 3 に対して p(p+2) ≡ 2 (mod 3) -/
+theorem twin_prime_product_mod3 {p : ℕ} (h : IsTwinPrime p) (hp3 : p > 3) :
+    p * (p + 2) % 3 = 2 := by
+  have h5 := h.mod_six hp3  -- p % 6 = 5
+  have hp3m : p % 3 = 2 := by omega
+  have hp2m : (p + 2) % 3 = 1 := by omega
+  have : p * (p + 2) % 3 = (p % 3) * ((p + 2) % 3) % 3 := by
+    rw [Nat.mul_mod]
+  rw [this, hp3m, hp2m]

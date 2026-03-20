@@ -453,3 +453,6 @@ theorem distSq_diagonal_points (a b : ℤ) : distSq (a, a) (b, b) = 2 * (a - b) 
 /-- distSq (a, b) (a + h, b + k) = h² + k²（差ベクトル版） -/
 theorem distSq_offset (a b h k : ℤ) : distSq (a, b) (a + h, b + k) = h ^ 2 + k ^ 2 := by
   unfold distSq; ring
+
+/-- distSq (1, 2) (4, 6) = 25 = 5²（ピタゴラス数 3,4,5 の具体例） -/
+theorem distSq_example_3_4_5 : distSq (1, 2) (4, 6) = 25 := by decide

@@ -940,3 +940,8 @@ theorem card_prodsetFinset2_ge_max {A B : Finset ℕ}
 theorem card_prodsetFinset2_comm (A B : Finset ℕ) :
     (prodsetFinset2 A B).card = (prodsetFinset2 B A).card := by
   rw [prodsetFinset2_comm]
+
+/-- |{a}·{b}| = 1 -/
+theorem card_prodsetFinset2_singletons (a b : ℕ) :
+    (prodsetFinset2 {a} {b}).card = 1 := by
+  unfold prodsetFinset2; simp
