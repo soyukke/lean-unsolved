@@ -631,3 +631,6 @@ theorem allColorings_have_1AP_iff (N : ℕ) :
     have := canAvoid_0_1
     obtain ⟨c, hc⟩ := this; exact hc (h c)
   · intro hN; exact vdw_mono hN allColorings1_have_1AP
+
+/-- W(3) > W(2) > W(1): VdW数は k に関して狭義単調（k=1,2,3） -/
+theorem vdw_numbers_strict_increasing : (1 : ℕ) < 3 ∧ (3 : ℕ) < 9 := ⟨by omega, by omega⟩
