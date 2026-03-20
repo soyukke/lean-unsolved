@@ -423,3 +423,8 @@ theorem distSq_product_is_sum_sq (p q r s : Point) :
   obtain ⟨px, py, hpq⟩ := distSq_is_sum_of_squares p q
   obtain ⟨rx, ry, hrs⟩ := distSq_is_sum_of_squares r s
   exact ⟨px * rx - py * ry, px * ry + py * rx, by rw [hpq, hrs, sum_sq_mul_sum_sq]⟩
+
+/-- 2点の中点距離: distSq (0,0) (2a, 2b) = 4 * distSq (0,0) (a,b) -/
+theorem distSq_double (a b : ℤ) :
+    distSq (0, 0) (2*a, 2*b) = 4 * distSq (0, 0) (a, b) := by
+  unfold distSq; ring

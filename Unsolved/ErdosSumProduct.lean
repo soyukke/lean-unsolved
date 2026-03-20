@@ -897,3 +897,10 @@ theorem card_sumsetFinset2_singleton_left (a : ℕ) (B : Finset ℕ) :
     · rintro ⟨c, hc, rfl⟩; exact ⟨a, rfl, c, hc, rfl⟩
   rw [this]
   exact Finset.card_image_of_injective B (fun x y h => by omega)
+
+/-- |A + A| + |A · A| ≥ 4|A| - 2 for positive A (improved bound) -/
+theorem sum_card_ge_improved {A : Finset ℕ} (hA : A.Nonempty) (hpos : ∀ a ∈ A, a > 0) :
+    (sumsetFinset A).card + (prodsetFinset A).card ≥ 4 * A.card - 2 := by
+  have h1 := card_sumsetFinset_ge_two_mul_sub_one hA
+  have h2 := card_prodsetFinset_ge_two_mul_sub_one hA hpos
+  omega
