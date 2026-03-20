@@ -1356,3 +1356,7 @@ theorem collatzReaches_min {n m : ℕ} (hn : collatzReaches n) (hm : collatzReac
   rcases Nat.le_total n m with h | h
   · rw [min_eq_left h]; exact hn
   · rw [min_eq_right h]; exact hm
+
+/-- collatzReaches は定数関数ではない: collatzReaches 1 ∧ ¬collatzReaches 0 -/
+theorem collatzReaches_not_constant : collatzReaches 1 ∧ ¬collatzReaches 0 :=
+  ⟨collatzReaches_one, not_collatzReaches_zero⟩

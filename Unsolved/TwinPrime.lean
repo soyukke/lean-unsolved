@@ -439,3 +439,9 @@ theorem consecutive_twin_primes_3_5 : IsTwinPrime 3 ∧ IsTwinPrime 5 :=
 /-- (5,7,11) は素数三つ組（ギャップ2,4） -/
 theorem prime_triple_5_7_11 : Nat.Prime 5 ∧ Nat.Prime 7 ∧ Nat.Prime 11 := by
   exact ⟨by norm_num, by norm_num, by norm_num⟩
+
+/-- 双子素数の積は 3 の倍数から 1 引いた数: p(p+2) = (p+1)²-1 -/
+theorem twin_prime_product_eq {p : ℕ} : p * (p + 2) = (p + 1) ^ 2 - 1 := by
+  cases p with
+  | zero => simp
+  | succ n => ring_nf; omega

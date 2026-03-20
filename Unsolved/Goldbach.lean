@@ -813,3 +813,9 @@ theorem isGoldbach_fourteen_cases {p q : ℕ} (hp : Nat.Prime p) (hq : Nat.Prime
     (heq : 14 = p + q) (hle : p ≤ q) : (p = 3 ∧ q = 11) ∨ (p = 7 ∧ q = 7) := by
   have := hp.two_le; have := hq.two_le
   interval_cases p <;> omega
+
+/-- IsGoldbach 16 の分解列挙: 16=3+13 か 16=5+11 -/
+theorem isGoldbach_sixteen_cases {p q : ℕ} (hp : Nat.Prime p) (hq : Nat.Prime q)
+    (heq : 16 = p + q) (hle : p ≤ q) : (p = 3 ∧ q = 13) ∨ (p = 5 ∧ q = 11) := by
+  have := hp.two_le; have := hq.two_le
+  interval_cases p <;> omega

@@ -505,3 +505,8 @@ theorem isSumFree_inter {A B : Finset ℕ} (hA : IsSumFree A) (hB : IsSumFree B)
 example : IsSumFree ({2, 5} : Finset ℕ) := by
   intro x hx y hy z hz h; simp at hx hy hz
   rcases hx with rfl | rfl <;> rcases hy with rfl | rfl <;> rcases hz with rfl | rfl <;> omega
+
+/-- {4, 5, 6} は sum-free -/
+example : IsSumFree ({4, 5, 6} : Finset ℕ) := by
+  intro x hx y hy z hz h; simp at hx hy hz
+  rcases hx with rfl | rfl | rfl <;> rcases hy with rfl | rfl | rfl <;> rcases hz with rfl | rfl | rfl <;> omega
