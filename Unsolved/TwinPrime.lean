@@ -414,3 +414,20 @@ theorem twin_prime_mean_composite {p : ℕ} (h : IsTwinPrime p) (hp3 : p > 3) :
 theorem IsCousinPrime.odd {p : ℕ} (h : IsCousinPrime p) (hp5 : p > 5) : p % 2 = 1 := by
   have h6 := h.mod_six (by omega)
   omega
+
+/-! ## 双子素数の最小性と和の性質 -/
+
+/-- (3,5) は最小の双子素数ペア -/
+theorem smallest_twin_prime : IsTwinPrime 3 ∧ ∀ p < 3, ¬IsTwinPrime p := by
+  refine ⟨⟨by norm_num, by norm_num⟩, fun p hp h => ?_⟩
+  interval_cases p
+  · exact Nat.not_prime_zero h.1
+  · exact Nat.not_prime_one h.1
+  · exact (by decide : ¬Nat.Prime 4) h.2
+
+/-- 双子素数の和は 4 の倍数: p > 3 なら p + (p+2) ≡ 0 (mod 4) -/
+theorem twin_prime_sum_div4 {p : ℕ} (h : IsTwinPrime p) (hp3 : p > 3) :
+    4 ∣ (p + (p + 2)) := by
+  have h6 := h.middle_div6 hp3
+  obtain ⟨k, hk⟩ := h6
+  exact ⟨3 * k, by omega⟩

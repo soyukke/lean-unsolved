@@ -773,3 +773,26 @@ theorem isGoldbach_six_unique {p q : ℕ} (hp : Nat.Prime p) (hq : Nat.Prime q)
 theorem isGoldbach_with_three {n : ℕ} (hp : Nat.Prime (n - 3)) (hn : n ≥ 6) (heven : n % 2 = 0) :
     IsGoldbach n := by
   exact ⟨3, n - 3, by norm_num, hp, by omega⟩
+
+/-! ## Goldbach 分解の一意性と多重性 -/
+
+/-- IsGoldbach 8 の一意性: 8 = p+q, p≤q, 素数 → p=3, q=5 -/
+theorem isGoldbach_eight_unique {p q : ℕ} (hp : Nat.Prime p) (hq : Nat.Prime q)
+    (heq : 8 = p + q) (hle : p ≤ q) : p = 3 ∧ q = 5 := by
+  have hp2 := hp.two_le; have hq2 := hq.two_le
+  have hpub : p ≤ 4 := by omega
+  interval_cases p
+  · -- p = 2: q = 6, not prime
+    have hq6 : q = 6 := by omega
+    subst hq6; exact absurd hq (by decide)
+  · -- p = 3: q = 5
+    exact ⟨rfl, by omega⟩
+  · -- p = 4: not prime
+    exact absurd hp (by decide)
+
+/-- IsGoldbach 10 は2通りの分解: 3+7 と 5+5 -/
+theorem isGoldbach_ten_two_ways :
+    (∃ p q, Nat.Prime p ∧ Nat.Prime q ∧ 10 = p + q ∧ p < q) ∧
+    (∃ p, Nat.Prime p ∧ 10 = p + p) :=
+  ⟨⟨3, 7, by norm_num, by norm_num, by norm_num, by omega⟩,
+   ⟨5, by norm_num, by norm_num⟩⟩

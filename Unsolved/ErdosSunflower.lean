@@ -710,3 +710,15 @@ theorem family_nonempty_of_containsSunflower {α : Type*} [DecidableEq α]
     一般の n-均一族:
     - n = 1 → f(1,k) = k (erdosRado_uniform1)
     - n = 2, k = 3 → 部分的（Case 1 + freq ≤ 1）-/
+
+/-! ## ContainsSunflower の追加性質 -/
+
+/-- 長さ2以上のリストは ContainsSunflower 2 を満たす -/
+theorem containsSunflower_two_of_length_two {α : Type*} [DecidableEq α]
+    {family : List (Finset α)} (hlen : family.length ≥ 2) :
+    ContainsSunflower family 2 := by
+  match family, hlen with
+  | S :: T :: _, _ =>
+    exact ⟨[S, T], rfl,
+      fun U hU => by simp [List.mem_cons] at hU ⊢; rcases hU with rfl | rfl <;> simp,
+      isSunflower_pair S T⟩

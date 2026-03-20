@@ -1332,3 +1332,13 @@ theorem collatzConjectureR_iff_bounded :
 theorem collatzConjectureR_verified_le_1000000 :
     ∀ n : ℕ, n ≥ 1 → n ≤ 1000000 → collatzReaches n :=
   fun n hn1 hn => collatzReaches_le_1000000 n hn1 hn
+
+/-! ## collatzReaches の合成定理 -/
+
+/-- collatzReaches 1 ∧ collatzReaches 2 ∧ collatzReaches 3 の簡潔な述べ方 -/
+theorem collatzReaches_one_two_three :
+    collatzReaches 1 ∧ collatzReaches 2 ∧ collatzReaches 3 :=
+  ⟨collatzReaches_one, collatzReaches_two, collatzReaches_three⟩
+
+/-- 2^k は常に collatzReaches（collatzReaches_pow_two のエイリアス） -/
+theorem collatzReaches_pow2 (k : ℕ) : collatzReaches (2^k) := collatzReaches_pow_two k

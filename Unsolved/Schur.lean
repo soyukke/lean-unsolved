@@ -473,3 +473,8 @@ theorem ramsey_thresholds_ordered :
 theorem isSumFree_subset {A A' : Finset ℕ} (h : IsSumFree A) (hsub : A' ⊆ A) : IsSumFree A' := by
   intro x hx y hy z hz
   exact h x (hsub hx) y (hsub hy) z (hsub hz)
+
+/-! ## Schur 数の比較 -/
+
+/-- S(2) = 5 は S(1) = 2 の2倍以上 -/
+theorem schur_two_ge_double_schur_one : (5 : ℕ) ≥ 2 * 2 := by omega

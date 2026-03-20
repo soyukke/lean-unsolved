@@ -351,3 +351,11 @@ theorem syracuse_minus_n_ge_one (n : ℕ) (hn : n ≥ 1) (hodd : n % 2 = 1) :
 
 /-- 偶数 n ≥ 2 に対して n/2 ≥ 1 -/
 theorem half_ge_one (n : ℕ) (hn : n ≥ 2) (heven : n % 2 = 0) : n / 2 ≥ 1 := by omega
+
+/-! ## 追加の算術的性質 -/
+
+/-- 偶数 n ≥ 4 に対して n/2 < n - 1 -/
+theorem half_lt_pred (n : ℕ) (hn : n ≥ 4) (heven : n % 2 = 0) : n / 2 < n - 1 := by omega
+
+/-- 3n+1 > 2n for n ≥ 1 -/
+theorem three_mul_add_one_gt_double (n : ℕ) (hn : n ≥ 1) : 3 * n + 1 > 2 * n := by omega
