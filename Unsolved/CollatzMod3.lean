@@ -340,3 +340,9 @@ theorem three_mul_add_one_div4_iff (n : ℕ) (hodd : n % 2 = 1) :
     ここでは n%6=1 → (3n+1)/2 % 3 = 2 を示す -/
 theorem syracuse_mod3_of_mod6_eq1 (n : ℕ) (h : n % 6 = 1) :
     ((3 * n + 1) / 2) % 3 = 2 := by omega
+
+/-! ## 25b. Syracuse 値と n の差 -/
+
+/-- 奇数 n ≥ 1 → (3n+1)/2 - n ≥ 1 -/
+theorem syracuse_minus_n_ge_one (n : ℕ) (hn : n ≥ 1) (hodd : n % 2 = 1) :
+    (3 * n + 1) / 2 - n ≥ 1 := by omega

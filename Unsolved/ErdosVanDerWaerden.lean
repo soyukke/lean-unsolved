@@ -620,3 +620,14 @@ theorem allColorings_have_2AP_iff (N : ℕ) :
     have := canAvoid_of_le (show N ≤ 2 by omega) canAvoid_2_2
     obtain ⟨c, hc⟩ := this; exact hc (h c)
   · intro hN; exact vdw_mono (show 3 ≤ N by omega) allColorings3_have_2AP
+
+/-- W(1) の iff: (∀ c : Coloring N, HasMonochromaticAP c 1) ↔ N ≥ 1 -/
+theorem allColorings_have_1AP_iff (N : ℕ) :
+    (∀ c : Coloring N, HasMonochromaticAP c 1) ↔ N ≥ 1 := by
+  constructor
+  · intro h; by_contra hlt; push_neg at hlt
+    have hN0 : N = 0 := by omega
+    subst hN0
+    have := canAvoid_0_1
+    obtain ⟨c, hc⟩ := this; exact hc (h c)
+  · intro hN; exact vdw_mono hN allColorings1_have_1AP

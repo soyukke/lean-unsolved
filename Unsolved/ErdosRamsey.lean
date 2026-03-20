@@ -673,6 +673,16 @@ theorem hasRamseyProperty_three_iff (n : ℕ) : HasRamseyProperty n 3 ↔ n ≥ 
   · intro h
     exact hasRamseyProperty_mono h ramsey_three_three
 
+/-- R(1) の iff: HasRamseyProperty n 1 ↔ n ≥ 1 -/
+theorem hasRamseyProperty_one_iff (n : ℕ) : HasRamseyProperty n 1 ↔ n ≥ 1 := by
+  constructor
+  · intro h; by_contra hlt; push_neg at hlt
+    have hn0 : n = 0 := by omega
+    subst hn0
+    exact not_hasRamseyProperty_of_lt (by omega : 0 < 1) h
+  · intro h
+    exact hasRamseyProperty_mono h ramsey_1_holds
+
 /-- R(2) の iff: HasRamseyProperty n 2 ↔ n ≥ 2 -/
 theorem hasRamseyProperty_two_iff (n : ℕ) : HasRamseyProperty n 2 ↔ n ≥ 2 := by
   constructor
