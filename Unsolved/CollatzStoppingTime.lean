@@ -1308,3 +1308,27 @@ theorem collatzConjectureR_iff_bounded :
   · intro h n hn
     obtain ⟨k, hk⟩ := h n hn
     exact collatzReaches_of_bounded k n hk
+
+/-! ## 最終まとめ: コラッツ予想の総合的形式化 -/
+
+/-
+コラッツ予想の総合的形式化:
+以下の5つの命題は全て同値（またはコラッツ予想からの帰結）:
+(1) 全 n ≥ 1 が1に到達 (CollatzConjectureR)
+(2) 全奇数 n ≥ 1 が1に到達 (SyracuseConjectureR)
+(3) 全 n ≥ 1 に対して collatzReachesBounded k n = true となる k が存在
+(4) 唯一の周期軌道は {1,2,4}
+(5) 全 n ≥ 1 の軌道が最終的に {1,2,4} サイクルに入る
+
+証明済みの関係:
+- (1) iff (2): collatzR_iff_syracuseR
+- (1) iff (3): collatzConjectureR_iff_bounded
+- (1) implies (4): collatzReaches_periodic_trivial
+- (1) implies (5): collatzReaches_enters_cycle
+-/
+
+/-- コラッツ予想が n ≤ 1000000 で成り立つ:
+    CollatzConjectureR の部分検証 -/
+theorem collatzConjectureR_verified_le_1000000 :
+    ∀ n : ℕ, n ≥ 1 → n ≤ 1000000 → collatzReaches n :=
+  fun n hn1 hn => collatzReaches_le_1000000 n hn1 hn

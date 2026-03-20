@@ -740,3 +740,15 @@ theorem weakGoldbach_le_1000003 (m : ℕ) (hm : m > 7) (hm_le : m ≤ 1000003) (
   weakGoldbach_of_goldbach_le
     (fun n hn4 hn_le heven => isGoldbach_even_le_1000000 n hn4 (by omega) heven)
     m hm hm_le hodd
+
+/-! ## 最終まとめ: Goldbach予想の総合的形式化 -/
+
+/-- Goldbach予想が偶数 ≤ 1000000 で成り立つ -/
+theorem goldbachConjecture_verified_le_1000000 :
+    ∀ n : ℕ, n ≥ 4 → n ≤ 1000000 → n % 2 = 0 → IsGoldbach n :=
+  fun n hn4 hn heven => isGoldbach_even_le_1000000 n hn4 hn heven
+
+/-- 弱Goldbach予想が奇数 ≤ 1000003 で成り立つ -/
+theorem weakGoldbachConjecture_verified_le_1000003 :
+    ∀ m : ℕ, m > 7 → m ≤ 1000003 → m % 2 = 1 → IsWeakGoldbach m :=
+  fun m hm hm_le hodd => weakGoldbach_le_1000003 m hm hm_le hodd

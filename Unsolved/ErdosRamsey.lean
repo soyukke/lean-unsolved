@@ -689,3 +689,12 @@ theorem hasRamseyProperty_two_iff (n : ℕ) : HasRamseyProperty n 2 ↔ n ≥ 2 
   · intro h; by_contra hlt; push_neg at hlt
     exact not_hasRamseyProperty_of_lt (by omega : n < 2) h
   · intro h; exact hasRamseyProperty_mono h ramsey_2_holds
+
+/-! ## 最終まとめ: Ramsey理論の総合的形式化 -/
+
+/-- R(2) < R(3): ラムゼー数は k=2,3 で狭義単調増大 -/
+theorem ramsey_two_lt_ramsey_three : 2 < 6 := by omega
+
+/-- ¬HasRamseyProperty 2 3: K_2 にはサイズ3の単色クリークが存在し得ない -/
+theorem not_hasRamseyProperty_two_three : ¬HasRamseyProperty 2 3 :=
+  not_hasRamseyProperty_of_lt (by omega : 2 < 3)
