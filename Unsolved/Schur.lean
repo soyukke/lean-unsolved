@@ -494,3 +494,9 @@ example : IsSumFree ({1, 3, 5} : Finset ℕ) := by
   simp at hx hy hz
   rcases hx with rfl | rfl | rfl <;> rcases hy with rfl | rfl | rfl <;>
     rcases hz with rfl | rfl | rfl <;> omega
+
+/-- IsSumFree の交差: IsSumFree A ∧ IsSumFree B → IsSumFree (A ∩ B) -/
+theorem isSumFree_inter {A B : Finset ℕ} (hA : IsSumFree A) (hB : IsSumFree B) :
+    IsSumFree (A ∩ B) := by
+  intro x hx y hy z hz
+  exact hA x (Finset.mem_inter.mp hx).1 y (Finset.mem_inter.mp hy).1 z (Finset.mem_inter.mp hz).1

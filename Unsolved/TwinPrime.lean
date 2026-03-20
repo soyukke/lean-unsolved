@@ -431,3 +431,7 @@ theorem twin_prime_sum_div4 {p : ℕ} (h : IsTwinPrime p) (hp3 : p > 3) :
   have h6 := h.middle_div6 hp3
   obtain ⟨k, hk⟩ := h6
   exact ⟨3 * k, by omega⟩
+
+/-- (3,5) と (5,7) は連続する双子素数ペア -/
+theorem consecutive_twin_primes_3_5 : IsTwinPrime 3 ∧ IsTwinPrime 5 :=
+  ⟨⟨by norm_num, by norm_num⟩, ⟨by norm_num, by norm_num⟩⟩

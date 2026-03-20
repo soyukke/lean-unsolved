@@ -359,3 +359,6 @@ theorem half_lt_pred (n : ℕ) (hn : n ≥ 4) (heven : n % 2 = 0) : n / 2 < n - 
 
 /-- 3n+1 > 2n for n ≥ 1 -/
 theorem three_mul_add_one_gt_double (n : ℕ) (hn : n ≥ 1) : 3 * n + 1 > 2 * n := by omega
+
+/-- 奇数 n に対して 3n+1 は n+2 より大きい（n ≥ 1） -/
+theorem three_mul_add_one_gt_add_two (n : ℕ) (hn : n ≥ 1) : 3 * n + 1 > n + 2 := by omega

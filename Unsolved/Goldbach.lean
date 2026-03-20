@@ -802,3 +802,8 @@ theorem isGoldbach_twelve_unique {p q : ℕ} (hp : Nat.Prime p) (hq : Nat.Prime 
     (heq : 12 = p + q) (hle : p ≤ q) : p = 5 ∧ q = 7 := by
   have := hp.two_le; have := hq.two_le
   interval_cases p <;> omega
+
+/-- 偶数 n で n/2 が素数なら IsGoldbach n -/
+theorem isGoldbach_of_half_prime {n : ℕ} (hn : n ≥ 4) (heven : n % 2 = 0)
+    (hp : Nat.Prime (n / 2)) : IsGoldbach n :=
+  ⟨n / 2, n / 2, hp, hp, by omega⟩

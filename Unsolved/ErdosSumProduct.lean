@@ -884,3 +884,16 @@ theorem prodsetFinset2_empty_right (A : Finset ℕ) :
     prodsetFinset2 A ∅ = ∅ := by
   unfold prodsetFinset2
   simp
+
+/-- |{a} + B| = |B| -/
+theorem card_sumsetFinset2_singleton_left (a : ℕ) (B : Finset ℕ) :
+    (sumsetFinset2 {a} B).card = B.card := by
+  have : sumsetFinset2 {a} B = B.image (a + ·) := by
+    ext x
+    rw [mem_sumsetFinset2]
+    simp only [Finset.mem_singleton, Finset.mem_image]
+    constructor
+    · rintro ⟨b, rfl, c, hc, rfl⟩; exact ⟨c, hc, rfl⟩
+    · rintro ⟨c, hc, rfl⟩; exact ⟨a, rfl, c, hc, rfl⟩
+  rw [this]
+  exact Finset.card_image_of_injective B (fun x y h => by omega)
