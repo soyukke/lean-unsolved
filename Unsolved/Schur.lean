@@ -538,3 +538,8 @@ theorem isSumFree_seven_to_ten : IsSumFree ({7, 8, 9, 10} : Finset ℕ) := by
 example : IsSumFree ({11, 12, 13, 14, 15} : Finset ℕ) := by
   intro x hx y hy z hz h; simp at hx hy hz
   rcases hx with rfl|rfl|rfl|rfl|rfl <;> rcases hy with rfl|rfl|rfl|rfl|rfl <;> rcases hz with rfl|rfl|rfl|rfl|rfl <;> omega
+
+/-- IsSumFree は Finset.filter で保存される -/
+theorem isSumFree_filter {A : Finset ℕ} (h : IsSumFree A) (p : ℕ → Prop) [DecidablePred p] :
+    IsSumFree (A.filter p) :=
+  isSumFree_subset h (Finset.filter_subset p A)

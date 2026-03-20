@@ -373,3 +373,6 @@ theorem three_mul_add_one_mod4_even (n : ℕ) (hodd : n % 2 = 1) :
 /-- (3n+1)/2 > n/2 for odd n ≥ 1 -/
 theorem syracuse_gt_half (n : ℕ) (hn : n ≥ 1) (hodd : n % 2 = 1) :
     (3 * n + 1) / 2 > n / 2 := by omega
+
+/-- 奇数 n ≥ 1 に対して (3n+1)/2 ≠ 0 -/
+theorem syracuse_ne_zero (n : ℕ) (hn : n ≥ 1) (hodd : n % 2 = 1) : (3 * n + 1) / 2 ≠ 0 := by omega

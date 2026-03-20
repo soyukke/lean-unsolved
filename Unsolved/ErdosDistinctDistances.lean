@@ -449,3 +449,7 @@ theorem distSq_diagonal (n : ℤ) : distSq (0, 0) (n, n) = 2 * n ^ 2 := by unfol
 /-- distSq (a, a) (b, b) = 2*(a-b)²（対角線上の2点） -/
 theorem distSq_diagonal_points (a b : ℤ) : distSq (a, a) (b, b) = 2 * (a - b) ^ 2 := by
   unfold distSq; ring
+
+/-- distSq (a, b) (a + h, b + k) = h² + k²（差ベクトル版） -/
+theorem distSq_offset (a b h k : ℤ) : distSq (a, b) (a + h, b + k) = h ^ 2 + k ^ 2 := by
+  unfold distSq; ring

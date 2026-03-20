@@ -471,3 +471,6 @@ theorem twin_prime_sq_mod24 {p : ℕ} (h : IsTwinPrime p) (hp3 : p > 3) :
   rw [this]
   have : p % 24 = 5 ∨ p % 24 = 11 ∨ p % 24 = 17 ∨ p % 24 = 23 := by omega
   rcases this with h | h | h | h <;> rw [h] <;> norm_num
+
+/-- IsTwinPrime 1049（1049+2=1051、両方素数） -/
+example : IsTwinPrime 1049 := ⟨by norm_num, by norm_num⟩

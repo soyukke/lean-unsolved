@@ -910,3 +910,21 @@ theorem isGoldbach_thirtyfour_cases {p q : ℕ} (hp : Nat.Prime p) (hq : Nat.Pri
            | exact absurd hp (by decide)
            | exact absurd hq (by decide)
            | omega)
+
+/-- 36のゴールドバッハ分割の分類 -/
+theorem isGoldbach_thirtysix_cases {p q : ℕ} (hp : Nat.Prime p) (hq : Nat.Prime q)
+    (heq : 36 = p + q) (hle : p ≤ q) :
+    (p = 5 ∧ q = 31) ∨ (p = 7 ∧ q = 29) ∨
+    (p = 13 ∧ q = 23) ∨ (p = 17 ∧ q = 19) := by
+  have := hp.two_le; have := hq.two_le
+  have hq_val : q = 36 - p := by omega
+  subst hq_val; have : p ≤ 36 := by omega
+  interval_cases p <;>
+    (first
+      | exact Or.inl ⟨rfl, rfl⟩
+      | exact Or.inr (Or.inl ⟨rfl, rfl⟩)
+      | exact Or.inr (Or.inr (Or.inl ⟨rfl, rfl⟩))
+      | exact Or.inr (Or.inr (Or.inr ⟨rfl, rfl⟩))
+      | exact absurd hp (by decide)
+      | exact absurd hq (by decide)
+      | omega)
