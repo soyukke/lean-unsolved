@@ -1381,3 +1381,6 @@ theorem syracuse_ge_eight (n : ℕ) (hn : n ≥ 5) (hodd : n % 2 = 1) :
 
 /-- 奇数 n に対して (3n+1) は n の3倍より大きい -/
 theorem three_mul_add_one_gt_triple (n : ℕ) : 3 * n + 1 > 3 * n := by omega
+
+/-- 奇数 n に対して (3n+1) mod 2 = 0（再確認的な omega 版） -/
+theorem three_mul_add_one_even_omega (n : ℕ) (hodd : n % 2 = 1) : (3 * n + 1) % 2 = 0 := by omega

@@ -462,3 +462,12 @@ theorem succ_sq_sub_one (p : ℕ) : (p + 1) ^ 2 - 1 = p ^ 2 + 2 * p := by
 /-- 双子素数 (p, p+2) の和は 8 以上 -/
 theorem twin_prime_sum_ge_eight {p : ℕ} (h : IsTwinPrime p) : p + (p + 2) ≥ 8 := by
   have := h.three_le; omega
+
+/-- 双子素数 p > 3 に対して p² ≡ 1 (mod 24)（p%6=5 → p²%24=1） -/
+theorem twin_prime_sq_mod24 {p : ℕ} (h : IsTwinPrime p) (hp3 : p > 3) :
+    p ^ 2 % 24 = 1 := by
+  have h5 := h.mod_six hp3  -- p % 6 = 5
+  have : p ^ 2 % 24 = (p % 24) ^ 2 % 24 := by rw [Nat.pow_mod]
+  rw [this]
+  have : p % 24 = 5 ∨ p % 24 = 11 ∨ p % 24 = 17 ∨ p % 24 = 23 := by omega
+  rcases this with h | h | h | h <;> rw [h] <;> norm_num

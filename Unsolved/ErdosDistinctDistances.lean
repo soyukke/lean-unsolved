@@ -445,3 +445,7 @@ theorem distSq_axes_origin (a b : ℤ) : distSq (a, 0) (0, b) = a ^ 2 + b ^ 2 :=
 
 /-- 原点から (n, n) への距離² = 2n² -/
 theorem distSq_diagonal (n : ℤ) : distSq (0, 0) (n, n) = 2 * n ^ 2 := by unfold distSq; ring
+
+/-- distSq (a, a) (b, b) = 2*(a-b)²（対角線上の2点） -/
+theorem distSq_diagonal_points (a b : ℤ) : distSq (a, a) (b, b) = 2 * (a - b) ^ 2 := by
+  unfold distSq; ring

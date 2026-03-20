@@ -935,3 +935,8 @@ theorem card_prodsetFinset2_ge_max {A B : Finset ℕ}
   have h2 : A.card ≥ 1 := Finset.Nonempty.card_pos hA
   have h3 : B.card ≥ 1 := Finset.Nonempty.card_pos hB
   omega
+
+/-- prodsetFinset2 の可換性の系: |A·B| = |B·A| -/
+theorem card_prodsetFinset2_comm (A B : Finset ℕ) :
+    (prodsetFinset2 A B).card = (prodsetFinset2 B A).card := by
+  rw [prodsetFinset2_comm]
