@@ -456,3 +456,7 @@ theorem distSq_offset (a b h k : ℤ) : distSq (a, b) (a + h, b + k) = h ^ 2 + k
 
 /-- distSq (1, 2) (4, 6) = 25 = 5²（ピタゴラス数 3,4,5 の具体例） -/
 theorem distSq_example_3_4_5 : distSq (1, 2) (4, 6) = 25 := by decide
+
+/-- distSq (0,0) (a*b, a*c) = a² * (b²+c²) -/
+theorem distSq_scaled_origin (a b c : ℤ) :
+    distSq (0, 0) (a * b, a * c) = a ^ 2 * (b ^ 2 + c ^ 2) := by unfold distSq; ring

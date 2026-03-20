@@ -943,3 +943,9 @@ theorem isGoldbach_thirtyeight_cases {p q : ℕ} (hp : Nat.Prime p) (hq : Nat.Pr
       | exact absurd hp (by decide)
       | exact absurd hq (by decide)
       | omega)
+
+/-- 40 のゴールドバッハ分解は (3,37), (11,29), (17,23) の3通り -/
+theorem isGoldbach_forty_cases {p q : ℕ} (hp : Nat.Prime p) (hq : Nat.Prime q)
+    (heq : 40 = p + q) (hle : p ≤ q) :
+    (p = 3 ∧ q = 37) ∨ (p = 11 ∧ q = 29) ∨ (p = 17 ∧ q = 23) := by
+  have := hp.two_le; have := hq.two_le; interval_cases p <;> omega

@@ -1384,3 +1384,6 @@ theorem three_mul_add_one_gt_triple (n : ℕ) : 3 * n + 1 > 3 * n := by omega
 
 /-- 奇数 n に対して (3n+1) mod 2 = 0（再確認的な omega 版） -/
 theorem three_mul_add_one_even_omega (n : ℕ) (hodd : n % 2 = 1) : (3 * n + 1) % 2 = 0 := by omega
+
+/-- 偶数 n に対して n/2 + n/2 = n -/
+theorem half_add_half (n : ℕ) (heven : n % 2 = 0) : n / 2 + n / 2 = n := by omega

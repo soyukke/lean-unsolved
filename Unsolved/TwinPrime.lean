@@ -484,3 +484,7 @@ theorem twin_prime_product_mod3 {p : ℕ} (h : IsTwinPrime p) (hp3 : p > 3) :
   have : p * (p + 2) % 3 = (p % 3) * ((p + 2) % 3) % 3 := by
     rw [Nat.mul_mod]
   rw [this, hp3m, hp2m]
+
+/-- IsTwinPrime p → p + 2 ≥ 5 -/
+theorem IsTwinPrime.plus_two_ge_five {p : ℕ} (h : IsTwinPrime p) : p + 2 ≥ 5 := by
+  have := h.three_le; omega

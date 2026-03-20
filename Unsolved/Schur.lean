@@ -543,3 +543,6 @@ example : IsSumFree ({11, 12, 13, 14, 15} : Finset ℕ) := by
 theorem isSumFree_filter {A : Finset ℕ} (h : IsSumFree A) (p : ℕ → Prop) [DecidablePred p] :
     IsSumFree (A.filter p) :=
   isSumFree_subset h (Finset.filter_subset p A)
+
+/-- {100} は sum-free -/
+example : IsSumFree ({100} : Finset ℕ) := isSumFree_singleton 100 (by omega)
