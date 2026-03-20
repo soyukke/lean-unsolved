@@ -1367,3 +1367,6 @@ theorem syracuse_plus_n (n : ℕ) (hn : n ≥ 1) (hodd : n % 2 = 1) :
 
 /-- 奇数 n に対して 3n+1 ≠ n（不動点非存在の算術版） -/
 theorem three_mul_add_one_ne (n : ℕ) : 3 * n + 1 ≠ n := by omega
+
+/-- 3n+1 と n+1 の差は 2n -/
+theorem three_mul_add_one_sub_succ (n : ℕ) : 3 * n + 1 - (n + 1) = 2 * n := by omega

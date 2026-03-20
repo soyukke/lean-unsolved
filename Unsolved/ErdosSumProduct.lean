@@ -920,3 +920,8 @@ theorem card_sumsetFinset2_ge_max {A B : Finset ℕ} (hA : A.Nonempty) (hB : B.N
   have h2 : A.card ≥ 1 := Finset.Nonempty.card_pos hA
   have h3 : B.card ≥ 1 := Finset.Nonempty.card_pos hB
   omega
+
+/-- sumsetFinset2 A B = sumsetFinset2 B A の系: |A+B| = |B+A| -/
+theorem card_sumsetFinset2_comm (A B : Finset ℕ) :
+    (sumsetFinset2 A B).card = (sumsetFinset2 B A).card := by
+  rw [sumsetFinset2_comm]
