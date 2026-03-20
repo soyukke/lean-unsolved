@@ -707,3 +707,11 @@ theorem hasRamseyProperty_zero_zero : HasRamseyProperty 0 0 := hasRamseyProperty
 
 /-- HasRamseyProperty は k=0 で全 n に成立（hasRamseyProperty_zero の一般版） -/
 theorem hasRamseyProperty_zero' : ∀ n, HasRamseyProperty n 0 := hasRamseyProperty_zero
+
+/-- HasRamseyProperty n k かつ HasRamseyProperty n k' → HasRamseyProperty n (min k k') -/
+theorem hasRamseyProperty_min {n k k' : ℕ}
+    (h : HasRamseyProperty n k) (h' : HasRamseyProperty n k') :
+    HasRamseyProperty n (min k k') := by
+  rcases Nat.le_total k k' with hle | hle
+  · rw [min_eq_left hle]; exact h
+  · rw [min_eq_right hle]; exact h'

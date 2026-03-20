@@ -726,3 +726,12 @@ theorem containsSunflower_two_of_length_two {α : Type*} [DecidableEq α]
 /-- ContainsSunflower [] 0 -/
 theorem containsSunflower_nil_zero {α : Type*} [DecidableEq α] :
     ContainsSunflower ([] : List (Finset α)) 0 := containsSunflower_zero []
+
+/-- ContainsSunflower family k ∧ k ≥ 1 → family.length ≥ 1 -/
+theorem family_length_pos_of_containsSunflower {α : Type*} [DecidableEq α]
+    {family : List (Finset α)} {k : ℕ} (hk : k ≥ 1)
+    (h : ContainsSunflower family k) : family.length ≥ 1 := by
+  have hne := family_nonempty_of_containsSunflower hk h
+  match family with
+  | [] => exact absurd rfl hne
+  | _ :: _ => simp

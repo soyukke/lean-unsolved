@@ -948,4 +948,14 @@ theorem isGoldbach_thirtyeight_cases {p q : ℕ} (hp : Nat.Prime p) (hq : Nat.Pr
 theorem isGoldbach_forty_cases {p q : ℕ} (hp : Nat.Prime p) (hq : Nat.Prime q)
     (heq : 40 = p + q) (hle : p ≤ q) :
     (p = 3 ∧ q = 37) ∨ (p = 11 ∧ q = 29) ∨ (p = 17 ∧ q = 23) := by
-  have := hp.two_le; have := hq.two_le; interval_cases p <;> omega
+  have hp2 := hp.two_le; have hq2 := hq.two_le
+  have hpub : p ≤ 20 := by omega
+  have hq_eq : q = 40 - p := by omega
+  subst hq_eq
+  interval_cases p <;> (first | exact Or.inl ⟨rfl, rfl⟩ | exact Or.inr (Or.inl ⟨rfl, rfl⟩) | exact Or.inr (Or.inr ⟨rfl, rfl⟩) | exact absurd hp (by decide) | exact absurd hq (by decide) | omega)
+
+/-- IsGoldbach n → n ≠ 2（2は2つの素数の和で表せない: 最小の素数は2であり 2+2=4≠2） -/
+theorem isGoldbach_ne_two {n : ℕ} (h : IsGoldbach n) : n ≠ 2 := by
+  intro h2; subst h2
+  obtain ⟨p, q, hp, hq, heq⟩ := h
+  have := hp.two_le; have := hq.two_le; omega

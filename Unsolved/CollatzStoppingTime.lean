@@ -1387,3 +1387,15 @@ theorem three_mul_add_one_even_omega (n : ℕ) (hodd : n % 2 = 1) : (3 * n + 1) 
 
 /-- 偶数 n に対して n/2 + n/2 = n -/
 theorem half_add_half (n : ℕ) (heven : n % 2 = 0) : n / 2 + n / 2 = n := by omega
+
+/-! ## 軌道の有界性: collatzReaches → 軌道は最終的に出発点より下がる -/
+
+/-- collatzReaches n ∧ n ≥ 2 → ∃ k ≥ 1, collatzIter k n < n
+    （軌道は最終的に出発点より下がる） -/
+theorem collatzReaches_eventually_decreases (n : ℕ) (hn : n ≥ 2) (hr : collatzReaches n) :
+    ∃ k, k ≥ 1 ∧ collatzIter k n < n := by
+  obtain ⟨j, hj⟩ := hr
+  have hj_pos : j ≥ 1 := by
+    by_contra h; push_neg at h; have : j = 0 := by omega
+    subst this; change n = 1 at hj; omega
+  exact ⟨j, hj_pos, by omega⟩

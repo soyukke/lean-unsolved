@@ -546,3 +546,9 @@ theorem isSumFree_filter {A : Finset ℕ} (h : IsSumFree A) (p : ℕ → Prop) [
 
 /-- {100} は sum-free -/
 example : IsSumFree ({100} : Finset ℕ) := isSumFree_singleton 100 (by omega)
+
+/-- IsSumFree A → 1 ∉ A ∨ 2 ∉ A（1+1=2 なので両方は含めない） -/
+theorem isSumFree_not_both_one_two {A : Finset ℕ} (h : IsSumFree A) :
+    1 ∉ A ∨ 2 ∉ A := by
+  by_contra hne; push_neg at hne
+  exact h 1 hne.1 1 hne.1 2 hne.2 rfl
