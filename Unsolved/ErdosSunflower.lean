@@ -700,3 +700,13 @@ theorem family_nonempty_of_containsSunflower {α : Type*} [DecidableEq α]
   obtain ⟨S, hS⟩ := List.exists_mem_of_ne_nil sub hsub_ne
   have := hmem S hS
   simp at this
+
+/- Erdős-Rado ひまわり予想の部分的形式化のまとめ:
+    2-均一族において:
+    - 要素頻度 ≥ k → k-ひまわり存在 (containsSunflower_of_element_appears_k)
+    - 要素頻度 ≤ 1 → 互いに素 → ひまわり (containsSunflower3_of_freq_le_one)
+    - 残り: 要素頻度 = 2 の貪欲マッチング（未証明）
+
+    一般の n-均一族:
+    - n = 1 → f(1,k) = k (erdosRado_uniform1)
+    - n = 2, k = 3 → 部分的（Case 1 + freq ≤ 1）-/
