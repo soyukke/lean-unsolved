@@ -445,3 +445,6 @@ theorem twin_prime_product_eq {p : ℕ} : p * (p + 2) = (p + 1) ^ 2 - 1 := by
   cases p with
   | zero => simp
   | succ n => ring_nf; omega
+
+/-- 500台の双子素数: IsTwinPrime 599 -/
+example : IsTwinPrime 599 := ⟨by norm_num, by norm_num⟩

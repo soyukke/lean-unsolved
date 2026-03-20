@@ -428,3 +428,7 @@ theorem distSq_product_is_sum_sq (p q r s : Point) :
 theorem distSq_double (a b : ℤ) :
     distSq (0, 0) (2*a, 2*b) = 4 * distSq (0, 0) (a, b) := by
   unfold distSq; ring
+
+/-- distSq (a, b) (c, d) = distSq (a-c, b-d) (0, 0) -/
+theorem distSq_diff_origin (a b c d : ℤ) :
+    distSq (a, b) (c, d) = distSq (a - c, b - d) (0, 0) := by unfold distSq; ring

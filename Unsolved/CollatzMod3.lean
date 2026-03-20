@@ -369,3 +369,7 @@ theorem three_mul_add_one_sq (n : ℕ) : (3 * n + 1) ^ 2 = 9 * n ^ 2 + 6 * n + 1
 /-- 奇数 n に対して (3n+1) mod 4 ∈ {0, 2}（偶数） -/
 theorem three_mul_add_one_mod4_even (n : ℕ) (hodd : n % 2 = 1) :
     (3 * n + 1) % 4 = 0 ∨ (3 * n + 1) % 4 = 2 := by omega
+
+/-- (3n+1)/2 > n/2 for odd n ≥ 1 -/
+theorem syracuse_gt_half (n : ℕ) (hn : n ≥ 1) (hodd : n % 2 = 1) :
+    (3 * n + 1) / 2 > n / 2 := by omega

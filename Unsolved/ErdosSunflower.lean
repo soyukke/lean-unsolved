@@ -722,3 +722,7 @@ theorem containsSunflower_two_of_length_two {α : Type*} [DecidableEq α]
     exact ⟨[S, T], rfl,
       fun U hU => by simp [List.mem_cons] at hU ⊢; rcases hU with rfl | rfl <;> simp,
       isSunflower_pair S T⟩
+
+/-- ContainsSunflower [] 0 -/
+theorem containsSunflower_nil_zero {α : Type*} [DecidableEq α] :
+    ContainsSunflower ([] : List (Finset α)) 0 := containsSunflower_zero []
