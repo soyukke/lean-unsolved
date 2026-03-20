@@ -454,3 +454,7 @@ theorem twin_prime_sum_gt_double {p : ℕ} (h : IsTwinPrime p) : p + (p + 2) > 2
 
 /-- IsTwinPrime 809（809+2=811は素数） -/
 example : IsTwinPrime 809 := ⟨by norm_num, by norm_num⟩
+
+/-- (p+1)² - 1 = p² + 2p（twin_prime_product_eq の系） -/
+theorem succ_sq_sub_one (p : ℕ) : (p + 1) ^ 2 - 1 = p ^ 2 + 2 * p := by
+  cases p <;> ring_nf <;> omega

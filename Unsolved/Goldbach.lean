@@ -862,3 +862,9 @@ theorem isGoldbach_twentysix_cases {p q : ℕ} (hp : Nat.Prime p) (hq : Nat.Prim
     (heq : 26 = p + q) (hle : p ≤ q) :
     (p = 3 ∧ q = 23) ∨ (p = 7 ∧ q = 19) ∨ (p = 13 ∧ q = 13) := by
   have := hp.two_le; have := hq.two_le; interval_cases p <;> omega
+
+/-- 28のゴールドバッハ分解: 28 = 5 + 23 または 28 = 11 + 17 -/
+theorem isGoldbach_twentyeight_cases {p q : ℕ} (hp : Nat.Prime p) (hq : Nat.Prime q)
+    (heq : 28 = p + q) (hle : p ≤ q) :
+    (p = 5 ∧ q = 23) ∨ (p = 11 ∧ q = 17) := by
+  have := hp.two_le; have := hq.two_le; interval_cases p <;> omega

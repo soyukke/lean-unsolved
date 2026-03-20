@@ -1370,3 +1370,7 @@ theorem three_mul_add_one_ne (n : ℕ) : 3 * n + 1 ≠ n := by omega
 
 /-- 3n+1 と n+1 の差は 2n -/
 theorem three_mul_add_one_sub_succ (n : ℕ) : 3 * n + 1 - (n + 1) = 2 * n := by omega
+
+/-- 奇数 n ≥ 3 に対して (3n+1)/2 ≥ 5 -/
+theorem syracuse_ge_five (n : ℕ) (hn : n ≥ 3) (hodd : n % 2 = 1) :
+    (3 * n + 1) / 2 ≥ 5 := by omega
