@@ -1296,3 +1296,15 @@ theorem collatzReaches_enters_cycle (n : ℕ) (hn : n ≥ 1) (hr : collatzReache
     ∃ k, collatzIter k n = 1 ∨ collatzIter k n = 2 ∨ collatzIter k n = 4 := by
   obtain ⟨j, hj⟩ := hr
   exact ⟨j, Or.inl hj⟩
+
+/-! ## CollatzConjectureR ↔ 有界ステップ判定 -/
+
+/-- CollatzConjectureR ↔ ∀ n ≥ 1, ∃ k, collatzReachesBounded k n = true -/
+theorem collatzConjectureR_iff_bounded :
+    CollatzConjectureR ↔ ∀ n : ℕ, n ≥ 1 → ∃ k, collatzReachesBounded k n = true := by
+  constructor
+  · intro h n hn
+    exact collatzReachesBounded_complete (h n hn)
+  · intro h n hn
+    obtain ⟨k, hk⟩ := h n hn
+    exact collatzReaches_of_bounded k n hk

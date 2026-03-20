@@ -295,3 +295,8 @@ theorem schur_one_iff (N : ℕ) :
     have := schur_avoidable_of_le (show N ≤ 1 by omega) schur_avoidable_one_one
     obtain ⟨c, hc⟩ := this; exact hc (h c)
   · intro hN; exact schur_mono (show 2 ≤ N by omega) schur_one_upper
+
+/-- N ≤ 4 → {1,...,N} の2色塗り分けで Schur triple を回避可能 (S(2) > 4 のまとめ) -/
+theorem schur_two_avoidable_le_4 (N : ℕ) (hN : N ≤ 4) :
+    ∃ c : SchurColoring N 2, ¬HasMonoSchurTriple c :=
+  schur_avoidable_of_le hN ⟨schurTwoWitness, schurTwoWitness_avoids⟩

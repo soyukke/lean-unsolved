@@ -852,3 +852,21 @@ theorem prod_card_sumset_prodset_ge {A : Finset ℕ}
   have h1 := card_sumsetFinset_ge_two_mul_sub_one hA
   have h2 := card_prodsetFinset_ge_two_mul_sub_one hA hpos
   nlinarith [h1, h2]
+
+/-- |A+B| ≤ |A| * |B| -/
+theorem card_sumsetFinset2_le_mul {A B : Finset ℕ} :
+    (sumsetFinset2 A B).card ≤ A.card * B.card := by
+  unfold sumsetFinset2
+  have h1 : ((A ×ˢ B).image (fun p => p.1 + p.2)).card ≤ (A ×ˢ B).card :=
+    Finset.card_image_le
+  have h2 : (A ×ˢ B).card = A.card * B.card := Finset.card_product A B
+  omega
+
+/-- |A·B| ≤ |A| * |B| -/
+theorem card_prodsetFinset2_le_mul {A B : Finset ℕ} :
+    (prodsetFinset2 A B).card ≤ A.card * B.card := by
+  unfold prodsetFinset2
+  have h1 : ((A ×ˢ B).image (fun p => p.1 * p.2)).card ≤ (A ×ˢ B).card :=
+    Finset.card_image_le
+  have h2 : (A ×ˢ B).card = A.card * B.card := Finset.card_product A B
+  omega
