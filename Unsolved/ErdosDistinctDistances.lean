@@ -460,3 +460,6 @@ theorem distSq_example_3_4_5 : distSq (1, 2) (4, 6) = 25 := by decide
 /-- distSq (0,0) (a*b, a*c) = a² * (b²+c²) -/
 theorem distSq_scaled_origin (a b c : ℤ) :
     distSq (0, 0) (a * b, a * c) = a ^ 2 * (b ^ 2 + c ^ 2) := by unfold distSq; ring
+
+/-- distSq (a, b) (a, b + 1) = 1（隣接格子点の垂直距離） -/
+theorem distSq_unit_vertical (a b : ℤ) : distSq (a, b) (a, b + 1) = 1 := by unfold distSq; ring

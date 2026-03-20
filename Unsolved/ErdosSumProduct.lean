@@ -950,3 +950,8 @@ theorem card_prodsetFinset2_singletons (a b : ℕ) :
 theorem sumsetFinset2_eq_empty_iff {A B : Finset ℕ} :
     sumsetFinset2 A B = ∅ ↔ A = ∅ ∨ B = ∅ := by
   unfold sumsetFinset2; simp [Finset.image_eq_empty, Finset.product_eq_empty]
+
+/-- prodsetFinset2 A B = ∅ ↔ A = ∅ ∨ B = ∅ -/
+theorem prodsetFinset2_eq_empty_iff {A B : Finset ℕ} :
+    prodsetFinset2 A B = ∅ ↔ A = ∅ ∨ B = ∅ := by
+  unfold prodsetFinset2; simp [Finset.image_eq_empty, Finset.product_eq_empty]

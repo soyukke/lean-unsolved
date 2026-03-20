@@ -495,3 +495,7 @@ theorem twin_prime_product_odd {p : ℕ} (h : IsTwinPrime p) : p * (p + 2) % 2 =
   rw [Nat.mul_mod]
   have : (p + 2) % 2 = 1 := by omega
   rw [hp, this]
+
+/-- IsTwinPrime p → p は 2 ではない -/
+theorem IsTwinPrime.ne_two {p : ℕ} (h : IsTwinPrime p) : p ≠ 2 := by
+  intro h2; subst h2; exact absurd h.2 (by decide)

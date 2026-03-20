@@ -964,3 +964,13 @@ theorem isGoldbach_ne_two {n : ℕ} (h : IsGoldbach n) : n ≠ 2 := by
 theorem isGoldbach_ne_one {n : ℕ} (h : IsGoldbach n) : n ≠ 1 := by
   intro h1; subst h1; obtain ⟨p, q, hp, hq, heq⟩ := h
   have := hp.two_le; have := hq.two_le; omega
+
+/-- IsGoldbach n → n ≠ 0 -/
+theorem isGoldbach_ne_zero {n : ℕ} (h : IsGoldbach n) : n ≠ 0 := by
+  intro h0; subst h0; obtain ⟨p, q, hp, hq, heq⟩ := h
+  have := hp.two_le; omega
+
+/-- IsGoldbach n → n ≠ 3 -/
+theorem isGoldbach_ne_three {n : ℕ} (h : IsGoldbach n) : n ≠ 3 := by
+  intro h3; subst h3; obtain ⟨p, q, hp, hq, heq⟩ := h
+  have := hp.two_le; have := hq.two_le; omega

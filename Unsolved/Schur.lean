@@ -557,3 +557,13 @@ theorem isSumFree_not_both_one_two {A : Finset ℕ} (h : IsSumFree A) :
 theorem isSumFree_no_double {A : Finset ℕ} (h : IsSumFree A) {a : ℕ} (ha : a ∈ A) :
     2 * a ∉ A := by
   intro h2a; exact h a ha a ha (2 * a) h2a (by omega)
+
+/-- IsSumFree A → a ∈ A → a + a ∉ A（isSumFree_no_double の別形） -/
+theorem isSumFree_no_self_sum {A : Finset ℕ} (h : IsSumFree A) {a : ℕ} (ha : a ∈ A) :
+    a + a ∉ A := by
+  intro haa; exact h a ha a ha (a + a) haa rfl
+
+/-- IsSumFree A → ∀ a b ∈ A, a + b ∈ A → False -/
+theorem isSumFree_no_sum_in {A : Finset ℕ} (h : IsSumFree A) {a b : ℕ}
+    (ha : a ∈ A) (hb : b ∈ A) {c : ℕ} (hc : c ∈ A) (heq : a + b = c) : False :=
+  h a ha b hb c hc heq

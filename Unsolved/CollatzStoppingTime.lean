@@ -1408,3 +1408,14 @@ theorem collatzStep_pos (n : ℕ) (hn : n > 0) : collatzStep n > 0 := by
   · rw [collatzStep_odd_eq n hodd]; omega
   · have heven : n % 2 = 0 := by omega
     rw [collatzStep_even_eq_div2 n heven]; omega
+
+/-- collatzIter k n > 0 for n > 0 (collatzStep_pos の帰納的拡張) -/
+theorem collatzIter_pos (k n : ℕ) (hn : n > 0) : collatzIter k n > 0 := by
+  induction k generalizing n with
+  | zero => simpa [collatzIter]
+  | succ k ih => rw [collatzIter_succ]; exact ih (collatzStep n) (collatzStep_pos n hn)
+
+/-- CollatzConjectureR → 全 n ≥ 2 の軌道に n 未満の値が現れる -/
+theorem collatzConjectureR_implies_decreasing (h : CollatzConjectureR) :
+    ∀ n : ℕ, n ≥ 2 → ∃ k, k ≥ 1 ∧ collatzIter k n < n :=
+  fun n hn => collatzReaches_eventually_decreases n hn (h n (by omega))

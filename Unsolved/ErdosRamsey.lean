@@ -715,3 +715,11 @@ theorem hasRamseyProperty_min {n k k' : ℕ}
   rcases Nat.le_total k k' with hle | hle
   · rw [min_eq_left hle]; exact h
   · rw [min_eq_right hle]; exact h'
+
+/-- HasRamseyProperty は max に閉じる -/
+theorem hasRamseyProperty_max {n m k : ℕ}
+    (hn : HasRamseyProperty n k) (hm : HasRamseyProperty m k) :
+    HasRamseyProperty (max n m) k := by
+  rcases Nat.le_total n m with h | h
+  · rw [max_eq_right h]; exact hm
+  · rw [max_eq_left h]; exact hn
