@@ -1342,3 +1342,10 @@ theorem collatzReaches_one_two_three :
 
 /-- 2^k は常に collatzReaches（collatzReaches_pow_two のエイリアス） -/
 theorem collatzReaches_pow2 (k : ℕ) : collatzReaches (2^k) := collatzReaches_pow_two k
+
+/-- collatzReaches n ∧ collatzReaches m → collatzReaches (max n m) -/
+theorem collatzReaches_max {n m : ℕ} (hn : collatzReaches n) (hm : collatzReaches m) :
+    collatzReaches (max n m) := by
+  rcases Nat.le_total n m with h | h
+  · rw [max_eq_right h]; exact hm
+  · rw [max_eq_left h]; exact hn

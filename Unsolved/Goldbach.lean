@@ -796,3 +796,9 @@ theorem isGoldbach_ten_two_ways :
     (∃ p, Nat.Prime p ∧ 10 = p + p) :=
   ⟨⟨3, 7, by norm_num, by norm_num, by norm_num, by omega⟩,
    ⟨5, by norm_num, by norm_num⟩⟩
+
+/-- IsGoldbach 12 の分解: 12=5+7のみ（p≤q前提） -/
+theorem isGoldbach_twelve_unique {p q : ℕ} (hp : Nat.Prime p) (hq : Nat.Prime q)
+    (heq : 12 = p + q) (hle : p ≤ q) : p = 5 ∧ q = 7 := by
+  have := hp.two_le; have := hq.two_le
+  interval_cases p <;> omega

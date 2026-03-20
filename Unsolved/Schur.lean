@@ -478,3 +478,19 @@ theorem isSumFree_subset {A A' : Finset ℕ} (h : IsSumFree A) (hsub : A' ⊆ A)
 
 /-- S(2) = 5 は S(1) = 2 の2倍以上 -/
 theorem schur_two_ge_double_schur_one : (5 : ℕ) ≥ 2 * 2 := by omega
+
+/-! ## Sum-free 集合の具体例 -/
+
+/-- {3, 4, 5} は sum-free -/
+example : IsSumFree {3, 4, 5} := by
+  intro x hx y hy z hz h
+  simp at hx hy hz
+  rcases hx with rfl | rfl | rfl <;> rcases hy with rfl | rfl | rfl <;>
+    rcases hz with rfl | rfl | rfl <;> omega
+
+/-- {1, 3, 5} は sum-free -/
+example : IsSumFree ({1, 3, 5} : Finset ℕ) := by
+  intro x hx y hy z hz h
+  simp at hx hy hz
+  rcases hx with rfl | rfl | rfl <;> rcases hy with rfl | rfl | rfl <;>
+    rcases hz with rfl | rfl | rfl <;> omega
