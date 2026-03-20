@@ -500,3 +500,8 @@ theorem isSumFree_inter {A B : Finset ℕ} (hA : IsSumFree A) (hB : IsSumFree B)
     IsSumFree (A ∩ B) := by
   intro x hx y hy z hz
   exact hA x (Finset.mem_inter.mp hx).1 y (Finset.mem_inter.mp hy).1 z (Finset.mem_inter.mp hz).1
+
+/-- {2,5} は sum-free -/
+example : IsSumFree ({2, 5} : Finset ℕ) := by
+  intro x hx y hy z hz h; simp at hx hy hz
+  rcases hx with rfl | rfl <;> rcases hy with rfl | rfl <;> rcases hz with rfl | rfl <;> omega

@@ -1349,3 +1349,10 @@ theorem collatzReaches_max {n m : ℕ} (hn : collatzReaches n) (hm : collatzReac
   rcases Nat.le_total n m with h | h
   · rw [max_eq_right h]; exact hm
   · rw [max_eq_left h]; exact hn
+
+/-- collatzReaches は min に閉じる -/
+theorem collatzReaches_min {n m : ℕ} (hn : collatzReaches n) (hm : collatzReaches m) :
+    collatzReaches (min n m) := by
+  rcases Nat.le_total n m with h | h
+  · rw [min_eq_left h]; exact hn
+  · rw [min_eq_right h]; exact hm

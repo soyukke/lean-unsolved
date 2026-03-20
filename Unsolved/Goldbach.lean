@@ -807,3 +807,9 @@ theorem isGoldbach_twelve_unique {p q : ℕ} (hp : Nat.Prime p) (hq : Nat.Prime 
 theorem isGoldbach_of_half_prime {n : ℕ} (hn : n ≥ 4) (heven : n % 2 = 0)
     (hp : Nat.Prime (n / 2)) : IsGoldbach n :=
   ⟨n / 2, n / 2, hp, hp, by omega⟩
+
+/-- IsGoldbach 14 の一意性: 14 = p+q, p≤q → p=3∧q=11 ∨ p=7∧q=7 -/
+theorem isGoldbach_fourteen_cases {p q : ℕ} (hp : Nat.Prime p) (hq : Nat.Prime q)
+    (heq : 14 = p + q) (hle : p ≤ q) : (p = 3 ∧ q = 11) ∨ (p = 7 ∧ q = 7) := by
+  have := hp.two_le; have := hq.two_le
+  interval_cases p <;> omega

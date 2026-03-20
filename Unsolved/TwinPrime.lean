@@ -435,3 +435,7 @@ theorem twin_prime_sum_div4 {p : ℕ} (h : IsTwinPrime p) (hp3 : p > 3) :
 /-- (3,5) と (5,7) は連続する双子素数ペア -/
 theorem consecutive_twin_primes_3_5 : IsTwinPrime 3 ∧ IsTwinPrime 5 :=
   ⟨⟨by norm_num, by norm_num⟩, ⟨by norm_num, by norm_num⟩⟩
+
+/-- (5,7,11) は素数三つ組（ギャップ2,4） -/
+theorem prime_triple_5_7_11 : Nat.Prime 5 ∧ Nat.Prime 7 ∧ Nat.Prime 11 := by
+  exact ⟨by norm_num, by norm_num, by norm_num⟩
