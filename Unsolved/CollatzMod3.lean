@@ -365,3 +365,7 @@ theorem three_mul_add_one_gt_add_two (n : ℕ) (hn : n ≥ 1) : 3 * n + 1 > n + 
 
 /-- (3n+1)² = 9n²+6n+1 -/
 theorem three_mul_add_one_sq (n : ℕ) : (3 * n + 1) ^ 2 = 9 * n ^ 2 + 6 * n + 1 := by ring
+
+/-- 奇数 n に対して (3n+1) mod 4 ∈ {0, 2}（偶数） -/
+theorem three_mul_add_one_mod4_even (n : ℕ) (hodd : n % 2 = 1) :
+    (3 * n + 1) % 4 = 0 ∨ (3 * n + 1) % 4 = 2 := by omega

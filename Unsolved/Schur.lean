@@ -510,3 +510,7 @@ example : IsSumFree ({2, 5} : Finset ℕ) := by
 example : IsSumFree ({4, 5, 6} : Finset ℕ) := by
   intro x hx y hy z hz h; simp at hx hy hz
   rcases hx with rfl | rfl | rfl <;> rcases hy with rfl | rfl | rfl <;> rcases hz with rfl | rfl | rfl <;> omega
+
+/-- {1,2} は sum-free ではない（1+1=2） -/
+theorem not_isSumFree_12 : ¬IsSumFree ({1, 2} : Finset ℕ) := by
+  intro h; exact h 1 (by simp) 1 (by simp) 2 (by simp) rfl

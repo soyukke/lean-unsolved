@@ -904,3 +904,11 @@ theorem sum_card_ge_improved {A : Finset ℕ} (hA : A.Nonempty) (hpos : ∀ a �
   have h1 := card_sumsetFinset_ge_two_mul_sub_one hA
   have h2 := card_prodsetFinset_ge_two_mul_sub_one hA hpos
   omega
+
+/-- |A + B| ≥ 1 for nonempty A, B -/
+theorem card_sumsetFinset2_pos {A B : Finset ℕ} (hA : A.Nonempty) (hB : B.Nonempty) :
+    (sumsetFinset2 A B).card ≥ 1 := by
+  obtain ⟨a, ha⟩ := hA; obtain ⟨b, hb⟩ := hB
+  have : a + b ∈ sumsetFinset2 A B := by
+    rw [mem_sumsetFinset2]; exact ⟨a, ha, b, hb, rfl⟩
+  exact Finset.card_pos.mpr ⟨a + b, this⟩

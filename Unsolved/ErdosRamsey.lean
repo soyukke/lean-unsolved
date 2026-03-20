@@ -701,3 +701,6 @@ theorem not_hasRamseyProperty_two_three : ¬HasRamseyProperty 2 3 :=
 
 /-- R(3) > R(2) > R(1): ラムゼー数は k に関して狭義単調（k=1,2,3） -/
 theorem ramsey_numbers_strict_increasing : (1 : ℕ) < 2 ∧ (2 : ℕ) < 6 := ⟨by omega, by omega⟩
+
+/-- HasRamseyProperty 0 0 は成立（空クリーク） -/
+theorem hasRamseyProperty_zero_zero : HasRamseyProperty 0 0 := hasRamseyProperty_zero 0
