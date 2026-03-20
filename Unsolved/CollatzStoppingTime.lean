@@ -1419,3 +1419,35 @@ theorem collatzIter_pos (k n : ℕ) (hn : n > 0) : collatzIter k n > 0 := by
 theorem collatzConjectureR_implies_decreasing (h : CollatzConjectureR) :
     ∀ n : ℕ, n ≥ 2 → ∃ k, k ≥ 1 ∧ collatzIter k n < n :=
   fun n hn => collatzReaches_eventually_decreases n hn (h n (by omega))
+
+/-! ## 軌道減少性 → コラッツ予想 -/
+
+/-- 軌道減少性 → コラッツ予想:
+    全 n ≥ 2 で ∃ k ≥ 1, collatzIter k n < n ならば全 n ≥ 1 が1に到達 -/
+theorem collatzConjectureR_of_eventually_decreases
+    (h : ∀ n : ℕ, n ≥ 2 → ∃ k, k ≥ 1 ∧ collatzIter k n < n) :
+    CollatzConjectureR := by
+  unfold CollatzConjectureR
+  intro n
+  induction n using Nat.strongRecOn with
+  | ind n ih =>
+    intro hn
+    by_cases h1 : n = 1
+    · rw [h1]; exact collatzReaches_one
+    · -- n ≥ 2
+      obtain ⟨k, hk1, hklt⟩ := h n (by omega)
+      -- collatzIter k n < n かつ collatzIter k n > 0（collatzIter_pos）
+      have hpos : collatzIter k n > 0 := collatzIter_pos k n (by omega)
+      -- 帰納法の仮定で collatzReaches (collatzIter k n)
+      have hr := ih (collatzIter k n) hklt (by omega)
+      -- collatzReaches (collatzIter k n) = ∃ j, collatzIter j (collatzIter k n) = 1
+      obtain ⟨j, hj⟩ := hr
+      -- collatzIter (k + j) n = collatzIter j (collatzIter k n) = 1
+      exact ⟨k + j, by rw [collatzIter_add' k j n, hj]⟩
+
+/-! ## コラッツ予想 ↔ 軌道減少性 -/
+
+/-- コラッツ予想 ↔ 軌道減少性 -/
+theorem collatzConjectureR_iff_eventually_decreases :
+    CollatzConjectureR ↔ (∀ n : ℕ, n ≥ 2 → ∃ k, k ≥ 1 ∧ collatzIter k n < n) :=
+  ⟨collatzConjectureR_implies_decreasing, collatzConjectureR_of_eventually_decreases⟩
