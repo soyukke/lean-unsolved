@@ -912,3 +912,11 @@ theorem card_sumsetFinset2_pos {A B : Finset ℕ} (hA : A.Nonempty) (hB : B.None
   have : a + b ∈ sumsetFinset2 A B := by
     rw [mem_sumsetFinset2]; exact ⟨a, ha, b, hb, rfl⟩
   exact Finset.card_pos.mpr ⟨a + b, this⟩
+
+/-- |A + B| ≥ max(|A|, |B|) -/
+theorem card_sumsetFinset2_ge_max {A B : Finset ℕ} (hA : A.Nonempty) (hB : B.Nonempty) :
+    (sumsetFinset2 A B).card ≥ max A.card B.card := by
+  have h1 := card_sumsetFinset2_ge hA hB
+  have h2 : A.card ≥ 1 := Finset.Nonempty.card_pos hA
+  have h3 : B.card ≥ 1 := Finset.Nonempty.card_pos hB
+  omega

@@ -829,3 +829,8 @@ theorem isGoldbach_eighteen_cases {p q : ℕ} (hp : Nat.Prime p) (hq : Nat.Prime
 theorem isGoldbach_twenty_cases {p q : ℕ} (hp : Nat.Prime p) (hq : Nat.Prime q)
     (heq : 20 = p + q) (hle : p ≤ q) : (p = 3 ∧ q = 17) ∨ (p = 7 ∧ q = 13) := by
   have := hp.two_le; have := hq.two_le; interval_cases p <;> omega
+
+/-- 22のゴールドバッハ分解: 3+19, 5+17, 11+11 -/
+theorem isGoldbach_twentytwo_cases {p q : ℕ} (hp : Nat.Prime p) (hq : Nat.Prime q)
+    (heq : 22 = p + q) (hle : p ≤ q) : (p = 3 ∧ q = 19) ∨ (p = 5 ∧ q = 17) ∨ (p = 11 ∧ q = 11) := by
+  have := hp.two_le; have := hq.two_le; interval_cases p <;> omega

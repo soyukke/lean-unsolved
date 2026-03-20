@@ -1360,3 +1360,7 @@ theorem collatzReaches_min {n m : ℕ} (hn : collatzReaches n) (hm : collatzReac
 /-- collatzReaches は定数関数ではない: collatzReaches 1 ∧ ¬collatzReaches 0 -/
 theorem collatzReaches_not_constant : collatzReaches 1 ∧ ¬collatzReaches 0 :=
   ⟨collatzReaches_one, not_collatzReaches_zero⟩
+
+/-- 奇数 n ≥ 1 → (3n+1)/2 + n = (5n+1)/2 -/
+theorem syracuse_plus_n (n : ℕ) (hn : n ≥ 1) (hodd : n % 2 = 1) :
+    (3 * n + 1) / 2 + n = (5 * n + 1) / 2 := by omega
