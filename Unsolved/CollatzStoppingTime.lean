@@ -1451,3 +1451,19 @@ theorem collatzConjectureR_of_eventually_decreases
 theorem collatzConjectureR_iff_eventually_decreases :
     CollatzConjectureR ↔ (∀ n : ℕ, n ≥ 2 → ∃ k, k ≥ 1 ∧ collatzIter k n < n) :=
   ⟨collatzConjectureR_implies_decreasing, collatzConjectureR_of_eventually_decreases⟩
+
+/-- collatzReaches n ならば任意の j ステップ後の collatzIter j n も 1 に到達する。
+    軌道上の全ての後続点が到達可能であることを示す。 -/
+theorem collatzReaches_collatzIter {n : ℕ} (hr : collatzReaches n) (j : ℕ) :
+    collatzReaches (collatzIter j n) := by
+  obtain ⟨k, hk⟩ := hr
+  by_cases hjk : j ≤ k
+  · exact ⟨k - j, by
+      have h := collatzIter_add' j (k - j) n
+      rw [Nat.add_sub_cancel' hjk] at h; rw [← h, hk]⟩
+  · push_neg at hjk
+    have hle : k ≤ j := by omega
+    have h := collatzIter_add' k (j - k) n
+    rw [Nat.add_sub_cancel' hle] at h
+    rw [← h, hk]
+    exact collatzReaches_one

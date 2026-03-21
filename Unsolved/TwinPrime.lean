@@ -499,3 +499,7 @@ theorem twin_prime_product_odd {p : ℕ} (h : IsTwinPrime p) : p * (p + 2) % 2 =
 /-- IsTwinPrime p → p は 2 ではない -/
 theorem IsTwinPrime.ne_two {p : ℕ} (h : IsTwinPrime p) : p ≠ 2 := by
   intro h2; subst h2; exact absurd h.2 (by decide)
+
+/-- 双子素数ペア (p, p+2) の和は p+1 の2倍に等しい -/
+theorem IsTwinPrime.sum_pair {p : ℕ} (_h : IsTwinPrime p) : p + (p + 2) = 2 * (p + 1) := by
+  omega

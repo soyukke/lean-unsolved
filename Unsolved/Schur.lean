@@ -567,3 +567,8 @@ theorem isSumFree_no_self_sum {A : Finset ℕ} (h : IsSumFree A) {a : ℕ} (ha :
 theorem isSumFree_no_sum_in {A : Finset ℕ} (h : IsSumFree A) {a b : ℕ}
     (ha : a ∈ A) (hb : b ∈ A) {c : ℕ} (hc : c ∈ A) (heq : a + b = c) : False :=
   h a ha b hb c hc heq
+
+/-- IsSumFree A → A.erase x も sum-free（要素削除は sum-free 性を保存） -/
+theorem isSumFree_erase {A : Finset ℕ} (h : IsSumFree A) (x : ℕ) :
+    IsSumFree (A.erase x) :=
+  isSumFree_subset h (Finset.erase_subset x A)

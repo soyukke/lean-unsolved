@@ -955,3 +955,8 @@ theorem sumsetFinset2_eq_empty_iff {A B : Finset ℕ} :
 theorem prodsetFinset2_eq_empty_iff {A B : Finset ℕ} :
     prodsetFinset2 A B = ∅ ↔ A = ∅ ∨ B = ∅ := by
   unfold prodsetFinset2; simp [Finset.image_eq_empty, Finset.product_eq_empty]
+
+/-- 非空集合の sumset は少なくとも1要素を持つ -/
+theorem card_sumsetFinset_pos {A : Finset ℕ} (hA : A.Nonempty) :
+    (sumsetFinset A).card ≥ 1 :=
+  Finset.Nonempty.card_pos (sumsetFinset_nonempty hA)

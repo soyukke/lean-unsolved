@@ -974,3 +974,11 @@ theorem isGoldbach_ne_zero {n : ℕ} (h : IsGoldbach n) : n ≠ 0 := by
 theorem isGoldbach_ne_three {n : ℕ} (h : IsGoldbach n) : n ≠ 3 := by
   intro h3; subst h3; obtain ⟨p, q, hp, hq, heq⟩ := h
   have := hp.two_le; have := hq.two_le; omega
+
+/-- IsGoldbach n → n ≥ 4（0,1,2,3 はいずれも2つの素数の和で表せない） -/
+theorem isGoldbach_ge_four {n : ℕ} (h : IsGoldbach n) : n ≥ 4 := by
+  have h0 := isGoldbach_ne_zero h
+  have h1 := isGoldbach_ne_one h
+  have h2 := isGoldbach_ne_two h
+  have h3 := isGoldbach_ne_three h
+  omega
