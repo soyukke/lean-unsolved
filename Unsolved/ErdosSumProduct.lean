@@ -970,3 +970,11 @@ theorem card_sumsetFinset2_ge_left {A B : Finset ℕ} (hA : A.Nonempty) (hB : B.
     (sumsetFinset2 A B).card ≥ A.card := by
   have := card_sumsetFinset2_ge hA hB
   have := Finset.Nonempty.card_pos hB; omega
+
+/-- |A · B| ≥ |A| when B is nonempty and positive -/
+theorem card_prodsetFinset2_ge_left {A B : Finset ℕ}
+    (hA : A.Nonempty) (hB : B.Nonempty)
+    (hposA : ∀ a ∈ A, a > 0) (hposB : ∀ b ∈ B, b > 0) :
+    (prodsetFinset2 A B).card ≥ A.card := by
+  have := card_prodsetFinset2_ge hA hB hposA hposB
+  have := Finset.Nonempty.card_pos hB; omega

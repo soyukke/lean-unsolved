@@ -513,3 +513,9 @@ theorem twin_prime_sq_sub_one_div24 {p : ℕ} (h : IsTwinPrime p) (hp3 : p > 3) 
     24 ∣ (p ^ 2 - 1) := by
   have h24 := twin_prime_sq_mod24 h hp3
   exact ⟨(p ^ 2 - 1) / 24, by omega⟩
+
+/-- 双子素数は3の倍数を挟む: p > 3 → 3 | (p+1) -/
+theorem twin_prime_middle_div3 {p : ℕ} (h : IsTwinPrime p) (hp3 : p > 3) :
+    3 ∣ (p + 1) := by
+  obtain ⟨k, hk⟩ := h.middle_div6 hp3
+  exact ⟨2 * k, by omega⟩

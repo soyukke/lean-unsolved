@@ -1490,3 +1490,6 @@ theorem collatzReaches_iff_enters_cycle (n : ℕ) (hn : n ≥ 1) :
 /-- 奇数 n ≥ 1 に対して (3n+1) / 2 + (3n+1) / 2 = 3n+1 (偶数なので) -/
 theorem syracuse_double (n : ℕ) (hn : n ≥ 1) (hodd : n % 2 = 1) :
     (3 * n + 1) / 2 + (3 * n + 1) / 2 = 3 * n + 1 := by omega
+
+/-- collatzStep (collatzStep 1) = 2（1→4→2） -/
+theorem collatzStep_step_one : collatzStep (collatzStep 1) = 2 := by decide

@@ -1015,3 +1015,9 @@ theorem isGoldbach_fortyfour_cases {p q : ℕ} (hp : Nat.Prime p) (hq : Nat.Prim
   subst hq_eq
   interval_cases p <;> first | omega | (exfalso; revert hp; decide) |
     (exfalso; revert hq; decide)
+
+/-- IsGoldbach 46 の分解 -/
+theorem isGoldbach_fortysix_cases {p q : ℕ} (hp : Nat.Prime p) (hq : Nat.Prime q)
+    (heq : 46 = p + q) (hle : p ≤ q) :
+    (p = 3 ∧ q = 43) ∨ (p = 5 ∧ q = 41) ∨ (p = 17 ∧ q = 29) ∨ (p = 23 ∧ q = 23) := by
+  have := hp.two_le; have := hq.two_le; interval_cases p <;> omega
