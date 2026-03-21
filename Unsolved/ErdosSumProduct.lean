@@ -964,3 +964,9 @@ theorem card_sumsetFinset_pos {A : Finset ℕ} (hA : A.Nonempty) :
 /-- sumsetFinset2 {a} {b} = {a+b} -/
 theorem sumsetFinset2_singletons (a b : ℕ) : sumsetFinset2 {a} {b} = {a + b} := by
   ext x; simp [sumsetFinset2, mem_sumsetFinset2, Finset.mem_singleton]
+
+/-- |A + B| ≥ |A| when B is nonempty -/
+theorem card_sumsetFinset2_ge_left {A B : Finset ℕ} (hA : A.Nonempty) (hB : B.Nonempty) :
+    (sumsetFinset2 A B).card ≥ A.card := by
+  have := card_sumsetFinset2_ge hA hB
+  have := Finset.Nonempty.card_pos hB; omega

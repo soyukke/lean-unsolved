@@ -507,3 +507,9 @@ theorem IsTwinPrime.sum_pair {p : ℕ} (_h : IsTwinPrime p) : p + (p + 2) = 2 * 
 /-- IsTwinPrime p → p + 2 > 2 -/
 theorem IsTwinPrime.plus_two_gt_two {p : ℕ} (h : IsTwinPrime p) : p + 2 > 2 := by
   have := h.three_le; omega
+
+/-- 双子素数 p > 3 に対して p² - 1 は 24 の倍数 -/
+theorem twin_prime_sq_sub_one_div24 {p : ℕ} (h : IsTwinPrime p) (hp3 : p > 3) :
+    24 ∣ (p ^ 2 - 1) := by
+  have h24 := twin_prime_sq_mod24 h hp3
+  exact ⟨(p ^ 2 - 1) / 24, by omega⟩

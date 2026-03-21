@@ -992,8 +992,26 @@ theorem isGoldbach_sum_ge {n m : ℕ} (hn : IsGoldbach n) (hm : IsGoldbach m) :
     n + m ≥ 8 := by
   have := isGoldbach_ge_four hn; have := isGoldbach_ge_four hm; omega
 
+set_option maxHeartbeats 800000 in
 /-- IsGoldbach 42 の分解 -/
 theorem isGoldbach_fortytwo_cases {p q : ℕ} (hp : Nat.Prime p) (hq : Nat.Prime q)
     (heq : 42 = p + q) (hle : p ≤ q) :
     (p = 5 ∧ q = 37) ∨ (p = 11 ∧ q = 31) ∨ (p = 13 ∧ q = 29) ∨ (p = 19 ∧ q = 23) := by
-  have := hp.two_le; have := hq.two_le; interval_cases p <;> omega
+  have h1 := hp.two_le; have h2 := hq.two_le
+  have h3 : p ≤ 40 := by omega
+  have hq_eq : q = 42 - p := by omega
+  subst hq_eq
+  interval_cases p <;> first | omega | (exfalso; revert hp; decide) |
+    (exfalso; revert hq; decide)
+
+set_option maxHeartbeats 800000 in
+/-- IsGoldbach 44 の分解 -/
+theorem isGoldbach_fortyfour_cases {p q : ℕ} (hp : Nat.Prime p) (hq : Nat.Prime q)
+    (heq : 44 = p + q) (hle : p ≤ q) :
+    (p = 3 ∧ q = 41) ∨ (p = 7 ∧ q = 37) ∨ (p = 13 ∧ q = 31) := by
+  have h1 := hp.two_le; have h2 := hq.two_le
+  have h3 : p ≤ 42 := by omega
+  have hq_eq : q = 44 - p := by omega
+  subst hq_eq
+  interval_cases p <;> first | omega | (exfalso; revert hp; decide) |
+    (exfalso; revert hq; decide)

@@ -1486,3 +1486,7 @@ theorem collatzReaches_iff_enters_cycle (n : ℕ) (hn : n ≥ 1) :
       exact ⟨j + 1, by rw [collatzIter_add' j 1 n, h]; decide⟩
     · -- collatzIter j n = 4 → collatzIter 2 4 = 1
       exact ⟨j + 2, by rw [collatzIter_add' j 2 n, h]; decide⟩
+
+/-- 奇数 n ≥ 1 に対して (3n+1) / 2 + (3n+1) / 2 = 3n+1 (偶数なので) -/
+theorem syracuse_double (n : ℕ) (hn : n ≥ 1) (hodd : n % 2 = 1) :
+    (3 * n + 1) / 2 + (3 * n + 1) / 2 = 3 * n + 1 := by omega

@@ -595,3 +595,7 @@ theorem isSumFree_singleton_iff (a : ℕ) : IsSumFree ({a} : Finset ℕ) ↔ a �
 theorem isSumFree_16_to_20 : IsSumFree ({16, 17, 18, 19, 20} : Finset ℕ) := by
   intro x hx y hy z hz h; simp at hx hy hz
   rcases hx with rfl|rfl|rfl|rfl|rfl <;> rcases hy with rfl|rfl|rfl|rfl|rfl <;> rcases hz with rfl|rfl|rfl|rfl|rfl <;> omega
+
+/-- not_isSumFree の具体例: {1,2,3} は sum-free でない（1+2=3） -/
+theorem not_isSumFree_123 : ¬IsSumFree ({1, 2, 3} : Finset ℕ) := by
+  intro h; exact h 1 (by simp) 2 (by simp) 3 (by simp) rfl
