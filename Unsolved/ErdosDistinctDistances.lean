@@ -463,3 +463,7 @@ theorem distSq_scaled_origin (a b c : ℤ) :
 
 /-- distSq (a, b) (a, b + 1) = 1（隣接格子点の垂直距離） -/
 theorem distSq_unit_vertical (a b : ℤ) : distSq (a, b) (a, b + 1) = 1 := by unfold distSq; ring
+
+/-- distSq は非退化: distSq p q = 0 → p = q（distSq_eq_zero_iff の mp） -/
+theorem eq_of_distSq_zero {p q : Point} (h : distSq p q = 0) : p = q :=
+  (distSq_eq_zero_iff p q).mp h

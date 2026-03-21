@@ -590,3 +590,8 @@ theorem isSumFree_singleton_iff (a : ℕ) : IsSumFree ({a} : Finset ℕ) ↔ a �
     subst ha0
     exact zero_not_mem_of_isSumFree h (Finset.mem_singleton.mpr rfl)
   · intro ha; exact isSumFree_singleton a ha
+
+/-- {16, 17, 18, 19, 20} は sum-free -/
+theorem isSumFree_16_to_20 : IsSumFree ({16, 17, 18, 19, 20} : Finset ℕ) := by
+  intro x hx y hy z hz h; simp at hx hy hz
+  rcases hx with rfl|rfl|rfl|rfl|rfl <;> rcases hy with rfl|rfl|rfl|rfl|rfl <;> rcases hz with rfl|rfl|rfl|rfl|rfl <;> omega

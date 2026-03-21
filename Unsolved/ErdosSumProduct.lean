@@ -960,3 +960,7 @@ theorem prodsetFinset2_eq_empty_iff {A B : Finset ℕ} :
 theorem card_sumsetFinset_pos {A : Finset ℕ} (hA : A.Nonempty) :
     (sumsetFinset A).card ≥ 1 :=
   Finset.Nonempty.card_pos (sumsetFinset_nonempty hA)
+
+/-- sumsetFinset2 {a} {b} = {a+b} -/
+theorem sumsetFinset2_singletons (a b : ℕ) : sumsetFinset2 {a} {b} = {a + b} := by
+  ext x; simp [sumsetFinset2, mem_sumsetFinset2, Finset.mem_singleton]

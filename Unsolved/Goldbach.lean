@@ -991,3 +991,9 @@ theorem isGoldbach_half_pos {n : ℕ} (h : IsGoldbach n) (heven : n % 2 = 0) : n
 theorem isGoldbach_sum_ge {n m : ℕ} (hn : IsGoldbach n) (hm : IsGoldbach m) :
     n + m ≥ 8 := by
   have := isGoldbach_ge_four hn; have := isGoldbach_ge_four hm; omega
+
+/-- IsGoldbach 42 の分解 -/
+theorem isGoldbach_fortytwo_cases {p q : ℕ} (hp : Nat.Prime p) (hq : Nat.Prime q)
+    (heq : 42 = p + q) (hle : p ≤ q) :
+    (p = 5 ∧ q = 37) ∨ (p = 11 ∧ q = 31) ∨ (p = 13 ∧ q = 29) ∨ (p = 19 ∧ q = 23) := by
+  have := hp.two_le; have := hq.two_le; interval_cases p <;> omega
