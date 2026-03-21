@@ -1465,5 +1465,24 @@ theorem collatzReaches_collatzIter {n : ℕ} (hr : collatzReaches n) (j : ℕ) :
     have hle : k ≤ j := by omega
     have h := collatzIter_add' k (j - k) n
     rw [Nat.add_sub_cancel' hle] at h
-    rw [← h, hk]
-    exact collatzReaches_one
+    rw [h, hk]
+    rcases collatzIter_one_in_cycle (j - k) with h1 | h1 | h1
+    · rw [h1]; exact collatzReaches_one
+    · rw [h1]; exact collatzReaches_two
+    · rw [h1]; exact collatzReaches_four
+
+/-- collatzReaches n ↔ ∃ j, collatzIter j n ∈ ({1, 2, 4} : Finset ℕ)
+    （サイクルに入ることと同値） -/
+theorem collatzReaches_iff_enters_cycle (n : ℕ) (hn : n ≥ 1) :
+    collatzReaches n ↔ ∃ j, collatzIter j n = 1 ∨ collatzIter j n = 2 ∨ collatzIter j n = 4 := by
+  constructor
+  · intro hr
+    obtain ⟨k, hk⟩ := hr
+    exact ⟨k, Or.inl hk⟩
+  · intro ⟨j, hj⟩
+    rcases hj with h | h | h
+    · exact ⟨j, h⟩
+    · -- collatzIter j n = 2 → collatzIter 1 2 = 1
+      exact ⟨j + 1, by rw [collatzIter_add' j 1 n, h]; decide⟩
+    · -- collatzIter j n = 4 → collatzIter 2 4 = 1
+      exact ⟨j + 2, by rw [collatzIter_add' j 2 n, h]; decide⟩

@@ -572,3 +572,11 @@ theorem isSumFree_no_sum_in {A : Finset ℕ} (h : IsSumFree A) {a b : ℕ}
 theorem isSumFree_erase {A : Finset ℕ} (h : IsSumFree A) (x : ℕ) :
     IsSumFree (A.erase x) :=
   isSumFree_subset h (Finset.erase_subset x A)
+
+/-- IsSumFree A → A の全要素は 1 以上 -/
+theorem isSumFree_all_pos {A : Finset ℕ} (h : IsSumFree A) : ∀ a ∈ A, a ≥ 1 := by
+  intro a ha
+  by_contra hle; push_neg at hle
+  have : a = 0 := by omega
+  subst this
+  exact zero_not_mem_of_isSumFree h ha
