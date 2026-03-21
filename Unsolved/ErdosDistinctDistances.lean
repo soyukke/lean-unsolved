@@ -467,3 +467,6 @@ theorem distSq_unit_vertical (a b : ℤ) : distSq (a, b) (a, b + 1) = 1 := by un
 /-- distSq は非退化: distSq p q = 0 → p = q（distSq_eq_zero_iff の mp） -/
 theorem eq_of_distSq_zero {p q : Point} (h : distSq p q = 0) : p = q :=
   (distSq_eq_zero_iff p q).mp h
+
+/-- distSq (a, b) (a + h, b) = h²（水平移動の距離） -/
+theorem distSq_horizontal (a b h : ℤ) : distSq (a, b) (a + h, b) = h ^ 2 := by unfold distSq; ring

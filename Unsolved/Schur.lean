@@ -603,3 +603,7 @@ theorem not_isSumFree_123 : ¬IsSumFree ({1, 2, 3} : Finset ℕ) := by
 /-- {1, 4, 5} は sum-free ではない（1+4=5） -/
 theorem not_isSumFree_145 : ¬IsSumFree ({1, 4, 5} : Finset ℕ) := by
   intro h; exact h 1 (by simp) 4 (by simp) 5 (by simp) rfl
+
+/-- {2, 3, 4} は sum-free ではない（2+2=4） -/
+theorem not_isSumFree_234 : ¬IsSumFree ({2, 3, 4} : Finset ℕ) := by
+  intro h; exact h 2 (by simp) 2 (by simp) 4 (by simp) rfl

@@ -1021,3 +1021,9 @@ theorem isGoldbach_fortysix_cases {p q : ℕ} (hp : Nat.Prime p) (hq : Nat.Prime
     (heq : 46 = p + q) (hle : p ≤ q) :
     (p = 3 ∧ q = 43) ∨ (p = 5 ∧ q = 41) ∨ (p = 17 ∧ q = 29) ∨ (p = 23 ∧ q = 23) := by
   have := hp.two_le; have := hq.two_le; interval_cases p <;> omega
+
+/-- IsGoldbach 48 の分解: (5,43), (7,41), (11,37), (17,31), (19,29) -/
+theorem isGoldbach_fortyeight_cases {p q : ℕ} (hp : Nat.Prime p) (hq : Nat.Prime q)
+    (heq : 48 = p + q) (hle : p ≤ q) :
+    (p = 5 ∧ q = 43) ∨ (p = 7 ∧ q = 41) ∨ (p = 11 ∧ q = 37) ∨ (p = 17 ∧ q = 31) ∨ (p = 19 ∧ q = 29) := by
+  have := hp.two_le; have := hq.two_le; interval_cases p <;> omega

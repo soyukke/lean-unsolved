@@ -519,3 +519,7 @@ theorem twin_prime_middle_div3 {p : ℕ} (h : IsTwinPrime p) (hp3 : p > 3) :
     3 ∣ (p + 1) := by
   obtain ⟨k, hk⟩ := h.middle_div6 hp3
   exact ⟨2 * k, by omega⟩
+
+/-- 双子素数 p > 3 に対して 2 | (p+1)（既存 succ_even の別形） -/
+theorem twin_prime_middle_even {p : ℕ} (h : IsTwinPrime p) (hp3 : p > 3) : 2 ∣ (p + 1) := by
+  obtain ⟨k, hk⟩ := h.middle_div6 hp3; exact ⟨3 * k, by omega⟩

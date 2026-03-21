@@ -386,3 +386,7 @@ theorem three_odd_add_one (n : ℕ) : 3 * (2 * n + 1) + 1 = 6 * n + 4 := by ring
 /-- (3n+1)^2 > 9n^2（n ≥ 1） -/
 theorem three_mul_add_one_sq_gt (n : ℕ) (hn : n ≥ 1) : (3 * n + 1) ^ 2 > 9 * n ^ 2 := by
   nlinarith [sq_nonneg n]
+
+/-- 奇数 n に対して 3n+1 ≡ 4 (mod 6) の系: 6 ∤ (3n+1) -/
+theorem six_not_dvd_three_mul_add_one (n : ℕ) (hodd : n % 2 = 1) : ¬(6 ∣ (3 * n + 1)) := by
+  intro ⟨k, hk⟩; have := three_mul_add_one_mod6 n hodd; omega
