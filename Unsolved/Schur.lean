@@ -580,3 +580,13 @@ theorem isSumFree_all_pos {A : Finset ℕ} (h : IsSumFree A) : ∀ a ∈ A, a �
   have : a = 0 := by omega
   subst this
   exact zero_not_mem_of_isSumFree h ha
+
+/-- IsSumFree {a} ↔ a ≥ 1 -/
+theorem isSumFree_singleton_iff (a : ℕ) : IsSumFree ({a} : Finset ℕ) ↔ a ≥ 1 := by
+  constructor
+  · intro h
+    by_contra hle; push_neg at hle
+    have ha0 : a = 0 := by omega
+    subst ha0
+    exact zero_not_mem_of_isSumFree h (Finset.mem_singleton.mpr rfl)
+  · intro ha; exact isSumFree_singleton a ha

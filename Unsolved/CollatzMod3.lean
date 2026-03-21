@@ -379,3 +379,6 @@ theorem syracuse_ne_zero (n : ℕ) (hn : n ≥ 1) (hodd : n % 2 = 1) : (3 * n + 
 
 /-- 3*(2n)+1 = 6n+1（偶数の3倍+1） -/
 theorem three_mul_double_add_one (n : ℕ) : 3 * (2 * n) + 1 = 6 * n + 1 := by ring
+
+/-- 3(2n+1)+1 = 6n+4（奇数の3倍+1の展開） -/
+theorem three_odd_add_one (n : ℕ) : 3 * (2 * n + 1) + 1 = 6 * n + 4 := by ring

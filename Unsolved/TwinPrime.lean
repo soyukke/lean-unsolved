@@ -503,3 +503,7 @@ theorem IsTwinPrime.ne_two {p : ℕ} (h : IsTwinPrime p) : p ≠ 2 := by
 /-- 双子素数ペア (p, p+2) の和は p+1 の2倍に等しい -/
 theorem IsTwinPrime.sum_pair {p : ℕ} (_h : IsTwinPrime p) : p + (p + 2) = 2 * (p + 1) := by
   omega
+
+/-- IsTwinPrime p → p + 2 > 2 -/
+theorem IsTwinPrime.plus_two_gt_two {p : ℕ} (h : IsTwinPrime p) : p + 2 > 2 := by
+  have := h.three_le; omega

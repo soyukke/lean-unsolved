@@ -735,3 +735,11 @@ theorem family_length_pos_of_containsSunflower {α : Type*} [DecidableEq α]
   match family with
   | [] => exact absurd rfl hne
   | _ :: _ => simp
+
+/-- 3-均一族の具体的ひまわり: {1,2,3},{4,5,6},{7,8,9} は互いに素なので3-ひまわり -/
+theorem sunflower_three_disjoint :
+    IsSunflower [({1, 2, 3} : Finset ℕ), {4, 5, 6}, {7, 8, 9}] := by
+  exact isSunflower_of_pairwise_disjoint _ (by
+    intro i j hi hj hij
+    simp only [List.length_cons, List.length_nil] at hi hj
+    interval_cases i <;> interval_cases j <;> simp_all <;> decide)

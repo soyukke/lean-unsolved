@@ -986,3 +986,8 @@ theorem isGoldbach_ge_four {n : ℕ} (h : IsGoldbach n) : n ≥ 4 := by
 /-- IsGoldbach n かつ n 偶数 → n/2 は正整数 -/
 theorem isGoldbach_half_pos {n : ℕ} (h : IsGoldbach n) (heven : n % 2 = 0) : n / 2 ≥ 2 := by
   have := isGoldbach_ge_four h; omega
+
+/-- IsGoldbach n ∧ IsGoldbach m → n + m ≥ 8 -/
+theorem isGoldbach_sum_ge {n m : ℕ} (hn : IsGoldbach n) (hm : IsGoldbach m) :
+    n + m ≥ 8 := by
+  have := isGoldbach_ge_four hn; have := isGoldbach_ge_four hm; omega
