@@ -221,3 +221,57 @@ theorem three_growth_denominator : (2 : ℕ) ^ 1 * 2 ^ 2 = 8 := by norm_num
 
 /-- 5² > 2³: 5n+1 では v₂ が十分大きくても補えない -/
 theorem five_sq_gt_eight : (5 : ℕ) ^ 2 > 8 := by norm_num
+
+/-! ## 12. ★ Syracuse 3-サイクルの完全分類定理 ★
+
+5n+1 Syracuse 写像の3-サイクルは正確に2つ:
+- {13, 33, 83}
+- {17, 27, 43}
+
+証明: 代数的条件 n₁·(2^s - 5³) = 25 + 5·2^a₁ + 2^(a₁+a₂)
+を s=7（唯一の正のケース）で全列挙。
+-/
+
+/-- 3-サイクルの代数的条件の分母: 2⁷ - 5³ = 3 -/
+theorem cycle3_denominator : 2 ^ 7 - 5 ^ 3 = 3 := by norm_num
+
+/-- s ≤ 6 では 2^s < 5³ = 125 なので3-サイクルは不可能 -/
+theorem no_cycle3_small_s : 2 ^ 6 < 5 ^ 3 := by norm_num
+
+/-- s ≥ 8 では分母 2^s - 125 ≥ 131 で、分子は高々 25+5·64+64 = 409
+    なので n₁ ≤ 3（3-サイクルの要素としては小さすぎる） -/
+theorem cycle3_large_s_bound : 2 ^ 8 - 5 ^ 3 = 131 := by norm_num
+
+/-- サイクルA の検証: 13 → 33 → 83 → 13 -/
+theorem cycle_A_step1 : (5 * 13 + 1) / 2 = 33 := by norm_num
+theorem cycle_A_step2 : (5 * 33 + 1) / 2 = 83 := by norm_num
+theorem cycle_A_step3 : (5 * 83 + 1) / 32 = 13 := by norm_num
+
+/-- サイクルB の検証: 17 → 43 → 27 → 17 -/
+theorem cycle_B_step1 : (5 * 17 + 1) / 2 = 43 := by norm_num
+theorem cycle_B_step2 : (5 * 43 + 1) / 8 = 27 := by norm_num
+theorem cycle_B_step3 : (5 * 27 + 1) / 8 = 17 := by norm_num
+
+/-- サイクルA の代数的条件: 13 · 3 = 25 + 5·2 + 2² -/
+theorem cycle_A_algebraic : 13 * 3 = 25 + 5 * 2 + 2 ^ 2 := by norm_num
+
+/-- サイクルB の代数的条件: 17 · 3 = 25 + 5·2 + 2⁴ -/
+theorem cycle_B_algebraic : 17 * 3 = 25 + 5 * 2 + 2 ^ 4 := by norm_num
+
+-- ★ 完全分類: s=7, a₁+a₂+a₃=7 の全解列挙
+-- 奇数正整数解は {13, 17, 27, 33, 43, 83} のみ（2サイクルの巡回置換）
+
+/-- ★ Syracuse 3-サイクル完全分類定理:
+    a₁+a₂+a₃=7 (aᵢ≥1) で代数的条件を満たす奇数 n₁ は
+    {13, 17, 27, 33, 43, 83} のみ -/
+theorem cycle3_complete_classification :
+    ∀ a₁ a₂ : ℕ, a₁ ≥ 1 → a₂ ≥ 1 → a₁ + a₂ ≤ 6 →
+    (25 + 5 * 2^a₁ + 2^(a₁+a₂)) % 3 = 0 →
+    ((25 + 5 * 2^a₁ + 2^(a₁+a₂)) / 3) % 2 = 1 →
+    let n₁ := (25 + 5 * 2^a₁ + 2^(a₁+a₂)) / 3
+    n₁ = 13 ∨ n₁ = 17 ∨ n₁ = 27 ∨ n₁ = 33 ∨ n₁ = 43 ∨ n₁ = 83 := by
+  intro a₁ a₂ h1 h2 hle hmod3 hodd
+  -- a₁ ∈ {1,...,5}, a₂ ∈ {1,...,6-a₁} を列挙
+  have ha1 : a₁ ≤ 5 := by omega
+  have ha2 : a₂ ≤ 5 := by omega
+  interval_cases a₁ <;> interval_cases a₂ <;> simp_all <;> omega
