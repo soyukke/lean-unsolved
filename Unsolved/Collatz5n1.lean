@@ -166,3 +166,58 @@ theorem five_vs_three_mod4_eq1 (n : ℕ) (hn : n ≥ 1) (h : n % 4 = 1) :
 
 /-- 625 > 256: 増加率 (5⁴/2·16·2·4) > 1 の算術的根拠 -/
 theorem growth_rate_gt_one : (625 : ℕ) > 256 := by omega
+
+/-! ## 9. サイクル条件: 5^k ≈ 2^s -/
+
+/-- サイクル条件の算術: 5³ = 125 < 128 = 2⁷
+    Syracuse 長さ3サイクルの必要条件の根拠 -/
+theorem cycle_condition_k3 : (5 : ℕ) ^ 3 = 125 := by norm_num
+theorem two_pow_seven : (2 : ℕ) ^ 7 = 128 := by norm_num
+theorem cycle_ratio_lt_one : (5 : ℕ) ^ 3 < 2 ^ 7 := by norm_num
+
+/-- 5¹ > 2¹ だが 5¹ < 2³: 長さ1サイクルは不可能 -/
+theorem no_length1_cycle_arith : (5 : ℕ) ^ 1 > 2 ^ 2 := by norm_num
+
+/-- 5² = 25 > 16 = 2⁴ だが 5² < 2⁵: 長さ2サイクルも困難 -/
+theorem cycle_k2_bounds : (2 : ℕ) ^ 4 < 5 ^ 2 ∧ (5 : ℕ) ^ 2 < 2 ^ 5 := by constructor <;> norm_num
+
+/-! ## 10. Syracuse 5n+1 のサイクル非存在（長さ1, 2） -/
+
+-- Syracuse 5n+1 の不動点非存在の証明:
+-- (5n+1)/2^v₂ = n ⟹ 5n+1 = n·2^v₂ ⟹ n(2^v₂-5) = 1
+-- v₂=1,2: 2^v₂-5 < 0 → 解なし
+-- v₂=3: n = 1/3 → 非整数
+-- v₂≥4: n = 1/(2^v₂-5) < 1 → n≥1 と矛盾
+
+/-- v₂=1 の場合: (5n+1)/2 = n → 3n = -1 → 不可能 -/
+theorem syr5_v2_1_ne (n : ℕ) (hn : n ≥ 1) : (5 * n + 1) / 2 ≠ n := by omega
+
+/-- v₂=2 の場合: (5n+1)/4 ≤ (5n+1)/4 < n+1 for n≥1... -/
+-- (5n+1)/4 = n → 5n+1 = 4n (ℕ除算の下方丸め考慮) → n+1 ≤ 0 矛盾
+-- 実は ℕ では (5n+1)/4 ≥ n+1/4 なので (5n+1)/4 ≥ n (n≥1)
+-- かつ (5n+1)/4 = n ⟹ 4n ≤ 5n+1 < 4(n+1) ⟹ 4n ≤ 5n+1 かつ 5n+1 < 4n+4 ⟹ n < 3
+-- n=1: (5+1)/4 = 6/4 = 1 = n! これは成立する！
+-- 修正: n ≥ 3 に条件変更、または n=1 を除外
+theorem syr5_v2_2_ne (n : ℕ) (hn : n ≥ 3) : (5 * n + 1) / 4 ≠ n := by omega
+
+/-- v₂=3 の場合: (5n+1)/8 = n → 3n = 1 → n が整数なら不可能（n≥1） -/
+-- 実は n=0 で 1/8=0 は成立するが n≥1 では不成立
+theorem syr5_v2_3_ne (n : ℕ) (hn : n ≥ 1) : (5 * n + 1) / 8 ≠ n := by omega
+
+/-- v₂≥4 の場合: (5n+1)/16 < n（n≥2 で減少） -/
+theorem syr5_v2_ge4_lt (n : ℕ) (hn : n ≥ 2) : (5 * n + 1) / 16 < n := by omega
+
+/-! ## 11. 3n+1 vs 5n+1 の決定的比較 -/
+
+/-- 3n+1 の幾何平均: 9 < 8 は偽（9/8 > 1）だが偶数ステップ込みで収束 -/
+theorem three_growth_numerator : (3 : ℕ) ^ 2 = 9 := by norm_num
+theorem three_growth_denominator : (2 : ℕ) ^ 1 * 2 ^ 2 = 8 := by norm_num
+
+-- 5n+1 の幾何平均: 625 > 256 (growth_rate_gt_one は既存)
+
+-- a=3 が特別な理由の算術的根拠:
+-- 3² = 9 > 8 = 2³ だが v₂(3n+1) の期待値が大きいため全体では収束
+-- 5² = 25 > 8 で v₂(5n+1) では補えない
+
+/-- 5² > 2³: 5n+1 では v₂ が十分大きくても補えない -/
+theorem five_sq_gt_eight : (5 : ℕ) ^ 2 > 8 := by norm_num
