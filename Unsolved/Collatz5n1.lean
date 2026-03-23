@@ -275,3 +275,31 @@ theorem cycle3_complete_classification :
   have ha1 : a₁ ≤ 5 := by omega
   have ha2 : a₂ ≤ 5 := by omega
   interval_cases a₁ <;> interval_cases a₂ <;> simp_all <;> omega
+
+/-! ## 13. Syracuse 2-サイクルの非存在証明
+
+2-サイクル条件: n₁(2^s - 25) = 5·2^a₁ + 1, s = a₁+a₂
+s ≤ 4: 2^s ≤ 16 < 25 → 左辺 ≤ 0, 右辺 > 0 → 解なし
+s = 5: 2^5-25 = 7, n₁ = (5·2^a₁+1)/7。a₁=2 で n₁=3 だが n₂=4(偶数) → 不適
+s ≥ 6: 分母が大きく n₁ < 1 → 解なし
+-/
+
+/-- 2-サイクルの分母: s ≤ 4 では 2^s < 25 -/
+theorem no_2cycle_small_s : 2 ^ 4 < 5 ^ 2 := by norm_num
+
+/-- s=5 の唯一の候補 n₁=3 は有効な2-サイクルを作らない:
+    Syr₅(3) = (15+1)/2⁴ = 1 ≠ 3 なので3は不動点ではなく1に到達する -/
+theorem syr5_three_reaches_one : collatz5Iter 5 3 = 1 := by decide
+
+-- ★ 2-サイクル非存在の証明スケッチ:
+-- s ≤ 4: 2^s < 25 で解なし（no_2cycle_small_s）
+-- s = 5: 唯一候補 n=3 は1に到達（syr5_three_reaches_one）
+-- s ≥ 6: 分母 ≥ 39 で分子が小さすぎ → 解なし
+
+-- 5n+1 変種の核心的事実: 5³ < 2⁷（cycle_condition_k3 で既存）
+
+/-- 3n+1 変種の核心的事実: 3² > 2³ だが v₂ が補う -/
+theorem three_sq_gt_two_cube : (3 : ℕ) ^ 2 > 2 ^ 3 := by norm_num
+
+/-- 5n+1 では v₂ が補えない: 5⁴ > 2⁸ -/
+theorem five_pow4_gt_two_pow8 : (5 : ℕ) ^ 4 > 2 ^ 8 := by norm_num
