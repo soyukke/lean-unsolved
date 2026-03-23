@@ -16,3 +16,4 @@ import Unsolved.ErdosRamsey
 import Unsolved.ErdosSunflower
 import Unsolved.ErdosSumProduct
 import Unsolved.Schur
+import Unsolved.Collatz5n1
