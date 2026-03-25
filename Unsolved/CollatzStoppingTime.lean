@@ -1493,3 +1493,20 @@ theorem syracuse_double (n : ℕ) (hn : n ≥ 1) (hodd : n % 2 = 1) :
 
 /-- collatzStep (collatzStep 1) = 2（1→4→2） -/
 theorem collatzStep_step_one : collatzStep (collatzStep 1) = 2 := by decide
+
+/-! ## ★ 新発見: collatzStep(2n+1) = 2·collatzStep(n) + 2
+
+奇数 n に対して collatzStep(2n+1) = 2·collatzStep(n) + 2。
+これはコラッツ軌道の「シフト」関係を意味する重要な構造定理。
+
+証明: n 奇数 → 2n+1 奇数
+  collatzStep(2n+1) = 3(2n+1)+1 = 6n+4
+  2·collatzStep(n)+2 = 2(3n+1)+2 = 6n+4 ✓
+-/
+
+/-- ★ 奇数 n に対して collatzStep(2n+1) = 2·collatzStep(n) + 2 -/
+theorem collatzStep_double_plus_one (n : ℕ) (hodd : n % 2 = 1) :
+    collatzStep (2 * n + 1) = 2 * collatzStep n + 2 := by
+  have h1 : (2 * n + 1) % 2 = 1 := by omega
+  rw [collatzStep_odd_eq (2 * n + 1) h1, collatzStep_odd_eq n hodd]
+  ring
