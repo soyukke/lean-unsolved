@@ -1510,3 +1510,13 @@ theorem collatzStep_double_plus_one (n : ℕ) (hodd : n % 2 = 1) :
   have h1 : (2 * n + 1) % 2 = 1 := by omega
   rw [collatzStep_odd_eq (2 * n + 1) h1, collatzStep_odd_eq n hodd]
   ring
+
+/-- ★ collatzStep(collatzStep(2n+1)) = 3n+2（奇数 n）
+    2ステップで 2n+1 → 6n+4 → 3n+2 -/
+theorem collatzStep_step_odd_double (n : ℕ) (hodd : n % 2 = 1) :
+    collatzStep (collatzStep (2 * n + 1)) = 3 * n + 2 := by
+  rw [collatzStep_double_plus_one n hodd]
+  have heven : (2 * collatzStep n + 2) % 2 = 0 := by omega
+  rw [collatzStep_even_eq_div2 (2 * collatzStep n + 2) heven]
+  rw [collatzStep_odd_eq n hodd]
+  omega
