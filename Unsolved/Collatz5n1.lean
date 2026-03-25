@@ -222,6 +222,28 @@ theorem three_growth_denominator : (2 : ℕ) ^ 1 * 2 ^ 2 = 8 := by norm_num
 /-- 5² > 2³: 5n+1 では v₂ が十分大きくても補えない -/
 theorem five_sq_gt_eight : (5 : ℕ) ^ 2 > 8 := by norm_num
 
+/-! ## ★ 統一シフト関係: collatz5Step(2n+1) = 2·collatz5Step(n) + 4 -/
+
+/-- ★ 5n+1 のシフト関係: step(2n+1) = 2·step(n) + 4 -/
+theorem collatz5Step_double_plus_one (n : ℕ) (hodd : n % 2 = 1) :
+    collatz5Step (2 * n + 1) = 2 * collatz5Step n + 4 := by
+  have h1 : (2 * n + 1) % 2 = 1 := by omega
+  rw [collatz5Step_odd (2 * n + 1) h1, collatz5Step_odd n hodd]
+  ring
+
+/-- 3n+1 との比較: 3n+1 では +2、5n+1 では +4 -/
+-- collatzStep_double_plus_one は CollatzStoppingTime.lean にある（+2 版）
+
+/-- ★ 2ステップ後の帰結: collatz5Step(collatz5Step(2n+1)) = collatz5Step(n) + 2
+    （5n+1 では「追いつけない」+2 のギャップ） -/
+theorem collatz5_two_steps_gap (n : ℕ) (hodd : n % 2 = 1) :
+    collatz5Step (collatz5Step (2 * n + 1)) = collatz5Step n + 2 := by
+  rw [collatz5Step_double_plus_one n hodd]
+  -- collatz5Step(2·step(n)+4) = (2·step(n)+4)/2 = step(n)+2
+  have heven : (2 * collatz5Step n + 4) % 2 = 0 := by omega
+  rw [collatz5Step_even (2 * collatz5Step n + 4) heven]
+  omega
+
 /-! ## 12. ★ Syracuse 3-サイクルの完全分類定理 ★
 
 5n+1 Syracuse 写像の3-サイクルは正確に2つ:
