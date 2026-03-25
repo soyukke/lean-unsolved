@@ -231,7 +231,7 @@ theorem collatz5Step_double_plus_one (n : ℕ) (hodd : n % 2 = 1) :
   rw [collatz5Step_odd (2 * n + 1) h1, collatz5Step_odd n hodd]
   ring
 
-/-- 3n+1 との比較: 3n+1 では +2、5n+1 では +4 -/
+-- 3n+1 との比較: 3n+1 では +2、5n+1 では +4
 -- collatzStep_double_plus_one は CollatzStoppingTime.lean にある（+2 版）
 
 /-- ★ 2ステップ後の帰結: collatz5Step(collatz5Step(2n+1)) = collatz5Step(n) + 2
@@ -325,3 +325,33 @@ theorem three_sq_gt_two_cube : (3 : ℕ) ^ 2 > 2 ^ 3 := by norm_num
 
 /-- 5n+1 では v₂ が補えない: 5⁴ > 2⁸ -/
 theorem five_pow4_gt_two_pow8 : (5 : ℕ) ^ 4 > 2 ^ 8 := by norm_num
+
+/-! ## ★ Syracuse 逆像の奇数性定理
+
+n が奇数、j ≥ 1、5 | (n·2^j - 1) ならば m = (n·2^j - 1)/5 は奇数。
+証明: n·2^j は偶数かつ ≡ 1 (mod 5) → mod 10 = 6 → n·2^j-1 ≡ 5 (mod 10)
+→ (n·2^j-1)/5 ≡ 1 (mod 2) → 奇数。
+-/
+
+-- Syracuse 逆像は常に奇数（一般の j では omega が非線形式を扱えない）
+-- 代わりに具体的な j での検証:
+
+/-- j=1: (n·2-1)/5 は奇数（5|(2n-1) のとき） -/
+theorem syr5_preimage_odd_j1 (n : ℕ) (hodd : n % 2 = 1)
+    (hdvd : (n * 2 - 1) % 5 = 0) (hpos : n ≥ 1) :
+    ((n * 2 - 1) / 5) % 2 = 1 := by omega
+
+/-- j=2: (n·4-1)/5 は奇数 -/
+theorem syr5_preimage_odd_j2 (n : ℕ) (hodd : n % 2 = 1)
+    (hdvd : (n * 4 - 1) % 5 = 0) (hpos : n ≥ 1) :
+    ((n * 4 - 1) / 5) % 2 = 1 := by omega
+
+/-- j=3: (n·8-1)/5 は奇数 -/
+theorem syr5_preimage_odd_j3 (n : ℕ) (hodd : n % 2 = 1)
+    (hdvd : (n * 8 - 1) % 5 = 0) (hpos : n ≥ 1) :
+    ((n * 8 - 1) / 5) % 2 = 1 := by omega
+
+/-- j=4: (n·16-1)/5 は奇数 -/
+theorem syr5_preimage_odd_j4 (n : ℕ) (hodd : n % 2 = 1)
+    (hdvd : (n * 16 - 1) % 5 = 0) (hpos : n ≥ 1) :
+    ((n * 16 - 1) / 5) % 2 = 1 := by omega
