@@ -1,6 +1,6 @@
 ---
 name: brainstorm
-description: 指定問題に対して10-20の探索手法候補を生成し、queue.jsonに投入した後、subagentに並列で調査させる。
+description: 未解決数学問題に対して20個の探索手法候補を生成し、Opus subagentで並列調査する。コラッツ・ゴールドバッハ・双子素数・エルデシュ等の問題について「アイデアを出して」「手法を考えて」「brainstormして」「探索方針を立てて」と言われたときに使用。
 argument-hint: [問題名 例: collatz, goldbach, twinprime, erdos89...]
 ---
 
@@ -19,9 +19,9 @@ argument-hint: [問題名 例: collatz, goldbach, twinprime, erdos89...]
 3. `Unsolved/` 以下の関連Leanファイル — 何が形式化済みか
 4. `Unsolved/explorations/queue.json` — 現在のキュー状態（既にdoneのものは再提案しない）
 
-### A2. 探索手法候補の生成（10-20個）
+### A2. 探索手法候補の生成（20個）
 
-以下の**10カテゴリ**から最低1つずつ、合計10-20の具体的な探索手法を生成する:
+以下の**10カテゴリ**から最低2つずつ、合計**20個**の具体的な探索手法を生成する:
 
 | # | カテゴリ | 例 |
 |---|---------|-----|
@@ -84,8 +84,9 @@ status は `queued` | `in_progress` | `done` | `skipped` のいずれか。
 
 ### B1. subagent の起動
 
-queue.json から `status: "queued"` のアイテムを最大 **5件** 選び、
-**1つのメッセージで全subagentを同時にAgent ツールで起動する**。
+queue.json から `status: "queued"` のアイテムを最大 **5件ずつ** 選び、
+**1つのメッセージで5体のsubagentを同時にAgent ツールで起動する**。
+全20件を消化するまで B1→B2 を **4ラウンド** 繰り返す。
 
 各subagentへのプロンプト:
 
@@ -127,8 +128,10 @@ queue.json から `status: "queued"` のアイテムを最大 **5件** 選び、
 
 subagent設定:
 - `subagent_type`: `"general-purpose"`
+- `model`: `"opus"` — 全subagentでOpusを使用
 - `description`: 手法タイトルの先頭3-5語
 - Lean形式化を含む場合: `isolation: "worktree"`
+- `run_in_background`: `true` — バックグラウンドで並列実行
 
 ### B2. 結果の収集・記録
 
@@ -140,8 +143,10 @@ subagent設定:
 
 ### B3. 残りのキュー処理
 
-まだ `queued` が残っている場合、次の5件で再度 B1 を実行する。
-全件消化するまで繰り返す。
+まだ `queued` が残っている場合、次の5件で再度 B1→B2 を実行する。
+全20件を消化するまで繰り返す（計4ラウンド）。
+
+**重要**: 各ラウンドでは前ラウンドの全subagentの完了を待ってから結果を記録し、次の5件を起動する。
 
 ---
 

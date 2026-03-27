@@ -1,6 +1,6 @@
 ---
 name: explore-batch
-description: キューから複数の探索手法を取り出し、subagentに並列で調査させ、結果を収集・記録する。
+description: 探索キュー(queue.json)から手法を取り出し、Opus subagentで並列調査して結果を記録する。「キューを消化して」「探索を実行して」「バッチで調査して」と言われたとき、またはqueue.jsonにqueuedアイテムがあるときに使用。
 argument-hint: [問題名] [件数(デフォルト5)]
 ---
 
@@ -80,9 +80,11 @@ subagentに問題の背景情報を渡すため、以下から問題概要を収
 
 #### subagent の設定
 
-- `subagent_type`: `"general-purpose"` を使用
+- `subagent_type`: `"general-purpose"`
+- `model`: `"opus"` — 全subagentでOpusを使用
 - 各subagentの `description` は探索手法のタイトルの先頭5語程度
 - Lean形式化が含まれる場合は `isolation: "worktree"` を使用
+- `run_in_background`: `true` — バックグラウンドで並列実行
 
 ### 3. 結果の収集と記録
 

@@ -1,6 +1,6 @@
 ---
 name: tackle-unsolved
-description: 未解決数学問題に取り組むオーケストレータ。brainstorm→並列subagent調査→集約の自動サイクル。
+description: 未解決数学問題（コラッツ予想、ゴールドバッハ予想、双子素数予想、エルデシュ問題、Schur数など）に取り組むオーケストレータ。20個の探索手法をbrainstormし、Opus subagentで並列調査し、結果を集約する自動サイクル。ユーザが数学の未解決問題の探索・調査・形式化・証明・計算実験を依頼したとき、または「探索して」「調べて」「コラッツ」「ゴールドバッハ」「エルデシュ」「Lean形式化」「並列探索」「brainstorm」等のキーワードが含まれるときにこのスキルを使用すること。/tackle-unsolved コマンドでも起動する。
 argument-hint: [問題名 例: collatz, goldbach, twinprime, erdos89...]
 ---
 
@@ -44,16 +44,16 @@ argument-hint: [問題名 例: collatz, goldbach, twinprime, erdos89...]
 
 `/brainstorm` スキルの SKILL.md を読み、その手順に従う:
 1. 現状把握（INDEX.md、直近の探索ファイル、Leanファイル、queue.json）
-2. 10-20の探索手法候補を生成
+2. **20個**の探索手法候補を生成
 3. queue.json に書き込み
-4. 最大5件をsubagentに並列ディスパッチして調査
+4. 5件ずつ×4ラウンドで**Opus subagent**を並列ディスパッチして調査
 5. 結果を収集・記録
 
 #### フェーズ: BATCH
 
 `/explore-batch` スキルの SKILL.md を読み、その手順に従う:
 1. キューから最大5件を選択
-2. 全件を並列subagentに同時ディスパッチ
+2. 全件を**Opus subagent**で並列ディスパッチ
 3. 結果を収集・記録
 4. queue.json を更新
 

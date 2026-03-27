@@ -1,6 +1,6 @@
 ---
 name: explore-aggregate
-description: 直近の探索結果を集約し、知識ベースを更新し、次のbrainstormが必要か判定する。5探索ごとに実行推奨。
+description: 直近の探索結果を横断分析し、SUMMARY.mdを更新し、次のbrainstormが必要か判定する。「集約して」「まとめて」「結果を整理して」と言われたとき、またはdone件数がaggregate_everyの倍数に達したときに使用。5探索ごとに実行推奨。
 argument-hint: [問題名 例: collatz, goldbach...]
 ---
 
