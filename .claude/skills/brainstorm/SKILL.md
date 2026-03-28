@@ -16,8 +16,13 @@ argument-hint: [問題名 例: collatz, goldbach, twinprime, erdos89...]
 
 1. `Unsolved/explorations/$ARGUMENTS/INDEX.md` — 過去の探索履歴
 2. 直近3件の探索ファイル — 最新の発見と失敗
-3. `Unsolved/` 以下の関連Leanファイル — 何が形式化済みか
-4. `Unsolved/explorations/queue.json` — 現在のキュー状態（既にdoneのものは再提案しない）
+3. `Unsolved/explorations/$ARGUMENTS/SUMMARY.md` — 集約済みの知識ベース（確定事実・行き止まり・有望方向）
+4. `Unsolved/Index.lean` — 形式証明済み副産物定理のカタログ（重複回避の基準）
+5. `Unsolved/explorations/queue.json` — 現在のキュー状態（doneのものは再提案しない）
+6. `.claude/skills/tackle-unsolved/problems.md` — 問題の基本定義とLeanモジュール一覧
+
+**特に注意**: SUMMARY.md の「行き止まり」セクションに列挙されたアプローチは**絶対に再提案しない**。
+Index.lean の形式証明済み定理と同じ内容を探索手法として提案しない（既に解決済み）。
 
 ### A2. 探索手法候補の生成（20個）
 
@@ -46,13 +51,18 @@ argument-hint: [問題名 例: collatz, goldbach, twinprime, erdos89...]
 - **必要なツール**: python / lean / websearch / analysis
 - **推定難度**: 低/中/高
 - **新規性**: [過去の探索と何が違うか]
+- **形式化ポテンシャル**: [Lean形式化の可能性 — なし/補題候補/定理候補/副産物候補]
 ```
+
+**形式化ポテンシャル**が高い手法は、たとえ主予想への直接的インパクトが小さくても優先度を上げる。
+sorry なしで証明できる定理は、それ自体が成果になる。
 
 ### A3. 優先順位付け
 
 生成した手法を以下の基準で順位付けする:
 - **成功確率**: 何か新しい発見が得られそうか
 - **影響度**: 発見できた場合のインパクト
+- **形式化価値**: Lean証明として残せるか（副産物としての独立した価値があるか）
 - **過去の探索との差異**: 既にやったことの焼き直しでないか
 - **実行可能性**: subagent 1体が10-15分で完了できるか
 
@@ -72,6 +82,7 @@ argument-hint: [問題名 例: collatz, goldbach, twinprime, erdos89...]
   "tools": ["python"],
   "priority": 1,
   "status": "queued",
+  "formalization_potential": "なし / 補題候補 / 定理候補 / 副産物候補",
   "created": "YYYY-MM-DD"
 }
 ```
@@ -88,46 +99,16 @@ queue.json から `status: "queued"` のアイテムを最大 **5件ずつ** 選
 **1つのメッセージで5体のsubagentを同時にAgent ツールで起動する**。
 全20件を消化するまで B1→B2 を **4ラウンド** 繰り返す。
 
-各subagentへのプロンプト:
+各subagentへのプロンプトは `/explore-batch` と同じ形式を使用する。
+ただし以下の情報をコンテキストに含めること:
 
-```
-あなたは未解決数学問題の探索エージェントです。以下の探索手法を実行してください。
-
-## 問題: [問題の概要（INDEX.mdから得た情報を含める）]
-## 探索手法: [title]
-## カテゴリ: [category]
-## 説明: [description]
-## 期待される成果: [expected_output]
-
-## 既知の重要事実（既存探索から）
-[INDEX.md等から得た、この探索に関連する既知事実を箇条書きで提供]
-
-## 実行ルール
-- 使用ツール: [tools 配列の全要素について、該当するルールを全て列挙する]
-  - python → Pythonスクリプトを作成・実行して計算実験。スクリプトは `scripts/` に保存
-  - lean → Lean 4 コードの調査・分析（読み取りのみ、編集しない）
-  - websearch → WebSearch で関連研究・既知結果を調査
-  - analysis → 数学的分析（代数的操作、場合分け等）を行い結論を記述
-  - ※ tools に複数のツールがある場合（例: ["python", "analysis"]）、全ツールを組み合わせて使ってよい
-- 15分以内に完了すること
-- 行き詰まったら「失敗した理由」を明記して終了（諦めてよい）
-- 結果は以下のJSON形式で返すこと:
-
-{
-  "title": "探索タイトル",
-  "approach": "何をしたか（2-3文）",
-  "findings": ["発見1", "発見2", ...],
-  "hypotheses": ["仮説1", ...],
-  "dead_ends": ["行き止まり1", ...],
-  "scripts_created": ["ファイル名"],
-  "outcome": "なし / 小発見 / 中発見 / 大発見 / ブレイクスルー",
-  "next_directions": ["次に試すべき方向1", ...],
-  "details": "詳細な分析結果"
-}
-```
+- 問題概要（problems.md から）
+- 既知の重要事実（SUMMARY.md + INDEX.md から5-10項目）
+- 形式証明済み主要定理（Index.lean から5項目）
+- Leanプロジェクト構造マップ
 
 subagent設定:
-- `subagent_type`: `"general-purpose"`
+- `subagent_type`: `"math-explorer"` — 専用の探索エージェントプロファイルを使用
 - `model`: `"opus"` — 全subagentでOpusを使用
 - `description`: 手法タイトルの先頭3-5語
 - Lean形式化を含む場合: `isolation: "worktree"`
@@ -159,15 +140,18 @@ subagent設定:
 - 生成した手法: N件
 - 調査完了: M件
 - 成果: 大発見 x件, 中発見 x件, 小発見 x件, なし x件
+- 形式化候補: x件
 
 ## 主要な発見
 1. [最も重要な発見]
 2. [次に重要な発見]
-3. ...
+
+## 形式化候補（Lean証明として残す価値があるもの）
+- [候補1 — 関連モジュール: Collatz.XXX]
+- [候補2]
 
 ## 有望な仮説
 - [仮説1]
-- [仮説2]
 
 ## 次のアクション
 - `/explore-aggregate [problem]` で集約推奨
@@ -176,8 +160,9 @@ subagent設定:
 ## 重要な原則
 
 - **広く浅く**: 手法生成フェーズでは深掘りしない。アイデアの量を重視
-- **過去の失敗を活かす**: INDEX.mdの「失敗したアプローチ」は二度やらない
+- **過去の失敗を活かす**: SUMMARY.mdの「行き止まり」は二度やらない
 - **視点の多様性**: 同じカテゴリに偏らない
 - **実行可能な粒度**: 「コラッツを解く」ではなく「mod 16での下降率を計算する」
+- **形式化意識**: 副産物でもよいので、形式証明として残せる成果を意識する
 - **subagentにファイル編集させない**: Lean/主要ファイルの編集はメインエージェントが集約後に行う
 - **並列起動必須**: subagentは逐次ではなく並列で起動する

@@ -21,13 +21,15 @@ argument-hint: [問題名] [件数(デフォルト5)]
 
 ### 1b. 問題概要の取得
 
-subagentに問題の背景情報を渡すため、以下から問題概要を収集する:
+subagentに渡すコンテキストを以下から収集する:
 
 - `.claude/skills/tackle-unsolved/problems.md` → 問題の基本定義とLeanファイル一覧
 - `Unsolved/explorations/[problem]/INDEX.md` → 過去の探索履歴と主要発見
 - `Unsolved/explorations/[problem]/SUMMARY.md` → 集約済みの知識（存在すれば）
+- `Unsolved/Index.lean` → 形式証明済み副産物定理の一覧（重複回避のため）
 
 これらから「既知の重要事実」を箇条書き5-10項目にまとめる。
+加えて「形式証明済みの主要定理」を5項目程度リストする（サブエージェントが車輪の再発明を避けるため）。
 
 ### 2. subagent の並列ディスパッチ
 
@@ -48,13 +50,21 @@ subagentに問題の背景情報を渡すため、以下から問題概要を収
 ## 既知の重要事実（過去の探索から）
 [1bで収集した箇条書き5-10項目]
 
+## 形式証明済みの主要定理（Index.lean より）
+[形式証明済み定理リスト — これらと重複する発見は「既知の再確認」と明記すること]
+
+## Leanプロジェクト構造
+Unsolved/Collatz/ — コラッツ予想（Defs, Structure, Mod, Mod3, Hensel, Cycle, Accel, Formula, Minimal, FiveNPlusOne, StoppingTime/）
+Unsolved/Erdos/ — エルデシュ問題群（Ramsey, SumProduct, VanDerWaerden, Sunflower, DistinctDistances）
+Unsolved/Goldbach.lean, TwinPrime.lean, Schur.lean
+
 ## 実行ルール
 - 使用ツール: [tools 配列の全要素について、該当するルールを全て列挙する]
   - python → Pythonスクリプトを作成・実行して計算実験。スクリプトは `scripts/` に保存
-  - lean → Lean 4 コードの調査・分析（ファイルの読み取りのみ、編集しない）
+  - lean → Lean 4 コードの調査・分析（ファイルの読み取りのみ、編集しない）。上記の構造マップから関連モジュールを特定して読むこと
   - websearch → WebSearch で関連研究・既知結果を調査
   - analysis → 数学的分析（代数的操作、場合分け等）を行い結論を記述
-  - ※ tools に複数のツールがある場合（例: ["python", "analysis"]）、全ツールを組み合わせて使ってよい
+  - ※ tools に複数のツールがある場合、全ツールを組み合わせて使ってよい
 - 15分以内に完了すること
 - 行き詰まったら「失敗した理由」を明記して終了してよい（諦めてOK）
 - 結果は以下のJSON形式で返すこと:
@@ -66,6 +76,8 @@ subagentに問題の背景情報を渡すため、以下から問題概要を収
   "hypotheses": ["仮説1（もしあれば）", ...],
   "dead_ends": ["行き止まり1（もしあれば）", ...],
   "scripts_created": ["スクリプトファイル名（もしあれば）"],
+  "lean_relevant": ["関連するLeanモジュール名（例: Collatz.Formula）"],
+  "formalization_value": "なし / 補題候補 / 定理候補 / 副産物としてIndex.lean追加候補",
   "outcome": "なし / 小発見 / 中発見 / 大発見 / ブレイクスルー",
   "next_directions": ["次に試すべき方向1", ...],
   "details": "詳細な分析結果（自由記述）"
@@ -73,14 +85,14 @@ subagentに問題の背景情報を渡すため、以下から問題概要を収
 
 ## 現在のプロジェクト状態
 - 作業ディレクトリ: (プロジェクトルート)
-- Leanソース: Unsolved/ 以下
+- Leanソース: Unsolved/ 以下（モジュール構造は上記参照）
 - 探索ログ: Unsolved/explorations/[problem]/ 以下
 - Pythonスクリプト: scripts/ 以下
 ```
 
 #### subagent の設定
 
-- `subagent_type`: `"general-purpose"`
+- `subagent_type`: `"math-explorer"` — 専用の探索エージェントプロファイルを使用
 - `model`: `"opus"` — 全subagentでOpusを使用
 - 各subagentの `description` は探索手法のタイトルの先頭5語程度
 - Lean形式化が含まれる場合は `isolation: "worktree"` を使用
@@ -103,6 +115,8 @@ subagentに問題の背景情報を渡すため、以下から問題概要を収
 - **キューID**: [id]
 - **カテゴリ**: [category]
 - **成果レベル**: [outcome]
+- **形式化価値**: [formalization_value]
+- **関連Leanモジュール**: [lean_relevant]
 - **日付**: [今日の日付]
 
 ## アプローチ
@@ -134,9 +148,10 @@ subagentに問題の背景情報を渡すため、以下から問題概要を収
 ```json
 {
   "status": "done",
-  "completed": "2026-03-27",
+  "completed": "2026-03-29",
   "result_file": "exploration_NNN.md",
   "outcome": "小発見",
+  "formalization_value": "補題候補",
   "summary": "1行要約"
 }
 ```
@@ -149,6 +164,7 @@ subagentに問題の背景情報を渡すため、以下から問題概要を収
 ## バッチ結果サマリー
 - 実行: N件
 - 成果: 大発見 x件, 中発見 x件, 小発見 x件, なし x件
+- 形式化候補: x件（うち定理候補 y件、副産物候補 z件）
 - 主要な発見:
   - [最も重要な発見1]
   - [最も重要な発見2]
@@ -167,3 +183,4 @@ queue.json の `done` 件数が `aggregate_every` の倍数に達していたら
 - **全subagentを並列起動**: 逐次実行しない
 - **結果を必ず記録**: subagentが失敗しても「失敗」として記録する
 - **キューを信じる**: キューにないものは調査しない
+- **形式化価値を追跡**: 各探索の形式化ポテンシャルを記録し、集約時にまとめて判断する
