@@ -1,0 +1,808 @@
+{
+  "exploration_id": "094",
+  "title": "逆Syracuse木の自己相似構造とフラクタル次元",
+  "method": "T^{-1}(m)の反復で逆Syracuse木を構成し、フラクタル次元・box-counting次元・自己相似パターンを推定",
+  "parameters": {
+    "max_depth": 35,
+    "node_limit": 2000000,
+    "box_counting_max_scale": 22
+  },
+  "tree_summary": {
+    "standard_tree_nodes": 267024,
+    "standard_max_depth": 40,
+    "syracuse_tree_nodes": 2000000,
+    "syracuse_max_depth": 13,
+    "build_time_sec": 2.89
+  },
+  "fractal_dimension": {
+    "log_N_over_D_estimate": 0.313714,
+    "growth_rate_gamma": 1.333249,
+    "theoretical_log_4_3": 0.287682,
+    "depth_series": [
+      {
+        "depth": 1,
+        "dim": 0.693147,
+        "gamma": 2.0
+      },
+      {
+        "depth": 2,
+        "dim": 0.549306,
+        "gamma": 1.5
+      },
+      {
+        "depth": 3,
+        "dim": 0.462098,
+        "gamma": 1.333333
+      },
+      {
+        "depth": 4,
+        "dim": 0.44794,
+        "gamma": 1.5
+      },
+      {
+        "depth": 5,
+        "dim": 0.439445,
+        "gamma": 1.5
+      },
+      {
+        "depth": 6,
+        "dim": 0.427492,
+        "gamma": 1.444444
+      },
+      {
+        "depth": 7,
+        "dim": 0.41291,
+        "gamma": 1.384615
+      },
+      {
+        "depth": 8,
+        "dim": 0.397257,
+        "gamma": 1.333333
+      },
+      {
+        "depth": 9,
+        "dim": 0.385082,
+        "gamma": 1.333333
+      },
+      {
+        "depth": 10,
+        "dim": 0.378419,
+        "gamma": 1.375
+      },
+      {
+        "depth": 11,
+        "dim": 0.375194,
+        "gamma": 1.409091
+      },
+      {
+        "depth": 12,
+        "dim": 0.371196,
+        "gamma": 1.387097
+      },
+      {
+        "depth": 13,
+        "dim": 0.366321,
+        "gamma": 1.360465
+      },
+      {
+        "depth": 14,
+        "dim": 0.360704,
+        "gamma": 1.333333
+      },
+      {
+        "depth": 15,
+        "dim": 0.355192,
+        "gamma": 1.320513
+      },
+      {
+        "depth": 16,
+        "dim": 0.350821,
+        "gamma": 1.330097
+      },
+      {
+        "depth": 17,
+        "dim": 0.347053,
+        "gamma": 1.332117
+      },
+      {
+        "depth": 18,
+        "dim": 0.343564,
+        "gamma": 1.328767
+      },
+      {
+        "depth": 19,
+        "dim": 0.340405,
+        "gamma": 1.327835
+      },
+      {
+        "depth": 20,
+        "dim": 0.337555,
+        "gamma": 1.32764
+      },
+      {
+        "depth": 21,
+        "dim": 0.335055,
+        "gamma": 1.329825
+      },
+      {
+        "depth": 22,
+        "dim": 0.332961,
+        "gamma": 1.335092
+      },
+      {
+        "depth": 23,
+        "dim": 0.330971,
+        "gamma": 1.332675
+      },
+      {
+        "depth": 24,
+        "dim": 0.329023,
+        "gamma": 1.32872
+      },
+      {
+        "depth": 25,
+        "dim": 0.327246,
+        "gamma": 1.329241
+      },
+      {
+        "depth": 26,
+        "dim": 0.325692,
+        "gamma": 1.332214
+      },
+      {
+        "depth": 27,
+        "dim": 0.324304,
+        "gamma": 1.334034
+      },
+      {
+        "depth": 28,
+        "dim": 0.323019,
+        "gamma": 1.334173
+      },
+      {
+        "depth": 29,
+        "dim": 0.321815,
+        "gamma": 1.333924
+      },
+      {
+        "depth": 30,
+        "dim": 0.320673,
+        "gamma": 1.333156
+      },
+      {
+        "depth": 31,
+        "dim": 0.319596,
+        "gamma": 1.332802
+      },
+      {
+        "depth": 32,
+        "dim": 0.318586,
+        "gamma": 1.332769
+      },
+      {
+        "depth": 33,
+        "dim": 0.317633,
+        "gamma": 1.332636
+      },
+      {
+        "depth": 34,
+        "dim": 0.316746,
+        "gamma": 1.333053
+      },
+      {
+        "depth": 35,
+        "dim": 0.315914,
+        "gamma": 1.333263
+      },
+      {
+        "depth": 36,
+        "dim": 0.315128,
+        "gamma": 1.333228
+      },
+      {
+        "depth": 37,
+        "dim": 0.314381,
+        "gamma": 1.333105
+      },
+      {
+        "depth": 38,
+        "dim": 0.313676,
+        "gamma": 1.333185
+      },
+      {
+        "depth": 39,
+        "dim": 0.31301,
+        "gamma": 1.333349
+      },
+      {
+        "depth": 40,
+        "dim": 0.312377,
+        "gamma": 1.33338
+      }
+    ]
+  },
+  "box_counting_dimension": {
+    "whole_tree_dimension": 0.409243,
+    "whole_tree_R_squared": 0.999318,
+    "frontier_dimensions": [
+      {
+        "depth": 11,
+        "num_nodes": 18,
+        "bc_dimension": 0.308885,
+        "R_squared": 0.982684
+      },
+      {
+        "depth": 14,
+        "num_nodes": 39,
+        "bc_dimension": 0.324025,
+        "R_squared": 0.99216
+      },
+      {
+        "depth": 17,
+        "num_nodes": 91,
+        "bc_dimension": 0.343862,
+        "R_squared": 0.994886
+      },
+      {
+        "depth": 20,
+        "num_nodes": 211,
+        "bc_dimension": 0.357127,
+        "R_squared": 0.996614
+      },
+      {
+        "depth": 23,
+        "num_nodes": 505,
+        "bc_dimension": 0.377704,
+        "R_squared": 0.998468
+      },
+      {
+        "depth": 26,
+        "num_nodes": 1187,
+        "bc_dimension": 0.382356,
+        "R_squared": 0.998426
+      },
+      {
+        "depth": 29,
+        "num_nodes": 2829,
+        "bc_dimension": 0.392172,
+        "R_squared": 0.998958
+      },
+      {
+        "depth": 32,
+        "num_nodes": 6682,
+        "bc_dimension": 0.393579,
+        "R_squared": 0.999278
+      },
+      {
+        "depth": 35,
+        "num_nodes": 15844,
+        "bc_dimension": 0.397031,
+        "R_squared": 0.999231
+      },
+      {
+        "depth": 38,
+        "num_nodes": 37536,
+        "bc_dimension": 0.398303,
+        "R_squared": 0.999278
+      }
+    ],
+    "scale_data": [
+      {
+        "scale_exp": 1,
+        "N_eps": 212443,
+        "filling_ratio": 0.0
+      },
+      {
+        "scale_exp": 2,
+        "N_eps": 169547,
+        "filling_ratio": 1e-06
+      },
+      {
+        "scale_exp": 3,
+        "N_eps": 136016,
+        "filling_ratio": 1e-06
+      },
+      {
+        "scale_exp": 4,
+        "N_eps": 108115,
+        "filling_ratio": 2e-06
+      },
+      {
+        "scale_exp": 5,
+        "N_eps": 82544,
+        "filling_ratio": 2e-06
+      },
+      {
+        "scale_exp": 6,
+        "N_eps": 62646,
+        "filling_ratio": 4e-06
+      },
+      {
+        "scale_exp": 7,
+        "N_eps": 47048,
+        "filling_ratio": 5e-06
+      },
+      {
+        "scale_exp": 8,
+        "N_eps": 35306,
+        "filling_ratio": 8e-06
+      },
+      {
+        "scale_exp": 9,
+        "N_eps": 26460,
+        "filling_ratio": 1.2e-05
+      },
+      {
+        "scale_exp": 10,
+        "N_eps": 19819,
+        "filling_ratio": 1.8e-05
+      },
+      {
+        "scale_exp": 11,
+        "N_eps": 14830,
+        "filling_ratio": 2.8e-05
+      },
+      {
+        "scale_exp": 12,
+        "N_eps": 11093,
+        "filling_ratio": 4.1e-05
+      },
+      {
+        "scale_exp": 13,
+        "N_eps": 8298,
+        "filling_ratio": 6.2e-05
+      },
+      {
+        "scale_exp": 14,
+        "N_eps": 6213,
+        "filling_ratio": 9.3e-05
+      },
+      {
+        "scale_exp": 15,
+        "N_eps": 4657,
+        "filling_ratio": 0.000139
+      },
+      {
+        "scale_exp": 16,
+        "N_eps": 3489,
+        "filling_ratio": 0.000208
+      },
+      {
+        "scale_exp": 17,
+        "N_eps": 2607,
+        "filling_ratio": 0.000311
+      },
+      {
+        "scale_exp": 18,
+        "N_eps": 1952,
+        "filling_ratio": 0.000465
+      },
+      {
+        "scale_exp": 19,
+        "N_eps": 1462,
+        "filling_ratio": 0.000697
+      },
+      {
+        "scale_exp": 20,
+        "N_eps": 1092,
+        "filling_ratio": 0.001041
+      },
+      {
+        "scale_exp": 21,
+        "N_eps": 816,
+        "filling_ratio": 0.001556
+      },
+      {
+        "scale_exp": 22,
+        "N_eps": 607,
+        "filling_ratio": 0.002316
+      }
+    ]
+  },
+  "self_similarity": {
+    "branching_pattern_stable": true,
+    "avg_inversions_final": 13.3295,
+    "standard_tree_inv3_ratio": [
+      {
+        "depth": 0,
+        "inv3_ratio": 0.0
+      },
+      {
+        "depth": 1,
+        "inv3_ratio": 1.0
+      },
+      {
+        "depth": 2,
+        "inv3_ratio": 0.0
+      },
+      {
+        "depth": 3,
+        "inv3_ratio": 1.0
+      },
+      {
+        "depth": 4,
+        "inv3_ratio": 0.5
+      },
+      {
+        "depth": 5,
+        "inv3_ratio": 0.3333
+      },
+      {
+        "depth": 6,
+        "inv3_ratio": 0.25
+      },
+      {
+        "depth": 7,
+        "inv3_ratio": 0.2
+      },
+      {
+        "depth": 8,
+        "inv3_ratio": 0.3333
+      },
+      {
+        "depth": 9,
+        "inv3_ratio": 0.5
+      },
+      {
+        "depth": 10,
+        "inv3_ratio": 0.5
+      },
+      {
+        "depth": 11,
+        "inv3_ratio": 0.3333
+      },
+      {
+        "depth": 12,
+        "inv3_ratio": 0.2917
+      },
+      {
+        "depth": 13,
+        "inv3_ratio": 0.2581
+      },
+      {
+        "depth": 14,
+        "inv3_ratio": 0.2821
+      },
+      {
+        "depth": 15,
+        "inv3_ratio": 0.36
+      },
+      {
+        "depth": 16,
+        "inv3_ratio": 0.3382
+      },
+      {
+        "depth": 17,
+        "inv3_ratio": 0.3187
+      },
+      {
+        "depth": 18,
+        "inv3_ratio": 0.325
+      },
+      {
+        "depth": 19,
+        "inv3_ratio": 0.327
+      },
+      {
+        "depth": 20,
+        "inv3_ratio": 0.3365
+      },
+      {
+        "depth": 21,
+        "inv3_ratio": 0.3511
+      },
+      {
+        "depth": 22,
+        "inv3_ratio": 0.3255
+      },
+      {
+        "depth": 23,
+        "inv3_ratio": 0.3168
+      },
+      {
+        "depth": 24,
+        "inv3_ratio": 0.3308
+      }
+    ],
+    "syracuse_branching_by_depth": [
+      {
+        "depth": 0,
+        "avg_inv": 20.0,
+        "distribution": {
+          "20": 1
+        }
+      },
+      {
+        "depth": 1,
+        "avg_inv": 15.0,
+        "distribution": {
+          "0": 1,
+          "20": 3
+        }
+      },
+      {
+        "depth": 2,
+        "avg_inv": 12.0,
+        "distribution": {
+          "0": 6,
+          "20": 9
+        }
+      },
+      {
+        "depth": 3,
+        "avg_inv": 12.8889,
+        "distribution": {
+          "0": 16,
+          "20": 29
+        }
+      },
+      {
+        "depth": 4,
+        "avg_inv": 13.3793,
+        "distribution": {
+          "0": 48,
+          "20": 97
+        }
+      },
+      {
+        "depth": 5,
+        "avg_inv": 13.4021,
+        "distribution": {
+          "0": 160,
+          "20": 325
+        }
+      },
+      {
+        "depth": 6,
+        "avg_inv": 13.3908,
+        "distribution": {
+          "0": 537,
+          "20": 1088
+        }
+      },
+      {
+        "depth": 7,
+        "avg_inv": 13.3309,
+        "distribution": {
+          "0": 1814,
+          "20": 3626
+        }
+      },
+      {
+        "depth": 8,
+        "avg_inv": 13.3194,
+        "distribution": {
+          "0": 6056,
+          "20": 12074
+        }
+      },
+      {
+        "depth": 9,
+        "avg_inv": 13.3268,
+        "distribution": {
+          "0": 20143,
+          "20": 40227
+        }
+      },
+      {
+        "depth": 10,
+        "avg_inv": 13.3405,
+        "distribution": {
+          "0": 66973,
+          "20": 134162
+        }
+      },
+      {
+        "depth": 11,
+        "avg_inv": 13.3292,
+        "distribution": {
+          "0": 223743,
+          "20": 447067
+        }
+      },
+      {
+        "depth": 12,
+        "avg_inv": 13.3316,
+        "distribution": {
+          "0": 347354,
+          "20": 694441
+        }
+      }
+    ]
+  },
+  "mod3_structure": {
+    "0": {
+      "1": 1.0
+    },
+    "1": {
+      "2": 1.0
+    },
+    "2": {
+      "1": 1.0
+    },
+    "3": {
+      "2": 1.0
+    },
+    "4": {
+      "1": 0.5,
+      "2": 0.5
+    },
+    "5": {
+      "0": 0.3333,
+      "1": 0.3333,
+      "2": 0.3333
+    },
+    "6": {
+      "0": 0.5,
+      "1": 0.25,
+      "2": 0.25
+    },
+    "7": {
+      "0": 0.4,
+      "1": 0.4,
+      "2": 0.2
+    },
+    "8": {
+      "0": 0.3333,
+      "1": 0.3333,
+      "2": 0.3333
+    },
+    "9": {
+      "0": 0.25,
+      "1": 0.25,
+      "2": 0.5
+    },
+    "10": {
+      "0": 0.1667,
+      "1": 0.3333,
+      "2": 0.5
+    },
+    "11": {
+      "0": 0.2778,
+      "1": 0.3889,
+      "2": 0.3333
+    },
+    "12": {
+      "0": 0.4167,
+      "1": 0.2917,
+      "2": 0.2917
+    },
+    "13": {
+      "0": 0.4194,
+      "1": 0.3226,
+      "2": 0.2581
+    },
+    "14": {
+      "0": 0.359,
+      "1": 0.359,
+      "2": 0.2821
+    },
+    "15": {
+      "0": 0.34,
+      "1": 0.3,
+      "2": 0.36
+    },
+    "16": {
+      "0": 0.3235,
+      "1": 0.3382,
+      "2": 0.3382
+    },
+    "17": {
+      "0": 0.3297,
+      "1": 0.3516,
+      "2": 0.3187
+    },
+    "18": {
+      "0": 0.3583,
+      "1": 0.3167,
+      "2": 0.325
+    },
+    "19": {
+      "0": 0.327,
+      "1": 0.3459,
+      "2": 0.327
+    },
+    "20": {
+      "0": 0.3175,
+      "1": 0.346,
+      "2": 0.3365
+    },
+    "21": {
+      "0": 0.3298,
+      "1": 0.3191,
+      "2": 0.3511
+    },
+    "22": {
+      "0": 0.336,
+      "1": 0.3386,
+      "2": 0.3255
+    },
+    "23": {
+      "0": 0.3446,
+      "1": 0.3386,
+      "2": 0.3168
+    },
+    "24": {
+      "0": 0.3368,
+      "1": 0.3323,
+      "2": 0.3308
+    },
+    "25": {
+      "0": 0.3322,
+      "1": 0.3266,
+      "2": 0.3412
+    },
+    "26": {
+      "0": 0.3243,
+      "1": 0.3361,
+      "2": 0.3395
+    },
+    "27": {
+      "0": 0.3296,
+      "1": 0.3358,
+      "2": 0.3346
+    },
+    "28": {
+      "0": 0.3346,
+      "1": 0.3322,
+      "2": 0.3332
+    },
+    "29": {
+      "0": 0.3369,
+      "1": 0.3323,
+      "2": 0.3309
+    }
+  },
+  "density_analysis": [
+    {
+      "N": 100,
+      "odd_total": 50,
+      "covered": 38,
+      "coverage_pct": 76.0,
+      "gap": 0.24,
+      "log_gap": -1.4271
+    },
+    {
+      "N": 1000,
+      "odd_total": 500,
+      "covered": 290,
+      "coverage_pct": 58.0,
+      "gap": 0.42,
+      "log_gap": -0.8675
+    },
+    {
+      "N": 10000,
+      "odd_total": 5000,
+      "covered": 1621,
+      "coverage_pct": 32.42,
+      "gap": 0.6758,
+      "log_gap": -0.3919
+    },
+    {
+      "N": 100000,
+      "odd_total": 50000,
+      "covered": 6890,
+      "coverage_pct": 13.78,
+      "gap": 0.8622,
+      "log_gap": -0.1483
+    },
+    {
+      "N": 1000000,
+      "odd_total": 500000,
+      "covered": 19449,
+      "coverage_pct": 3.8898,
+      "gap": 0.961102,
+      "log_gap": -0.0397
+    }
+  ],
+  "findings": [
+    "フラクタル次元 log(N(D))/D の推定値: 0.3137 (理論値 log(4/3)=0.2877)",
+    "成長率 γ = N(D)/N(D-1) の最終推定: 1.3332",
+    "全体Box-counting次元: 0.4092 (R²=0.9993)",
+    "フロンティアBox-counting次元（最終3層平均）: 0.3963, 既知推定値0.84との比較",
+    "Syracuse逆像の分岐安定性: 最終5層の平均逆像数=13.3295, 変動幅=0.0211 → 安定（自己相似的）",
+    "標準木の(2n-1)/3分岐率: 最終5層平均=0.3333 (理論値1/3≈0.3333)",
+    "mod 3 分布の最終5層: 0≡0.332, 1≡0.333, 2≡0.336 → 均等に安定"
+  ],
+  "elapsed_sec": 9.74
+}

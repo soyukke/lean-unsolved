@@ -1,4 +1,4 @@
-import Unsolved.CollatzMod
+import Unsolved.Collatz.Mod
 
 /-!
 # コラッツ予想 探索12: 非自明サイクルの排除

@@ -1,0 +1,1011 @@
+{
+  "exploration_id": "mod3k_orbit_structure",
+  "category": "algebraic_structure",
+  "description": "Syracuse関数T(n)のmod 3^k軌道構造と3-adic解析",
+  "parameters": {
+    "sample_size": 100000,
+    "k_max": 6
+  },
+  "analysis_1_distribution": {
+    "1": {
+      "mod": 3,
+      "total_odd_n": 50000,
+      "distinct_residues_hit": 2,
+      "residues_with_3_divides": 0,
+      "count_landing_on_mult_of_3": 0,
+      "num_expected_odd_non3_classes": 1,
+      "fraction_in_expected_classes": 0.3334,
+      "chi_squared": 22217.78,
+      "top_residues": {
+        "2": 33330,
+        "1": 16670
+      }
+    },
+    "2": {
+      "mod": 9,
+      "total_odd_n": 50000,
+      "distinct_residues_hit": 6,
+      "residues_with_3_divides": 0,
+      "count_landing_on_mult_of_3": 0,
+      "num_expected_odd_non3_classes": 3,
+      "fraction_in_expected_classes": 0.4446,
+      "chi_squared": 16657.56,
+      "top_residues": {
+        "5": 11113,
+        "2": 11109,
+        "8": 11108,
+        "1": 5561,
+        "7": 5556,
+        "4": 5553
+      }
+    },
+    "3": {
+      "mod": 27,
+      "total_odd_n": 50000,
+      "distinct_residues_hit": 18,
+      "residues_with_3_divides": 0,
+      "count_landing_on_mult_of_3": 0,
+      "num_expected_odd_non3_classes": 9,
+      "fraction_in_expected_classes": 0.48188,
+      "chi_squared": 14794.38,
+      "top_residues": {
+        "5": 3707,
+        "11": 3706,
+        "17": 3706,
+        "23": 3705,
+        "2": 3704,
+        "8": 3703,
+        "14": 3701,
+        "20": 3699,
+        "26": 3699,
+        "1": 1857
+      }
+    },
+    "4": {
+      "mod": 81,
+      "total_odd_n": 50000,
+      "distinct_residues_hit": 54,
+      "residues_with_3_divides": 0,
+      "count_landing_on_mult_of_3": 0,
+      "num_expected_odd_non3_classes": 27,
+      "fraction_in_expected_classes": 0.49474,
+      "chi_squared": 14153.14,
+      "top_residues": {
+        "5": 1238,
+        "11": 1237,
+        "17": 1237,
+        "23": 1237,
+        "29": 1237,
+        "35": 1237,
+        "41": 1236,
+        "47": 1236,
+        "53": 1236,
+        "59": 1236
+      }
+    },
+    "5": {
+      "mod": 243,
+      "total_odd_n": 50000,
+      "distinct_residues_hit": 162,
+      "residues_with_3_divides": 0,
+      "count_landing_on_mult_of_3": 0,
+      "num_expected_odd_non3_classes": 81,
+      "fraction_in_expected_classes": 0.50094,
+      "chi_squared": 13834.15,
+      "top_residues": {
+        "5": 417,
+        "11": 416,
+        "17": 416,
+        "23": 416,
+        "29": 416,
+        "35": 416,
+        "41": 415,
+        "47": 415,
+        "53": 415,
+        "59": 415
+      }
+    },
+    "6": {
+      "mod": 729,
+      "total_odd_n": 50000,
+      "distinct_residues_hit": 486,
+      "residues_with_3_divides": 0,
+      "count_landing_on_mult_of_3": 0,
+      "num_expected_odd_non3_classes": 243,
+      "fraction_in_expected_classes": 0.50664,
+      "chi_squared": 13579.86,
+      "top_residues": {
+        "5": 142,
+        "11": 141,
+        "17": 141,
+        "23": 141,
+        "29": 141,
+        "35": 141,
+        "41": 140,
+        "47": 140,
+        "53": 140,
+        "59": 140
+      }
+    }
+  },
+  "analysis_2_iterated_distribution": {
+    "k=1_m=1": {
+      "mod": 3,
+      "iterations": 1,
+      "total": 25000,
+      "distinct_residues": 2,
+      "entropy": 0.918402,
+      "max_entropy": 1.0,
+      "entropy_ratio": 0.918402,
+      "top5": {
+        "2": 16664,
+        "1": 8336
+      }
+    },
+    "k=1_m=2": {
+      "mod": 3,
+      "iterations": 2,
+      "total": 25000,
+      "distinct_residues": 2,
+      "entropy": 0.918762,
+      "max_entropy": 1.0,
+      "entropy_ratio": 0.918762,
+      "top5": {
+        "2": 16655,
+        "1": 8345
+      }
+    },
+    "k=1_m=3": {
+      "mod": 3,
+      "iterations": 3,
+      "total": 25000,
+      "distinct_residues": 2,
+      "entropy": 0.919279,
+      "max_entropy": 1.0,
+      "entropy_ratio": 0.919279,
+      "top5": {
+        "2": 16642,
+        "1": 8358
+      }
+    },
+    "k=1_m=4": {
+      "mod": 3,
+      "iterations": 4,
+      "total": 25000,
+      "distinct_residues": 2,
+      "entropy": 0.920861,
+      "max_entropy": 1.0,
+      "entropy_ratio": 0.920861,
+      "top5": {
+        "2": 16602,
+        "1": 8398
+      }
+    },
+    "k=1_m=5": {
+      "mod": 3,
+      "iterations": 5,
+      "total": 25000,
+      "distinct_residues": 2,
+      "entropy": 0.921645,
+      "max_entropy": 1.0,
+      "entropy_ratio": 0.921645,
+      "top5": {
+        "2": 16582,
+        "1": 8418
+      }
+    },
+    "k=2_m=1": {
+      "mod": 9,
+      "iterations": 1,
+      "total": 25000,
+      "distinct_residues": 6,
+      "entropy": 2.503365,
+      "max_entropy": 2.584963,
+      "entropy_ratio": 0.968434,
+      "top5": {
+        "5": 5556,
+        "2": 5555,
+        "8": 5553,
+        "1": 2782,
+        "7": 2778
+      }
+    },
+    "k=2_m=2": {
+      "mod": 9,
+      "iterations": 2,
+      "total": 25000,
+      "distinct_residues": 6,
+      "entropy": 2.261404,
+      "max_entropy": 2.584963,
+      "entropy_ratio": 0.874831,
+      "top5": {
+        "8": 8720,
+        "2": 6345,
+        "4": 4361,
+        "1": 3190,
+        "5": 1590
+      }
+    },
+    "k=2_m=3": {
+      "mod": 9,
+      "iterations": 3,
+      "total": 25000,
+      "distinct_residues": 6,
+      "entropy": 2.262687,
+      "max_entropy": 2.584963,
+      "entropy_ratio": 0.875327,
+      "top5": {
+        "8": 8712,
+        "2": 6331,
+        "4": 4348,
+        "1": 3220,
+        "5": 1599
+      }
+    },
+    "k=2_m=4": {
+      "mod": 9,
+      "iterations": 4,
+      "total": 25000,
+      "distinct_residues": 6,
+      "entropy": 2.26604,
+      "max_entropy": 2.584963,
+      "entropy_ratio": 0.876624,
+      "top5": {
+        "8": 8668,
+        "2": 6333,
+        "4": 4351,
+        "1": 3246,
+        "5": 1601
+      }
+    },
+    "k=2_m=5": {
+      "mod": 9,
+      "iterations": 5,
+      "total": 25000,
+      "distinct_residues": 6,
+      "entropy": 2.268461,
+      "max_entropy": 2.584963,
+      "entropy_ratio": 0.877561,
+      "top5": {
+        "8": 8652,
+        "2": 6302,
+        "4": 4305,
+        "1": 3330,
+        "5": 1628
+      }
+    },
+    "k=3_m=1": {
+      "mod": 27,
+      "iterations": 1,
+      "total": 25000,
+      "distinct_residues": 18,
+      "entropy": 4.088325,
+      "max_entropy": 4.169925,
+      "entropy_ratio": 0.980431,
+      "top5": {
+        "5": 1855,
+        "11": 1855,
+        "17": 1854,
+        "23": 1851,
+        "2": 1851
+      }
+    },
+    "k=3_m=2": {
+      "mod": 27,
+      "iterations": 2,
+      "total": 25000,
+      "distinct_residues": 18,
+      "entropy": 3.846347,
+      "max_entropy": 4.169925,
+      "entropy_ratio": 0.922402,
+      "top5": {
+        "17": 2911,
+        "8": 2905,
+        "26": 2904,
+        "11": 2122,
+        "2": 2113
+      }
+    },
+    "k=3_m=3": {
+      "mod": 27,
+      "iterations": 3,
+      "total": 25000,
+      "distinct_residues": 18,
+      "entropy": 3.686499,
+      "max_entropy": 4.169925,
+      "entropy_ratio": 0.884068,
+      "top5": {
+        "26": 4424,
+        "17": 3297,
+        "20": 3273,
+        "13": 2226,
+        "2": 1828
+      }
+    },
+    "k=3_m=4": {
+      "mod": 27,
+      "iterations": 4,
+      "total": 25000,
+      "distinct_residues": 18,
+      "entropy": 3.689179,
+      "max_entropy": 4.169925,
+      "entropy_ratio": 0.884711,
+      "top5": {
+        "26": 4410,
+        "17": 3285,
+        "20": 3261,
+        "13": 2242,
+        "2": 1828
+      }
+    },
+    "k=3_m=5": {
+      "mod": 27,
+      "iterations": 5,
+      "total": 25000,
+      "distinct_residues": 18,
+      "entropy": 3.694802,
+      "max_entropy": 4.169925,
+      "entropy_ratio": 0.886059,
+      "top5": {
+        "26": 4366,
+        "17": 3306,
+        "20": 3222,
+        "13": 2239,
+        "2": 1809
+      }
+    },
+    "k=4_m=1": {
+      "mod": 81,
+      "iterations": 1,
+      "total": 25000,
+      "distinct_residues": 54,
+      "entropy": 5.673275,
+      "max_entropy": 5.754888,
+      "entropy_ratio": 0.985819,
+      "top5": {
+        "5": 620,
+        "11": 620,
+        "17": 620,
+        "23": 619,
+        "29": 619
+      }
+    },
+    "k=4_m=2": {
+      "mod": 81,
+      "iterations": 2,
+      "total": 25000,
+      "distinct_residues": 54,
+      "entropy": 5.431133,
+      "max_entropy": 5.754888,
+      "entropy_ratio": 0.943743,
+      "top5": {
+        "17": 978,
+        "35": 975,
+        "53": 975,
+        "71": 970,
+        "8": 969
+      }
+    },
+    "k=4_m=3": {
+      "mod": 81,
+      "iterations": 3,
+      "total": 25000,
+      "distinct_residues": 54,
+      "entropy": 5.27085,
+      "max_entropy": 5.754888,
+      "entropy_ratio": 0.915891,
+      "top5": {
+        "53": 1479,
+        "26": 1473,
+        "80": 1472,
+        "17": 1115,
+        "47": 1096
+      }
+    },
+    "k=4_m=4": {
+      "mod": 81,
+      "iterations": 4,
+      "total": 25000,
+      "distinct_residues": 54,
+      "entropy": 5.15592,
+      "max_entropy": 5.754888,
+      "entropy_ratio": 0.89592,
+      "top5": {
+        "80": 2221,
+        "71": 1676,
+        "20": 1657,
+        "26": 1653,
+        "40": 1112
+      }
+    },
+    "k=4_m=5": {
+      "mod": 81,
+      "iterations": 5,
+      "total": 25000,
+      "distinct_residues": 54,
+      "entropy": 5.156775,
+      "max_entropy": 5.754888,
+      "entropy_ratio": 0.896069,
+      "top5": {
+        "80": 2211,
+        "71": 1671,
+        "20": 1635,
+        "26": 1633,
+        "40": 1098
+      }
+    }
+  },
+  "analysis_3_transition_matrix": {
+    "1": {
+      "mod": 3,
+      "num_odd_residues": 1,
+      "deterministic_transitions": 0,
+      "deterministic_ratio": 0.0,
+      "avg_branching_factor": 2.0,
+      "stationary_L1_from_uniform": 0.666467
+    },
+    "2": {
+      "mod": 9,
+      "num_odd_residues": 4,
+      "deterministic_transitions": 0,
+      "deterministic_ratio": 0.0,
+      "avg_branching_factor": 6.0,
+      "stationary_L1_from_uniform": 0.555231
+    },
+    "3": {
+      "mod": 27,
+      "num_odd_residues": 13,
+      "deterministic_transitions": 0,
+      "deterministic_ratio": 0.0,
+      "avg_branching_factor": 9.4615,
+      "stationary_L1_from_uniform": 0.570731
+    },
+    "4": {
+      "mod": 81,
+      "num_odd_residues": 40,
+      "deterministic_transitions": 0,
+      "deterministic_ratio": 0.0,
+      "avg_branching_factor": 7.95,
+      "stationary_L1_from_uniform": 0.578556
+    }
+  },
+  "analysis_4_3adic_convergence": {
+    "k=1": {
+      "mod": 3,
+      "avg_v3_by_iteration": {
+        "1": 0.6923,
+        "2": 0.6667,
+        "3": 0.75,
+        "4": 0.3333,
+        "5": 0.5
+      },
+      "num_pairs": 59
+    },
+    "k=2": {
+      "mod": 9,
+      "avg_v3_by_iteration": {
+        "1": 0.9487,
+        "2": 0.5263,
+        "3": 0.9737,
+        "4": 0.7568,
+        "5": 0.5676
+      },
+      "num_pairs": 189
+    },
+    "k=3": {
+      "mod": 27,
+      "avg_v3_by_iteration": {
+        "1": 1.1795,
+        "2": 0.7414,
+        "3": 0.8,
+        "4": 0.6842,
+        "5": 0.693
+      },
+      "num_pairs": 576
+    },
+    "k=4": {
+      "mod": 81,
+      "avg_v3_by_iteration": {
+        "1": 1.416,
+        "2": 0.6029,
+        "3": 0.7622,
+        "4": 0.8934,
+        "5": 0.7529
+      },
+      "num_pairs": 1741
+    }
+  },
+  "analysis_5_forbidden_patterns": {
+    "1": {
+      "mod": 3,
+      "total_odd_residues": 1,
+      "total_odd_non3_residues": 1,
+      "reachable_odd_residues": 1,
+      "unreachable_odd_residues": [],
+      "unreachable_odd_non3_residues": [],
+      "num_unreachable_odd": 0,
+      "num_unreachable_odd_non3": 0,
+      "reachable_mult3_residues": [],
+      "forbidden_ratio_odd": 0.0,
+      "forbidden_ratio_odd_non3": 0.0
+    },
+    "2": {
+      "mod": 9,
+      "total_odd_residues": 4,
+      "total_odd_non3_residues": 3,
+      "reachable_odd_residues": 3,
+      "unreachable_odd_residues": [
+        3
+      ],
+      "unreachable_odd_non3_residues": [],
+      "num_unreachable_odd": 1,
+      "num_unreachable_odd_non3": 0,
+      "reachable_mult3_residues": [],
+      "forbidden_ratio_odd": 0.25,
+      "forbidden_ratio_odd_non3": 0.0
+    },
+    "3": {
+      "mod": 27,
+      "total_odd_residues": 13,
+      "total_odd_non3_residues": 9,
+      "reachable_odd_residues": 9,
+      "unreachable_odd_residues": [
+        3,
+        9,
+        15,
+        21
+      ],
+      "unreachable_odd_non3_residues": [],
+      "num_unreachable_odd": 4,
+      "num_unreachable_odd_non3": 0,
+      "reachable_mult3_residues": [],
+      "forbidden_ratio_odd": 0.307692,
+      "forbidden_ratio_odd_non3": 0.0
+    },
+    "4": {
+      "mod": 81,
+      "total_odd_residues": 40,
+      "total_odd_non3_residues": 27,
+      "reachable_odd_residues": 27,
+      "unreachable_odd_residues": [
+        3,
+        9,
+        15,
+        21,
+        27,
+        33,
+        39,
+        45,
+        51,
+        57,
+        63,
+        69,
+        75
+      ],
+      "unreachable_odd_non3_residues": [],
+      "num_unreachable_odd": 13,
+      "num_unreachable_odd_non3": 0,
+      "reachable_mult3_residues": [],
+      "forbidden_ratio_odd": 0.325,
+      "forbidden_ratio_odd_non3": 0.0
+    },
+    "5": {
+      "mod": 243,
+      "total_odd_residues": 121,
+      "total_odd_non3_residues": 81,
+      "reachable_odd_residues": 81,
+      "unreachable_odd_residues": [
+        3,
+        9,
+        15,
+        21,
+        27,
+        33,
+        39,
+        45,
+        51,
+        57,
+        63,
+        69,
+        75,
+        81,
+        87,
+        93,
+        99,
+        105,
+        111,
+        117
+      ],
+      "unreachable_odd_non3_residues": [],
+      "num_unreachable_odd": 40,
+      "num_unreachable_odd_non3": 0,
+      "reachable_mult3_residues": [],
+      "forbidden_ratio_odd": 0.330579,
+      "forbidden_ratio_odd_non3": 0.0
+    }
+  },
+  "analysis_6_mod9_classification": {
+    "mod_18_classification": [
+      {
+        "n_mod_18": 1,
+        "n_mod_3": 1,
+        "n_mod_9": 1,
+        "v2_of_3r_plus_1": 2,
+        "T_mod_9_values": [
+          1,
+          2,
+          4,
+          5,
+          7,
+          8
+        ],
+        "is_deterministic": false,
+        "deterministic_value": null
+      },
+      {
+        "n_mod_18": 3,
+        "n_mod_3": 0,
+        "n_mod_9": 3,
+        "v2_of_3r_plus_1": 1,
+        "T_mod_9_values": [
+          1,
+          2,
+          4,
+          5,
+          7,
+          8
+        ],
+        "is_deterministic": false,
+        "deterministic_value": null
+      },
+      {
+        "n_mod_18": 5,
+        "n_mod_3": 2,
+        "n_mod_9": 5,
+        "v2_of_3r_plus_1": 4,
+        "T_mod_9_values": [
+          1,
+          2,
+          4,
+          5,
+          7,
+          8
+        ],
+        "is_deterministic": false,
+        "deterministic_value": null
+      },
+      {
+        "n_mod_18": 7,
+        "n_mod_3": 1,
+        "n_mod_9": 7,
+        "v2_of_3r_plus_1": 1,
+        "T_mod_9_values": [
+          1,
+          2,
+          4,
+          5,
+          7,
+          8
+        ],
+        "is_deterministic": false,
+        "deterministic_value": null
+      },
+      {
+        "n_mod_18": 9,
+        "n_mod_3": 0,
+        "n_mod_9": 0,
+        "v2_of_3r_plus_1": 2,
+        "T_mod_9_values": [
+          1,
+          2,
+          4,
+          5,
+          7,
+          8
+        ],
+        "is_deterministic": false,
+        "deterministic_value": null
+      },
+      {
+        "n_mod_18": 11,
+        "n_mod_3": 2,
+        "n_mod_9": 2,
+        "v2_of_3r_plus_1": 1,
+        "T_mod_9_values": [
+          1,
+          2,
+          4,
+          5,
+          7,
+          8
+        ],
+        "is_deterministic": false,
+        "deterministic_value": null
+      },
+      {
+        "n_mod_18": 13,
+        "n_mod_3": 1,
+        "n_mod_9": 4,
+        "v2_of_3r_plus_1": 3,
+        "T_mod_9_values": [
+          1,
+          2,
+          4,
+          5,
+          7,
+          8
+        ],
+        "is_deterministic": false,
+        "deterministic_value": null
+      },
+      {
+        "n_mod_18": 15,
+        "n_mod_3": 0,
+        "n_mod_9": 6,
+        "v2_of_3r_plus_1": 1,
+        "T_mod_9_values": [
+          1,
+          2,
+          4,
+          5,
+          7,
+          8
+        ],
+        "is_deterministic": false,
+        "deterministic_value": null
+      },
+      {
+        "n_mod_18": 17,
+        "n_mod_3": 2,
+        "n_mod_9": 8,
+        "v2_of_3r_plus_1": 2,
+        "T_mod_9_values": [
+          1,
+          2,
+          4,
+          5,
+          7,
+          8
+        ],
+        "is_deterministic": false,
+        "deterministic_value": null
+      }
+    ],
+    "deterministic_count": 0,
+    "total_classes": 9,
+    "deterministic_ratio": 0.0
+  },
+  "analysis_7_extended_classification": {
+    "k=1_a=1": {
+      "mod_input": 6,
+      "mod_output": 3,
+      "total_classes": 3,
+      "deterministic": 0,
+      "det_ratio": 0.0
+    },
+    "k=1_a=2": {
+      "mod_input": 12,
+      "mod_output": 3,
+      "total_classes": 6,
+      "deterministic": 3,
+      "det_ratio": 0.5
+    },
+    "k=1_a=3": {
+      "mod_input": 24,
+      "mod_output": 3,
+      "total_classes": 12,
+      "deterministic": 9,
+      "det_ratio": 0.75
+    },
+    "k=1_a=4": {
+      "mod_input": 48,
+      "mod_output": 3,
+      "total_classes": 24,
+      "deterministic": 21,
+      "det_ratio": 0.875
+    },
+    "k=1_a=5": {
+      "mod_input": 96,
+      "mod_output": 3,
+      "total_classes": 48,
+      "deterministic": 45,
+      "det_ratio": 0.9375
+    },
+    "k=1_a=6": {
+      "mod_input": 192,
+      "mod_output": 3,
+      "total_classes": 96,
+      "deterministic": 93,
+      "det_ratio": 0.9688
+    },
+    "k=1_a=7": {
+      "mod_input": 384,
+      "mod_output": 3,
+      "total_classes": 192,
+      "deterministic": 189,
+      "det_ratio": 0.9844
+    },
+    "k=2_a=1": {
+      "mod_input": 18,
+      "mod_output": 9,
+      "total_classes": 9,
+      "deterministic": 0,
+      "det_ratio": 0.0
+    },
+    "k=2_a=2": {
+      "mod_input": 36,
+      "mod_output": 9,
+      "total_classes": 18,
+      "deterministic": 9,
+      "det_ratio": 0.5
+    },
+    "k=2_a=3": {
+      "mod_input": 72,
+      "mod_output": 9,
+      "total_classes": 36,
+      "deterministic": 27,
+      "det_ratio": 0.75
+    },
+    "k=2_a=4": {
+      "mod_input": 144,
+      "mod_output": 9,
+      "total_classes": 72,
+      "deterministic": 63,
+      "det_ratio": 0.875
+    },
+    "k=2_a=5": {
+      "mod_input": 288,
+      "mod_output": 9,
+      "total_classes": 144,
+      "deterministic": 135,
+      "det_ratio": 0.9375
+    },
+    "k=2_a=6": {
+      "mod_input": 576,
+      "mod_output": 9,
+      "total_classes": 288,
+      "deterministic": 279,
+      "det_ratio": 0.9688
+    },
+    "k=2_a=7": {
+      "mod_input": 1152,
+      "mod_output": 9,
+      "total_classes": 576,
+      "deterministic": 567,
+      "det_ratio": 0.9844
+    },
+    "k=3_a=1": {
+      "mod_input": 54,
+      "mod_output": 27,
+      "total_classes": 27,
+      "deterministic": 0,
+      "det_ratio": 0.0
+    },
+    "k=3_a=2": {
+      "mod_input": 108,
+      "mod_output": 27,
+      "total_classes": 54,
+      "deterministic": 27,
+      "det_ratio": 0.5
+    },
+    "k=3_a=3": {
+      "mod_input": 216,
+      "mod_output": 27,
+      "total_classes": 108,
+      "deterministic": 81,
+      "det_ratio": 0.75
+    },
+    "k=3_a=4": {
+      "mod_input": 432,
+      "mod_output": 27,
+      "total_classes": 216,
+      "deterministic": 189,
+      "det_ratio": 0.875
+    },
+    "k=3_a=5": {
+      "mod_input": 864,
+      "mod_output": 27,
+      "total_classes": 432,
+      "deterministic": 405,
+      "det_ratio": 0.9375
+    },
+    "k=3_a=6": {
+      "mod_input": 1728,
+      "mod_output": 27,
+      "total_classes": 864,
+      "deterministic": 837,
+      "det_ratio": 0.9688
+    },
+    "k=3_a=7": {
+      "mod_input": 3456,
+      "mod_output": 27,
+      "total_classes": 1728,
+      "deterministic": 1701,
+      "det_ratio": 0.9844
+    }
+  },
+  "analysis_8_consecutive_orbits": {
+    "1": {
+      "mod": 3,
+      "total_triples_observed": 25000,
+      "distinct_triples": 8,
+      "theoretical_max_triples": 1,
+      "coverage_ratio": 8.0,
+      "entropy": 2.7564,
+      "max_entropy": 3.0,
+      "entropy_ratio": 0.918813,
+      "top5_triples": {
+        "(2, 2, 2)": 7397,
+        "(2, 2, 1)": 3707,
+        "(1, 2, 2)": 3699,
+        "(2, 1, 2)": 3699,
+        "(2, 1, 1)": 1861
+      }
+    },
+    "2": {
+      "mod": 9,
+      "total_triples_observed": 25000,
+      "distinct_triples": 214,
+      "theoretical_max_triples": 27,
+      "coverage_ratio": 7.925926,
+      "entropy": 6.2679,
+      "max_entropy": 7.7415,
+      "entropy_ratio": 0.80965,
+      "top5_triples": {
+        "(5, 8, 8)": 1434,
+        "(2, 8, 8)": 1430,
+        "(8, 8, 8)": 1430,
+        "(7, 2, 8)": 719,
+        "(2, 8, 4)": 718
+      }
+    },
+    "3": {
+      "mod": 27,
+      "total_triples_observed": 25000,
+      "distinct_triples": 986,
+      "theoretical_max_triples": 729,
+      "coverage_ratio": 1.352538,
+      "entropy": 8.0564,
+      "max_entropy": 9.9454,
+      "entropy_ratio": 0.810064,
+      "top5_triples": {
+        "(23, 8, 26)": 466,
+        "(20, 17, 26)": 466,
+        "(17, 26, 26)": 465,
+        "(14, 8, 26)": 462,
+        "(11, 17, 26)": 462
+      }
+    }
+  },
+  "key_findings": [
+    "CONFIRMED: T(n) ≢ 0 (mod 3) for all tested odd n",
+    "mod 3^1: det_ratio=0.0, avg_branching=2.0, L1=0.666467",
+    "mod 3^2: det_ratio=0.0, avg_branching=6.0, L1=0.555231",
+    "mod 3^3: det_ratio=0.0, avg_branching=9.4615, L1=0.570731",
+    "mod 3^4: det_ratio=0.0, avg_branching=7.95, L1=0.578556",
+    "mod 3^1: 0 unreachable odd, 0 unreachable odd-non3, forbidden_ratio=0.0",
+    "mod 3^2: 1 unreachable odd, 0 unreachable odd-non3, forbidden_ratio=0.25",
+    "mod 3^3: 4 unreachable odd, 0 unreachable odd-non3, forbidden_ratio=0.307692",
+    "mod 3^4: 13 unreachable odd, 0 unreachable odd-non3, forbidden_ratio=0.325",
+    "mod 3^5: 40 unreachable odd, 0 unreachable odd-non3, forbidden_ratio=0.330579",
+    "mod 9 classification: 0/9 deterministic (ratio=0.0)",
+    "Extended k=1_a=3: det_ratio=0.75 (9/12)",
+    "Extended k=1_a=4: det_ratio=0.875 (21/24)",
+    "Extended k=1_a=5: det_ratio=0.9375 (45/48)",
+    "Extended k=1_a=6: det_ratio=0.9688 (93/96)",
+    "Extended k=1_a=7: det_ratio=0.9844 (189/192)",
+    "Extended k=2_a=3: det_ratio=0.75 (27/36)",
+    "Extended k=2_a=4: det_ratio=0.875 (63/72)",
+    "Extended k=2_a=5: det_ratio=0.9375 (135/144)",
+    "Extended k=2_a=6: det_ratio=0.9688 (279/288)",
+    "Extended k=2_a=7: det_ratio=0.9844 (567/576)",
+    "Extended k=3_a=3: det_ratio=0.75 (81/108)",
+    "Extended k=3_a=4: det_ratio=0.875 (189/216)",
+    "Extended k=3_a=5: det_ratio=0.9375 (405/432)",
+    "Extended k=3_a=6: det_ratio=0.9688 (837/864)",
+    "Extended k=3_a=7: det_ratio=0.9844 (1701/1728)",
+    "mod 3^1 triples: coverage=8.0, entropy_ratio=0.918813",
+    "mod 3^2 triples: coverage=7.925926, entropy_ratio=0.80965",
+    "mod 3^3 triples: coverage=1.352538, entropy_ratio=0.810064"
+  ]
+}

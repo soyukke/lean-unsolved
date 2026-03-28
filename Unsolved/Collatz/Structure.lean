@@ -1,4 +1,4 @@
-import Unsolved.Collatz
+import Unsolved.Collatz.Defs
 
 /-!
 # コラッツ予想 フェーズ3: 構造的性質

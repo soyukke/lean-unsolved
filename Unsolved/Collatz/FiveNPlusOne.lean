@@ -1,4 +1,4 @@
-import Unsolved.CollatzStructure
+import Unsolved.Collatz.Structure
 
 /-!
 # 5n+1 コラッツ変種の形式化

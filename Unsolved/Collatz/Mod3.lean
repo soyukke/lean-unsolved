@@ -1,4 +1,4 @@
-import Unsolved.CollatzStructure
+import Unsolved.Collatz.Structure
 
 /-!
 # コラッツ予想 探索43: mod 3 不変量

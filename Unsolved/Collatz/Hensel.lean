@@ -1,4 +1,4 @@
-import Unsolved.CollatzMod
+import Unsolved.Collatz.Mod
 
 /-!
 # コラッツ予想 探索13: Hensel Attrition（2-adic消耗）

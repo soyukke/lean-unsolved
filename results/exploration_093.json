@@ -1,0 +1,417 @@
+{
+  "exploration_id": "093",
+  "title": "mod 2^k での決定的下降割合の収束検証（拡張）",
+  "convergence_table": [
+    {
+      "k": 3,
+      "total_odd": 4,
+      "det": 2,
+      "non_det": 2,
+      "det_ratio": 0.5,
+      "non_det_ratio": 0.5,
+      "samples": 200,
+      "elapsed": 0.0
+    },
+    {
+      "k": 4,
+      "total_odd": 8,
+      "det": 6,
+      "non_det": 2,
+      "det_ratio": 0.75,
+      "non_det_ratio": 0.25,
+      "samples": 200,
+      "elapsed": 0.0
+    },
+    {
+      "k": 5,
+      "total_odd": 16,
+      "det": 12,
+      "non_det": 4,
+      "det_ratio": 0.75,
+      "non_det_ratio": 0.25,
+      "samples": 200,
+      "elapsed": 0.0
+    },
+    {
+      "k": 6,
+      "total_odd": 32,
+      "det": 24,
+      "non_det": 8,
+      "det_ratio": 0.75,
+      "non_det_ratio": 0.25,
+      "samples": 200,
+      "elapsed": 0.0
+    },
+    {
+      "k": 7,
+      "total_odd": 64,
+      "det": 54,
+      "non_det": 10,
+      "det_ratio": 0.84375,
+      "non_det_ratio": 0.15625,
+      "samples": 200,
+      "elapsed": 0.01
+    },
+    {
+      "k": 8,
+      "total_odd": 128,
+      "det": 109,
+      "non_det": 19,
+      "det_ratio": 0.8515625,
+      "non_det_ratio": 0.1484375,
+      "samples": 200,
+      "elapsed": 0.02
+    },
+    {
+      "k": 9,
+      "total_odd": 256,
+      "det": 225,
+      "non_det": 31,
+      "det_ratio": 0.87890625,
+      "non_det_ratio": 0.12109375,
+      "samples": 200,
+      "elapsed": 0.03
+    },
+    {
+      "k": 10,
+      "total_odd": 512,
+      "det": 448,
+      "non_det": 64,
+      "det_ratio": 0.875,
+      "non_det_ratio": 0.125,
+      "samples": 200,
+      "elapsed": 0.06
+    },
+    {
+      "k": 11,
+      "total_odd": 1024,
+      "det": 910,
+      "non_det": 114,
+      "det_ratio": 0.88867188,
+      "non_det_ratio": 0.11132812,
+      "samples": 100,
+      "elapsed": 0.06
+    },
+    {
+      "k": 12,
+      "total_odd": 2048,
+      "det": 1866,
+      "non_det": 182,
+      "det_ratio": 0.91113281,
+      "non_det_ratio": 0.08886719,
+      "samples": 80,
+      "elapsed": 0.1
+    },
+    {
+      "k": 13,
+      "total_odd": 4096,
+      "det": 3729,
+      "non_det": 367,
+      "det_ratio": 0.91040039,
+      "non_det_ratio": 0.08959961,
+      "samples": 50,
+      "elapsed": 0.14
+    },
+    {
+      "k": 14,
+      "total_odd": 8192,
+      "det": 7540,
+      "non_det": 652,
+      "det_ratio": 0.92041016,
+      "non_det_ratio": 0.07958984,
+      "samples": 30,
+      "elapsed": 0.15
+    }
+  ],
+  "theoretical_step1": {
+    "3": {
+      "total": 4,
+      "step1_descent": 1,
+      "step1_ascent": 2,
+      "v2_indeterminate": 1,
+      "step1_descent_ratio": 0.25,
+      "step1_ascent_ratio": 0.5
+    },
+    "4": {
+      "total": 8,
+      "step1_descent": 3,
+      "step1_ascent": 4,
+      "v2_indeterminate": 1,
+      "step1_descent_ratio": 0.375,
+      "step1_ascent_ratio": 0.5
+    },
+    "5": {
+      "total": 16,
+      "step1_descent": 7,
+      "step1_ascent": 8,
+      "v2_indeterminate": 1,
+      "step1_descent_ratio": 0.4375,
+      "step1_ascent_ratio": 0.5
+    },
+    "6": {
+      "total": 32,
+      "step1_descent": 15,
+      "step1_ascent": 16,
+      "v2_indeterminate": 1,
+      "step1_descent_ratio": 0.46875,
+      "step1_ascent_ratio": 0.5
+    },
+    "7": {
+      "total": 64,
+      "step1_descent": 31,
+      "step1_ascent": 32,
+      "v2_indeterminate": 1,
+      "step1_descent_ratio": 0.484375,
+      "step1_ascent_ratio": 0.5
+    },
+    "8": {
+      "total": 128,
+      "step1_descent": 63,
+      "step1_ascent": 64,
+      "v2_indeterminate": 1,
+      "step1_descent_ratio": 0.4921875,
+      "step1_ascent_ratio": 0.5
+    },
+    "9": {
+      "total": 256,
+      "step1_descent": 127,
+      "step1_ascent": 128,
+      "v2_indeterminate": 1,
+      "step1_descent_ratio": 0.49609375,
+      "step1_ascent_ratio": 0.5
+    },
+    "10": {
+      "total": 512,
+      "step1_descent": 255,
+      "step1_ascent": 256,
+      "v2_indeterminate": 1,
+      "step1_descent_ratio": 0.498046875,
+      "step1_ascent_ratio": 0.5
+    },
+    "11": {
+      "total": 1024,
+      "step1_descent": 511,
+      "step1_ascent": 512,
+      "v2_indeterminate": 1,
+      "step1_descent_ratio": 0.4990234375,
+      "step1_ascent_ratio": 0.5
+    },
+    "12": {
+      "total": 2048,
+      "step1_descent": 1023,
+      "step1_ascent": 1024,
+      "v2_indeterminate": 1,
+      "step1_descent_ratio": 0.49951171875,
+      "step1_ascent_ratio": 0.5
+    },
+    "13": {
+      "total": 4096,
+      "step1_descent": 2047,
+      "step1_ascent": 2048,
+      "v2_indeterminate": 1,
+      "step1_descent_ratio": 0.499755859375,
+      "step1_ascent_ratio": 0.5
+    },
+    "14": {
+      "total": 8192,
+      "step1_descent": 4095,
+      "step1_ascent": 4096,
+      "v2_indeterminate": 1,
+      "step1_descent_ratio": 0.4998779296875,
+      "step1_ascent_ratio": 0.5
+    },
+    "15": {
+      "total": 16384,
+      "step1_descent": 8191,
+      "step1_ascent": 8192,
+      "v2_indeterminate": 1,
+      "step1_descent_ratio": 0.49993896484375,
+      "step1_ascent_ratio": 0.5
+    },
+    "16": {
+      "total": 32768,
+      "step1_descent": 16383,
+      "step1_ascent": 16384,
+      "v2_indeterminate": 1,
+      "step1_descent_ratio": 0.499969482421875,
+      "step1_ascent_ratio": 0.5
+    },
+    "17": {
+      "total": 65536,
+      "step1_descent": 32767,
+      "step1_ascent": 32768,
+      "v2_indeterminate": 1,
+      "step1_descent_ratio": 0.4999847412109375,
+      "step1_ascent_ratio": 0.5
+    },
+    "18": {
+      "total": 131072,
+      "step1_descent": 65535,
+      "step1_ascent": 65536,
+      "v2_indeterminate": 1,
+      "step1_descent_ratio": 0.49999237060546875,
+      "step1_ascent_ratio": 0.5
+    }
+  },
+  "non_det_mod32_all": {
+    "3": {
+      "3": 1,
+      "7": 1
+    },
+    "4": {
+      "11": 1,
+      "15": 1
+    },
+    "5": {
+      "7": 1,
+      "15": 1,
+      "27": 1,
+      "31": 1
+    },
+    "6": {
+      "7": 2,
+      "15": 2,
+      "27": 2,
+      "31": 2
+    },
+    "7": {
+      "27": 2,
+      "31": 4,
+      "7": 2,
+      "15": 2
+    },
+    "8": {
+      "27": 4,
+      "31": 7,
+      "15": 4,
+      "7": 4
+    },
+    "9": {
+      "27": 7,
+      "31": 12,
+      "15": 6,
+      "7": 6
+    },
+    "10": {
+      "27": 13,
+      "31": 25,
+      "15": 13,
+      "7": 13
+    },
+    "11": {
+      "27": 22,
+      "31": 45,
+      "15": 24,
+      "7": 23
+    },
+    "12": {
+      "27": 34,
+      "31": 82,
+      "15": 36,
+      "7": 30
+    },
+    "13": {
+      "27": 71,
+      "31": 154,
+      "15": 71,
+      "7": 71
+    },
+    "14": {
+      "27": 124,
+      "31": 281,
+      "15": 125,
+      "7": 122
+    }
+  },
+  "det_step_dist_all": {
+    "3": {
+      "1": 2
+    },
+    "4": {
+      "1": 4,
+      "2": 1,
+      "3": 1
+    },
+    "5": {
+      "1": 8,
+      "2": 2,
+      "3": 2
+    },
+    "6": {
+      "1": 16,
+      "2": 4,
+      "3": 4
+    },
+    "7": {
+      "1": 32,
+      "2": 8,
+      "4": 3,
+      "3": 8,
+      "5": 3
+    },
+    "8": {
+      "1": 64,
+      "2": 16,
+      "4": 6,
+      "3": 16,
+      "5": 7
+    },
+    "9": {
+      "1": 128,
+      "2": 32,
+      "4": 12,
+      "3": 32,
+      "5": 14,
+      "6": 7
+    },
+    "10": {
+      "1": 256,
+      "2": 64,
+      "4": 24,
+      "3": 64,
+      "5": 28,
+      "6": 12
+    },
+    "11": {
+      "1": 512,
+      "2": 128,
+      "4": 48,
+      "3": 128,
+      "5": 56,
+      "7": 14,
+      "6": 24
+    },
+    "12": {
+      "1": 1024,
+      "2": 256,
+      "4": 96,
+      "3": 256,
+      "5": 112,
+      "8": 44,
+      "7": 30,
+      "6": 48
+    },
+    "13": {
+      "1": 2048,
+      "2": 512,
+      "4": 192,
+      "3": 512,
+      "5": 224,
+      "8": 85,
+      "7": 60,
+      "6": 96
+    },
+    "14": {
+      "1": 4096,
+      "2": 1024,
+      "4": 384,
+      "3": 1024,
+      "5": 448,
+      "8": 170,
+      "7": 120,
+      "6": 192,
+      "9": 82
+    }
+  },
+  "conclusion": "非決定的割合は k の増大とともに減少: k=10で12.5% → k=14で8.0% 仮説「7/8に収束」は棄却。決定的割合は 7/8 を超えて 1 に漸近する傾向。 非決定的剰余類は依然として r≡7,15,27,31 (mod 32) に集中。特に r≡31 (mod 32) が最多。 1ステップ決定的下降は常に全奇数クラスの 1/2 (v2>=2の割合)。2ステップ以上の決定的下降が k とともに増加し、全体の決定的割合を押し上げる。"
+}

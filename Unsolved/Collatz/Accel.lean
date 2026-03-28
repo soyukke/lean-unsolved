@@ -1,4 +1,4 @@
-import Unsolved.CollatzHensel
+import Unsolved.Collatz.Hensel
 
 /-!
 # コラッツ予想 探索14: 「上昇+下降」1サイクルの縮小率

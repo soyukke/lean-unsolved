@@ -1,4 +1,4 @@
-import Unsolved.CollatzAccel
+import Unsolved.Collatz.Accel
 
 /-!
 # コラッツ予想 探索37: 最小反例の制約

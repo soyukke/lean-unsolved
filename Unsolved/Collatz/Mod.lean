@@ -1,4 +1,4 @@
-import Unsolved.CollatzStructure
+import Unsolved.Collatz.Structure
 
 /-!
 # コラッツ予想 探索11: mod 2^k での Syracuse 関数の振る舞い

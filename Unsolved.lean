@@ -1,19 +1,6 @@
 import Unsolved.Collatz
-import Unsolved.CollatzStructure
-import Unsolved.CollatzMod
-import Unsolved.CollatzCycle
-import Unsolved.CollatzHensel
-import Unsolved.CollatzAccel
-import Unsolved.CollatzFormula
-import Unsolved.CollatzMinimal
+import Unsolved.Erdos
 import Unsolved.Goldbach
 import Unsolved.TwinPrime
-import Unsolved.CollatzStoppingTime
-import Unsolved.CollatzMod3
-import Unsolved.ErdosVanDerWaerden
-import Unsolved.ErdosDistinctDistances
-import Unsolved.ErdosRamsey
-import Unsolved.ErdosSunflower
-import Unsolved.ErdosSumProduct
 import Unsolved.Schur
-import Unsolved.Collatz5n1
+-- import Unsolved.Index  -- ドキュメント専用（Lean定義なし）

@@ -21,24 +21,24 @@
 | # | 探索 | ステータス | 成果物 | 主要発見 |
 |---|------|----------|--------|---------|
 | 5 | 構造解析 | ✅ | scripts/collatz_structure.py | mod 4が上昇/下降を決定 |
-| 6 | 基本補題群 | ✅ | CollatzStructure.lean | even/odd step, 4→2→1 cycle |
+| 6 | 基本補題群 | ✅ | Collatz/Structure.lean | even/odd step, 4→2→1 cycle |
 | 7 | ビットパターン遷移 | ✅ | scripts/collatz_bit_transition.py | 末尾ビット→v2完全決定 |
-| 8 | 下降補題 | ✅ | CollatzStructure.lean | n≡1(mod4)→T(n)<n ★核心 |
-| 9 | 2ステップ下降 | ✅ | CollatzStructure.lean | n≡3(mod8)→T²(n)<T(n) |
+| 8 | 下降補題 | ✅ | Collatz/Structure.lean | n≡1(mod4)→T(n)<n ★核心 |
+| 9 | 2ステップ下降 | ✅ | Collatz/Structure.lean | n≡3(mod8)→T²(n)<T(n) |
 
 ## フェーズ4: 形式化と証明
 
 | # | 探索 | ステータス | 成果物 | 主要発見 |
 |---|------|----------|--------|---------|
 | 10 | Taoアプローチ調査 | ✅ | - | 対数密度, 特性関数減衰. Lean形式化は困難 |
-| 11 | mod 8完全分類 | ✅ | CollatzMod.lean | v2=2,1,≥3,1 for r=1,3,5,7 |
-| 12 | サイクル排除 | ✅ | CollatzCycle.lean | 3^a=2^b→a=b=0, Baker公理 |
-| 13 | Hensel attrition | ✅ | CollatzHensel.lean | k回上昇⟺n≡2^{k+1}-1, k=1..4 |
-| 14 | 加速Syracuse | ✅ | CollatzAccel.lean | 上界(9n+5)/8等, firstDescent |
+| 11 | mod 8完全分類 | ✅ | Collatz/Mod.lean | v2=2,1,≥3,1 for r=1,3,5,7 |
+| 12 | サイクル排除 | ✅ | Collatz/Cycle.lean | 3^a=2^b→a=b=0, Baker公理 |
+| 13 | Hensel attrition | ✅ | Collatz/Hensel.lean | k回上昇⟺n≡2^{k+1}-1, k=1..4 |
+| 14 | 加速Syracuse | ✅ | Collatz/Accel.lean | 上界(9n+5)/8等, firstDescent |
 | 15 | 大規模解析+一般k調査 | ✅ | scripts/collatz_accel.py | 平均縮小0.985, trailing 1-bits決定的 |
-| 16 | ★一般公式 | ✅ | CollatzFormula.lean | 2^k·T^k=3^k·n+(3^k-2^k) ★重要 |
+| 16 | ★一般公式 | ✅ | Collatz/Formula.lean | 2^k·T^k=3^k·n+(3^k-2^k) ★重要 |
 | 17 | 逆コラッツ木 | ✅ | scripts/collatz_inverse_tree.py | 成長率≈4/3, カバー率調査 |
-| 18 | 完全サイクル公式 | ✅ | CollatzFormula.lean | 4·2^k·T^{k+1}+2^{k+1}≤3^{k+1}(n+1) |
+| 18 | 完全サイクル公式 | ✅ | Collatz/Formula.lean | 4·2^k·T^{k+1}+2^{k+1}≤3^{k+1}(n+1) |
 | 19 | 対数ポテンシャル | ✅ | scripts/collatz_potential.py | Var[delta]=2, 最良ポテンシャル83.5%減少 |
 
 ## フェーズ5: 並列力技探索
@@ -70,7 +70,7 @@
 
 | # | 探索 | ステータス | 成果物 | 主要発見 |
 |---|------|----------|--------|---------|
-| 42 | StoppingTime追加補題 | ✅ | CollatzStoppingTime.lean | s(4n)=s(n)+2, s(8n)=s(n)+3, 2^k·n到達⟺n到達, s(2^k)=k, collatzIter合成律 |
+| 42 | StoppingTime追加補題 | ✅ | Collatz/StoppingTime/*.lean | s(4n)=s(n)+2, s(8n)=s(n)+3, 2^k·n到達⟺n到達, s(2^k)=k, collatzIter合成律 |
 
 ## フェーズ10: 解析的手法
 
@@ -97,16 +97,16 @@
 | 53 | 生成関数 | ✅ | scripts/collatz_generating_function.py | ★Z変換極が全て単位円内 | A |
 | 54 | Rauzy fractal | ✅ | scripts/collatz_rauzy.py | U頻度≈log₂(3)-1, 冗長度74% | B |
 | 55 | パターンマイニング | ✅ | scripts/collatz_pattern_mining.py | carry chain平均長2.0 | B |
-| 65 | 小さい値の到達可能性 | ✅ | CollatzStoppingTime.lean | collatzReaches 5,6,7 を decide で証明 | B |
-| 66 | mod 2^k 完全分類まとめ + 到達可能性拡張 | ✅ | CollatzMod3.lean, CollatzStoppingTime.lean | mod 16 分類追加, collatzReaches 8,9,10 | B |
-| 67 | collatzReaches の合成性質 | ✅ | CollatzStoppingTime.lean | collatzReaches_even_iff: 偶数nの到達⟺n/2の到達 | B |
-| 68 | collatzReaches の奇数版 | ✅ | CollatzStoppingTime.lean | collatzReaches_odd_iff: 奇数n>1の到達⟺3n+1の到達 | B |
-| 69 | 増減まとめ + collatzReaches 合成 | ✅ | CollatzMod3.lean, CollatzStoppingTime.lean | (3n+1)/2≤2n, collatzReaches 13,15,16 | B |
-| 70 | collatzReaches の偶数合成と具体例 | ✅ | CollatzStoppingTime.lean | collatzReaches_of_half, collatzReaches 20 | B |
-| 71 | mod 2^k 性質まとめ + stoppingTime 上界 | ✅ | CollatzMod3.lean, CollatzStoppingTime.lean | (3n+1)≥4∧偶数, mod4排中律, collatzReaches 32,64 | B |
-| 72 | 3ステップ合成 + collatzReaches 100 | ✅ | CollatzMod3.lean, CollatzStoppingTime.lean | 3n+1>n+1, (3n+1)/4 mod4, collatzReaches 100 | B |
-| 75 | mod 6 完全分類 + 奇数到達性 | ✅ | CollatzMod3.lean, CollatzStoppingTime.lean | ★(3n+1)%6=4 (奇数n), collatzReaches 17,19,21 | B |
-| 76 | mod 12 分類 + 奇数到達性拡張 | ✅ | CollatzMod3.lean, CollatzStoppingTime.lean | ★(3n+1)%12∈{4,10}, collatzReaches 23,25 | B |
+| 65 | 小さい値の到達可能性 | ✅ | Collatz/StoppingTime/*.lean | collatzReaches 5,6,7 を decide で証明 | B |
+| 66 | mod 2^k 完全分類まとめ + 到達可能性拡張 | ✅ | Collatz/Mod3.lean, Collatz/StoppingTime/*.lean | mod 16 分類追加, collatzReaches 8,9,10 | B |
+| 67 | collatzReaches の合成性質 | ✅ | Collatz/StoppingTime/*.lean | collatzReaches_even_iff: 偶数nの到達⟺n/2の到達 | B |
+| 68 | collatzReaches の奇数版 | ✅ | Collatz/StoppingTime/*.lean | collatzReaches_odd_iff: 奇数n>1の到達⟺3n+1の到達 | B |
+| 69 | 増減まとめ + collatzReaches 合成 | ✅ | Collatz/Mod3.lean, Collatz/StoppingTime/*.lean | (3n+1)/2≤2n, collatzReaches 13,15,16 | B |
+| 70 | collatzReaches の偶数合成と具体例 | ✅ | Collatz/StoppingTime/*.lean | collatzReaches_of_half, collatzReaches 20 | B |
+| 71 | mod 2^k 性質まとめ + stoppingTime 上界 | ✅ | Collatz/Mod3.lean, Collatz/StoppingTime/*.lean | (3n+1)≥4∧偶数, mod4排中律, collatzReaches 32,64 | B |
+| 72 | 3ステップ合成 + collatzReaches 100 | ✅ | Collatz/Mod3.lean, Collatz/StoppingTime/*.lean | 3n+1>n+1, (3n+1)/4 mod4, collatzReaches 100 | B |
+| 75 | mod 6 完全分類 + 奇数到達性 | ✅ | Collatz/Mod3.lean, Collatz/StoppingTime/*.lean | ★(3n+1)%6=4 (奇数n), collatzReaches 17,19,21 | B |
+| 76 | mod 12 分類 + 奇数到達性拡張 | ✅ | Collatz/Mod3.lean, Collatz/StoppingTime/*.lean | ★(3n+1)%12∈{4,10}, collatzReaches 23,25 | B |
 
 ## フェーズ12: 深堀り (探索56-59)
 
@@ -114,7 +114,7 @@
 |---|------|----------|--------|---------|------|
 | 56 | E[v₂]=2の証明 | ✅ | scripts/collatz_ev2_proof.py | v2=2滞在率25%, 幾何分布メカニズム | A |
 | 57 | k=10-12拡大周期 | ✅ | scripts/collatz_expansion_window.py | 大偏差レートI=0.055で消滅を説明 | A |
-| 58 | mod32 Lean形式化 | ✅ | CollatzMinimal.lean拡張 | ★mod32≡11,23排除(sorry無し) | S |
+| 58 | mod32 Lean形式化 | ✅ | Collatz/Minimal.lean拡張 | ★mod32≡11,23排除(sorry無し) | S |
 | 59 | v2分布の厳密証明 | ✅ | scripts/collatz_v2_distribution_proof.py | ★★P(v2=j)=1/2^j厳密証明, E[v₂]=2.0 | S |
 
 ## フェーズ13: 集約テスト探索 (探索030-034)
@@ -126,6 +126,57 @@
 | 32 | 停止時間生成関数 | ✅ | exploration_032.md | 自然境界で解析接続不可。行き止まり | C |
 | 33 | コラッツグラフRamsey性質 | ✅ | exploration_033.md | 長さ5以上の単調増加列は必ず存在 | B |
 | 34 | ランダムモデル収束速度 | ✅ | exploration_034.md | O(1/√n)収束、Terrasと一致 | B |
+
+## フェーズ14: ラウンド3並列探索 (探索081-085)
+
+| # | 探索 | ステータス | 成果物 | 主要発見 | 評価 |
+|---|------|----------|--------|---------|------|
+| 81 | mod 2^k 層別全単射構造 | ✅ | exploration_081.md | ★v2層別で各層が全単射、一様定常分布 | A |
+| 82 | Cramér関数と大偏差解析 | ✅ | exploration_082.md | ★★I(0)=0.055閉形式、発散は指数減衰 | S |
+| 83 | T(n)≢0(mod 3)の証明分析 | ✅ | exploration_083.md | 既にLean形式証明済み、mod 3∈{1,2}分類可能 | C |
+| 84 | 逆コラッツ木の到達密度下界 | ✅ | exploration_084.md | ★gap≈1.64·exp(-0.237·L/log₂N)のユニバーサル下界 | A |
+| 85 | d/u>log₂(3)のバースト公式 | ✅ | exploration_085.md | ★LTEでバースト公式導出、確率的アプローチが有望 | A |
+
+## フェーズ15: ラウンド3バッチ2 (探索086-090)
+
+| # | 探索 | ステータス | 成果物 | 主要発見 | 評価 |
+|---|------|----------|--------|---------|------|
+| 86 | Dirichlet級数の解析接続 | ✅ | exploration_086.md | 残余項がEuler-Maclaurin展開と機械精度一致。Dirichlet倍率≈7 | B |
+| 87 | U/Dパターン組合せ的数え上げ | ✅ | exploration_087.md | ★禁止パターン不在、2次マルコフ連鎖、均衡復元力 | A |
+| 88 | Z_2上の周期点完全分類 | ✅ | exploration_088.md | ★Z_2上に形式的周期点無限。不動点n=1のみ。2-adic反発性 | A |
+| 89 | 転送作用素スペクトルギャップ | ✅ | exploration_089.md | ★gap>0.5、混合時間1-2ステップ。E[v₂]正確公式発見 | A |
+| 90 | Collatz/Formula一般公式の下降条件 | ✅ | exploration_090.md | 既存形式化でカバー済み。新規方向は上昇回数の上界 | C |
+
+## フェーズ16: ラウンド3バッチ3 (探索091-095)
+
+| # | 探索 | ステータス | 成果物 | 主要発見 | 評価 |
+|---|------|----------|--------|---------|------|
+| 91 | collatzReaches帰納的構築戦略 | ✅ | exploration_091.md | 奇数核テーブル+メタプログラミングが最適解 | A |
+| 92 | mod 2^10 下降ステップ数分類 | ✅ | exploration_092.md | ★87.5%決定的、(2^{2k}-1)/3型超急速下降 | A |
+| 93 | Syracuse力学系エルゴード性 | ✅ | exploration_093.md | ★相関指数減衰τ≈5.7、リアプノフ全負、単一エルゴード | A |
+| 94 | stopping time尾部分布 | ✅ | exploration_094.md | ★尾部指数減衰exp(-0.0735t)、max~(logN)^1.623 | A |
+| 95 | 連分数展開との相関 | ✅ | exploration_095.md | 連分数とSTは無相関(r=-0.004)、仮説棄却 | C |
+
+## フェーズ17: ラウンド4バッチ1 (探索096-101)
+
+| # | 探索 | ステータス | 成果物 | 主要発見 | 評価 |
+|---|------|----------|--------|---------|------|
+| 96 | mod p^k 多素数p-adic構造 | ✅ | exploration_096.md | ★定理: p\|T(n)⟺n≡-(3^{-1})(mod p)。v_p分布はGeo(1/p) | A |
+| 97 | 超急速下降族の代数的分類 | ✅ | exploration_097.md | ★T(n)=1唯一族は(4^k-1)/3。T(n)=c統一公式 | A |
+| 98 | ST減衰定数λの理論的導出 | ✅ | exploration_098.md | ★★I(0)×4/3=0.0733≈λ=0.0735(0.3%一致) | S |
+| 99 | 2次マルコフ遷移行列の固有値 | ✅ | exploration_099.md | ★gap≈0.82, |λ₂|=0.182, 混合6ステップ | A |
+| 100 | 集中不等式でd/u>log₂(3) | ✅ | exploration_100.md | Cramér: P≤exp(-0.055k)。v₂=2トラップ発見。∀n証明は不可 | A |
+| 101 | スペクトルギャップM→∞漸近 | ✅ | exploration_101.md | ★全k=3..10でgap≥0.65。0漸近なし | A |
+
+## フェーズ18: ラウンド4バッチ2 (探索102-106)
+
+| # | 探索 | ステータス | 成果物 | 主要発見 | 評価 |
+|---|------|----------|--------|---------|------|
+| 102 | consecutiveAscents形式化分析 | ✅ | exploration_102.md | 形式化可能(0.92)。帰納法+mod逆変換 | A |
+| 103 | E[v₂]パリティ公式形式化設計 | ✅ | exploration_103.md | v2_add_of_ltが核心障壁。k=5で公式不整合 | A |
+| 104 | mod 3^k軌道構造 | ✅ | exploration_104.md | ★確定遷移普遍公式1-1/2^{a-1}、T^m→-1集中 | A |
+| 105 | mod 2^12 決定的下降割合 | ✅ | exploration_105.md | ★7/8仮説棄却。決定的割合→1(k=14で92%) | A |
+| 106 | Baker定理サイクル排除 | ✅ | exploration_106.md | p=1..10完全排除。Baker下界11800bit不足 | B |
 
 ## 未着手の方向
 

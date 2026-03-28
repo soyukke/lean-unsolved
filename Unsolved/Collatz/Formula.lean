@@ -1,4 +1,4 @@
-import Unsolved.CollatzHensel
+import Unsolved.Collatz.Hensel
 
 /-!
 # コラッツ予想 探索16: 連続上昇中の Syracuse 反復の一般公式
