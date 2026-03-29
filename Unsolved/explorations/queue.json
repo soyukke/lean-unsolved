@@ -1214,6 +1214,308 @@
       "result_file": "exploration_149.md",
       "outcome": "小発見",
       "summary": "v3(3^k-2^k)=0(自明)。3-adicはサイクル排除に無力。vq一般公式を副産物導出"
+    },
+    {
+      "id": "collatz-156",
+      "problem": "collatz",
+      "title": "E[v₂]=2のHasSum形式化: テレスコープ和+Mathlib極限",
+      "category": "既存補題の拡張",
+      "description": "探索124設計に基づく。Thm B(Σj/2^j=2-(K+2)/2^K帰納法)+Thm C(HasSum+tendsto)。150-230行。",
+      "tools": [
+        "lean",
+        "analysis"
+      ],
+      "priority": 1,
+      "status": "done",
+      "formalization_potential": "定理候補",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_156.md",
+      "outcome": "中発見",
+      "formalization_value": "定理候補",
+      "summary": "★60-90行設計完了。partial_sum帰納法+tendsto分解+hasSum組立。Mathlib API全確認"
+    },
+    {
+      "id": "collatz-157",
+      "problem": "collatz",
+      "title": "一般Hensel帰納法: consecutiveAscents n k ⟺ n≡2^{k+1}-1(mod 2^{k+1})",
+      "category": "既存補題の拡張",
+      "description": "探索118設計。T^k(n)+1=2·3^k·m→mod4判定。100-150行。v2_mulとsyracuse_iter_alt_formula使用。",
+      "tools": [
+        "lean",
+        "analysis"
+      ],
+      "priority": 1,
+      "status": "done",
+      "formalization_potential": "定理候補",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_157.md",
+      "outcome": "中発見",
+      "formalization_value": "定理候補",
+      "summary": "★120-180行設計。iter_plus_one_factorization核心。k帰納法+mod4判定"
+    },
+    {
+      "id": "collatz-158",
+      "problem": "collatz",
+      "title": "入次数≤2のLean形式化: Indegree.lean新規作成",
+      "category": "既存補題の拡張",
+      "description": "探索121設計。6補題(even_pred_unique,odd_pred_unique,odd_predecessor,pred_complete,indegree_le_two,indegree_eq_two_iff)。90-180行。",
+      "tools": [
+        "lean"
+      ],
+      "priority": 1,
+      "status": "done",
+      "formalization_potential": "補題候補",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_158.md",
+      "outcome": "中発見",
+      "formalization_value": "補題候補",
+      "summary": "★8補題設計完了。全omega中心。依存Defs.leanのみ。鳩の巣8ケース展開"
+    },
+    {
+      "id": "collatz-159",
+      "problem": "collatz",
+      "title": "v2_dvd_iff: v2(m)≥k ⟺ 2^k∣mの形式化",
+      "category": "既存補題の拡張",
+      "description": "v2とdvdの接続補題。kに関する帰納法+v2の定義展開。collatzResidue形式化の前提。",
+      "tools": [
+        "lean",
+        "analysis"
+      ],
+      "priority": 1,
+      "status": "done",
+      "formalization_potential": "定理候補",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_159.md",
+      "outcome": "中発見",
+      "formalization_value": "定理候補",
+      "summary": "★順方向1行。逆方向k帰納法(generalizing m)。m>0前提必須"
+    },
+    {
+      "id": "collatz-160",
+      "problem": "collatz",
+      "title": "h_top=log(4/3)の理論的裏付け: 非コンパクト空間上のBowenエントロピー",
+      "category": "位相的/幾何学的",
+      "description": "探索152の結果を理論的に精密化。逆像成長率=位相的エントロピーの条件(Gurevich-Zargaryanの定理)を確認。",
+      "tools": [
+        "websearch",
+        "analysis"
+      ],
+      "priority": 2,
+      "status": "in_progress",
+      "created": "2026-03-29"
+    },
+    {
+      "id": "collatz-161",
+      "problem": "collatz",
+      "title": "10^7検証Phase1実装: 50Kチャンクx180の自動生成",
+      "category": "計算実験",
+      "description": "探索153設計のPhase1。generate_10m_chunks.pyでLeanファイル自動生成→lake build検証。",
+      "tools": [
+        "python",
+        "lean"
+      ],
+      "priority": 2,
+      "status": "queued",
+      "created": "2026-03-29"
+    },
+    {
+      "id": "collatz-162",
+      "problem": "collatz",
+      "title": "syracuse_odd: syracuseが常に奇数を返すことの形式証明",
+      "category": "既存補題の拡張",
+      "description": "10^7検証Phase2の前提。T(n)=(3n+1)/2^v、vは3n+1の2-adic。結果は奇数。v2_divとpow_v2_dvdで証明。",
+      "tools": [
+        "lean",
+        "analysis"
+      ],
+      "priority": 2,
+      "status": "queued",
+      "formalization_potential": "定理候補",
+      "created": "2026-03-29"
+    },
+    {
+      "id": "collatz-163",
+      "problem": "collatz",
+      "title": "合流時間E[C]=3.42·log₂Nの理論的導出",
+      "category": "確率的",
+      "description": "探索142のスケーリング定数。転送作用素のスペクトルギャップとの関係。2つの独立RWの初到達問題。",
+      "tools": [
+        "python",
+        "analysis"
+      ],
+      "priority": 2,
+      "status": "queued",
+      "created": "2026-03-29"
+    },
+    {
+      "id": "collatz-164",
+      "problem": "collatz",
+      "title": "N(m,k)再帰シフト法則の代数的証明",
+      "category": "代数的構造",
+      "description": "探索141。N(m,k)=N(m-1,k-2)のv2層持ち上げによる証明。mod 2^k→mod 2^{k+2}での衝突保存。",
+      "tools": [
+        "python",
+        "analysis"
+      ],
+      "priority": 2,
+      "status": "queued",
+      "created": "2026-03-29"
+    },
+    {
+      "id": "collatz-165",
+      "problem": "collatz",
+      "title": "全v2=1サイクル不可能のLean形式化設計",
+      "category": "既存補題の拡張",
+      "description": "探索144。C=3^p-2^p, D=2^p-3^p, C/D=-1。等比級数の閉形式。Baker排除の帰結。",
+      "tools": [
+        "lean",
+        "analysis"
+      ],
+      "priority": 2,
+      "status": "queued",
+      "formalization_potential": "定理候補",
+      "created": "2026-03-29"
+    },
+    {
+      "id": "collatz-166",
+      "problem": "collatz",
+      "title": "mod 18下降逆像の再帰構造とGalton-Watson接続",
+      "category": "逆問題/双対",
+      "description": "探索145。mod18で下降逆像が3等分。GW過程のmod型と接続。",
+      "tools": [
+        "python"
+      ],
+      "priority": 3,
+      "status": "queued",
+      "created": "2026-03-29"
+    },
+    {
+      "id": "collatz-167",
+      "problem": "collatz",
+      "title": "v2列エントロピー率のk→∞収束先特定",
+      "category": "計算実験",
+      "description": "探索128。H(L)/L: L=8で1.43。L=12,15でさらに精密化。真のエントロピー率推定。",
+      "tools": [
+        "python"
+      ],
+      "priority": 3,
+      "status": "queued",
+      "created": "2026-03-29"
+    },
+    {
+      "id": "collatz-168",
+      "problem": "collatz",
+      "title": "collatzResidue(k)=(4^{⌈k/2⌉}-1)/3のLean定義と核心等式",
+      "category": "既存補題の拡張",
+      "description": "探索138,146設計。3·c(k)+1=4^{⌈k/2⌉}。v2(3n+1)≥k条件の基礎。",
+      "tools": [
+        "lean",
+        "analysis"
+      ],
+      "priority": 2,
+      "status": "queued",
+      "formalization_potential": "定理候補",
+      "created": "2026-03-29"
+    },
+    {
+      "id": "collatz-169",
+      "problem": "collatz",
+      "title": "Stern-Brocot v2条件付き依存の数論的起源: mod 16遷移行列の固有構造",
+      "category": "代数的構造",
+      "description": "探索140。v2=5→v2=4が51.5%。mod16遷移行列のスペクトル分析。",
+      "tools": [
+        "python"
+      ],
+      "priority": 3,
+      "status": "queued",
+      "created": "2026-03-29"
+    },
+    {
+      "id": "collatz-170",
+      "problem": "collatz",
+      "title": "D(N)~(logN)^αのN=10^8-10^9拡張とα収束先特定",
+      "category": "計算実験",
+      "description": "探索151。α=1.60は増大傾向。N=10^8以上で2.0に収束するか。",
+      "tools": [
+        "python"
+      ],
+      "priority": 3,
+      "status": "queued",
+      "created": "2026-03-29"
+    },
+    {
+      "id": "collatz-171",
+      "problem": "collatz",
+      "title": "Syracuse写像のmod 3^k遷移の閉形式: ord_{3^k}(2)周期",
+      "category": "代数的構造",
+      "description": "探索129。T(n)mod9は18通り決定。mod27,81への拡張とord_{3^k}(2)=2·3^{k-1}の検証。",
+      "tools": [
+        "python"
+      ],
+      "priority": 3,
+      "status": "queued",
+      "created": "2026-03-29"
+    },
+    {
+      "id": "collatz-172",
+      "problem": "collatz",
+      "title": "mod 2^k非排除残基の偶奇振動の2-adic理論的説明",
+      "category": "計算実験",
+      "description": "探索148。N(k)/N(k-1)に偶奇振動。epsilon~0.015の理論的説明。",
+      "tools": [
+        "python",
+        "analysis"
+      ],
+      "priority": 3,
+      "status": "queued",
+      "created": "2026-03-29"
+    },
+    {
+      "id": "collatz-173",
+      "problem": "collatz",
+      "title": "コラッツ問題のPA独立性: stopping timeの計算可能上界の有無",
+      "category": "論理的/モデル理論",
+      "description": "探索135拡張。ST(n)にrec上界F(n)が存在するか。存在→CCはΠ₁でPA独立性低下。",
+      "tools": [
+        "websearch",
+        "analysis"
+      ],
+      "priority": 3,
+      "status": "queued",
+      "created": "2026-03-29"
+    },
+    {
+      "id": "collatz-174",
+      "problem": "collatz",
+      "title": "逆像ギャップ比=4の形式化とT^{-k}木の分岐構造",
+      "category": "逆問題/双対",
+      "description": "探索150。gap(a)/gap(a-2)=4の証明。有効aのmod3条件。Lean形式化可能。",
+      "tools": [
+        "lean",
+        "analysis"
+      ],
+      "priority": 2,
+      "status": "queued",
+      "formalization_potential": "補題候補",
+      "created": "2026-03-29"
+    },
+    {
+      "id": "collatz-175",
+      "problem": "collatz",
+      "title": "加速Syracuse Syr^2のランダムウォーク表現とCLT",
+      "category": "確率的",
+      "description": "探索147示唆。mod4決定成分除去。Syr^2(n)はmod4=1のnに対して定義。純iid的挙動。",
+      "tools": [
+        "python",
+        "analysis"
+      ],
+      "priority": 2,
+      "status": "queued",
+      "created": "2026-03-29"
     }
   ]
 }
