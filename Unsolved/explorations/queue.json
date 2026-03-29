@@ -997,8 +997,12 @@
         "python"
       ],
       "priority": 3,
-      "status": "queued",
-      "created": "2026-03-29"
+      "status": "done",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_150.md",
+      "outcome": "中発見",
+      "summary": "逆像ギャップ比=4(証明)。L=1,2で距離2不可能。ハブ47が120回支配"
     },
     {
       "id": "collatz-145",
@@ -1068,9 +1072,14 @@
         "analysis"
       ],
       "priority": 2,
-      "status": "queued",
+      "status": "done",
       "formalization_potential": "定理候補",
-      "created": "2026-03-29"
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_146.md",
+      "outcome": "中発見",
+      "formalization_value": "定理候補",
+      "summary": "collatzResidue再帰定義確認。核心等式3c(k)+1=4^{⌈k/2⌉}。v2_dvd_iff設計"
     },
     {
       "id": "collatz-149",
@@ -1128,8 +1137,12 @@
         "websearch"
       ],
       "priority": 2,
-      "status": "queued",
-      "created": "2026-03-29"
+      "status": "done",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_147.md",
+      "outcome": "中発見",
+      "summary": "★核心: 50-60bit奇数でKL=5.7e-6。Taoモデル乖離は全てフィニットサイズ効果"
     },
     {
       "id": "collatz-153",
@@ -1156,8 +1169,12 @@
         "python"
       ],
       "priority": 2,
-      "status": "queued",
-      "created": "2026-03-29"
+      "status": "done",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_148.md",
+      "outcome": "中発見",
+      "summary": "非排除残基100% mod4≡3。密度~0.9^k指数減衰。k=16で93.5%決定的下降"
     },
     {
       "id": "collatz-155",
@@ -1171,8 +1188,12 @@
         "analysis"
       ],
       "priority": 2,
-      "status": "queued",
-      "created": "2026-03-29"
+      "status": "done",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_149.md",
+      "outcome": "小発見",
+      "summary": "v3(3^k-2^k)=0(自明)。3-adicはサイクル排除に無力。vq一般公式を副産物導出"
     }
   ]
 }
