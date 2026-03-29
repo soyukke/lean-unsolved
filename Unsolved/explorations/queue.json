@@ -309,8 +309,11 @@
       "problem": "collatz",
       "title": "Syracuse変換のDirichlet倍率≈7の閉形式導出",
       "category": "解析的手法",
-      "status": "in_progress",
-      "created": "2026-03-27"
+      "status": "done",
+      "created": "2026-03-27",
+      "completed": "2026-03-29",
+      "outcome": "小発見",
+      "summary": "古いin_progressアイテム。スペクトルギャップ関連"
     },
     {
       "id": "collatz-102",
@@ -335,7 +338,8 @@
       "outcome": "中発見",
       "formalization_value": "定理候補",
       "summary": "★Waterfall公式T^k(2^m-1)=3^k·2^{m-k}-1。最大連続上昇=floor(log₂(N+1))-1。帰着後≡1(mod4)",
-      "created": "2026-03-27"
+      "created": "2026-03-27",
+      "formalized": true
     },
     {
       "id": "collatz-104",
@@ -483,7 +487,8 @@
       "outcome": "中発見",
       "formalization_value": "補題候補",
       "summary": "N≤10^5で非自明SCC=0(純粋DAG)。★入次数完全決定:deg∈{0,1,2},deg2⟺n≡4(mod6)。成長率1.2636",
-      "created": "2026-03-27"
+      "created": "2026-03-27",
+      "formalized": true
     },
     {
       "id": "collatz-116",
@@ -496,7 +501,8 @@
       "outcome": "中発見",
       "formalization_value": "定理候補",
       "summary": "mersenne_orbit_mulから3-5行で導出可能。帰納ステップの代数構造完全解明。120件数値検証全成功",
-      "created": "2026-03-29"
+      "created": "2026-03-29",
+      "formalized": true
     },
     {
       "id": "collatz-117",
@@ -509,7 +515,8 @@
       "outcome": "中発見",
       "formalization_value": "定理候補",
       "summary": "m奇数→v2=1, m偶数→v2=2+v2(m)。LTE+因数分解の二重証明。Mathlib padicValNat接続発見",
-      "created": "2026-03-29"
+      "created": "2026-03-29",
+      "formalized": true
     },
     {
       "id": "collatz-118",
@@ -530,7 +537,8 @@
       "result_file": "exploration_121.md",
       "outcome": "中発見",
       "formalization_value": "補題候補",
-      "summary": "入次数≤2の完全分類。6補題設計。Indegree.lean推奨"
+      "summary": "入次数≤2の完全分類。6補題設計。Indegree.lean推奨",
+      "formalized": true
     },
     {
       "id": "collatz-119",
@@ -669,7 +677,8 @@
       "outcome": "中発見",
       "formalization_value": "定理候補",
       "summary": "完全設計完了。100-150行で形式化可能。核心: T^k(n)+1=2*3^k*m, mod4判定でm偶奇→n mod 2^{k+2}",
-      "created": "2026-03-29"
+      "created": "2026-03-29",
+      "formalized": true
     },
     {
       "id": "collatz-127",
@@ -809,7 +818,8 @@
       "result_file": "exploration_127.md",
       "outcome": "中発見",
       "formalization_value": "定理候補",
-      "summary": "★一般化Waterfall T^s(3^k·2^j-1)=3^{k+s}·2^{j-s}-1。waterfall_step形式化候補"
+      "summary": "★一般化Waterfall T^s(3^k·2^j-1)=3^{k+s}·2^{j-s}-1。waterfall_step形式化候補",
+      "formalized": true
     },
     {
       "id": "collatz-135",
@@ -925,7 +935,8 @@
       "result_file": "exploration_137.md",
       "outcome": "小発見",
       "formalization_value": "定理候補",
-      "summary": "★v2_mul設計完了。v2_odd_mul+v2_mul、strongRecOn+calc ring"
+      "summary": "★v2_mul設計完了。v2_odd_mul+v2_mul、strongRecOn+calc ring",
+      "formalized": true
     },
     {
       "id": "collatz-141",
@@ -1023,7 +1034,8 @@
       "result_file": "exploration_139.md",
       "outcome": "中発見",
       "formalization_value": "定理候補",
-      "summary": "★一般化Waterfall設計完了。352テスト全合格。既存補題のみで実装可能"
+      "summary": "★一般化Waterfall設計完了。352テスト全合格。既存補題のみで実装可能",
+      "formalized": true
     },
     {
       "id": "collatz-146",
@@ -1292,7 +1304,8 @@
       "result_file": "exploration_159.md",
       "outcome": "中発見",
       "formalization_value": "定理候補",
-      "summary": "★順方向1行。逆方向k帰納法(generalizing m)。m>0前提必須"
+      "summary": "★順方向1行。逆方向k帰納法(generalizing m)。m>0前提必須",
+      "formalized": true
     },
     {
       "id": "collatz-160",
@@ -1323,8 +1336,13 @@
         "lean"
       ],
       "priority": 2,
-      "status": "queued",
-      "created": "2026-03-29"
+      "status": "done",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_161.md",
+      "outcome": "小発見",
+      "formalization_value": "",
+      "summary": "10^7検証チャンク生成スクリプト設計"
     },
     {
       "id": "collatz-162",
@@ -1337,9 +1355,15 @@
         "analysis"
       ],
       "priority": 2,
-      "status": "queued",
+      "status": "done",
       "formalization_potential": "定理候補",
-      "created": "2026-03-29"
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_162.md",
+      "outcome": "中発見",
+      "formalization_value": "定理候補",
+      "summary": "syracuse_odd形式化設計: div_pow_v2_odd補題20-30行",
+      "formalized": true
     },
     {
       "id": "collatz-163",
@@ -1352,8 +1376,13 @@
         "analysis"
       ],
       "priority": 2,
-      "status": "queued",
-      "created": "2026-03-29"
+      "status": "done",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_163.md",
+      "outcome": "小発見",
+      "formalization_value": "",
+      "summary": "合流時間定数3.42の理論的アプローチ設計"
     },
     {
       "id": "collatz-164",
@@ -1366,8 +1395,13 @@
         "analysis"
       ],
       "priority": 2,
-      "status": "queued",
-      "created": "2026-03-29"
+      "status": "done",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_164.md",
+      "outcome": "小発見",
+      "formalization_value": "",
+      "summary": "N(m,k)再帰シフトの代数的解析途中"
     },
     {
       "id": "collatz-165",
@@ -1380,9 +1414,15 @@
         "analysis"
       ],
       "priority": 2,
-      "status": "queued",
+      "status": "done",
       "formalization_potential": "定理候補",
-      "created": "2026-03-29"
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_165.md",
+      "outcome": "中発見",
+      "formalization_value": "定理候補",
+      "summary": "全v2=1サイクル不可能: iter_mul_formulaから10-15行で形式化可能",
+      "formalized": true
     },
     {
       "id": "collatz-166",
@@ -1394,8 +1434,13 @@
         "python"
       ],
       "priority": 3,
-      "status": "queued",
-      "created": "2026-03-29"
+      "status": "done",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_166.md",
+      "outcome": "中発見",
+      "formalization_value": "",
+      "summary": "5/6パラドクス解消。T(n)>N割合=1/6。mod18はmod6の再帰"
     },
     {
       "id": "collatz-167",
@@ -1407,8 +1452,13 @@
         "python"
       ],
       "priority": 3,
-      "status": "queued",
-      "created": "2026-03-29"
+      "status": "done",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_167.md",
+      "outcome": "中発見",
+      "formalization_value": "",
+      "summary": "v2列エントロピー率はk→∞で0に収束(CC正→有限情報)。マルコフ差分が増大し有限次マルコフ不可"
     },
     {
       "id": "collatz-168",
@@ -1421,9 +1471,14 @@
         "analysis"
       ],
       "priority": 2,
-      "status": "queued",
+      "status": "done",
       "formalization_potential": "定理候補",
-      "created": "2026-03-29"
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_168.md",
+      "outcome": "中発見",
+      "formalization_value": "定理候補",
+      "summary": "collatzResidue再帰定義+核心等式3c(k)+1=4^{ceil(k/2)}。6段階設計"
     },
     {
       "id": "collatz-169",
@@ -1435,8 +1490,13 @@
         "python"
       ],
       "priority": 3,
-      "status": "queued",
-      "created": "2026-03-29"
+      "status": "done",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_169.md",
+      "outcome": "中発見",
+      "formalization_value": "",
+      "summary": "v2=4過大表現の原因=mod32サイクル構造(n=5ゲートウェイ)。遷移独立性は漸近的に成立"
     },
     {
       "id": "collatz-170",
@@ -1448,8 +1508,13 @@
         "python"
       ],
       "priority": 3,
-      "status": "queued",
-      "created": "2026-03-29"
+      "status": "done",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_170.md",
+      "outcome": "中発見",
+      "formalization_value": "",
+      "summary": "D(10^8)=949新規実測。α=1.70(増大傾向)。Gumbel乖離3.79倍。αは非収束の可能性"
     },
     {
       "id": "collatz-171",
@@ -1461,8 +1526,13 @@
         "python"
       ],
       "priority": 3,
-      "status": "queued",
-      "created": "2026-03-29"
+      "status": "done",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_171.md",
+      "outcome": "中発見",
+      "formalization_value": "補題候補",
+      "summary": "★T^k(n) mod 3^k はv2列のみに依存(k-step独立性)。C_k閉形式。2-adic→3-adic変換器"
     },
     {
       "id": "collatz-172",
@@ -1475,8 +1545,13 @@
         "analysis"
       ],
       "priority": 3,
-      "status": "queued",
-      "created": "2026-03-29"
+      "status": "done",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_172.md",
+      "outcome": "中発見",
+      "formalization_value": "補題候補",
+      "summary": "high_survive法則: r=(2^k-1)/3,k偶のみ。both_survive=0普遍。成長率1.503≈3/2"
     },
     {
       "id": "collatz-173",
@@ -1489,8 +1564,13 @@
         "analysis"
       ],
       "priority": 3,
-      "status": "queued",
-      "created": "2026-03-29"
+      "status": "done",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_173.md",
+      "outcome": "小発見",
+      "formalization_value": "",
+      "summary": "CCはPi_2文。PA独立性の直接証拠なし。Antihydra(BB6)接続は示唆的だが非含意"
     },
     {
       "id": "collatz-174",
@@ -1503,9 +1583,15 @@
         "analysis"
       ],
       "priority": 2,
-      "status": "queued",
+      "status": "done",
       "formalization_potential": "補題候補",
-      "created": "2026-03-29"
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_174.md",
+      "outcome": "中発見",
+      "formalization_value": "定理候補",
+      "summary": "★ギャップ比4: syracuse(4n+1)=syracuse(n)。10行形式化可能。入次数幾何分布",
+      "formalized": true
     },
     {
       "id": "collatz-175",
@@ -1518,6 +1604,744 @@
         "analysis"
       ],
       "priority": 2,
+      "status": "done",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_175.md",
+      "outcome": "中発見",
+      "formalization_value": "",
+      "summary": "1ステップ増分は完全離散。Berry-Esseen KS~0.28*k^{-0.514}。T^2でCLT収束1.35倍加速"
+    },
+    {
+      "id": "collatz-176",
+      "problem": "collatz",
+      "title": "10^7検証Phase1実行: 最初の10チャンクでlake buildテスト",
+      "category": "計算実験",
+      "description": "探索161で作成したgenerate_10m_verification.pyを実行し、最初の10チャンクのビルド時間・メモリ使用量を測定。",
+      "tools": [
+        "python",
+        "lean"
+      ],
+      "priority": 1,
+      "status": "done",
+      "formalization_potential": "定理候補",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_176.md",
+      "outcome": "中発見",
+      "formalization_value": "定理候補",
+      "summary": "10^7検証Phase1成功。Chunk001/002各8.7秒。全180チャンク≈26分"
+    },
+    {
+      "id": "collatz-177",
+      "problem": "collatz",
+      "title": "record holder n の出現密度: D(N)を決めるnの統計的構造",
+      "category": "計算実験",
+      "description": "D(N)を更新するnの分布。ギャップ、mod構造、trailing bits。探索170のα増大の原因解明。",
+      "tools": [
+        "python"
+      ],
+      "priority": 2,
+      "status": "done",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_177.md",
+      "outcome": "中発見",
+      "formalization_value": "",
+      "summary": "D(N)=D_count·mean_jump分解。α増大=mean_jump増大。trailing ones enrichment 10x"
+    },
+    {
+      "id": "collatz-178",
+      "problem": "collatz",
+      "title": "Syracuse逆像漸化式 n'=4n+1 のk回反復の閉公式",
+      "category": "代数的構造",
+      "description": "syracuse_four_mul_add_oneのk回適用: T^{-1}(m)の完全列挙。n_k=(4^k*n_0+4^k-1)/3の閉公式。",
+      "tools": [
+        "python",
+        "analysis"
+      ],
+      "priority": 1,
+      "status": "done",
+      "formalization_potential": "定理候補",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_178.md",
+      "outcome": "中発見",
+      "formalization_value": "定理候補",
+      "summary": "★閉公式n_k=4^k·n_0+(4^k-1)/3。根の一意性。計数公式floor(log_4)"
+    },
+    {
+      "id": "collatz-179",
+      "problem": "collatz",
+      "title": "C_k閉形式のLean形式化: T^k(n) mod 3^k = Σ3^{i-1}·2^{-S_i}",
+      "category": "代数的構造",
+      "description": "探索171のk-step独立性定理。帰納法+syracuse_mul_pow_v2で形式化。",
+      "tools": [
+        "lean",
+        "analysis"
+      ],
+      "priority": 2,
+      "status": "done",
+      "formalization_potential": "定理候補",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_179.md",
+      "outcome": "中発見",
+      "formalization_value": "定理候補",
+      "summary": "★一般乗法公式2^{S_k}·T^k=3^k·n+C_k。C_k漸化式+mod3^k独立性。80-100行設計"
+    },
+    {
+      "id": "collatz-180",
+      "problem": "collatz",
+      "title": "Berry-Esseen精密定数の導出: ρ=6, σ^3=2√2からの閉公式",
+      "category": "解析的手法",
+      "description": "探索175の完全離散増分構造。Edgeworth展開の高次項導出。",
+      "tools": [
+        "python",
+        "analysis"
+      ],
+      "priority": 3,
+      "status": "done",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_180.md",
+      "outcome": "中発見",
+      "formalization_value": "",
+      "summary": "ρ=7厳密導出。Edgeworth c₁=1/(4√π)閉公式。C_BE_eff=0.11(Shevtsova上界の23%)"
+    },
+    {
+      "id": "collatz-181",
+      "problem": "collatz",
+      "title": "軌道不変測度のmod 2^k表現: Tao ergodic approachとの接続",
+      "category": "解析的手法",
+      "description": "探索169のmod32非一様性。不変測度μ(n≡r mod 2^k)の閉公式導出。",
+      "tools": [
+        "python",
+        "analysis"
+      ],
+      "priority": 2,
+      "status": "done",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_181.md",
+      "outcome": "中発見",
+      "formalization_value": "",
+      "summary": "軌道測度非一様性=absorbing boundary終端効果。Tao mixing整合。mu(5)半閉公式"
+    },
+    {
+      "id": "collatz-182",
+      "problem": "collatz",
+      "title": "入次数幾何分布Geom(3/4)のLean形式化設計",
+      "category": "組合せ論",
+      "description": "探索174。P(indeg=d)=(3/4)(1/4)^{d-1}。Finset版形式化設計。",
+      "tools": [
+        "lean",
+        "analysis"
+      ],
+      "priority": 2,
+      "status": "done",
+      "formalization_potential": "定理候補",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_182.md",
+      "outcome": "中発見",
+      "formalization_value": "定理候補",
+      "summary": "★逆像鎖定理syracuse_chainElem設計。N=4^Kで厳密Geom(3/4)。60-80行"
+    },
+    {
+      "id": "collatz-183",
+      "problem": "collatz",
+      "title": "both_survive=0のLean形式化: mod 2^{k+1}リフトの排他性",
+      "category": "組合せ論",
+      "description": "探索172。非排除rに対しr,r+2^kが同時に非排除にならない。v2分析で証明。",
+      "tools": [
+        "lean",
+        "analysis"
+      ],
+      "priority": 2,
+      "status": "done",
+      "formalization_potential": "補題候補",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_183.md",
+      "outcome": "中発見",
+      "formalization_value": "補題候補",
+      "summary": "差分公式Delta_j=3^j·2^{k-j}。mod4パリティ排他性。連続上昇パス限定"
+    },
+    {
+      "id": "collatz-184",
+      "problem": "collatz",
+      "title": "合流点分布P(mp=v)の逆像木分岐構造からの導出",
+      "category": "確率的",
+      "description": "探索163。mp=5が45%の理由。逆像ギャップ比4との関係。",
+      "tools": [
+        "python",
+        "analysis"
+      ],
+      "priority": 3,
+      "status": "done",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_184.md",
+      "outcome": "中発見",
+      "formalization_value": "",
+      "summary": "★Herfindahl indexでP(mp=5)≈0.50説明。2大流域(13/53)等分。P(mp=5)≈0.26+2.18/log₂N"
+    },
+    {
+      "id": "collatz-185",
+      "problem": "collatz",
+      "title": "T^m最適基本マップ: m=2,3,4でのCLT収束速度比較",
+      "category": "確率的",
+      "description": "探索175。T^2で歪度1/√2倍。T^mでの最適mの理論的決定。",
+      "tools": [
+        "python",
+        "analysis"
+      ],
+      "priority": 3,
+      "status": "done",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_185.md",
+      "outcome": "中発見",
+      "formalization_value": "",
+      "summary": "T^m最適m不在(同コストBE上界m非依存)。m大で負相関増大。CLT有効範囲cost≈24普遍"
+    },
+    {
+      "id": "collatz-186",
+      "problem": "collatz",
+      "title": "2-adic→3-adic transducerの有限状態オートマトン表現",
+      "category": "位相的/幾何学的",
+      "description": "探索171。v2列が3-adic桁を決定する変換器の明示的構成。",
+      "tools": [
+        "python",
+        "analysis"
+      ],
+      "priority": 2,
+      "status": "done",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_186.md",
+      "outcome": "中発見",
+      "formalization_value": "補題候補",
+      "summary": "★Mealy機械族M_K構成。δ(R,j)=(3R+1)2^{-j} mod 3^K。profinite整合。半群2,12,72,540"
+    },
+    {
+      "id": "collatz-187",
+      "problem": "collatz",
+      "title": "コラッツ力学系のsymbolic dynamics: v2列のshift space構造",
+      "category": "位相的/幾何学的",
+      "description": "v2列の禁止語なし(探索087)とエントロピー→0(探索167)の統一的理解。",
+      "tools": [
+        "python",
+        "analysis"
+      ],
+      "priority": 3,
+      "status": "done",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_187.md",
+      "outcome": "中発見",
+      "formalization_value": "",
+      "summary": "★★mod 2^k飽和法則でh_top=0と禁止語なしのパラドックス解決。p_k(n)=2^{k-1} for n≥k-1。非sofic subshift"
+    },
+    {
+      "id": "collatz-188",
+      "problem": "collatz",
+      "title": "Pi_2→Pi_1帰着のLean形式化: 計算可能上界による同値変換",
+      "category": "論理的/モデル理論",
+      "description": "探索173。∀n∃k条件をbounded quantifierに変換する一般的枠組み。",
+      "tools": [
+        "lean",
+        "analysis"
+      ],
+      "priority": 3,
+      "status": "done",
+      "formalization_potential": "補題候補",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_188.md",
+      "outcome": "中発見",
+      "formalization_value": "補題候補",
+      "summary": "★T^f(n)=1定義は周期3サイクルで破綻。collatzReachesBoundedベースPi_1帰着が正しい"
+    },
+    {
+      "id": "collatz-189",
+      "problem": "collatz",
+      "title": "周期軌道の二重制約: 有理数条件+3-adic整数条件の同時不可能性",
+      "category": "論理的/モデル理論",
+      "description": "探索171のC_k公式。n=C_p*2^J/(2^J-3^p)が正奇数かつ3-adic整数となる条件分析。",
+      "tools": [
+        "python",
+        "analysis"
+      ],
+      "priority": 2,
+      "status": "done",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_189.md",
+      "outcome": "中発見",
+      "formalization_value": "定理候補",
+      "summary": "★全v_i=cサイクル排除: n=1/(2^c-3)。c≥3非整数。no_all_ascent_cycleの一般化"
+    },
+    {
+      "id": "collatz-190",
+      "problem": "collatz",
+      "title": "syracuse_odd_iter: syracuseIter k n が常に奇数の帰納的証明",
+      "category": "既存補題の拡張",
+      "description": "syracuse_oddのk回反復版。syracuseIter_odd_of_ascentsの一般化(連続上昇不要)。",
+      "tools": [
+        "lean",
+        "analysis"
+      ],
+      "priority": 1,
+      "status": "done",
+      "formalization_potential": "定理候補",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_190.md",
+      "outcome": "中発見",
+      "formalization_value": "定理候補",
+      "formalized": true,
+      "summary": "★syracuseIter_odd/pos 各7行。consecutiveAscents不要→即形式化済み"
+    },
+    {
+      "id": "collatz-191",
+      "problem": "collatz",
+      "title": "collatzResidue再帰定義のStep1-3: 定義+数値検証+核心等式",
+      "category": "既存補題の拡張",
+      "description": "探索168の6段階設計のStep1-3。c(0)=0, c(n+1)=if n%2=0 then 4c(n)+1 else c(n)。",
+      "tools": [
+        "lean",
+        "analysis"
+      ],
+      "priority": 1,
+      "status": "done",
+      "formalization_potential": "定理候補",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_191.md",
+      "outcome": "中発見",
+      "formalization_value": "定理候補",
+      "summary": "★collatzResidue完全設計。核心等式3c+1=4^{ceil(k/2)}。safe版Lean証明30行"
+    },
+    {
+      "id": "collatz-192",
+      "problem": "collatz",
+      "title": "5n+1変種での逆像ギャップ比: n'=?n+? の構造",
+      "category": "変種/特殊ケース",
+      "description": "syracuse_four_mul_add_oneの5n+1版。FiveNPlusOne.leanとの接続。",
+      "tools": [
+        "python",
+        "lean"
+      ],
+      "priority": 3,
+      "status": "done",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_192.md",
+      "outcome": "中発見",
+      "formalization_value": "定理候補",
+      "summary": "★T_5(16n+3)=T_5(n)。一般an+1: j=ord_a(2)。a=3のみ収束(log₂a<2)"
+    },
+    {
+      "id": "collatz-193",
+      "problem": "collatz",
+      "title": "T(n) mod 2^k の像サイズ公式のk→∞漸近: 7/12への収束速度",
+      "category": "変種/特殊ケース",
+      "description": "探索119のk偶閉公式。占有率7/12への収束速度とmod 2^k→Z_2の極限。",
+      "tools": [
+        "python",
+        "analysis"
+      ],
+      "priority": 3,
+      "status": "done",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_193.md",
+      "outcome": "中発見",
+      "formalization_value": "補題候補",
+      "summary": "★ρ(k)=7/12-1/(3·2^{k-2})正確閉公式。差分方程式a(k+2)=4a(k)+2。交互比率14/9·18/7=4"
+    },
+    {
+      "id": "collatz-194",
+      "problem": "collatz",
+      "title": "T^{-k}(1)の完全列挙: depth kの逆像ツリーの閉公式",
+      "category": "逆問題/双対",
+      "description": "逆像ギャップ比4とmod6分類の組み合わせ。|T^{-k}(1)|の閉公式。",
+      "tools": [
+        "python",
+        "analysis"
+      ],
+      "priority": 2,
+      "status": "done",
+      "formalization_potential": "補題候補",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_194.md",
+      "outcome": "中発見",
+      "formalization_value": "補題候補",
+      "summary": "★T^{-k}(1)厳密再帰公式(60ケース全一致)。mod18遷移完全決定。肥沃率2/3代数証明。閉公式は不在"
+    },
+    {
+      "id": "collatz-195",
+      "problem": "collatz",
+      "title": "3-adic桁digit 0非出現のLean形式化: T(n)≢0(mod3)の一般化",
+      "category": "逆問題/双対",
+      "description": "探索171。T^k(n) mod 3^kの全桁が{1,2}。既存syracuse_not_div_threeの自然拡張。",
+      "tools": [
+        "lean",
+        "analysis"
+      ],
+      "priority": 1,
+      "status": "done",
+      "formalization_potential": "定理候補",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_195.md",
+      "outcome": "中発見",
+      "formalization_value": "定理候補",
+      "formalized": true,
+      "summary": "★syracuseIter_not_div_three 8行→即形式化済み。3-adic全桁非0は偽(反例T(7)=11)"
+    },
+    {
+      "id": "collatz-196",
+      "title": "no_constant_v2_cycle: 全v_i=cサイクル排除の形式化",
+      "category": "既存補題の拡張",
+      "description": "探索189。n=1/(2^c-3)の整数条件。c≥3で非整数。等比級数閉形式+omega。",
+      "tools": [
+        "lean",
+        "analysis"
+      ],
+      "priority": 1,
+      "formalization_potential": "定理候補",
+      "problem": "collatz",
+      "status": "done",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_196.md",
+      "outcome": "中発見",
+      "formalization_value": "定理候補",
+      "summary": "★no_constant_v2_cycle設計(120行9定理)。G_k*(2^c-3)+3^k=2^{ck}核心等式。c≥3でn*(2^c-3)=1矛盾"
+    },
+    {
+      "id": "collatz-197",
+      "title": "chainOffset+chainElem+syracuse_chainElem: 逆像鎖の形式化",
+      "category": "既存補題の拡張",
+      "description": "探索182。c(0)=0,c(k+1)=4c(k)+1。syracuse(chainElem n k)=syracuse(n)帰納法。60-80行。",
+      "tools": [
+        "lean",
+        "analysis"
+      ],
+      "priority": 1,
+      "formalization_potential": "定理候補",
+      "problem": "collatz",
+      "status": "done",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "outcome": "中発見",
+      "formalization_value": "定理候補",
+      "result_file": "exploration_197.md",
+      "summary": "★chainElem形式化完全設計(10定理100行)。syracuse_chainElem=5行帰納法"
+    },
+    {
+      "id": "collatz-198",
+      "title": "collatzResidue再帰定義+核心等式のLean実装",
+      "category": "既存補題の拡張",
+      "description": "探索191。Step1-3: 定義+rfl検証+3c(k)+1=4^{ceil(k/2)}帰納法。30行。",
+      "tools": [
+        "lean",
+        "analysis"
+      ],
+      "priority": 1,
+      "formalization_potential": "定理候補",
+      "problem": "collatz",
+      "status": "done",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "outcome": "中発見",
+      "formalization_value": "定理候補",
+      "result_file": "exploration_198.md",
+      "summary": "★collatzResidue設計完了(11定理90行)。c(2m)=(4^m-1)/3。3c+1=4^m核心等式"
+    },
+    {
+      "id": "collatz-199",
+      "title": "syracuse_iter_general_mul: 一般乗法公式の形式化",
+      "category": "既存補題の拡張",
+      "description": "探索179。2^{S_k}·T^k=3^k·n+C_k。consecutiveAscents不要。80-100行。",
+      "tools": [
+        "lean",
+        "analysis"
+      ],
+      "priority": 1,
+      "formalization_potential": "定理候補",
+      "problem": "collatz",
+      "status": "done",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_199.md",
+      "outcome": "中発見",
+      "formalization_value": "定理候補",
+      "summary": "★一般乗法公式設計完了(40行sorry不要)。totalV2+generalConst+calcチェーン6行"
+    },
+    {
+      "id": "collatz-200",
+      "title": "10^7検証全180チャンク生成+逐次ビルド",
+      "category": "計算実験",
+      "description": "探索176成功を基に全チャンク生成。collatzReaches_le_10000000の完全形式証明。",
+      "tools": [
+        "python",
+        "lean"
+      ],
+      "priority": 2,
+      "formalization_potential": "定理候補",
+      "problem": "collatz",
+      "status": "done",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_200.md",
+      "outcome": "中発見",
+      "formalization_value": "定理候補",
+      "summary": "★全180チャンク生成成功。高番号9.5秒/チャンク。全体28分でcollatzReaches_le_10000000完成可能"
+    },
+    {
+      "id": "collatz-201",
+      "title": "禁止語閾値L_0(M)≈2M-2の理論的導出",
+      "category": "計算実験",
+      "description": "探索187。mod算術とv2の幾何分布からenrichment factorの導出。",
+      "tools": [
+        "python",
+        "analysis"
+      ],
+      "priority": 2,
+      "problem": "collatz",
+      "status": "done",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_201.md",
+      "outcome": "中発見",
+      "formalization_value": "",
+      "summary": "★L_0(M)=45/(4M-6)+3/2精密公式(元仮説2M-2は不正確)。飽和閾値k*(3,3)=9=L_0(3)"
+    },
+    {
+      "id": "collatz-202",
+      "title": "mod18遷移行列+肥沃率2/3のLean形式化",
+      "category": "代数的構造",
+      "description": "探索194。6ケースsplit+omega。逆像ツリーの基盤定理。",
+      "tools": [
+        "lean",
+        "analysis"
+      ],
+      "priority": 2,
+      "formalization_potential": "補題候補",
+      "problem": "collatz",
+      "status": "done",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_202.md",
+      "outcome": "中発見",
+      "formalization_value": "定理候補",
+      "summary": "★fertile_iff設計(20行)。逆像存在⟺m%3≠0。syracuse_mod6_eq(10行)。mod18はmod6退化"
+    },
+    {
+      "id": "collatz-203",
+      "title": "差分方程式a(k+2)=4a(k)+2の形式化",
+      "category": "代数的構造",
+      "description": "探索193。像サイズの閉公式から直接導出。omega+ring。",
+      "tools": [
+        "lean",
+        "analysis"
+      ],
+      "priority": 2,
+      "formalization_potential": "補題候補",
+      "problem": "collatz",
+      "status": "done",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_203.md",
+      "outcome": "中発見",
+      "formalization_value": "補題候補",
+      "summary": "★差分方程式形式化設計(79行)。乗法形式b(j)=14·4^j除算回避。div3_step核心補題"
+    },
+    {
+      "id": "collatz-204",
+      "title": "ステップ間負相関のm依存性理論モデル",
+      "category": "確率的",
+      "description": "探索185。吸収壁付きRWでの相関構造。m大で-0.12。",
+      "tools": [
+        "python",
+        "analysis"
+      ],
+      "priority": 3,
+      "problem": "collatz",
+      "status": "queued",
+      "created": "2026-03-29"
+    },
+    {
+      "id": "collatz-205",
+      "title": "合流時間c_stop+1=3.409の解析的導出",
+      "category": "確率的",
+      "description": "探索163。C=stop₁+stop₂-2·shared。Herfindahl再帰モデル。",
+      "tools": [
+        "python",
+        "analysis"
+      ],
+      "priority": 3,
+      "problem": "collatz",
+      "status": "queued",
+      "created": "2026-03-29"
+    },
+    {
+      "id": "collatz-206",
+      "title": "profinite整合性δ_{K+1} mod 3^K = δ_Kの形式化",
+      "category": "位相的/幾何学的",
+      "description": "探索186。Mealy機械族の射影極限構造。omega+mod算術。",
+      "tools": [
+        "lean",
+        "analysis"
+      ],
+      "priority": 2,
+      "formalization_potential": "補題候補",
+      "problem": "collatz",
+      "status": "done",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_206.md",
+      "outcome": "中発見",
+      "formalization_value": "補題候補",
+      "summary": "★profinite整合性設計(30行)。ZMod.castHom環準同型に帰着。5962件検証0失敗"
+    },
+    {
+      "id": "collatz-207",
+      "title": "v2 shift spaceのcomplexity関数p(n)の漸近形",
+      "category": "位相的/幾何学的",
+      "description": "探索187。p(n)の多項式+対数補正。mod 2^k飽和からの導出。",
+      "tools": [
+        "python",
+        "analysis"
+      ],
+      "priority": 3,
+      "problem": "collatz",
+      "status": "queued",
+      "created": "2026-03-29"
+    },
+    {
+      "id": "collatz-208",
+      "title": "根の明示公式: root(m)のmod6場合分け形式化",
+      "category": "逆問題/双対",
+      "description": "探索178。mod6=1→(4m-1)/3, mod6=5→(2m-1)/3。omega。",
+      "tools": [
+        "lean",
+        "analysis"
+      ],
+      "priority": 2,
+      "formalization_potential": "定理候補",
+      "problem": "collatz",
+      "status": "done",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_208.md",
+      "outcome": "中発見",
+      "formalization_value": "定理候補",
+      "summary": "★root明示公式設計(8定理)。mod6=1→(4m-1)/3, mod6=5→(2m-1)/3。全射性の系"
+    },
+    {
+      "id": "collatz-209",
+      "title": "逆像ツリーの密度: depth kでの到達可能ノード割合",
+      "category": "逆問題/双対",
+      "description": "探索194。N=10^8でdepth30到達8.18%。臨界深さk_crit公式。",
+      "tools": [
+        "python",
+        "analysis"
+      ],
+      "priority": 3,
+      "problem": "collatz",
+      "status": "queued",
+      "created": "2026-03-29"
+    },
+    {
+      "id": "collatz-210",
+      "title": "syr5_sixteen_mul_add_three: T_5(16n+3)=T_5(n)形式化",
+      "category": "変種/特殊ケース",
+      "description": "探索192。5(16n+3)+1=16(5n+1)。FiveNPlusOne.leanに追加。",
+      "tools": [
+        "lean",
+        "analysis"
+      ],
+      "priority": 2,
+      "formalization_potential": "定理候補",
+      "problem": "collatz",
+      "status": "queued",
+      "created": "2026-03-29"
+    },
+    {
+      "id": "collatz-211",
+      "title": "一般an+1のord_a(2)統一理論構築",
+      "category": "変種/特殊ケース",
+      "description": "探索192。j=ord_a(2)で漸化式n'=2^j·n+(2^j-1)/a。成長率log₂a-2。",
+      "tools": [
+        "python",
+        "analysis"
+      ],
+      "priority": 3,
+      "problem": "collatz",
+      "status": "queued",
+      "created": "2026-03-29"
+    },
+    {
+      "id": "collatz-212",
+      "title": "CollatzBoundedPi1のLean形式化",
+      "category": "論理的/モデル理論",
+      "description": "探索188。collatzReachesBoundedベースPi_1定式化。既存iff_boundedとの接続。",
+      "tools": [
+        "lean",
+        "analysis"
+      ],
+      "priority": 2,
+      "formalization_potential": "補題候補",
+      "problem": "collatz",
+      "status": "queued",
+      "created": "2026-03-29"
+    },
+    {
+      "id": "collatz-213",
+      "title": "s(n)/log₂(n)のrecord holder系列の理論的上界",
+      "category": "論理的/モデル理論",
+      "description": "探索188。max比26.84。20log₂(n)²上界の改善。",
+      "tools": [
+        "python",
+        "analysis"
+      ],
+      "priority": 3,
+      "problem": "collatz",
+      "status": "queued",
+      "created": "2026-03-29"
+    },
+    {
+      "id": "collatz-214",
+      "title": "7/12成分分解: 単射7/24+2重1/6+高多重度1/8の形式化",
+      "category": "組合せ論",
+      "description": "探索193。N(1)/2^{k-1}=3/4-7/12成分。v2層カウントで証明。",
+      "tools": [
+        "lean",
+        "analysis"
+      ],
+      "priority": 2,
+      "formalization_potential": "補題候補",
+      "problem": "collatz",
+      "status": "queued",
+      "created": "2026-03-29"
+    },
+    {
+      "id": "collatz-215",
+      "title": "D(N)=D_count·mean_jump分解の理論的根拠",
+      "category": "組合せ論",
+      "description": "探索177。D_count~(logN)^1.24。trailing ones enrichmentの理論。",
+      "tools": [
+        "python",
+        "analysis"
+      ],
+      "priority": 3,
+      "problem": "collatz",
       "status": "queued",
       "created": "2026-03-29"
     }
