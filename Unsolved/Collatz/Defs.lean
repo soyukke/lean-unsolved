@@ -123,6 +123,53 @@ theorem v2_two_mul (n : ℕ) (hn : n ≠ 0) : v2 (2 * n) = 1 + v2 n := by
   have : 2 * n / 2 = n := Nat.mul_div_cancel_left n (by omega)
   rw [this]
 
+/-- 奇数との積の v2: a が奇数なら v2(a*b) = v2(b) -/
+theorem v2_odd_mul (a b : ℕ) (ha : a % 2 = 1) : v2 (a * b) = v2 b := by
+  induction b using Nat.strongRecOn with
+  | ind b ih =>
+    by_cases hb0 : b = 0
+    · subst hb0; simp [v2]
+    · by_cases hb_odd : b % 2 = 1
+      · -- a*b is odd (odd * odd = odd)
+        have hab_odd : (a * b) % 2 = 1 := by
+          rw [Nat.mul_mod]; simp [ha, hb_odd]
+        rw [v2_odd _ (by omega), v2_odd _ (by omega)]
+      · -- b is even: b = 2*(b/2), a*b = 2*(a*(b/2))
+        push_neg at hb_odd
+        have hb_even : b % 2 = 0 := by omega
+        have hb2_lt : b / 2 < b := Nat.div_lt_self (by omega) (by omega)
+        have hab_eq : a * b = 2 * (a * (b / 2)) := by
+          have hb2 : b = 2 * (b / 2) := by omega
+          conv_lhs => rw [hb2]
+          ring
+        have hab_ne : a * (b / 2) ≠ 0 := by
+          intro h; simp at h; omega
+        rw [hab_eq, v2_two_mul _ hab_ne, ih _ hb2_lt,
+            v2_even b hb0 hb_even]
+
+/-- v2 の乗法性: v2(a*b) = v2(a) + v2(b) (a,b > 0) -/
+theorem v2_mul (a b : ℕ) (ha : a > 0) (hb : b > 0) : v2 (a * b) = v2 a + v2 b := by
+  induction a using Nat.strongRecOn with
+  | ind a ih =>
+    by_cases ha_odd : a % 2 = 1
+    · -- a odd: v2(a) = 0
+      have hva : v2 a = 0 := v2_odd a (by omega)
+      rw [v2_odd_mul a b ha_odd, hva]; simp
+    · -- a even: a = 2*(a/2)
+      push_neg at ha_odd
+      have ha_even : a % 2 = 0 := by omega
+      have ha2_lt : a / 2 < a := Nat.div_lt_self ha (by omega)
+      have ha2_pos : a / 2 > 0 := by omega
+      have hab_eq : a * b = 2 * ((a / 2) * b) := by
+        have ha2 : a = 2 * (a / 2) := by omega
+        conv_lhs => rw [ha2]
+        ring
+      have hab_ne : (a / 2) * b ≠ 0 := by
+        intro h; simp at h; omega
+      rw [hab_eq, v2_two_mul _ hab_ne, ih _ ha2_lt ha2_pos]
+      have hva : v2 a = 1 + v2 (a / 2) := v2_even a (by omega) ha_even
+      omega
+
 /-! ### Syracuse の基本定理 -/
 
 private theorem v2_4 : v2 4 = 2 := by unfold v2; unfold v2; unfold v2; simp
