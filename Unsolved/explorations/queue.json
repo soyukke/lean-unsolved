@@ -3,7 +3,7 @@
   "last_brainstorm": "2026-03-29",
   "last_aggregate": "2026-03-29",
   "aggregate_every": 5,
-  "aggregate_count": 9,
+  "aggregate_count": 10,
   "items": [
     {
       "id": "collatz-001",
