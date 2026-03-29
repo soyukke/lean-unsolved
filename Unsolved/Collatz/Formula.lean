@@ -733,3 +733,98 @@ example : syracuse (syracuseIter 2 7) < syracuseIter 2 7 := by
 -- T(53) = (3*53+1) / 2^v2(160) = 160/... v2(160) = 5, 160/32 = 5. 5 < 53 ✓
 example : syracuse (syracuseIter 3 15) < syracuseIter 3 15 := by
   simp [syracuseIter, syracuse, v2]
+
+/-! ## 14. Waterfall公式: メルセンヌ数のSyracuse反復 -/
+
+/-- メルセンヌ数の Syracuse 単一ステップ: m≥2 のとき syracuse(2^m - 1) = 3·2^{m-1} - 1。
+    2^m - 1 は全ビット1のパターンで n≡3(mod4) なので上昇ステップ。
+    Waterfall公式 T^k(2^m-1) = 3^k·2^{m-k}-1 の基礎。(探索112) -/
+theorem syracuse_two_pow_sub_one (m : ℕ) (hm : m ≥ 2) :
+    syracuse (2 ^ m - 1) = 3 * 2 ^ (m - 1) - 1 := by
+  -- 2^m ≡ 0 (mod 4) なので 2^m - 1 ≡ 3 (mod 4)
+  have hpow4 : 4 ∣ 2 ^ m := by
+    change 2 ^ 2 ∣ 2 ^ m
+    exact pow_dvd_pow 2 hm
+  have hge4 : 2 ^ m ≥ 4 := by
+    calc 2 ^ m ≥ 2 ^ 2 := Nat.pow_le_pow_right (by omega) hm
+      _ = 4 := by norm_num
+  have hmod4 : (2 ^ m - 1) % 4 = 3 := by
+    obtain ⟨k, hk⟩ := hpow4
+    omega
+  -- n ≡ 3 (mod 4) → syracuse n = (3n+1)/2
+  rw [syracuse_mod4_eq3 _ hmod4]
+  -- (3*(2^m - 1) + 1) / 2 = 3*2^{m-1} - 1
+  have hrel : 2 ^ m = 2 * 2 ^ (m - 1) := by
+    have h1 := pow_add (M := ℕ) 2 1 (m - 1)
+    have h2 : 1 + (m - 1) = m := by omega
+    rw [h2] at h1; simpa using h1
+  have hpow_pos : 2 ^ (m - 1) ≥ 1 := Nat.one_le_pow _ _ (by omega)
+  have heq : 3 * (2 ^ m - 1) + 1 = 2 * (3 * 2 ^ (m - 1) - 1) := by
+    rw [hrel]; omega
+  rw [heq, Nat.mul_div_cancel_left _ (by omega : 0 < 2)]
+
+/-- Waterfall帰着後の即時下降: 2·3^{m-1}-1 ≡ 1 (mod 4) for m ≥ 1。
+    メルセンヌ数 2^m-1 の上昇フェーズ (m-1回) 後、帰着値 2·3^{m-1}-1 は
+    mod 4 ≡ 1 なので直ちに下降ステップに入る。(探索112) -/
+theorem waterfall_landing_mod4 (m : ℕ) (_hm : m ≥ 1) :
+    (2 * 3 ^ (m - 1) - 1) % 4 = 1 := by
+  have hodd : Odd (3 ^ (m - 1)) := Odd.pow (by decide : Odd 3)
+  obtain ⟨k, hk⟩ := hodd
+  omega
+
+/-- Waterfall公式（完全版）: T^k(2^m - 1) = 3^k · 2^{m-k} - 1 (k < m)。
+    メルセンヌ数 2^m-1 の Syracuse 反復 k 回後の閉公式。
+    mersenne_orbit_mul から代数的に導出。(探索112,116) -/
+theorem waterfall_formula (m k : ℕ) (hm : m ≥ 1) (hk : k < m) :
+    syracuseIter k (2 ^ m - 1) = 3 ^ k * 2 ^ (m - k) - 1 := by
+  have hmul := mersenne_orbit_mul m k hm (by omega : k + 1 ≤ m)
+  -- hmul: 2^k * T^k(2^m-1) + 2^k = 3^k * 2^m
+  -- Factor: 2^k * (T^k + 1) = 3^k * 2^m = 3^k * 2^(m-k) * 2^k
+  have hpow_pos : 2 ^ k > 0 := by positivity
+  have hrel : 2 ^ m = 2 ^ (m - k) * 2 ^ k := by
+    rw [← pow_add]; congr 1; omega
+  -- From hmul: 2^k * iter + 2^k = 3^k * 2^(m-k) * 2^k
+  -- So: iter + 1 = 3^k * 2^(m-k)
+  have h1 : syracuseIter k (2 ^ m - 1) + 1 = 3 ^ k * 2 ^ (m - k) := by
+    set iter := syracuseIter k (2 ^ m - 1)
+    -- hmul: 2^k * iter + 2^k = 3^k * 2^m (not rewriting inside iter)
+    have key : 2 ^ k * (iter + 1) = 2 ^ k * (3 ^ k * 2 ^ (m - k)) :=
+      calc 2 ^ k * (iter + 1) = 2 ^ k * iter + 2 ^ k := by ring
+        _ = 3 ^ k * 2 ^ m := hmul
+        _ = 3 ^ k * (2 ^ (m - k) * 2 ^ k) := by rw [hrel]
+        _ = 2 ^ k * (3 ^ k * 2 ^ (m - k)) := by ring
+    exact Nat.eq_of_mul_eq_mul_left hpow_pos key
+  omega
+
+/-- 一般化Waterfall単一ステップ: a奇数, j≥2 のとき T(a·2^j - 1) = 3a·2^{j-1} - 1。
+    syracuse_two_pow_sub_one (a=1) の一般化。
+    3^k·2^j-1 型数の軌道解析の基礎。(探索127) -/
+theorem waterfall_step (a j : ℕ) (_ha : a % 2 = 1) (ha_pos : a ≥ 1) (hj : j ≥ 2) :
+    syracuse (a * 2 ^ j - 1) = 3 * a * 2 ^ (j - 1) - 1 := by
+  -- a·2^j ≡ 0 (mod 4) (j≥2), so a·2^j - 1 ≡ 3 (mod 4)
+  have hpow4 : 4 ∣ a * 2 ^ j := by
+    have : 4 ∣ 2 ^ j := by change 2 ^ 2 ∣ 2 ^ j; exact pow_dvd_pow 2 hj
+    exact dvd_mul_of_dvd_right this a
+  have hge4 : a * 2 ^ j ≥ 4 := by
+    have : 2 ^ j ≥ 4 := by
+      calc 2 ^ j ≥ 2 ^ 2 := Nat.pow_le_pow_right (by omega) hj
+        _ = 4 := by norm_num
+    nlinarith
+  have hmod4 : (a * 2 ^ j - 1) % 4 = 3 := by
+    obtain ⟨k, hk⟩ := hpow4; omega
+  rw [syracuse_mod4_eq3 _ hmod4]
+  -- (3*(a·2^j - 1) + 1) / 2 = 3a·2^{j-1} - 1
+  have hpow_rel : 2 ^ j = 2 * 2 ^ (j - 1) := by
+    have h1 := pow_add (M := ℕ) 2 1 (j - 1)
+    have h2 : 1 + (j - 1) = j := by omega
+    rw [h2] at h1; simpa using h1
+  have hrel : a * 2 ^ j = 2 * (a * 2 ^ (j - 1)) := by
+    calc a * 2 ^ j = a * (2 * 2 ^ (j - 1)) := by rw [hpow_rel]
+      _ = 2 * (a * 2 ^ (j - 1)) := by ring
+  have hpow_pos : a * 2 ^ (j - 1) ≥ 1 := by
+    have : 2 ^ (j - 1) ≥ 1 := Nat.one_le_pow _ _ (by omega)
+    omega
+  have h3y : 3 * a * 2 ^ (j - 1) = 3 * (a * 2 ^ (j - 1)) := by ring
+  have heq : 3 * (a * 2 ^ j - 1) + 1 = 2 * (3 * a * 2 ^ (j - 1) - 1) := by
+    rw [h3y, hrel]; omega
+  rw [heq, Nat.mul_div_cancel_left _ (by omega : 0 < 2)]

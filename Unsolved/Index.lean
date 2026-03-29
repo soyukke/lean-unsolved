@@ -157,10 +157,45 @@
 
 ---
 
+## 12. Syracuse像の素因子構造
+**ファイル**: `Collatz.Structure`
+
+| 定理 | 内容 | 再利用性 |
+|------|------|----------|
+| `two_pow_v2_dvd` | 2^v2(m) ∣ m | ★★★ |
+| `syracuse_mul_pow_v2` | syracuse(n) * 2^v2(3n+1) = 3n+1 (乗法的分解) | ★★ |
+| `syracuse_dvd_odd_prime_iff` | 素数 p ≠ 2 について: p ∣ syracuse(n) ⟺ p ∣ (3n+1) | ★★ |
+| `v2_pow_two` | v2(2^m) = m | ★★★ |
+| `syracuse_eq_one_iff_pow_two` | syracuse(n) = 1 ⟺ ∃ m, 3n+1 = 2^m | ★★ |
+| `three_pow_odd` | 3^m は全て奇数 | ★★ |
+| `v2_three_pow_sub_one_odd` | m奇数のとき v2(3^m-1) = 1 (LTE公式) | ★★ |
+| `v2_three_pow_add_one_odd` | k奇数のとき v2(3^k+1) = 2 | ★★ |
+| `v2_three_pow_add_one_even` | k偶数のとき v2(3^k+1) = 1 | ★★ |
+| `syracuse_mod3_eq` | T(n) mod 3 = (v2偶→1, v2奇→2): 3-adic従属性 | ★★ |
+
+Syracuse像の奇素因子は (3n+1) の奇素因子と完全に一致する。
+T(n)=1 となる n は (4^k-1)/3 族に限る。
+
+---
+
+## 13. メルセンヌ数のSyracuse反復（Waterfall公式）
+**ファイル**: `Collatz.Formula`
+
+| 定理 | 内容 | 再利用性 |
+|------|------|----------|
+| `syracuse_two_pow_sub_one` | m≥2 で syracuse(2^m-1) = 3·2^{m-1}-1 | ★★ |
+| `waterfall_landing_mod4` | 2·3^{m-1}-1 ≡ 1 (mod 4): 帰着後即時下降 | ★ |
+| `waterfall_formula` | T^k(2^m-1) = 3^k·2^{m-k}-1 (完全版Waterfall) | ★★★ |
+| `waterfall_step` | T(a·2^j-1) = 3a·2^{j-1}-1 (a奇数, j≥2) | ★★★ |
+
+メルセンヌ数の完全閉公式と一般化Waterfall単一ステップ。
+
+---
+
 ## 今後形式化の価値が高い方向
 
 1. **d/u > log₂(3) の証明** — コラッツ予想と同値。降下/上昇比の厳密な下界。
-2. **T(n) ≢ 0 (mod 3)** — Syracuse像の mod 3 非零性。形式化容易。
-3. **s(2n) = s(n) + 1 の一般化** — 任意の偶奇混合パターンへの拡張。
+2. **v2普遍性定理** — 全奇数dでv2(3n+d)は同一幾何分布（探索114）。
+3. **Waterfall公式（一般化）** — T^k(2^m-1)=3^k·2^{m-k}-1 の完全帰納証明。
 4. **Baker's theorem の Lean形式化** — 現在公理として導入。Mathlib への貢献可能性。
 -/

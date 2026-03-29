@@ -277,3 +277,168 @@ theorem syracuse_not_div_three (n : ℕ) (_hn : n % 2 = 1) :
   · exact pow_v2_dvd (3 * n + 1)
   · exact three_mul_add_one_not_div_three n
   · exact coprime_pow_two_three (v2 (3 * n + 1))
+
+/-! ### 9.5 Syracuse値の素因子構造: p ∣ syracuse(n) ⟺ p ∣ (3n+1) -/
+
+/-- 2^v2(m) は m を割り切る -/
+theorem two_pow_v2_dvd (m : ℕ) : 2 ^ v2 m ∣ m := pow_v2_dvd m
+
+/-- Syracuse値の乗法的分解: syracuse(n) * 2^v2(3n+1) = 3n+1 -/
+theorem syracuse_mul_pow_v2 (n : ℕ) :
+    syracuse n * 2 ^ v2 (3 * n + 1) = 3 * n + 1 :=
+  Nat.div_mul_cancel (two_pow_v2_dvd (3 * n + 1))
+
+/-- 素数 p ≠ 2 に対して: p ∣ syracuse(n) ⟺ p ∣ (3n+1)。
+    Syracuse像の奇素因子は (3n+1) の奇素因子と完全に一致する。
+    特に p = 3 では 3 ∤ (3n+1) なので 3 ∤ syracuse(n)、
+    p ≥ 5 では p ∣ syracuse(n) ⟺ n ≡ -(3⁻¹) (mod p)。(探索096) -/
+theorem syracuse_dvd_odd_prime_iff (n : ℕ) (p : ℕ) (hp : Nat.Prime p) (hp2 : p ≠ 2) :
+    p ∣ syracuse n ↔ p ∣ (3 * n + 1) := by
+  constructor
+  · intro h
+    have h2 := dvd_mul_of_dvd_left h (2 ^ v2 (3 * n + 1))
+    rwa [syracuse_mul_pow_v2] at h2
+  · intro h
+    rw [← syracuse_mul_pow_v2 n] at h
+    rcases hp.prime.dvd_or_dvd h with h1 | h2
+    · exact h1
+    · exfalso
+      have h3 : p ∣ 2 := hp.prime.dvd_of_dvd_pow h2
+      have hle : p ≤ 2 := Nat.le_of_dvd (by omega) h3
+      exact hp2 (Nat.le_antisymm hle hp.two_le)
+
+/-! ### 9.6 Syracuse不動点: syracuse(n) = 1 ⟺ 3n+1 = 2^m -/
+
+/-- 2のべき乗の v2 値: v2(2^m) = m -/
+theorem v2_pow_two (m : ℕ) : v2 (2 ^ m) = m := by
+  induction m with
+  | zero => exact v2_odd 1 (by omega)
+  | succ k ih =>
+    have : 2 ^ (k + 1) = 2 * 2 ^ k := by ring
+    rw [this, v2_two_mul (2 ^ k) (by positivity)]
+    omega
+
+/-- syracuse(n) = 1 ⟺ 3n+1 が 2 のべき乗。
+    T(n)=1 となる奇数 n は n=(2^m-1)/3 (m偶数) の族に限る。
+    特に n=(4^k-1)/3 すなわち n=1,5,21,85,... が唯一の族。(探索097) -/
+theorem syracuse_eq_one_iff_pow_two (n : ℕ) :
+    syracuse n = 1 ↔ ∃ m : ℕ, 3 * n + 1 = 2 ^ m := by
+  constructor
+  · intro h
+    exact ⟨v2 (3 * n + 1), by
+      have := syracuse_mul_pow_v2 n
+      rw [h, one_mul] at this
+      exact this.symm⟩
+  · intro ⟨m, hm⟩
+    change (3 * n + 1) / 2 ^ v2 (3 * n + 1) = 1
+    rw [hm, v2_pow_two]
+    exact Nat.div_self (by positivity)
+
+/-! ### 9.7 v2(3^m - 1) の閉形式（LTE公式） -/
+
+/-- 3^m は全ての m で奇数（Structure版、Formula.leanにも同名あり） -/
+private theorem three_pow_odd' (m : ℕ) : 3 ^ m % 2 = 1 := by
+  have ⟨k, hk⟩ : Odd (3 ^ m) := Odd.pow (by decide : Odd 3)
+  omega
+
+/-- 9^k ≡ 1 (mod 4) -/
+private theorem nine_pow_mod4 (k : ℕ) : 9 ^ k % 4 = 1 := by
+  induction k with
+  | zero => simp
+  | succ n ih => rw [pow_succ]; omega
+
+/-- m が奇数のとき v2(3^m - 1) = 1。
+    証明: 3^(2k+1) = 9^k·3 ≡ 1·3 = 3 (mod 4) → 3^m-1 ≡ 2 (mod 4)。(探索117) -/
+theorem v2_three_pow_sub_one_odd (m : ℕ) (hm : m % 2 = 1) :
+    v2 (3 ^ m - 1) = 1 := by
+  obtain ⟨k, rfl⟩ : ∃ k, m = 2 * k + 1 := ⟨m / 2, by omega⟩
+  -- 3^(2k) = 9^k
+  have h9k : (3 : ℕ) ^ (2 * k) = 9 ^ k := by
+    have : (9 : ℕ) = 3 ^ 2 := by norm_num
+    rw [this, ← pow_mul, Nat.mul_comm]
+  -- 3^(2k+1) % 4 = 3
+  have hmod4 : 3 ^ (2 * k + 1) % 4 = 3 := by
+    rw [pow_succ, h9k]; have := nine_pow_mod4 k; omega
+  have hge : 3 ^ (2 * k + 1) ≥ 3 := by
+    calc 3 ^ (2 * k + 1) ≥ 3 ^ 1 := Nat.pow_le_pow_right (by omega) (by omega)
+      _ = 3 := by norm_num
+  have hne : 3 ^ (2 * k + 1) - 1 ≠ 0 := by omega
+  have heven : (3 ^ (2 * k + 1) - 1) % 2 = 0 := by have := three_pow_odd' (2 * k + 1); omega
+  -- (3^(2k+1)-1)/2 is odd → v2 = 0 → 1 + 0 = 1
+  have hmod4_sub : (3 ^ (2 * k + 1) - 1) % 4 = 2 := by omega
+  set q := (3 ^ (2 * k + 1) - 1) / 4
+  have h_eq : 3 ^ (2 * k + 1) - 1 = 4 * q + 2 := by omega
+  have h_div2 : (3 ^ (2 * k + 1) - 1) / 2 = 2 * q + 1 := by omega
+  rw [v2_even _ hne heven, h_div2, v2_odd _ (by omega)]
+
+/-- 9^k ≡ 1 (mod 8) -/
+private theorem nine_pow_mod8 (k : ℕ) : 9 ^ k % 8 = 1 := by
+  induction k with
+  | zero => simp
+  | succ n ih => rw [pow_succ]; omega
+
+/-- k が奇数のとき v2(3^k + 1) = 2。
+    証明: 3^(2j+1) = 9^j·3 ≡ 3 (mod 8) → 3^k+1 ≡ 4 (mod 8)。(探索117) -/
+theorem v2_three_pow_add_one_odd (k : ℕ) (hk : k % 2 = 1) :
+    v2 (3 ^ k + 1) = 2 := by
+  obtain ⟨j, rfl⟩ : ∃ j, k = 2 * j + 1 := ⟨k / 2, by omega⟩
+  have h9j : (3 : ℕ) ^ (2 * j) = 9 ^ j := by
+    have : (9 : ℕ) = 3 ^ 2 := by norm_num
+    rw [this, ← pow_mul, Nat.mul_comm]
+  have hmod8 : (3 ^ (2 * j + 1) + 1) % 8 = 4 := by
+    rw [pow_succ, h9j]; have := nine_pow_mod8 j; omega
+  -- 3^k+1 ≡ 4 (mod 8) → v2 = 2
+  have hne0 : 3 ^ (2 * j + 1) + 1 ≠ 0 := by positivity
+  have heven1 : (3 ^ (2 * j + 1) + 1) % 2 = 0 := by omega
+  -- Step-by-step: v2_even twice, then v2_odd
+  set q := (3 ^ (2 * j + 1) + 1) / 8
+  have heq8 : 3 ^ (2 * j + 1) + 1 = 8 * q + 4 := by omega
+  have hdiv2 : (3 ^ (2 * j + 1) + 1) / 2 = 4 * q + 2 := by omega
+  rw [v2_even _ hne0 heven1, hdiv2]
+  have hne1 : 4 * q + 2 ≠ 0 := by omega
+  have heven2 : (4 * q + 2) % 2 = 0 := by omega
+  rw [v2_even _ hne1 heven2]
+  have hdiv4 : (4 * q + 2) / 2 = 2 * q + 1 := by omega
+  rw [hdiv4, v2_odd _ (by omega)]
+
+/-- k が偶数のとき v2(3^k + 1) = 1。
+    証明: 3^{2j} = 9^j ≡ 1 (mod 4) → 3^k+1 ≡ 2 (mod 4)。(探索117) -/
+theorem v2_three_pow_add_one_even (k : ℕ) (hk : k % 2 = 0) :
+    v2 (3 ^ k + 1) = 1 := by
+  obtain ⟨j, rfl⟩ : ∃ j, k = 2 * j := ⟨k / 2, by omega⟩
+  have h9j : (3 : ℕ) ^ (2 * j) = 9 ^ j := by
+    have : (9 : ℕ) = 3 ^ 2 := by norm_num
+    rw [this, ← pow_mul, Nat.mul_comm]
+  have hmod4 : (3 ^ (2 * j) + 1) % 4 = 2 := by
+    rw [h9j]; have := nine_pow_mod4 j; omega
+  have hne : 3 ^ (2 * j) + 1 ≠ 0 := by positivity
+  have heven : (3 ^ (2 * j) + 1) % 2 = 0 := by omega
+  set q := (3 ^ (2 * j) + 1) / 4
+  have heq4 : 3 ^ (2 * j) + 1 = 4 * q + 2 := by omega
+  have hdiv2 : (3 ^ (2 * j) + 1) / 2 = 2 * q + 1 := by omega
+  rw [v2_even _ hne heven, hdiv2, v2_odd _ (by omega)]
+
+/-! ### 9.8 Syracuse値の mod 3 分類: T(n) mod 3 は v2 の偶奇で決定 -/
+
+/-- 2^v mod 3: v偶数→1, v奇数→2 -/
+private theorem two_pow_mod3 (v : ℕ) : 2 ^ v % 3 = if v % 2 = 0 then 1 else 2 := by
+  induction v with
+  | zero => simp
+  | succ k ih =>
+    rw [pow_succ]
+    by_cases hk : k % 2 = 0
+    · have h2k : 2 ^ k % 3 = 1 := by rw [ih, if_pos hk]
+      rw [if_neg (show (k + 1) % 2 ≠ 0 from by omega)]; omega
+    · have h2k : 2 ^ k % 3 = 2 := by rw [ih, if_neg hk]
+      rw [if_pos (show (k + 1) % 2 = 0 from by omega)]; omega
+
+/-- Syracuse値の mod 3 は v2(3n+1) の偶奇で完全決定。
+    v2 偶数 → T(n) ≡ 1 (mod 3)、v2 奇数 → T(n) ≡ 2 (mod 3)。
+    3-adic構造が2-adicに従属する核心定理。(探索129) -/
+theorem syracuse_mod3_eq (n : ℕ) (_hn : n % 2 = 1) :
+    syracuse n % 3 = if v2 (3 * n + 1) % 2 = 0 then 1 else 2 := by
+  have hmul := syracuse_mul_pow_v2 n
+  have hmod_prod : (syracuse n * 2 ^ v2 (3 * n + 1)) % 3 = 1 := by rw [hmul]; omega
+  rw [Nat.mul_mod] at hmod_prod
+  rw [two_pow_mod3] at hmod_prod
+  split_ifs at hmod_prod ⊢ with hv <;> omega

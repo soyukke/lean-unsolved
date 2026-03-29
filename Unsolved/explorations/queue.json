@@ -1,15 +1,60 @@
 {
   "version": 1,
-  "last_brainstorm": "2026-03-27",
-  "last_aggregate": "2026-03-28",
+  "last_brainstorm": "2026-03-29",
+  "last_aggregate": "2026-03-29",
   "aggregate_every": 5,
-  "aggregate_count": 6,
+  "aggregate_count": 9,
   "items": [
-    {"id": "collatz-001", "problem": "collatz", "title": "mod 16下降率統計", "status": "done", "completed": "2026-03-27", "result_file": "exploration_030.md", "outcome": "小発見", "summary": "mod 16で残余4,12のクラスが最も高い下降率を示す"},
-    {"id": "collatz-002", "problem": "collatz", "title": "2-adic評価パターン", "status": "done", "completed": "2026-03-27", "result_file": "exploration_031.md", "outcome": "中発見", "summary": "v2(3n+1)の分布はn mod 8に完全に依存する"},
-    {"id": "collatz-003", "problem": "collatz", "title": "停止時間生成関数", "status": "done", "completed": "2026-03-27", "result_file": "exploration_032.md", "outcome": "なし", "summary": "生成関数は自然境界を持ち解析接続不可能"},
-    {"id": "collatz-004", "problem": "collatz", "title": "コラッツグラフRamsey性質", "status": "done", "completed": "2026-03-27", "result_file": "exploration_033.md", "outcome": "小発見", "summary": "長さ5以上の単調増加列は必ず存在する"},
-    {"id": "collatz-005", "problem": "collatz", "title": "ランダムモデル収束速度", "status": "done", "completed": "2026-03-27", "result_file": "exploration_034.md", "outcome": "小発見", "summary": "O(1/√n)で収束、Terrasの理論値と一致"},
+    {
+      "id": "collatz-001",
+      "problem": "collatz",
+      "title": "mod 16下降率統計",
+      "status": "done",
+      "completed": "2026-03-27",
+      "result_file": "exploration_030.md",
+      "outcome": "小発見",
+      "summary": "mod 16で残余4,12のクラスが最も高い下降率を示す"
+    },
+    {
+      "id": "collatz-002",
+      "problem": "collatz",
+      "title": "2-adic評価パターン",
+      "status": "done",
+      "completed": "2026-03-27",
+      "result_file": "exploration_031.md",
+      "outcome": "中発見",
+      "summary": "v2(3n+1)の分布はn mod 8に完全に依存する"
+    },
+    {
+      "id": "collatz-003",
+      "problem": "collatz",
+      "title": "停止時間生成関数",
+      "status": "done",
+      "completed": "2026-03-27",
+      "result_file": "exploration_032.md",
+      "outcome": "なし",
+      "summary": "生成関数は自然境界を持ち解析接続不可能"
+    },
+    {
+      "id": "collatz-004",
+      "problem": "collatz",
+      "title": "コラッツグラフRamsey性質",
+      "status": "done",
+      "completed": "2026-03-27",
+      "result_file": "exploration_033.md",
+      "outcome": "小発見",
+      "summary": "長さ5以上の単調増加列は必ず存在する"
+    },
+    {
+      "id": "collatz-005",
+      "problem": "collatz",
+      "title": "ランダムモデル収束速度",
+      "status": "done",
+      "completed": "2026-03-27",
+      "result_file": "exploration_034.md",
+      "outcome": "小発見",
+      "summary": "O(1/√n)で収束、Terrasの理論値と一致"
+    },
     {
       "id": "collatz-080",
       "problem": "collatz",
@@ -183,7 +228,8 @@
       "result_file": "exploration_096.md",
       "outcome": "中発見",
       "summary": "定理: p|T(n)⟺n≡-(3^{-1})(mod p)を証明。v_p分布はGeo(1/p)に厳密一致。Lean形式化候補",
-      "created": "2026-03-26"
+      "created": "2026-03-26",
+      "formalized": true
     },
     {
       "id": "collatz-095",
@@ -231,7 +277,8 @@
       "result_file": "exploration_097.md",
       "outcome": "中発見",
       "summary": "T(n)=1の唯一族は(4^k-1)/3。T(n)=c統一公式n=(c·2^j-1)/3。逆像ファンネル構造発見",
-      "created": "2026-03-27"
+      "created": "2026-03-27",
+      "formalized": true
     },
     {
       "id": "collatz-099",
@@ -282,11 +329,12 @@
       "problem": "collatz",
       "title": "連続上昇回数の分布と極値統計: メルセンヌ数との関連",
       "category": "組合せ論的",
-      "description": "n ≡ 2^{k+1}-1 (mod 2^{k+1})が連続上昇k回の必要十分条件。連続上昇回数の分布をN=10^7まで計算し、最大連続上昇回数の成長率をlog(N)と比較する。メルセンヌ数2^p-1(p素数)の軌道が特別に長い連続上昇を持つか検証。",
-      "expected_output": "連続上昇回数の分布、最大値の成長率、メルセンヌ数の特殊性",
-      "tools": ["python"],
-      "priority": 3,
-      "status": "queued",
+      "status": "done",
+      "completed": "2026-03-29",
+      "result_file": "exploration_112.md",
+      "outcome": "中発見",
+      "formalization_value": "定理候補",
+      "summary": "★Waterfall公式T^k(2^m-1)=3^k·2^{m-k}-1。最大連続上昇=floor(log₂(N+1))-1。帰着後≡1(mod4)",
       "created": "2026-03-27"
     },
     {
@@ -354,11 +402,12 @@
       "problem": "collatz",
       "title": "非標準解析によるコラッツ予想の再定式化",
       "category": "論理的/モデル理論",
-      "description": "超実数体*Rでコラッツ関数を定義し、無限大の超自然数に対するSyracuse軌道の挙動を分析する。内的集合と外的集合の区別を利用し、「有限で到達」と「無限ステップで到達」の境界を明確化する。",
-      "expected_output": "非標準解析的な再定式化、サイクル/発散の超実数的特徴づけ",
-      "tools": ["analysis", "websearch"],
-      "priority": 3,
-      "status": "queued",
+      "status": "done",
+      "completed": "2026-03-29",
+      "result_file": "exploration_113.md",
+      "outcome": "小発見",
+      "formalization_value": "補題候補",
+      "summary": "CC⟺ある無限超自然数が*Sに属する(overspill)。転送原理で超有限サイクル排除。overspillの限界明確化",
       "created": "2026-03-27"
     },
     {
@@ -402,11 +451,12 @@
       "problem": "collatz",
       "title": "3n+d(d=3,5,7)変種のエルゴード性比較と相転移",
       "category": "変種/特殊ケース",
-      "description": "探索048で3n+d相転移が発見されている。d=3,5,7について探索093と同様のエルゴード性解析（リアプノフ指数、相関関数減衰、スペクトルギャップ）を行い、d=1(標準コラッツ)と比較する。相転移点の位置をエルゴード的性質から特定する。",
-      "expected_output": "各dでのリアプノフ指数・スペクトルギャップ・ミキシング性、相転移の連続性/不連続性",
-      "tools": ["python"],
-      "priority": 3,
-      "status": "queued",
+      "status": "done",
+      "completed": "2026-03-29",
+      "result_file": "exploration_114.md",
+      "outcome": "中発見",
+      "formalization_value": "定理候補",
+      "summary": "★v2普遍性定理:全奇数dでv2(3n+d)は同一幾何分布。d=1のミキシング最強。相転移はa≈3-3.5で発生",
       "created": "2026-03-27"
     },
     {
@@ -414,11 +464,12 @@
       "problem": "collatz",
       "title": "逆像密度のmod M分布とRenyi-Parry理論の応用",
       "category": "逆問題/双対",
-      "description": "T^{-1}(m)の逆像集合のmod M(M=8,16,32)での分布を計算し、逆像が密な残基クラスと疎な残基クラスを分類する。Renyi-Parry理論（β-展開）との対応で、逆像密度の理論的予測を導出する。",
-      "expected_output": "逆像密度のmod M分布、理論予測との比較",
-      "tools": ["python", "analysis"],
-      "priority": 2,
-      "status": "queued",
+      "status": "done",
+      "completed": "2026-03-29",
+      "result_file": "exploration_111.md",
+      "outcome": "中発見",
+      "formalization_value": "補題候補",
+      "summary": "v2条件自動成立。逆像数閉公式|T^{-1}(m)∩[1,N]|=floor(log₂(3N/m)/2)。Parry測度とは乖離",
       "created": "2026-03-27"
     },
     {
@@ -426,12 +477,358 @@
       "problem": "collatz",
       "title": "コラッツグラフの到達可能性と強連結成分分析",
       "category": "逆問題/双対",
-      "description": "n→T(n)の有向グラフ(n≤N)の構造を分析する。強連結成分(SCC)の数・サイズ分布、1からの距離分布、最長パスを計算。グラフ理論の観点から、全頂点が1に到達することの構造的な証拠を探る。",
-      "expected_output": "コラッツグラフのSCC分析、距離分布、グラフ理論的特徴",
-      "tools": ["python"],
-      "priority": 3,
-      "status": "queued",
+      "status": "done",
+      "completed": "2026-03-29",
+      "result_file": "exploration_115.md",
+      "outcome": "中発見",
+      "formalization_value": "補題候補",
+      "summary": "N≤10^5で非自明SCC=0(純粋DAG)。★入次数完全決定:deg∈{0,1,2},deg2⟺n≡4(mod6)。成長率1.2636",
       "created": "2026-03-27"
+    },
+    {
+      "id": "collatz-116",
+      "problem": "collatz",
+      "title": "Waterfall公式の一般k帰納法証明とconsecutiveAscentsの接続",
+      "category": "既存補題の拡張",
+      "status": "done",
+      "completed": "2026-03-29",
+      "result_file": "exploration_116.md",
+      "outcome": "中発見",
+      "formalization_value": "定理候補",
+      "summary": "mersenne_orbit_mulから3-5行で導出可能。帰納ステップの代数構造完全解明。120件数値検証全成功",
+      "created": "2026-03-29"
+    },
+    {
+      "id": "collatz-117",
+      "problem": "collatz",
+      "title": "v2(3^m-1)のLTE公式: m偶数→2+v2(m), m奇数→1",
+      "category": "既存補題の拡張",
+      "status": "done",
+      "completed": "2026-03-29",
+      "result_file": "exploration_117.md",
+      "outcome": "中発見",
+      "formalization_value": "定理候補",
+      "summary": "m奇数→v2=1, m偶数→v2=2+v2(m)。LTE+因数分解の二重証明。Mathlib padicValNat接続発見",
+      "created": "2026-03-29"
+    },
+    {
+      "id": "collatz-118",
+      "problem": "collatz",
+      "title": "入次数≤2の形式証明: コラッツグラフの前駆ノードはmod6で決定",
+      "category": "既存補題の拡張",
+      "description": "コラッツグラフで各ノードnの入次数（前駆ノード数）が最大2であることをLean形式化する。前駆は(a)=2n（常に存在）と(b)=(n-1)/3（n≡4 mod 6のとき存在）。mod 6の場合分けで完全に決定的。",
+      "expected_output": "入次数≤2のLean形式証明設計",
+      "tools": [
+        "lean",
+        "analysis"
+      ],
+      "priority": 2,
+      "status": "done",
+      "formalization_potential": "補題候補",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_121.md",
+      "outcome": "中発見",
+      "formalization_value": "補題候補",
+      "summary": "入次数≤2の完全分類。6補題設計。Indegree.lean推奨"
+    },
+    {
+      "id": "collatz-119",
+      "problem": "collatz",
+      "title": "Syracuse軌道のlog₂スケールでのランダムウォーク近似の精密化",
+      "category": "確率的",
+      "description": "X_k=log₂(T^k(n))とした対数スケールのランダムウォーク。ドリフト=-0.415、分散の精密値を計算。正規近似の適用範囲をKolmogorov-Smirnov検定で検証。局所中心極限定理によるST分布の予測をN=10^6で検証。",
+      "expected_output": "対数RWの精密パラメータ、正規近似の適用限界、ST分布予測",
+      "tools": [
+        "python"
+      ],
+      "priority": 2,
+      "status": "done",
+      "formalization_potential": "なし",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_122.md",
+      "outcome": "中発見",
+      "formalization_value": "なし",
+      "summary": "I(0)精密値。KS~k^{-0.43}。TST/logn=2.50(理論2.41)。v2相互情報量0.036bits"
+    },
+    {
+      "id": "collatz-120",
+      "problem": "collatz",
+      "title": "v2列のブロック統計: 長さLブロックの頻度とエントロピー",
+      "category": "計算実験",
+      "description": "v2列{v2(3*T^k(n)+1)}のL=3,4,5ブロック（例: (1,2,1)）の実測頻度を計算し、独立仮定からの偏差を定量化。ブロックエントロピーH(L)とL*H(1)の差（冗長度）を計算し、v2列の短距離相関構造を解明。",
+      "expected_output": "ブロック頻度表、エントロピー率、冗長度の定量値",
+      "tools": [
+        "python"
+      ],
+      "priority": 3,
+      "status": "done",
+      "formalization_potential": "なし",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_128.md",
+      "outcome": "中発見",
+      "formalization_value": "なし",
+      "summary": "冗長度超線形。H(8)/8=1.43。lag4ピーク0.079bits。v2=4が1.44倍過大"
+    },
+    {
+      "id": "collatz-121",
+      "problem": "collatz",
+      "title": "mod 2^k でのSyracuse置換のサイクル構造と像の多重度分布",
+      "category": "代数的構造",
+      "status": "done",
+      "completed": "2026-03-29",
+      "result_file": "exploration_119.md",
+      "outcome": "中発見",
+      "formalization_value": "補題候補",
+      "summary": "★v2層別全単射確認。像の閉公式:k奇→3/4,k偶→7/12。多重度の完全再帰公式。k=3-21全数検証",
+      "created": "2026-03-29"
+    },
+    {
+      "id": "collatz-122",
+      "problem": "collatz",
+      "title": "3-adic評価v3(T^k(n))の分布と軌道上の振る舞い",
+      "category": "代数的構造",
+      "description": "v3(T^k(n))の分布をn=1..10^6の軌道で計算。T(n)≢0(mod3)は証明済みだが、v3(T(n)-1)やv3(T(n)-2)の分布はどうか。3-adic構造がSyracuse軌道に追加的制約を与えるか調査。",
+      "expected_output": "v3値の分布、軌道上のパターン、新しい制約の有無",
+      "tools": [
+        "python"
+      ],
+      "priority": 3,
+      "status": "done",
+      "formalization_potential": "なし",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_129.md",
+      "outcome": "中発見",
+      "formalization_value": "補題候補",
+      "summary": "★T(n)≡1(mod3)⟺v2偶数。3-adicは2-adic従属。定理1形式化候補"
+    },
+    {
+      "id": "collatz-123",
+      "problem": "collatz",
+      "title": "Tao 2019の密度1結果の精密化",
+      "category": "解析的手法",
+      "status": "done",
+      "completed": "2026-03-29",
+      "result_file": "exploration_120.md",
+      "outcome": "中発見",
+      "formalization_value": "なし",
+      "summary": "k_min/logN≈8-10。高TST上位mod16≡15集中(z=43.9)。末尾連続1がTST主要決定因子。lambda=0.0826(有限補正)",
+      "created": "2026-03-29"
+    },
+    {
+      "id": "collatz-124",
+      "problem": "collatz",
+      "title": "コラッツ軌道の最大ピーク/n比の漸近分布",
+      "category": "計算実験",
+      "description": "peak(n)=max{T^k(n)}のpeak(n)/n比の分布を計算。record holderの構造（mod 32等のパターン）、peak/nの対数の分布（正規かGumbel型か）を調べる。peak(n)/n>Cとなる最小nの成長率。",
+      "expected_output": "peak/n分布、record holderのmod構造、極値統計",
+      "tools": [
+        "python"
+      ],
+      "priority": 3,
+      "status": "done",
+      "formalization_potential": "なし",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_130.md",
+      "outcome": "中発見",
+      "formalization_value": "なし",
+      "summary": "peak/n: Weibull型上尾示唆。trailing_ones寄与0.59bits/bit。min_n~C^{1.26}"
+    },
+    {
+      "id": "collatz-125",
+      "problem": "collatz",
+      "title": "Syracuse軌道とStern-Brocot木の関係",
+      "category": "組合せ論的",
+      "description": "Stern-Brocot木はCalkin-Wilf列挙で全正有理数を網羅する。Syracuse軌道のlog₂(n)スケールでの振る舞いをStern-Brocot木上のパスとして解釈し、下降/上昇パターンとの対応を調べる。",
+      "expected_output": "Stern-Brocot木上の解釈、軌道パスの特徴付け",
+      "tools": [
+        "python",
+        "analysis"
+      ],
+      "priority": 3,
+      "status": "done",
+      "formalization_potential": "なし",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_131.md",
+      "outcome": "失敗",
+      "summary": "APIエラー(500)"
+    },
+    {
+      "id": "collatz-126",
+      "problem": "collatz",
+      "title": "一般化Hensel帰納法: k回連続上昇⟺n≡2^{k+1}-1(mod 2^{k+1})のLean形式化",
+      "category": "既存補題の拡張",
+      "status": "done",
+      "completed": "2026-03-29",
+      "result_file": "exploration_118.md",
+      "outcome": "中発見",
+      "formalization_value": "定理候補",
+      "summary": "完全設計完了。100-150行で形式化可能。核心: T^k(n)+1=2*3^k*m, mod4判定でm偶奇→n mod 2^{k+2}",
+      "created": "2026-03-29"
+    },
+    {
+      "id": "collatz-127",
+      "problem": "collatz",
+      "title": "最小反例の構造: もし反例nが存在するなら mod 2^20 での必要条件",
+      "category": "逆問題/双対",
+      "description": "CCが偽と仮定し最小反例n₀の性質を導出。n₀は発散orサイクル。発散の場合: n₀ mod 2^k (k=8,12,16,20) での可能な残基を網羅的に列挙し、排除可能な残基を計算。",
+      "expected_output": "反例の存在可能なmod 2^k残基集合、排除率",
+      "tools": [
+        "python",
+        "analysis"
+      ],
+      "priority": 2,
+      "status": "done",
+      "formalization_potential": "補題候補",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_123.md",
+      "outcome": "中発見",
+      "formalization_value": "補題候補",
+      "summary": "★メルセンヌ閾値定理:trailing1s≥m*(k)でN=2^{k-m}。mod2^20で94.4%排除"
+    },
+    {
+      "id": "collatz-128",
+      "problem": "collatz",
+      "title": "E[v₂]=2の厳密証明のLean形式化戦略",
+      "category": "既存補題の拡張",
+      "description": "P(v2=j)=1/2^jの厳密証明（探索059）をLean 4で形式化する戦略を設計。有限modでの数え上げ+極限移行。Σ_{j=1}^{k} j/2^j → 2 のテレスコープ和をLean Mathlibのtsum補題で処理。",
+      "expected_output": "E[v₂]=2のLean形式化設計、必要なMathlib補題のリスト",
+      "tools": [
+        "lean",
+        "analysis"
+      ],
+      "priority": 2,
+      "status": "done",
+      "formalization_potential": "定理候補",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_124.md",
+      "outcome": "中発見",
+      "formalization_value": "定理候補",
+      "summary": "E[v₂]=2の3段階形式化設計。Thm A+B+C=150-230行。Mathlib依存確認済"
+    },
+    {
+      "id": "collatz-129",
+      "problem": "collatz",
+      "title": "コラッツ予想と well-ordering principle: 最小発散列の非存在",
+      "category": "論理的/モデル理論",
+      "description": "自然数のwell-orderingから、もし発散列が存在するなら最小始点n₀が存在する。n₀の性質を演繹的に導出し矛盾を目指す。特にn₀が偶数なら n₀/2 < n₀ も発散→矛盾。奇数の場合の精密な制約。",
+      "expected_output": "最小発散始点の必要条件、排除可能な条件",
+      "tools": [
+        "analysis"
+      ],
+      "priority": 3,
+      "status": "done",
+      "formalization_potential": "補題候補",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_132.md",
+      "outcome": "失敗",
+      "summary": "APIエラー(500)"
+    },
+    {
+      "id": "collatz-130",
+      "problem": "collatz",
+      "title": "Syracuse写像のmod 2^k上の置換群の構造: 群の位数と生成元",
+      "category": "代数的構造",
+      "description": "T: (Z/2^kZ)* → (Z/2^kZ)* の置換群⟨T⟩を各kで計算。位数|⟨T⟩|のkに対する成長率、Sym(2^{k-1})の部分群としての指数を求める。k=3..12で網羅的計算。",
+      "expected_output": "置換群の位数・構造、kに対する成長パターン",
+      "tools": [
+        "python"
+      ],
+      "priority": 3,
+      "status": "done",
+      "formalization_potential": "なし",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_133.md",
+      "outcome": "失敗",
+      "summary": "APIエラー(500)"
+    },
+    {
+      "id": "collatz-132",
+      "problem": "collatz",
+      "title": "逆コラッツ木のGalton-Watsonモデルと絶滅確率",
+      "category": "確率的",
+      "description": "逆コラッツ木をGalton-Watson分岐過程としてモデル化。各ノードの子の数=入次数(1or2)、確率はmod6分布から。絶滅確率=0(超臨界)であることの理論的確認と、被覆時間の推定。",
+      "expected_output": "GWモデルのパラメータ、絶滅確率、被覆時間推定",
+      "tools": [
+        "python",
+        "analysis"
+      ],
+      "priority": 2,
+      "status": "done",
+      "formalization_potential": "なし",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_125.md",
+      "outcome": "中発見",
+      "formalization_value": "なし",
+      "summary": "GW超臨界mu=4/3、絶滅確率=0。幅定数C≈0.6713。未カバーはn=27軌道上"
+    },
+    {
+      "id": "collatz-133",
+      "problem": "collatz",
+      "title": "Syracuse写像の逆像分岐: T^{-k}(1)の構造とk番目の層の密度",
+      "category": "逆問題/双対",
+      "description": "T^{-k}(1)（1にちょうどkステップで到達する奇数の集合）のサイズと密度を計算。k=1..30で|T^{-k}(1)|の成長率、mod 8,16での分布、層間の遷移パターンを調べる。",
+      "expected_output": "各層のサイズ・密度、成長率、mod構造",
+      "tools": [
+        "python"
+      ],
+      "priority": 2,
+      "status": "done",
+      "formalization_potential": "なし",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_126.md",
+      "outcome": "中発見",
+      "summary": "逆木成長率1.3324≈4/3(0.07%一致)。mod12被覆密度:≡1,5→79%,≡7,11→40%"
+    },
+    {
+      "id": "collatz-134",
+      "problem": "collatz",
+      "title": "3^k*2^j-1型数の軌道パターンの完全分類",
+      "category": "変種/特殊ケース",
+      "description": "n=3^k*2^j-1 (k=0..5, j=1..20) の軌道を系統的に計算。Waterfall公式(k=0)の拡張として、k≥1でのパターンを分類。特にk=1(n=3*2^j-1)はWaterfall帰着値そのもの。",
+      "expected_output": "3^k*2^j-1型の軌道分類、パターンの法則",
+      "tools": [
+        "python"
+      ],
+      "priority": 2,
+      "status": "done",
+      "formalization_potential": "補題候補",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_127.md",
+      "outcome": "中発見",
+      "formalization_value": "定理候補",
+      "summary": "★一般化Waterfall T^s(3^k·2^j-1)=3^{k+s}·2^{j-s}-1。waterfall_step形式化候補"
+    },
+    {
+      "id": "collatz-135",
+      "problem": "collatz",
+      "title": "Syracuse軌道の自己交差(orbit intersection)の統計",
+      "category": "位相的/幾何学的",
+      "description": "異なる始点n₁,n₂の軌道が合流するまでのステップ数を計算。合流時間の分布、合流点のmod構造を調べる。「全ての軌道はいずれ合流する」ことの数値的証拠と、合流時間の理論予測。",
+      "expected_output": "合流時間分布、合流点のmod構造、理論予測",
+      "tools": [
+        "python"
+      ],
+      "priority": 3,
+      "status": "done",
+      "formalization_potential": "なし",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_134.md",
+      "outcome": "失敗",
+      "summary": "APIエラー(500)"
     }
   ]
 }
