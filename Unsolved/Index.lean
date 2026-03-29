@@ -171,6 +171,7 @@
 | `syracuse_eq_one_iff_pow_two` | syracuse(n) = 1 ⟺ ∃ m, 3n+1 = 2^m | ★★ |
 | `three_pow_odd` | 3^m は全て奇数 | ★★ |
 | `v2_three_pow_sub_one_odd` | m奇数のとき v2(3^m-1) = 1 (LTE公式) | ★★ |
+| `v2_three_pow_sub_one_even` | m偶数のとき v2(3^m-1) = 2+v2(m) (LTE公式) | ★★★ |
 | `v2_three_pow_add_one_odd` | k奇数のとき v2(3^k+1) = 2 | ★★ |
 | `v2_three_pow_add_one_even` | k偶数のとき v2(3^k+1) = 1 | ★★ |
 | `syracuse_mod3_eq` | T(n) mod 3 = (v2偶→1, v2奇→2): 3-adic従属性 | ★★ |

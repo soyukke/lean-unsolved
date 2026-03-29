@@ -418,6 +418,39 @@ theorem v2_three_pow_add_one_even (k : ℕ) (hk : k % 2 = 0) :
   have hdiv2 : (3 ^ (2 * j) + 1) / 2 = 2 * q + 1 := by omega
   rw [v2_even _ hne heven, hdiv2, v2_odd _ (by omega)]
 
+/-- m が偶数(m≥2)のとき v2(3^m - 1) = 2 + v2(m)。
+    証明: 強帰納法 + 因数分解 3^{2k}-1=(3^k-1)(3^k+1) + v2_mul。(探索117 LTE公式) -/
+theorem v2_three_pow_sub_one_even (m : ℕ) (hm_even : m % 2 = 0) (hm_pos : m ≥ 2) :
+    v2 (3 ^ m - 1) = 2 + v2 m := by
+  induction m using Nat.strongRecOn with
+  | ind m ih =>
+    obtain ⟨k, rfl⟩ : ∃ k, m = 2 * k := ⟨m / 2, by omega⟩
+    have hk_pos : k ≥ 1 := by omega
+    -- Factor: 3^{2k} - 1 = (3^k - 1)(3^k + 1)
+    have h3k_ge : 3 ^ k ≥ 3 := by
+      calc 3 ^ k ≥ 3 ^ 1 := Nat.pow_le_pow_right (by omega) hk_pos
+        _ = 3 := by norm_num
+    have hfactor : 3 ^ (2 * k) - 1 = (3 ^ k - 1) * (3 ^ k + 1) := by
+      suffices h : (3 ^ k - 1) * (3 ^ k + 1) + 1 = 3 ^ (2 * k) by omega
+      have h3k_pos : 3 ^ k ≥ 1 := Nat.one_le_pow _ _ (by omega)
+      have hsq : 3 ^ (2 * k) = 3 ^ k * 3 ^ k := by rw [← pow_add]; congr 1; omega
+      rw [hsq]; zify [h3k_pos]; ring
+    rw [hfactor, v2_mul _ _ (by omega) (by omega)]
+    -- v2(2k) = 1 + v2(k)
+    have hv2m : v2 (2 * k) = 1 + v2 k := v2_two_mul k (by omega)
+    by_cases hk_odd : k % 2 = 1
+    · -- k odd: v2(3^k-1)=1, v2(3^k+1)=2
+      rw [v2_three_pow_sub_one_odd k hk_odd, v2_three_pow_add_one_odd k hk_odd]
+      have : v2 k = 0 := v2_odd k (by omega)
+      omega
+    · -- k even (k≥2): v2(3^k-1)=2+v2(k) by IH, v2(3^k+1)=1
+      have hk_even : k % 2 = 0 := by omega
+      have hk_ge2 : k ≥ 2 := by omega
+      have hk_lt : k < 2 * k := by omega
+      have ih_k := ih k hk_lt hk_even hk_ge2
+      rw [ih_k, v2_three_pow_add_one_even k hk_even]
+      omega
+
 /-! ### 9.8 Syracuse値の mod 3 分類: T(n) mod 3 は v2 の偶奇で決定 -/
 
 /-- 2^v mod 3: v偶数→1, v奇数→2 -/
