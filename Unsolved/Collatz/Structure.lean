@@ -504,3 +504,127 @@ theorem syracuse_ascent_mod3 (n : ℕ) (_hn : n ≥ 1) (hodd : n % 2 = 1) (hmod4
     syracuse n % 3 = 2 := by
   rw [syracuse_mod3_eq n hodd, if_neg]
   rw [v2_three_mul_add_one_of_mod4_eq3 n hmod4]; omega
+
+/-! ## コラッツグラフの入次数 (探索115)
+
+コラッツグラフの任意の頂点 n に対して、前像 {m | collatzStep m = n} の要素数は
+高々2である。偶数前像 2n は常に存在し、奇数前像 (n-1)/3 は n ≡ 4 (mod 6)
+のときのみ存在する。
+-/
+
+/-- 偶数の前像は一意: collatzStep(m) = n かつ m 偶数なら m = 2n -/
+theorem collatzStep_even_preimage (m n : ℕ) (hm_even : m % 2 = 0)
+    (h : collatzStep m = n) : m = 2 * n := by
+  simp [collatzStep, hm_even] at h
+  omega
+
+/-- 奇数の前像は一意: collatzStep(m) = n かつ m 奇数なら n = 3m + 1 -/
+theorem collatzStep_odd_preimage (m n : ℕ) (hm_odd : m % 2 = 1)
+    (h : collatzStep m = n) : n = 3 * m + 1 := by
+  simp [collatzStep, show m % 2 ≠ 0 by omega] at h
+  omega
+
+/-- 偶数前像は常に存在: collatzStep(2n) = n -/
+theorem collatzStep_has_even_preimage (n : ℕ) (hn : n > 0) :
+    collatzStep (2 * n) = n :=
+  collatzStep_double n hn
+
+/-- 奇数前像の存在条件: n ≡ 4 (mod 6) かつ n ≥ 4 のとき (n-1)/3 は
+    正の奇数で collatzStep((n-1)/3) = n -/
+theorem collatzStep_odd_preimage_exists (n : ℕ) (hn : n ≥ 4) (hmod : n % 6 = 4) :
+    (n - 1) / 3 % 2 = 1 ∧ (n - 1) / 3 > 0 ∧ collatzStep ((n - 1) / 3) = n := by
+  constructor
+  · omega
+  constructor
+  · omega
+  · simp [collatzStep, show (n - 1) / 3 % 2 ≠ 0 by omega]
+    omega
+
+/-- コラッツグラフの入次数は高々2: 3つの相異なる前像は存在しない (探索115) -/
+theorem collatzStep_indeg_le_two (a b c n : ℕ)
+    (hab : a ≠ b) (hbc : b ≠ c) (hac : a ≠ c)
+    (ha : collatzStep a = n) (hb : collatzStep b = n) (hc : collatzStep c = n) :
+    False := by
+  -- 鳩巣原理: 3数のうち少なくとも2つは同パリティ
+  -- 偶数前像 m/2=n → m=2n (一意)、奇数前像 3m+1=n → m=(n-1)/3 (一意)
+  by_cases ha_par : a % 2 = 0 <;> by_cases hb_par : b % 2 = 0 <;> by_cases hc_par : c % 2 = 0
+  all_goals (simp [collatzStep, *] at ha hb hc ⊢; omega)
+
+/-! ## m / 2^v2(m) の奇数性 (探索162)
+
+v2(m) は m の2-adic付値（2で割れる最大回数）なので、
+2^v2(m) で割った商は必ず奇数になる。これは Syracuse 関数の
+奇数性の基盤となる補題。
+-/
+
+/-- m / 2^v2(m) は奇数: v2 は maximal なので商は2で割れない。
+    背理法: 商が偶数 → 2^{v2(m)+1} | m → v2(m) ≥ v2(m)+1 矛盾 -/
+theorem odd_of_div_two_pow_v2 (m : ℕ) (hm : m > 0) :
+    (m / 2 ^ v2 m) % 2 = 1 := by
+  by_contra h
+  have hq_even : (m / 2 ^ v2 m) % 2 = 0 := by omega
+  have h2dvd : 2 ∣ (m / 2 ^ v2 m) := Nat.dvd_of_mod_eq_zero hq_even
+  have hpow_dvd : 2 ^ v2 m ∣ m := two_pow_v2_dvd m
+  have h_next : 2 ^ (v2 m + 1) ∣ m := by
+    rw [pow_succ]
+    exact Nat.mul_dvd_of_dvd_div hpow_dvd h2dvd
+  have := v2_ge_of_dvd m (v2 m + 1) hm h_next
+  omega
+
+/-- Syracuse 関数は常に奇数を返す（n ≥ 1 かつ n 奇数のとき）(探索162) -/
+theorem syracuse_odd (n : ℕ) (hn : n ≥ 1) (hodd : n % 2 = 1) :
+    syracuse n % 2 = 1 := by
+  change (3 * n + 1) / 2 ^ v2 (3 * n + 1) % 2 = 1
+  exact odd_of_div_two_pow_v2 (3 * n + 1) (by omega)
+
+/-- ★Syracuse反復は常に奇数を返す（consecutiveAscents不要）。
+    syracuse_odd と syracuse_pos の帰納的適用。(探索190) -/
+theorem syracuseIter_odd (n k : ℕ) (hn : n ≥ 1) (hodd : n % 2 = 1) :
+    syracuseIter k n % 2 = 1 := by
+  induction k generalizing n with
+  | zero => simp only [syracuseIter_zero]; exact hodd
+  | succ k ih =>
+    simp only [syracuseIter_succ]
+    exact ih (syracuse n) (syracuse_pos n hn hodd) (syracuse_odd n hn hodd)
+
+/-- Syracuse反復は常に正（consecutiveAscents不要）。(探索190) -/
+theorem syracuseIter_pos (n k : ℕ) (hn : n ≥ 1) (hodd : n % 2 = 1) :
+    syracuseIter k n ≥ 1 := by
+  induction k generalizing n with
+  | zero => simp only [syracuseIter_zero]; exact hn
+  | succ k ih =>
+    simp only [syracuseIter_succ]
+    exact ih (syracuse n) (syracuse_pos n hn hodd) (syracuse_odd n hn hodd)
+
+/-- Syracuse反復の結果は3で割れない（k≥1）。(探索195) -/
+theorem syracuseIter_not_div_three (n k : ℕ) (hn : n ≥ 1) (hodd : n % 2 = 1) :
+    syracuseIter (k + 1) n % 3 ≠ 0 := by
+  induction k generalizing n with
+  | zero =>
+    simp only [syracuseIter_succ, syracuseIter_zero]
+    exact syracuse_not_div_three n hodd
+  | succ k ih =>
+    simp only [syracuseIter_succ]
+    exact ih (syracuse n) (syracuse_pos n hn hodd) (syracuse_odd n hn hodd)
+
+/-! ## 逆像ギャップ比定理 (探索174)
+
+Syracuse関数の逆像が等差数列的構造 n' = 4n+1 を持つことの形式化。
+T(n) = m ならば T(4n+1) = m。これは 3(4n+1)+1 = 4(3n+1) から直ちに従う。
+-/
+
+/-- ★逆像ギャップ比: syracuse(4n+1) = syracuse(n)。
+    証明: 3(4n+1)+1 = 4(3n+1) なので v2 が2増えて商は同じ。(探索174) -/
+theorem syracuse_four_mul_add_one (n : ℕ) (_hn : n ≥ 1) (hodd : n % 2 = 1) :
+    syracuse (4 * n + 1) = syracuse n := by
+  simp only [syracuse]
+  have h3n1_ne : 3 * n + 1 ≠ 0 := by omega
+  have hkey : 3 * (4 * n + 1) + 1 = 4 * (3 * n + 1) := by ring
+  rw [hkey]
+  -- v2(4*(3n+1)) = 2 + v2(3n+1)
+  have hv2 : v2 (4 * (3 * n + 1)) = 2 + v2 (3 * n + 1) := by
+    rw [show (4 : ℕ) * (3 * n + 1) = 2 * (2 * (3 * n + 1)) from by ring,
+        v2_two_mul _ (by omega), v2_two_mul _ h3n1_ne]; omega
+  rw [hv2, pow_add, show (2 : ℕ) ^ 2 = 4 from by norm_num]
+  -- 4*(3n+1) / (4 * 2^v2(3n+1)) = (3n+1) / 2^v2(3n+1)
+  exact Nat.mul_div_mul_left (3 * n + 1) (2 ^ v2 (3 * n + 1)) (by omega)

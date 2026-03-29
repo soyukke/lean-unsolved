@@ -180,6 +180,32 @@
 | `syracuse_mod3_eq` | T(n) mod 3 = (v2偶→1, v2奇→2): 3-adic従属性 | ★★ |
 
 Syracuse像の奇素因子は (3n+1) の奇素因子と完全に一致する。
+
+### 12½. 2-adic商の奇数性 (探索162)
+
+| 定理 | 内容 | 再利用性 |
+|------|------|----------|
+| `odd_of_div_two_pow_v2` | m/2^{v2(m)} は奇数 (m>0) | ★★★ |
+| `syracuse_odd` | syracuse(n) は常に奇数 | ★★★ |
+
+v2 の maximality から導出。Syracuse関数の基本性質。
+
+| `syracuseIter_odd` | syracuseIter k n は常に奇数 | ★★★ |
+| `syracuseIter_pos` | syracuseIter k n ≥ 1 | ★★★ |
+
+反復の奇数性・正値性。consecutiveAscents不要の一般版。
+
+| `syracuseIter_not_div_three` | syracuseIter (k+1) n は3で割れない | ★★ |
+
+反復結果の3非整除性。syracuse_not_div_threeのk回反復版。
+
+### 12¾. 逆像ギャップ比 (探索174)
+
+| 定理 | 内容 | 再利用性 |
+|------|------|----------|
+| `syracuse_four_mul_add_one` | syracuse(4n+1) = syracuse(n) | ★★★ |
+
+逆像が漸化式 n'=4n+1 に従う。3(4n+1)+1=4(3n+1) による。
 T(n)=1 となる n は (4^k-1)/3 族に限る。
 
 ---
@@ -196,6 +222,45 @@ T(n)=1 となる n は (4^k-1)/3 族に限る。
 | `generalized_waterfall_formula` | T^s(3^k·2^j-1) = 3^{k+s}·2^{j-s}-1 | ★★★ |
 
 メルセンヌ数の完全閉公式と一般化Waterfall。
+
+---
+
+## 14½. 一般Hensel帰納法 (探索118)
+**ファイル**: `Collatz.Formula`
+
+| 定理 | 内容 | 再利用性 |
+|------|------|----------|
+| `hensel_general` | k回連続上昇 ↔ n ≡ 2^{k+1}-1 (mod 2^{k+1}) | ★★★ |
+| `hensel_necessary` | 必要条件方向 | ★★ |
+| `hensel_sufficient` | 十分条件方向 | ★★ |
+
+k=1..4の個別定理を完全に統一する一般定理。証明は乗法公式と3^kの奇数性による。
+
+---
+
+## 14¾. サイクル排除（全v2=1） (探索144,165)
+**ファイル**: `Collatz.Formula`
+
+| 定理 | 内容 | 再利用性 |
+|------|------|----------|
+| `no_all_ascent_cycle` | 全ステップv2=1のサイクルは不可能 | ★★ |
+
+連続上昇のみでサイクルを形成することはできない。乗法公式から2^p=3^pが必要になり矛盾。
+
+---
+
+## 14. コラッツグラフの入次数 (探索115)
+**ファイル**: `Collatz.Structure`
+
+| 定理 | 内容 | 再利用性 |
+|------|------|----------|
+| `collatzStep_even_preimage` | m偶数で collatzStep(m)=n なら m=2n | ★★ |
+| `collatzStep_odd_preimage` | m奇数で collatzStep(m)=n なら n=3m+1 | ★★ |
+| `collatzStep_has_even_preimage` | collatzStep(2n) = n (偶数前像は常に存在) | ★ |
+| `collatzStep_odd_preimage_exists` | n≡4(mod6)のとき奇数前像(n-1)/3が存在 | ★★ |
+| `collatzStep_indeg_le_two` | 入次数≤2: 3つの相異なる前像は存在しない | ★★★ |
+
+コラッツグラフの任意の頂点の入次数は{0,1,2}。鳩巣原理による証明。
 
 ---
 

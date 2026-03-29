@@ -860,3 +860,128 @@ theorem generalized_waterfall_formula (k j s : ℕ) (hj : j ≥ 2) (hs : s < j) 
       have hexp2 : j - 1 - s = j - (s + 1) := by omega
       rw [hexp1, hexp2] at ih_app
       exact ih_app
+
+/-! ## 一般Hensel帰納法 (探索118)
+
+k回連続上昇 ↔ n ≡ 2^{k+1}-1 (mod 2^{k+1}) の一般的な同値定理。
+既存の k=1..4 の個別証明を統一する。証明の核心は乗法公式
+`2^k*(iter+1) = 3^k*(n+1)` と 3^k の奇数性。
+-/
+
+/-- P | (n+1) → n % P = P - 1 -/
+private theorem mod_eq_pred_of_dvd (P n : ℕ) (hP : P ≥ 1) (h : P ∣ n + 1) :
+    n % P = P - 1 := by
+  obtain ⟨q, hq⟩ := h
+  rcases q with _ | q
+  · omega
+  · have hexp : P * (q + 1) = P * q + P := by ring
+    have : n = (P - 1) + P * q := by omega
+    rw [this, Nat.add_mul_mod_self_left, Nat.mod_eq_of_lt (by omega)]
+
+/-- n % P = P - 1 → P | (n+1) -/
+private theorem dvd_of_mod_eq_pred (P n : ℕ) (h : n % P = P - 1) (hP : P ≥ 1) :
+    P ∣ (n + 1) := by
+  refine ⟨n / P + 1, ?_⟩
+  have hm := Nat.div_add_mod n P
+  rw [h] at hm
+  -- hm : n / P * P + (P - 1) = n
+  have h1 : n / P * P + (P - 1) + 1 = n / P * P + P := by omega
+  have h2 : n + 1 = n / P * P + P := by linarith
+  linarith [show P * (n / P + 1) = n / P * P + P from by ring]
+
+/-- 3^k * m が 2^j で割れるなら m 自身が 2^j で割れる（3^k は奇数） -/
+private theorem dvd_of_dvd_mul_three_pow (k m j : ℕ) (hm : m > 0)
+    (h : 2 ^ j ∣ 3 ^ k * m) : 2 ^ j ∣ m := by
+  have h3odd : (3 : ℕ) ^ k % 2 = 1 := three_pow_odd k
+  have hprod_pos : 3 ^ k * m > 0 := by positivity
+  have hge := v2_ge_of_dvd (3 ^ k * m) j hprod_pos h
+  rw [v2_odd_mul (3 ^ k) m h3odd] at hge
+  exact dvd_of_v2_ge m j hge
+
+/-- 一般Hensel帰納法（必要条件）: k回連続上昇 → n ≡ 2^{k+1}-1 (mod 2^{k+1}) -/
+theorem hensel_necessary (n k : ℕ) (hn : n ≥ 1) (hodd : n % 2 = 1)
+    (hasc : consecutiveAscents n k) : n % 2 ^ (k + 1) = 2 ^ (k + 1) - 1 := by
+  induction k with
+  | zero => simp; omega
+  | succ k ih =>
+    have hasc_k := consecutiveAscents_mono n (by omega : k ≤ k + 1) hasc
+    have ih_k := ih hasc_k
+    have hmod4 := syracuseIter_mod4_eq3_of_ascents n k hn hodd hasc
+    have hformula := syracuse_iter_alt_formula n k hn hodd hasc_k
+    -- iter % 4 = 3 → 4 | (iter + 1)
+    obtain ⟨t, ht⟩ : 4 ∣ (syracuseIter k n + 1) := by omega
+    -- 2^{k+2} | 3^k * (n+1)
+    have h_dvd_prod : 2 ^ (k + 2) ∣ 3 ^ k * (n + 1) :=
+      ⟨t, by calc 3 ^ k * (n + 1)
+          = 2 ^ k * syracuseIter k n + 2 ^ k := hformula.symm
+        _ = 2 ^ k * (syracuseIter k n + 1) := by ring
+        _ = 2 ^ k * (4 * t) := by rw [ht]
+        _ = 2 ^ (k + 2) * t := by ring⟩
+    have h_dvd_n1 := dvd_of_dvd_mul_three_pow k (n + 1) (k + 2) (by omega) h_dvd_prod
+    exact mod_eq_pred_of_dvd _ _ (Nat.one_le_pow _ _ (by omega)) h_dvd_n1
+
+/-- 一般Hensel帰納法（十分条件）: n ≡ 2^{k+1}-1 (mod 2^{k+1}) → k回連続上昇 -/
+theorem hensel_sufficient (n k : ℕ) (hn : n ≥ 1) (hodd : n % 2 = 1)
+    (hmod : n % 2 ^ (k + 1) = 2 ^ (k + 1) - 1) : consecutiveAscents n k := by
+  induction k with
+  | zero => intro i hi; omega
+  | succ k ih =>
+    -- mod 弱化: 2^{k+2} | (n+1) → 2^{k+1} | (n+1) → n % 2^{k+1} = 2^{k+1}-1
+    have h_dvd_n1 : 2 ^ (k + 2) ∣ (n + 1) :=
+      dvd_of_mod_eq_pred _ _ hmod (Nat.one_le_pow _ _ (by omega))
+    have h_dvd_weak : 2 ^ (k + 1) ∣ (n + 1) :=
+      dvd_trans ⟨2, by ring⟩ h_dvd_n1
+    have hmod_weak : n % 2 ^ (k + 1) = 2 ^ (k + 1) - 1 :=
+      mod_eq_pred_of_dvd _ _ (Nat.one_le_pow _ _ (by omega)) h_dvd_weak
+    -- IH で k 回上昇
+    have hasc_k := ih hmod_weak
+    -- 公式: 2^k * iter + 2^k = 3^k * (n + 1)
+    have hformula := syracuse_iter_alt_formula n k hn hodd hasc_k
+    -- 2^{k+2} | (n+1) から iter + 1 = 4 * 3^k * q を導出
+    obtain ⟨q, hq⟩ := h_dvd_n1
+    have h2k2_pos : (2 : ℕ) ^ (k + 2) > 0 := by positivity
+    have hq_pos : q ≥ 1 := by
+      rcases q with _ | q
+      · simp at hq
+      · omega
+    have h2k_pos : 2 ^ k > 0 := by positivity
+    have heq_lhs : 2 ^ k * (syracuseIter k n + 1) = 2 ^ k * (4 * 3 ^ k * q) :=
+      calc 2 ^ k * (syracuseIter k n + 1)
+          = 2 ^ k * syracuseIter k n + 2 ^ k := by ring
+        _ = 3 ^ k * (n + 1) := hformula
+        _ = 3 ^ k * (2 ^ (k + 2) * q) := by rw [hq]
+        _ = 2 ^ k * (4 * 3 ^ k * q) := by ring
+    have hiter1 : syracuseIter k n + 1 = 4 * 3 ^ k * q :=
+      mul_left_cancel₀ (by positivity : (2 : ℕ) ^ k ≠ 0) heq_lhs
+    -- iter % 4 = 3 (4 | iter+1 から)
+    have h4_dvd : 4 ∣ (syracuseIter k n + 1) := ⟨3 ^ k * q, by linarith⟩
+    have hiter_mod4 : syracuseIter k n % 4 = 3 := by omega
+    -- k 番目のステップも上昇
+    have h_asc_at_k : syracuse (syracuseIter k n) > syracuseIter k n :=
+      syracuse_gt_of_mod4_eq3 (syracuseIter k n) hiter_mod4
+    -- k+1 回上昇を構成
+    intro i hi
+    by_cases hik : i < k
+    · exact hasc_k i hik
+    · have : i = k := by omega
+      subst this
+      exact h_asc_at_k
+
+/-- ★一般Hensel帰納法: k回連続上昇 ↔ n ≡ 2^{k+1}-1 (mod 2^{k+1})
+    k=1..4の個別定理を完全に統一する一般定理。(探索118) -/
+theorem hensel_general (n k : ℕ) (hn : n ≥ 1) (hodd : n % 2 = 1) :
+    consecutiveAscents n k ↔ n % 2 ^ (k + 1) = 2 ^ (k + 1) - 1 :=
+  ⟨hensel_necessary n k hn hodd, hensel_sufficient n k hn hodd⟩
+
+/-- ★全v2=1サイクルは不可能: p回連続上昇してT^p(n)=nなら矛盾。
+    証明: 乗法公式から 2^p(n+1) = 3^p(n+1)、n+1>0 で 2^p = 3^p。
+    しかし p≥1 で 2^p < 3^p。(探索144,165) -/
+theorem no_all_ascent_cycle (n p : ℕ) (hn : n ≥ 1) (hodd : n % 2 = 1) (hp : p ≥ 1)
+    (hasc : consecutiveAscents n p) (hcycle : syracuseIter p n = n) : False := by
+  have hf := syracuse_iter_alt_formula n p hn hodd hasc
+  rw [hcycle] at hf
+  -- hf : 2^p * n + 2^p = 3^p * (n + 1), i.e., 2^p * (n+1) = 3^p * (n+1)
+  have heq : 2 ^ p * (n + 1) = 3 ^ p * (n + 1) := by linarith
+  have hpow : 2 ^ p = 3 ^ p := mul_right_cancel₀ (by omega : n + 1 ≠ 0) heq
+  have hlt : 2 ^ p < 3 ^ p := Nat.pow_lt_pow_left (by omega) (by omega)
+  omega
