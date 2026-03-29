@@ -1057,8 +1057,12 @@
         "python"
       ],
       "priority": 3,
-      "status": "queued",
-      "created": "2026-03-29"
+      "status": "done",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_151.md",
+      "outcome": "小発見",
+      "summary": "D(N)~7.47·(logN)^1.60。3パラメータモデル最良AIC。alphaは増大傾向"
     },
     {
       "id": "collatz-148",
@@ -1093,8 +1097,12 @@
         "analysis"
       ],
       "priority": 3,
-      "status": "queued",
-      "created": "2026-03-29"
+      "status": "done",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_152.md",
+      "outcome": "中発見",
+      "summary": "★h_top=log(4/3)=0.2877。逆像成長率が高精度収束。パリティ列=フィボナッチ(黄金比シフト)"
     },
     {
       "id": "collatz-150",
@@ -1108,8 +1116,12 @@
         "python"
       ],
       "priority": 3,
-      "status": "queued",
-      "created": "2026-03-29"
+      "status": "done",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_153.md",
+      "outcome": "中発見",
+      "summary": "3段階設計完了。Phase1:チャンク拡張30-60分。Phase2:Syracuse核1/10。Phase3:メタプロ"
     },
     {
       "id": "collatz-151",
@@ -1122,8 +1134,12 @@
         "python"
       ],
       "priority": 3,
-      "status": "queued",
-      "created": "2026-03-29"
+      "status": "done",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_154.md",
+      "outcome": "中発見",
+      "summary": "CLT緩やか収束(k=20:skew=-0.21)。分散飽和は1到達+軌道集中。alpha_k=(3/4)^kは比率スケール"
     },
     {
       "id": "collatz-152",
@@ -1155,8 +1171,12 @@
         "python"
       ],
       "priority": 3,
-      "status": "queued",
-      "created": "2026-03-29"
+      "status": "done",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_155.md",
+      "outcome": "小発見",
+      "summary": "素数軌道に真の特殊性なし。mod2^k末尾ビットが支配。TST差はサイズ効果"
     },
     {
       "id": "collatz-154",
