@@ -22,6 +22,9 @@
 | `v2_two_mul` | v2(2n) = 1 + v2(n) | ★★★ |
 | `v2_odd_mul` | a奇数のとき v2(a*b) = v2(b) | ★★★ |
 | `v2_mul` | v2(a*b) = v2(a) + v2(b) (乗法性) | ★★★ |
+| `dvd_of_v2_ge` | v2(m)≥k → 2^k∣m | ★★ |
+| `v2_ge_of_dvd` | m>0, 2^k∣m → v2(m)≥k | ★★ |
+| `v2_ge_iff_dvd` | m>0 で v2(m)≥k ⟺ 2^k∣m | ★★★ |
 
 これらは Collatz とは無関係に、2進数論・暗号理論・符号理論で広く使える。
 

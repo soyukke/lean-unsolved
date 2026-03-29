@@ -283,6 +283,28 @@ theorem syracuse_not_div_three (n : ℕ) (_hn : n % 2 = 1) :
 /-- 2^v2(m) は m を割り切る -/
 theorem two_pow_v2_dvd (m : ℕ) : 2 ^ v2 m ∣ m := pow_v2_dvd m
 
+/-- 順方向: v2(m) ≥ k → 2^k ∣ m -/
+theorem dvd_of_v2_ge (m k : ℕ) (h : v2 m ≥ k) : 2 ^ k ∣ m :=
+  dvd_trans (pow_dvd_pow 2 h) (two_pow_v2_dvd m)
+
+/-- 逆方向: m > 0 かつ 2^k ∣ m → v2(m) ≥ k。kに関する帰納法。(探索159) -/
+theorem v2_ge_of_dvd (m k : ℕ) (hm : m > 0) (h : 2 ^ k ∣ m) : v2 m ≥ k := by
+  induction k generalizing m with
+  | zero => omega
+  | succ k ih =>
+    have h2m : 2 ∣ m := dvd_trans (dvd_pow_self 2 (by omega : k + 1 ≠ 0)) h
+    have heven : m % 2 = 0 := Nat.mod_eq_zero_of_dvd h2m
+    rw [v2_even m (by omega) heven]
+    suffices v2 (m / 2) ≥ k by omega
+    apply ih (m / 2) (by omega)
+    obtain ⟨c, hc⟩ := h
+    have hm2 : m = 2 * (2 ^ k * c) := by rw [hc, pow_succ]; ring
+    exact ⟨c, by omega⟩
+
+/-- v2 と整除性の同値関係: m > 0 のとき v2(m) ≥ k ⟺ 2^k ∣ m。(探索159) -/
+theorem v2_ge_iff_dvd (m k : ℕ) (hm : m > 0) : v2 m ≥ k ↔ 2 ^ k ∣ m :=
+  ⟨dvd_of_v2_ge m k, v2_ge_of_dvd m k hm⟩
+
 /-- Syracuse値の乗法的分解: syracuse(n) * 2^v2(3n+1) = 3n+1 -/
 theorem syracuse_mul_pow_v2 (n : ℕ) :
     syracuse n * 2 ^ v2 (3 * n + 1) = 3 * n + 1 :=
