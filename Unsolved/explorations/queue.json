@@ -881,8 +881,12 @@
         "python"
       ],
       "priority": 2,
-      "status": "queued",
-      "created": "2026-03-29"
+      "status": "done",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_141.md",
+      "outcome": "中発見",
+      "summary": "T mod 2^kは全単射でない。逆像分布N(m,k)の再帰シフト法則N(m,k)=N(m-1,k-2)発見"
     },
     {
       "id": "collatz-139",
@@ -895,8 +899,12 @@
         "python"
       ],
       "priority": 2,
-      "status": "queued",
-      "created": "2026-03-29"
+      "status": "done",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_142.md",
+      "outcome": "中発見",
+      "summary": "E[合流時間]≈3.42·log₂N。n=5が45.4%の合流ハブ。二峰性分布"
     },
     {
       "id": "collatz-140",
@@ -951,9 +959,14 @@
         "lean"
       ],
       "priority": 2,
-      "status": "queued",
+      "status": "done",
       "formalization_potential": "補題候補",
-      "created": "2026-03-29"
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_143.md",
+      "outcome": "中発見",
+      "formalization_value": "補題候補",
+      "summary": "n%4=3→T(n)%3=2(2-3行形式化)。連続上昇中mod3=2不変。mod9テーブルは巡回置換"
     },
     {
       "id": "collatz-143",
@@ -966,8 +979,12 @@
         "python"
       ],
       "priority": 2,
-      "status": "queued",
-      "created": "2026-03-29"
+      "status": "done",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_144.md",
+      "outcome": "中発見",
+      "summary": "★全v2=1サイクル代数的不可能(C/D=-1)。非排除密度0.883^k。散在残基=(4^m-1)/3"
     },
     {
       "id": "collatz-144",
@@ -1016,9 +1033,14 @@
         "analysis"
       ],
       "priority": 2,
-      "status": "queued",
+      "status": "done",
       "formalization_potential": "補題候補",
-      "created": "2026-03-29"
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_145.md",
+      "outcome": "中発見",
+      "formalization_value": "補題候補",
+      "summary": "★T^{-1}完全分類。像サイズ=3N/8。平均入次数=4/3。mod18下降構造"
     },
     {
       "id": "collatz-147",
