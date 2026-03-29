@@ -475,3 +475,10 @@ theorem syracuse_mod3_eq (n : ℕ) (_hn : n % 2 = 1) :
   rw [Nat.mul_mod] at hmod_prod
   rw [two_pow_mod3] at hmod_prod
   split_ifs at hmod_prod ⊢ with hv <;> omega
+
+/-- 上昇ステップでは T(n) ≡ 2 (mod 3): n ≡ 3 (mod 4) → T(n) % 3 = 2。
+    上昇では v2(3n+1)=1(奇数)なので syracuse_mod3_eq から直ちに従う。(探索143) -/
+theorem syracuse_ascent_mod3 (n : ℕ) (_hn : n ≥ 1) (hodd : n % 2 = 1) (hmod4 : n % 4 = 3) :
+    syracuse n % 3 = 2 := by
+  rw [syracuse_mod3_eq n hodd, if_neg]
+  rw [v2_three_mul_add_one_of_mod4_eq3 n hmod4]; omega
