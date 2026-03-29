@@ -190,8 +190,9 @@ T(n)=1 となる n は (4^k-1)/3 族に限る。
 | `waterfall_landing_mod4` | 2·3^{m-1}-1 ≡ 1 (mod 4): 帰着後即時下降 | ★ |
 | `waterfall_formula` | T^k(2^m-1) = 3^k·2^{m-k}-1 (完全版Waterfall) | ★★★ |
 | `waterfall_step` | T(a·2^j-1) = 3a·2^{j-1}-1 (a奇数, j≥2) | ★★★ |
+| `generalized_waterfall_formula` | T^s(3^k·2^j-1) = 3^{k+s}·2^{j-s}-1 | ★★★ |
 
-メルセンヌ数の完全閉公式と一般化Waterfall単一ステップ。
+メルセンヌ数の完全閉公式と一般化Waterfall。
 
 ---
 

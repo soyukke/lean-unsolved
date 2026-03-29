@@ -828,3 +828,35 @@ theorem waterfall_step (a j : ℕ) (_ha : a % 2 = 1) (ha_pos : a ≥ 1) (hj : j 
   have heq : 3 * (a * 2 ^ j - 1) + 1 = 2 * (3 * a * 2 ^ (j - 1) - 1) := by
     rw [h3y, hrel]; omega
   rw [heq, Nat.mul_div_cancel_left _ (by omega : 0 < 2)]
+
+/-- 一般化Waterfall公式: T^s(3^k·2^j - 1) = 3^{k+s}·2^{j-s} - 1 (j≥2, s<j)。
+    waterfall_formula (k=0) の一般化。3^k·2^j-1 型数の軌道の閉公式。(探索127,139) -/
+theorem generalized_waterfall_formula (k j s : ℕ) (hj : j ≥ 2) (hs : s < j) :
+    syracuseIter s (3 ^ k * 2 ^ j - 1) = 3 ^ (k + s) * 2 ^ (j - s) - 1 := by
+  induction s generalizing k j with
+  | zero => simp
+  | succ s ih =>
+    simp only [syracuseIter_succ]
+    -- First step: waterfall_step gives syracuse(3^k*2^j-1) = 3*3^k*2^{j-1}-1
+    have hk_odd : (3 ^ k) % 2 = 1 := by
+      have ⟨t, ht⟩ : Odd (3 ^ k) := Odd.pow (by decide : Odd 3); omega
+    have hk_pos : 3 ^ k ≥ 1 := Nat.one_le_pow _ _ (by omega)
+    have hfirst := waterfall_step (3 ^ k) j hk_odd hk_pos hj
+    -- Rewrite 3*3^k to 3^{k+1}
+    have h3k1 : 3 * 3 ^ k * 2 ^ (j - 1) = 3 ^ (k + 1) * 2 ^ (j - 1) := by
+      rw [pow_succ]; ring
+    rw [show 3 * (3 ^ k) * 2 ^ (j - 1) = 3 ^ (k + 1) * 2 ^ (j - 1) from by rw [pow_succ]; ring] at hfirst
+    rw [hfirst]
+    -- Goal: syracuseIter s (3^{k+1}*2^{j-1}-1) = 3^{k+s+1}*2^{j-s-1}-1
+    by_cases hs0 : s = 0
+    · subst hs0; simp
+    · -- s ≥ 1, j ≥ s+2 ≥ 3, j-1 ≥ 2
+      have hj1 : j - 1 ≥ 2 := by omega
+      have hs1 : s < j - 1 := by omega
+      have ih_app := ih (k + 1) (j - 1) hj1 hs1
+      -- ih_app: syracuseIter s (3^{k+1}*2^{j-1}-1) = 3^{k+1+s}*2^{j-1-s}-1
+      -- Need: same = 3^{k+(s+1)}*2^{j-(s+1)}-1
+      have hexp1 : k + 1 + s = k + (s + 1) := by omega
+      have hexp2 : j - 1 - s = j - (s + 1) := by omega
+      rw [hexp1, hexp2] at ih_app
+      exact ih_app
