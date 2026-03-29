@@ -1,0 +1,240 @@
+{
+  "rho_proof": {
+    "rho": 7.0,
+    "rho_over_sigma3": 2.474873734153
+  },
+  "exact_forms": {
+    "sigma": 1.414213562373,
+    "sigma3": 2.828427124746,
+    "rho": 7.0,
+    "rho_over_sigma3": 2.474873734153,
+    "kappa": {
+      "1": -0.415037499279,
+      "2": 2.0,
+      "3": -6.0,
+      "4": 26.0,
+      "5": -150.0,
+      "6": 1082.0
+    },
+    "gamma": {
+      "3": -2.12132034356,
+      "4": 6.5,
+      "5": -26.516504294496,
+      "6": 135.25
+    }
+  },
+  "hermite_sups": {
+    "sup_he2_phi": 0.398942280401,
+    "sup_he3_phi": 0.550587838057,
+    "sup_he5_phi": 2.30710586924
+  },
+  "edgeworth_coefficients": {
+    "c1": 0.141047395887,
+    "c1_analytic": 0.141047395887,
+    "c1_exact_form": "1/(4*sqrt(pi))",
+    "c2a": 0.149117539474,
+    "c2b": 0.144194116827,
+    "c2": 0.293311656301
+  },
+  "scaling_theory": {
+    "c1": 0.141047395887,
+    "c2": 0.293311656301,
+    "c2_over_c1": 2.079525498906,
+    "effective_alpha_3_50": -0.675166927075,
+    "effective_A_3_50": 0.354645908411
+  },
+  "numerical_verification": {
+    "results": [
+      {
+        "k": 1,
+        "n_samples": 80000,
+        "ks_clt": 0.259712438917,
+        "ks_edgeworth": 0.302683709186,
+        "ks_pred": 0.434359052188,
+        "ks_times_sqrt_k": 0.259712438917,
+        "c_be_effective": 0.10493967241,
+        "ratio_clt_to_pred": 0.597921092259,
+        "improvement_edge": 0.858032431332
+      },
+      {
+        "k": 2,
+        "n_samples": 80000,
+        "ks_clt": 0.190287461288,
+        "ks_edgeworth": 0.178819480852,
+        "ks_pred": 0.246391398251,
+        "ks_times_sqrt_k": 0.269107108503,
+        "c_be_effective": 0.108735692165,
+        "ratio_clt_to_pred": 0.772297501613,
+        "improvement_edge": 1.064131605695
+      },
+      {
+        "k": 3,
+        "n_samples": 80000,
+        "ks_clt": 0.15545430086,
+        "ks_edgeworth": 0.111537761509,
+        "ks_pred": 0.179204304084,
+        "ks_times_sqrt_k": 0.269254747345,
+        "c_be_effective": 0.108795347265,
+        "ratio_clt_to_pred": 0.867469683024,
+        "improvement_edge": 1.393736961879
+      },
+      {
+        "k": 5,
+        "n_samples": 80000,
+        "ks_clt": 0.123785182992,
+        "ks_edgeworth": 0.073858278318,
+        "ks_pred": 0.121740644311,
+        "ks_times_sqrt_k": 0.276792083778,
+        "c_be_effective": 0.111840891096,
+        "ratio_clt_to_pred": 1.01679421604,
+        "improvement_edge": 1.675982514235
+      },
+      {
+        "k": 7,
+        "n_samples": 40000,
+        "ks_clt": 0.105965986947,
+        "ks_edgeworth": 0.061313416162,
+        "ks_pred": 0.095212569842,
+        "ks_times_sqrt_k": 0.280359648894,
+        "c_be_effective": 0.113282405088,
+        "ratio_clt_to_pred": 1.112941149718,
+        "improvement_edge": 1.728267540441
+      },
+      {
+        "k": 10,
+        "n_samples": 30000,
+        "ks_clt": 0.084033333358,
+        "ks_edgeworth": 0.050803059499,
+        "ks_pred": 0.073934268534,
+        "ks_times_sqrt_k": 0.265736732786,
+        "c_be_effective": 0.107373854722,
+        "ratio_clt_to_pred": 1.136595181422,
+        "improvement_edge": 1.654099855137
+      },
+      {
+        "k": 15,
+        "n_samples": 30000,
+        "ks_clt": 0.06970000004,
+        "ks_edgeworth": 0.041814207623,
+        "ks_pred": 0.05597239144,
+        "ks_times_sqrt_k": 0.269946939386,
+        "c_be_effective": 0.109075035086,
+        "ratio_clt_to_pred": 1.245256781908,
+        "improvement_edge": 1.66689754516
+      },
+      {
+        "k": 20,
+        "n_samples": 30000,
+        "ks_clt": 0.068600000094,
+        "ks_edgeworth": 0.037572991705,
+        "ks_pred": 0.04620473934,
+        "ks_times_sqrt_k": 0.306788526935,
+        "c_be_effective": 0.123961284449,
+        "ratio_clt_to_pred": 1.484696182118,
+        "improvement_edge": 1.825779555494
+      },
+      {
+        "k": 30,
+        "n_samples": 30000,
+        "ks_clt": 0.048993852872,
+        "ks_edgeworth": 0.028106469915,
+        "ks_pred": 0.035528668678,
+        "ks_times_sqrt_k": 0.268350383972,
+        "c_be_effective": 0.10842992928,
+        "ratio_clt_to_pred": 1.378994898903,
+        "improvement_edge": 1.743152129056
+      },
+      {
+        "k": 50,
+        "n_samples": 30000,
+        "ks_clt": 0.106252624518,
+        "ks_edgeworth": 0.112590601894,
+        "ks_pred": 0.025813347146,
+        "ks_times_sqrt_k": 0.751319513156,
+        "c_be_effective": 0.303578927194,
+        "ratio_clt_to_pred": 4.116189346415,
+        "improvement_edge": 0.943707758292
+      },
+      {
+        "k": 75,
+        "n_samples": 30000,
+        "ks_clt": 0.432234791225,
+        "ks_edgeworth": 0.416548546828,
+        "ks_pred": 0.020197572481,
+        "ks_times_sqrt_k": 3.743263096002,
+        "c_be_effective": 1.512506696542,
+        "ratio_clt_to_pred": 21.400333710211,
+        "improvement_edge": 1.037657662032
+      },
+      {
+        "k": 100,
+        "n_samples": 30000,
+        "ks_clt": 0.720995649374,
+        "ks_edgeworth": 0.713213173116,
+        "ks_pred": 0.017037856152,
+        "ks_times_sqrt_k": 7.209956493741,
+        "c_be_effective": 2.913262359305,
+        "ratio_clt_to_pred": 42.31727530473,
+        "improvement_edge": 1.010911851535
+      }
+    ],
+    "power_law_alpha": 0.337157222248,
+    "power_law_A": 0.048892673904,
+    "c_be_mean_large_k": 0.739741155226
+  },
+  "pointwise_test": {
+    "5": {
+      "ks_clt": 0.123918516326,
+      "ks_edge": 0.074420778315,
+      "improvement": 1.665106427686,
+      "max_clt_error_position": 1.264911064706,
+      "edgeworth_term1_at_0": -0.063078313051
+    },
+    "10": {
+      "ks_clt": 0.08950000002,
+      "ks_edge": 0.048684192444,
+      "improvement": 1.838379061609,
+      "max_clt_error_position": 1.341640788564,
+      "edgeworth_term1_at_0": -0.044603102904
+    },
+    "20": {
+      "ks_clt": 0.06221666671,
+      "ks_edge": 0.034006725936,
+      "improvement": 1.829540039408,
+      "max_clt_error_position": 1.26491110351,
+      "edgeworth_term1_at_0": -0.031539156525
+    }
+  },
+  "summary": {
+    "closed_form_parameters": {
+      "E[X]": "log2(3) - 2 = -0.4150374992788439",
+      "Var[X]": "2 (exact: Var[Geom(1/2)] = 2)",
+      "sigma": "sqrt(2)",
+      "sigma_cubed": "2*sqrt(2)",
+      "kappa_3": "-6",
+      "kappa_4": "26",
+      "kappa_5": "-150",
+      "kappa_6": "1082",
+      "gamma_3_skewness": "-3*sqrt(2)/2 = -2.12132...",
+      "gamma_4_excess_kurtosis": "13/2 = 6.5",
+      "rho_E_absX3": "7 (exact)",
+      "rho_over_sigma3": "7*sqrt(2)/4 = 2.47487..."
+    },
+    "edgeworth_expansion": {
+      "term1_coeff": "c1 = 1/(4*sqrt(pi)) = 0.1410473959",
+      "term2_coeff": "c2 = 0.2933116563",
+      "KS_formula": "KS(k) ~ 0.141047/sqrt(k) + 0.293312/k"
+    },
+    "berry_esseen": {
+      "BE_bound": "sup|F_k-Phi| <= C * 2.474874 / sqrt(k)",
+      "effective_C_BE": 0.739741155226,
+      "Shevtsova_upper_bound": 0.4748
+    },
+    "scaling_explanation": {
+      "observed_pattern": "KS ~ 0.28 * k^{-0.514}",
+      "theoretical_alpha_local": "alpha_loc = -(1/2 + r)/(1+r) where r = c2/(c1*sqrt(k)), effective alpha(k=3..50) = -0.6752",
+      "explanation": "Edgeworth\u5c55\u958b\u306e\u7b2c2\u9805(1/k)\u304c\u6b63\u306e\u305f\u3081\u3001\u6709\u9650k\u3067\u306e\u6709\u52b9\u6307\u6570\u306f -0.5\u3088\u308a\u6025 (more negative)\u3002k -> inf\u3067\u306f -0.5 \u306b\u53ce\u675f\u3002"
+    },
+    "elapsed_seconds": 9.823426961899
+  }
+}

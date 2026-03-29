@@ -1,0 +1,169 @@
+{
+  "title": "Syracuse T mod 2^k permutation group - v2 analysis",
+  "image_ratios": [
+    {
+      "k": 3,
+      "image_size": 3,
+      "n_odds": 4,
+      "ratio": 0.75
+    },
+    {
+      "k": 4,
+      "image_size": 4,
+      "n_odds": 8,
+      "ratio": 0.5
+    },
+    {
+      "k": 5,
+      "image_size": 12,
+      "n_odds": 16,
+      "ratio": 0.75
+    },
+    {
+      "k": 6,
+      "image_size": 18,
+      "n_odds": 32,
+      "ratio": 0.5625
+    },
+    {
+      "k": 7,
+      "image_size": 48,
+      "n_odds": 64,
+      "ratio": 0.75
+    },
+    {
+      "k": 8,
+      "image_size": 74,
+      "n_odds": 128,
+      "ratio": 0.578125
+    },
+    {
+      "k": 9,
+      "image_size": 192,
+      "n_odds": 256,
+      "ratio": 0.75
+    },
+    {
+      "k": 10,
+      "image_size": 298,
+      "n_odds": 512,
+      "ratio": 0.58203125
+    },
+    {
+      "k": 11,
+      "image_size": 768,
+      "n_odds": 1024,
+      "ratio": 0.75
+    },
+    {
+      "k": 12,
+      "image_size": 1194,
+      "n_odds": 2048,
+      "ratio": 0.5830078125
+    },
+    {
+      "k": 13,
+      "image_size": 3072,
+      "n_odds": 4096,
+      "ratio": 0.75
+    },
+    {
+      "k": 14,
+      "image_size": 4778,
+      "n_odds": 8192,
+      "ratio": 0.583251953125
+    },
+    {
+      "k": 15,
+      "image_size": 12288,
+      "n_odds": 16384,
+      "ratio": 0.75
+    },
+    {
+      "k": 16,
+      "image_size": 19114,
+      "n_odds": 32768,
+      "ratio": 0.58331298828125
+    },
+    {
+      "k": 17,
+      "image_size": 49152,
+      "n_odds": 65536,
+      "ratio": 0.75
+    }
+  ],
+  "invariant_subset_orders": [
+    {
+      "k": 3,
+      "invariant_size": 1,
+      "order": 1,
+      "log2_order": 0
+    },
+    {
+      "k": 4,
+      "invariant_size": 1,
+      "order": 1,
+      "log2_order": 0
+    },
+    {
+      "k": 5,
+      "invariant_size": 1,
+      "order": 1,
+      "log2_order": 0
+    },
+    {
+      "k": 6,
+      "invariant_size": 1,
+      "order": 1,
+      "log2_order": 0
+    },
+    {
+      "k": 7,
+      "invariant_size": 1,
+      "order": 1,
+      "log2_order": 0
+    },
+    {
+      "k": 8,
+      "invariant_size": 1,
+      "order": 1,
+      "log2_order": 0
+    },
+    {
+      "k": 9,
+      "invariant_size": 1,
+      "order": 1,
+      "log2_order": 0
+    },
+    {
+      "k": 10,
+      "invariant_size": 27,
+      "order": 26,
+      "log2_order": 4.700439718141092
+    },
+    {
+      "k": 11,
+      "invariant_size": 26,
+      "order": 25,
+      "log2_order": 4.643856189774724
+    },
+    {
+      "k": 12,
+      "invariant_size": 14,
+      "order": 42,
+      "log2_order": 5.392317422778761
+    },
+    {
+      "k": 13,
+      "invariant_size": 1,
+      "order": 1,
+      "log2_order": 0
+    },
+    {
+      "k": 14,
+      "invariant_size": 1,
+      "order": 1,
+      "log2_order": 0
+    }
+  ]
+}

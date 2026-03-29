@@ -1,0 +1,57 @@
+{
+  "title": "mod 2^k非排除残基の偶奇振動の2-adic理論的説明（最終）",
+  "approach": "リフト構造k->k+1を解析。high_survive=(2^k-1)/3パターンの完全法則と、B(k)+R(k)によるパリティ遷移法則を発見。",
+  "findings": [
+    "high_survive(k) = 1 iff k even, = 0 iff k odd (k=3..21で完全検証)",
+    "high_surviveする残基は常に r=(2^k-1)/3 (k偶数で整数、v2(3r+1)=k)",
+    "both_survive = 0 が全kで成立（2つのリフトが同時に非排除になることはない）",
+    "パリティ遷移: N(k+1) mod 2 = (N(k) + B(k) + R(k)) mod 2",
+    "パリティ列 OOOEEOOOOEEEOOOEOEOE は単純周期を持たない",
+    "成長率 alpha = 1.503 (log2 = 0.588), N(k) ~ 0.189 * 1.503^k"
+  ],
+  "hypotheses": [
+    "high_survive=(1 if k%2==0 else 0) は2^k mod 3 = (-1)^k mod 3 の直接的帰結",
+    "R(k)の偶奇がパリティ振動の主要な決定因子であり、carry chainの精密構造に依存",
+    "N(k)の成長率 1.503 は 3/2 に漸近する可能性（3x+1写像の平均的影響）"
+  ],
+  "dead_ends": [
+    "T(r+2^k) = T(r) + 3*2^{k-1} mod 2^{k+1} は v2(3r+1)>=2 の残基では不成立",
+    "(-1)^k モデルでの残差振動はデータに一致しない",
+    "3-adic valuation v3(N(k))にはパリティとの系統的相関なし"
+  ],
+  "nk_series": {
+    "2": 1,
+    "3": 3,
+    "4": 3,
+    "5": 2,
+    "6": 2,
+    "7": 3,
+    "8": 7,
+    "9": 11,
+    "10": 13,
+    "11": 14,
+    "12": 22,
+    "13": 32,
+    "14": 51,
+    "15": 61,
+    "16": 109,
+    "17": 162,
+    "18": 285,
+    "19": 504,
+    "20": 717,
+    "21": 1390
+  },
+  "parity_sequence": "OOOEEOOOOEEEOOOEOEOE",
+  "high_survive_law": {
+    "statement": "high_survive(k) = 1 if k even, 0 if k odd",
+    "residue": "r = (2^k - 1) / 3 when k is even",
+    "algebraic_reason": "2^k = 1 mod 3 iff k is even, so (2^k-1)/3 is integer",
+    "v2_property": "v2(3 * (2^k-1)/3 + 1) = v2(2^k) = k"
+  },
+  "parity_transition": {
+    "formula": "N(k+1) = N(k) - B(k) + R(k)",
+    "parity_rule": "parity changes iff B(k)+R(k) is odd",
+    "both_survive_zero": "Guaranteed by 2-adic distance argument"
+  },
+  "outcome": "medium_discovery"
+}

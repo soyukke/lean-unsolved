@@ -1,0 +1,85 @@
+{
+  "title": "Berry-Esseen精密定数の閉公式導出: コラッツ加速Syracuse増分",
+  "approach": "X = log2(3) - Geom(1/2) の完全離散構造を利用し、全モーメント・キュムラント・Berry-Esseen定数rho・Edgeworth展開係数を閉公式で導出。数値検証で理論と実測の整合性を確認。",
+  "findings": [
+    "rho = E[|X-mu|^3] = 7 (exact): 解析的証明を完成 (1/2 + 26/4 = 7)",
+    "Berry-Esseen比 rho/sigma^3 = 7*sqrt(2)/4 = 2.4749 (exact)",
+    "Edgeworth第1項係数 c1 = 1/(4*sqrt(pi)) = 0.1410 (exact closed form)",
+    "Edgeworth第2項係数 c2 = 0.2933 (numerical, from sup|He_3*phi|=0.5506, sup|He_5*phi|=2.3071)",
+    "実効Berry-Esseen定数 C_BE_eff ≈ 0.11 (k=1..30で安定、Shevtsova上界0.4748の23%)",
+    "KS*sqrt(k) ≈ 0.27-0.29 for k=1..30 (非常に安定したBE型スケーリング)",
+    "k>=50で軌道の1到達によるバイアスが顕著化しBE近似が破綻",
+    "キュムラント列: kappa_n = (-1)^n * A_n where A_n = E[V^n] (Geom(1/2) raw moments)"
+  ],
+  "hypotheses": [
+    "実効C_BE ≈ 0.11はコラッツ増分の特殊構造(離散幾何分布)に固有の値であり、一般のBE上界0.4748よりはるかに小さい",
+    "k=1..30でのKS*sqrt(k)の安定性は、増分の近似独立性が30ステップまで成立することを意味する",
+    "KS ~ 0.28*k^{-0.514}という経験則は、Edgeworth 2項 c1/sqrt(k)+c2/kのpower law近似であり、有効指数alpha_loc = -(1/2+r)/(1+r), r=c2/(c1*sqrt(k))で説明される"
+  ],
+  "dead_ends": [
+    "k>=50での数値検証: 軌道の1到達率が高く、条件付きサンプリングにバイアスが入る。Berry-Esseen的解析はk<=30が実用限界",
+    "Edgeworth KS上界 c1/sqrt(k)+c2/k は実測KSを過大評価する(c2が上界のsupから来るため)"
+  ],
+  "scripts_created": [
+    "scripts/berry_esseen_precise_constant.py",
+    "scripts/berry_esseen_precise_v2.py",
+    "scripts/berry_esseen_large_k_fix.py"
+  ],
+  "outcome": "中発見",
+  "next_directions": [
+    "Edgeworth CDF補正の精密な(supでない)KS寄与を、特定のx位置で評価する閉公式の導出",
+    "1到達バイアスの定量化: k大でのコンディショニング効果の理論的モデリング",
+    "kappa_nの一般閉公式: kappa_n = (-1)^n * Li_{-n}(1/2) を利用したEdgeworth全次数展開",
+    "C_BE_eff ≈ 0.11 の理論的根拠: 離散幾何分布のBerry-Esseen最良定数の導出"
+  ],
+  "details": {
+    "closed_form_summary": {
+      "distribution": "X = log2(3) - V, V ~ Geom(1/2), P(V=j) = 2^{-j} for j >= 1",
+      "E_X": "log2(3) - 2 = -0.41504",
+      "Var_X": "2 (exact: from sum j^2 * 2^{-j} = 6, so Var = 6-4 = 2)",
+      "sigma": "sqrt(2)",
+      "sigma_cubed": "2*sqrt(2)",
+      "raw_moments_V": {"E[V]": 2, "E[V^2]": 6, "E[V^3]": 26, "E[V^4]": 150, "E[V^5]": 1082, "E[V^6]": 9366},
+      "central_moments_V": {"mu2": 2, "mu3": 6, "mu4": 38, "mu5": 270, "mu6": 2342},
+      "cumulants": {"kappa1": "log2(3)-2", "kappa2": 2, "kappa3": -6, "kappa4": 26, "kappa5": -150, "kappa6": 1082},
+      "standardized_cumulants": {
+        "gamma3_skewness": "-3*sqrt(2)/2 = -2.1213",
+        "gamma4_excess_kurtosis": "13/2 = 6.5"
+      }
+    },
+    "berry_esseen_constants": {
+      "rho_derivation": "rho = sum |j-2|^3 * 2^{-j} = 1/2 + 0 + (1/4)*sum m^3 * 2^{-m} = 1/2 + 26/4 = 7",
+      "rho": 7,
+      "rho_over_sigma3": "7/(2*sqrt(2)) = 7*sqrt(2)/4 = 2.4749",
+      "BE_theorem": "sup|F_k - Phi| <= C_BE * 7*sqrt(2)/(4*sqrt(k))",
+      "Shevtsova_C_BE_upper": 0.4748,
+      "effective_C_BE_observed": "0.11 (for k=1..30)"
+    },
+    "edgeworth_expansion": {
+      "formula": "F_k(x) = Phi(x) - phi(x)*[gamma3/6 * He2(x)/sqrt(k) + (gamma4/24 * He3(x) + gamma3^2/72 * He5(x))/k + ...]",
+      "KS_upper_bound": "KS(k) <= c1/sqrt(k) + c2/k + O(k^{-3/2})",
+      "c1_exact": "1/(4*sqrt(pi)) = 0.14105",
+      "c1_derivation": "|gamma3|/6 * sup|He2*phi| = (3*sqrt(2)/2)/6 * 1/sqrt(2*pi) = sqrt(2)/(4*sqrt(2*pi)) = 1/(4*sqrt(pi))",
+      "c2": 0.2933,
+      "sup_He2_phi": "1/sqrt(2*pi) = 0.3989 (at x=0)",
+      "sup_He3_phi": "0.5506 (at x=+-0.742, from x^4-6x^2+3=0)",
+      "sup_He5_phi": "2.3071"
+    },
+    "numerical_verification_k1_30": {
+      "k_1": {"ks_clt": 0.261, "ks_sqrt_k": 0.261, "c_be_eff": 0.105},
+      "k_2": {"ks_clt": 0.189, "ks_sqrt_k": 0.267, "c_be_eff": 0.108},
+      "k_3": {"ks_clt": 0.159, "ks_sqrt_k": 0.275, "c_be_eff": 0.111},
+      "k_5": {"ks_clt": 0.126, "ks_sqrt_k": 0.282, "c_be_eff": 0.114},
+      "k_10": {"ks_clt": 0.088, "ks_sqrt_k": 0.278, "c_be_eff": 0.112},
+      "k_20": {"ks_clt": 0.065, "ks_sqrt_k": 0.289, "c_be_eff": 0.117},
+      "k_30": {"ks_clt": 0.049, "ks_sqrt_k": 0.268, "c_be_eff": 0.108}
+    },
+    "scaling_explanation": {
+      "local_exponent_formula": "alpha_loc(k) = -(1/2 + r)/(1 + r) where r = c2/(c1*sqrt(k))",
+      "r_values": {"k=3": 1.20, "k=5": 0.93, "k=10": 0.66, "k=20": 0.46, "k=50": 0.29, "k=100": 0.21},
+      "alpha_values": {"k=3": -0.773, "k=5": -0.741, "k=10": -0.698, "k=20": -0.659, "k=50": -0.614, "k=100": -0.586},
+      "effective_power_law_k3_50": "alpha=-0.675, A=0.355",
+      "convergence": "alpha -> -0.5 as k -> inf (pure Berry-Esseen)"
+    }
+  }
+}

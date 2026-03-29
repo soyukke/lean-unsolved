@@ -1,0 +1,36 @@
+{
+  "title": "mod18遷移行列+肥沃率2/3のLean形式化設計",
+  "approach": "Syracuse逆像のmod6分類を数値検証し、mod18遷移行列の構造を解析した。肥沃率2/3の証明にはfertile_iff（逆像存在 <=> m%3!=0）の同値条件を設計し、既存のsyracuse_mod3_eqおよびroot_mod6設計（探索178）を統合した形式化設計を完成させた。",
+  "findings": [
+    "【新発見1】mod18遷移行列はmod6で退化する: n%18の9クラスはn%6の3クラスに集約され、同一mod6クラス内では遷移確率分布が完全一致（50.8%, 25.4%, 12.7%, 6.4%, 3.2%, 1.6%の幾何分布）",
+    "【新発見2】syracuse(n) mod 6 はv2の偶奇で2値に決定: v2奇→mod6=5, v2偶→mod6=1。これはsyracuse_mod3_eq（既証明）の系だが、mod6への拡張として新規",
+    "【新発見3】3の倍数クラス(mod18 in {3,9,15})への遷移は厳密に0: syracuse_not_div_threeの数値的再確認",
+    "【新発見4】P(v2(3n+1)奇数)=2/3, P(v2(3n+1)偶数)=1/3: 級数 sum 1/2^{2k+1} = 2/3 の正確な計算",
+    "【設計完了】fertile_iff: 逆像存在 <=> m%3!=0 の完全な同値証明の設計。->方向はsyracuse_not_div_three、<-方向は探索178のroot公式を利用",
+    "【既知の確認】syracuse_mod3_eq, syracuse_not_div_three, syracuse_four_mul_add_one, collatzStep_indeg_le_twoは全て形式化済み"
+  ],
+  "hypotheses": [
+    "fertile_iffの<-方向: odd_mod6_trichotomyで3ケースに分割し、m%6=1ケースでsyracuse_root_mod6_eq1、m%6=5でsyracuse_root_mod6_eq5、m%6=3で矛盾（m%3=0）とすれば証明完成",
+    "mod18遷移行列の退化は、3n+1 mod 3 = 1（定数）であることとv2がmod6に非依存であることの組み合わせで説明可能",
+    "v2(3n+1)=jの確率1/2^jは、3n+1が2^jで割れる条件がmod 2^jの1クラスに対応することから従う"
+  ],
+  "dead_ends": [
+    "mod18遷移行列を直接形式化する方向: mod18では遷移先が確定しない（v2がmod18で決まらないため）ので、形式化対象としては不適",
+    "mod36分析: mod36でも半数以上のクラスで遷移先が非確定的であり、高次modでの確定的遷移は限定的",
+    "肥沃率のFinset版形式化: Finset.filter + .card でのcounting argumentは技術的に複雑で、mod6の3分岐 + 等分布論法が必要"
+  ],
+  "scripts_created": [
+    "scripts/mod18_transition_fertile.py",
+    "scripts/mod18_root_detail.py",
+    "scripts/mod18_pattern_discovery.py",
+    "scripts/mod18_fertile_summary.py"
+  ],
+  "outcome": "中発見",
+  "next_directions": [
+    "fertile_iffの実装: Mod.lean末尾に追加。探索178のroot公式(syracuse_root_mod6_eq1, syracuse_root_mod6_eq5)を先に形式化する必要あり",
+    "syracuse_mod6_of_v2_parity: v2の偶奇でmod6が{1,5}に決定する定理の形式化。syracuse_mod3_eqの系として5-10行",
+    "P(v2(3n+1)=j)=1/2^jの形式化: これは mod 2^j でのequidistributionに帰着するが、Lean4での density 概念が必要で難しい",
+    "逆像木の完全記述: fertile_iff + syracuse_four_mul_add_one による T^{-1}(m) の完全列挙定理"
+  ],
+  "details": "## 探索194の分析結果\n\n### 1. mod18遷移行列の構造\n\nSyracuseを奇数のmod18分類で見ると、9x9の遷移行列が得られる。\n数値実験（n=1..200001の奇数）で以下を確認:\n\n- 3の倍数クラス（mod18 in {3,9,15}）への遷移確率は厳密に0\n- mod6で同じクラスの行は同一の遷移確率分布を持つ\n  - mod6=1: {1,7,13} → 同一分布\n  - mod6=3: {3,9,15} → 同一分布  \n  - mod6=5: {5,11,17} → 同一分布\n- 遷移確率は 50.8%, 25.4%, 12.7%, 6.4%, 3.2%, 1.6% の幾何分布\n  これは v2(3n+1) の分布 P(v2=j) = 1/2^j に対応\n\n### 2. syracuse(n) mod 6 の決定\n\nsyracuse(n) = (3n+1)/2^{v2(3n+1)} において:\n- (3n+1) mod 3 = 1（常に）\n- 2^j mod 3: j奇→2, j偶→1\n- よって syracuse(n) mod 3 = (3n+1)/2^j mod 3 = 1 * (2^j)^{-1} mod 3\n  - j奇: 2^{-1} = 2 mod 3, つまり mod3=2\n  - j偶: 1^{-1} = 1 mod 3, つまり mod3=1\n- syracuseは常に奇数なので、mod6 = {1,5}の2値に制限:\n  - v2奇 → mod6=5 (mod3=2, mod2=1)\n  - v2偶 → mod6=1 (mod3=1, mod2=1)\n\n### 3. 肥沃率2/3の3つの意味\n\n(a) 組合せ的: 奇数をmod6で{1,3,5}に分けると{1,5}が肥沃で比率2/3\n(b) 確率的: P(v2(3n+1)奇)=Σ1/2^{2k+1}=2/3 → 像がmod6=5クラスに入る確率\n(c) 逆像的: m%3≠0 ⟺ Syracuse逆像が存在（fertile_iff）\n\n### 4. Lean形式化設計\n\n【優先度高: fertile_iff】約20行\n```\ntheorem fertile_iff (m : Nat) (hm : m >= 1) (hodd : m % 2 = 1) :\n    (exists n, n >= 1 ∧ n % 2 = 1 ∧ syracuse n = m) <-> m % 3 != 0\n```\n- ->: syracuse_not_div_three\n- <-: odd_mod6_trichotomy + syracuse_root_mod6_eq{1,5}\n\n【優先度中: syracuse_mod6_of_v2_parity】約10行\n```\ntheorem syracuse_mod6_eq (n : Nat) (hodd : n % 2 = 1) :\n    syracuse n % 6 = if v2(3*n+1) % 2 = 0 then 1 else 5\n```\n- syracuse_mod3_eq（既存）+ syracuse_odd（既存）から導出\n\n【前提: 探索178の形式化が先に必要】\n- syracuse_root_mod6_eq1, syracuse_root_mod6_eq5\n\n### 5. 既知と新規の区別\n\n既知（形式化済み）:\n- syracuse_mod3_eq（v2の偶奇でmod3決定）\n- syracuse_not_div_three（像は3非整除）\n- syracuse_four_mul_add_one（逆像の4n+1構造）\n- collatzStep_indeg_le_two（入次数≤2）\n\n新規（本探索）:\n- mod18遷移行列のmod6退化構造の発見と数値検証\n- fertile_iffの完全な形式化設計\n- syracuse_mod6_eqの形式化設計\n- P(v2奇)=2/3の級数的解釈"
+}

@@ -1,0 +1,31 @@
+{
+  "title": "root(m)のmod6場合分けLean形式化設計",
+  "approach": "Syracuse逆像の根root(m)について、m mod 6 = 1のときroot = (4m-1)/3、m mod 6 = 5のときroot = (2m-1)/3という公式を数値的に検証し（10万まで0エラー）、Lean 4での形式化設計を完成させた。代数的証明と2つの証明戦略（Nat.div_add_modパターン vs パラメータ化）を比較し、推奨戦略を決定した。",
+  "findings": [
+    "m % 6 = 1 のとき root(m) = (4m-1)/3: 核心等式 3*((4m-1)/3)+1 = 4m を利用。m=6k+1ならroot=8k+1（奇数）で、3*(8k+1)+1 = 4*(6k+1) = 4m、v2(4m)=2よりsyracuse(root) = 4m/4 = m",
+    "m % 6 = 5 のとき root(m) = (2m-1)/3: 核心等式 3*((2m-1)/3)+1 = 2m を利用。m=6k+5ならroot=4k+3（奇数）で、3*(4k+3)+1 = 2*(6k+5) = 2m、v2(2m)=1よりsyracuse(root) = 2m/2 = m",
+    "逆像は4p+1チェーンを形成: syracuse_four_mul_add_oneにより、root, 4*root+1, 4*(4*root+1)+1, ...が全て同じmの逆像",
+    "系として、Syracuse関数は奇数で3の倍数でない全ての正整数への全射（syracuse_surjective_on_odd_non_mul3）が証明可能",
+    "全10万までの奇数について公式を検証し、0エラーを確認"
+  ],
+  "hypotheses": [
+    "omega が Nat.div を直接扱えない場合、パラメータ化（m = 6k+1 or 6k+5）が最も確実な戦略",
+    "v2_four_mul_odd と v2_two_mul_odd は新規補題だが v2_two_mul と v2_odd の2段階rewriteで証明可能"
+  ],
+  "dead_ends": [
+    "omega だけで 3*((4m-1)/3)+1 = 4m を直接証明しようとする試み：Lean 4のomegaはNat.divを限定的にしか扱えないため、Nat.div_add_modの補助が必要になる可能性がある"
+  ],
+  "scripts_created": [
+    "scripts/exploration_178_root_formula.py",
+    "scripts/exploration_178_lean_design.py",
+    "scripts/exploration_178_omega_workaround.py"
+  ],
+  "outcome": "中発見",
+  "next_directions": [
+    "Lean 4で実際にsyracuse_root_mod6_eq1とsyracuse_root_mod6_eq5を形式化（Mod.lean末尾に追加推奨）",
+    "syracuse_surjective_on_odd_non_mul3（全射性定理）の形式化",
+    "root が逆像の最小値であることの形式化（4p+1チェーンの最小性）",
+    "root公式とsyracuse_four_mul_add_oneの組み合わせで、逆像木の完全な記述"
+  ],
+  "details": "## 数学的内容\n\nSyracuse関数 T(n) = (3n+1)/2^v2(3n+1) の逆像問題を解いた。\n\n### mod 6 = 1 の場合\nm = 6k+1 に対して r = (4m-1)/3 = 8k+1 とすると:\n- r は奇数 (8k+1 mod 2 = 1)\n- 3r+1 = 3(8k+1)+1 = 24k+4 = 4(6k+1) = 4m\n- v2(4m) = 2 (mが奇数なので)\n- T(r) = 4m/4 = m\n\n### mod 6 = 5 の場合\nm = 6k+5 に対して r = (2m-1)/3 = 4k+3 とすると:\n- r は奇数 (4k+3 mod 2 = 1)\n- 3r+1 = 3(4k+3)+1 = 12k+10 = 2(6k+5) = 2m\n- v2(2m) = 1 (mが奇数なので)\n- T(r) = 2m/2 = m\n\n### Lean形式化設計\n\n新規定理8個:\n1. key_eq_mod6_eq1: 3*((4m-1)/3)+1 = 4m\n2. key_eq_mod6_eq5: 3*((2m-1)/3)+1 = 2m\n3. root_odd_mod6_eq1: ((4m-1)/3) % 2 = 1\n4. root_odd_mod6_eq5: ((2m-1)/3) % 2 = 1\n5. v2_four_mul_odd: v2(4m) = 2 (m odd)\n6. v2_two_mul_odd: v2(2m) = 1 (m odd)\n7. syracuse_root_mod6_eq1: syracuse((4m-1)/3) = m\n8. syracuse_root_mod6_eq5: syracuse((2m-1)/3) = m\n\n推奨証明戦略: パラメータ化(m=6k+rとsubst)。\n既存依存: v2_two_mul, v2_odd (Defs.lean)。\n配置先: Unsolved/Collatz/Mod.lean末尾。"
+}

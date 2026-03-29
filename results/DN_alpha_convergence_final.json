@@ -1,0 +1,78 @@
+{
+  "title": "D(N)_alpha_convergence_final",
+  "new_data": {
+    "D_1e8": 949,
+    "D_2e8": 953,
+    "D_5e7": 744
+  },
+  "DN_table": {
+    "3": 178,
+    "4": 261,
+    "5": 350,
+    "6": 524,
+    "7": 685,
+    "8": 949
+  },
+  "regression_all": {
+    "alpha": 1.697,
+    "C": 6.191,
+    "R2": 0.9858,
+    "note": "log(D) vs log(logN) 回帰"
+  },
+  "instantaneous_alpha": {
+    "3-4": 1.3304,
+    "4-5": 1.3149,
+    "5-6": 2.2134,
+    "6-7": 1.7381,
+    "7-8": 2.4413
+  },
+  "cv_optimal_alpha": {
+    "all_k": 1.696,
+    "k_ge_5": 2.084,
+    "k_ge_6": 2.057
+  },
+  "DlogN_regression_alpha": 1.697,
+  "alpha_estimates_summary": {
+    "median": 1.808,
+    "mean": 1.881,
+    "std": 0.186
+  },
+  "alpha_trend": "weakly_increasing_with_N",
+  "best_estimate_alpha_range": "1.65-1.75",
+  "best_estimate_alpha_with_trend": "alpha is not converging to a fixed value; it increases with N",
+  "D_1e9_prediction": {
+    "regression_alpha_1.70": 1061,
+    "alpha_1.6_extrapolation": 1146,
+    "alpha_1.7_extrapolation": 1159,
+    "alpha_2.0_extrapolation": 1201,
+    "alpha_2.4_extrapolation": 1259
+  },
+  "gumbel_evt_comparison": {
+    "lambda_tail": 0.0735,
+    "D_actual_over_D_gumbel": {
+      "k3": 1.894,
+      "k4": 2.083,
+      "k5": 2.234,
+      "k6": 2.788,
+      "k7": 3.124,
+      "k8": 3.787
+    },
+    "trend": "ratio increases with N => deviation from iid EVT"
+  },
+  "ratio_stability": {
+    "alpha_1.5": "increasing => too small",
+    "alpha_1.6": "slightly increasing => slightly too small",
+    "alpha_1.7": "stable (CV=0.068) => best current fit",
+    "alpha_1.8": "slightly decreasing => slightly too large",
+    "alpha_2.0": "decreasing => too large"
+  },
+  "key_findings": [
+    "D(10^8)=949 (新規実測): alpha=1.6 モデルの予測(~870)を9%超過",
+    "瞬間alpha(k=7->8)=2.44 は全ペア中で最大",
+    "alpha は安定せず、Nと共に緩やかに増大する傾向が明確",
+    "D(N)/(logN)^1.7 がN=10^3..10^8で最も安定(CV=0.068)",
+    "N=10^7 までの alpha=1.60 から N=10^8 を含めると alpha=1.70 に更新",
+    "Gumbel EVT予測との乖離比が 1.89(k=3)から3.79(k=8)に増大",
+    "alpha が固定値に収束しない可能性: D(N) ~ exp(c*(logN)^beta) 型の可能性あり"
+  ]
+}

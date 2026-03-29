@@ -1,0 +1,237 @@
+{
+  "title": "mod 2^k非排除残基の偶奇振動の2-adic理論的解析（深層）",
+  "approach": "非排除残基のリフト構造 k->k+1 を代数的に分析。T(r+2^k) = T(r) + 3*2^{k-1} mod 2^{k+1} の恒等式を発見・証明。",
+  "nk_series": {
+    "2": 1,
+    "3": 3,
+    "4": 3,
+    "5": 2,
+    "6": 2,
+    "7": 3,
+    "8": 7,
+    "9": 11,
+    "10": 13,
+    "11": 14,
+    "12": 22,
+    "13": 32,
+    "14": 51,
+    "15": 61,
+    "16": 109,
+    "17": 162,
+    "18": 285,
+    "19": 504,
+    "20": 717,
+    "21": 1390
+  },
+  "parity_sequence": "OOOEEOOOOEEEOOOEOEOE",
+  "key_identity": "T(r+2^k) = T(r) + 3*2^{k-1} mod 2^{k+1} (for all non-excluded r with v2(3r+1)=1)",
+  "both_survive_always_zero": true,
+  "lift_analysis": {
+    "3": {
+      "N_k": 3,
+      "N_k1": 3,
+      "E_k": 3,
+      "R_k": 0,
+      "E_mod2": 1,
+      "R_mod2": 0,
+      "high_survive": 0,
+      "low_survive": 3
+    },
+    "4": {
+      "N_k": 3,
+      "N_k1": 2,
+      "E_k": 4,
+      "R_k": 0,
+      "E_mod2": 0,
+      "R_mod2": 0,
+      "high_survive": 1,
+      "low_survive": 1
+    },
+    "5": {
+      "N_k": 2,
+      "N_k1": 2,
+      "E_k": 2,
+      "R_k": 0,
+      "E_mod2": 0,
+      "R_mod2": 0,
+      "high_survive": 0,
+      "low_survive": 2
+    },
+    "6": {
+      "N_k": 2,
+      "N_k1": 3,
+      "E_k": 2,
+      "R_k": 1,
+      "E_mod2": 0,
+      "R_mod2": 1,
+      "high_survive": 1,
+      "low_survive": 1
+    },
+    "7": {
+      "N_k": 3,
+      "N_k1": 7,
+      "E_k": 3,
+      "R_k": 4,
+      "E_mod2": 1,
+      "R_mod2": 0,
+      "high_survive": 0,
+      "low_survive": 3
+    },
+    "8": {
+      "N_k": 7,
+      "N_k1": 11,
+      "E_k": 8,
+      "R_k": 5,
+      "E_mod2": 0,
+      "R_mod2": 1,
+      "high_survive": 1,
+      "low_survive": 5
+    },
+    "9": {
+      "N_k": 11,
+      "N_k1": 13,
+      "E_k": 13,
+      "R_k": 4,
+      "E_mod2": 1,
+      "R_mod2": 0,
+      "high_survive": 0,
+      "low_survive": 9
+    },
+    "10": {
+      "N_k": 13,
+      "N_k1": 14,
+      "E_k": 16,
+      "R_k": 4,
+      "E_mod2": 0,
+      "R_mod2": 0,
+      "high_survive": 1,
+      "low_survive": 9
+    },
+    "11": {
+      "N_k": 14,
+      "N_k1": 22,
+      "E_k": 16,
+      "R_k": 10,
+      "E_mod2": 0,
+      "R_mod2": 0,
+      "high_survive": 0,
+      "low_survive": 12
+    },
+    "12": {
+      "N_k": 22,
+      "N_k1": 32,
+      "E_k": 26,
+      "R_k": 14,
+      "E_mod2": 0,
+      "R_mod2": 0,
+      "high_survive": 1,
+      "low_survive": 17
+    },
+    "13": {
+      "N_k": 32,
+      "N_k1": 51,
+      "E_k": 34,
+      "R_k": 21,
+      "E_mod2": 0,
+      "R_mod2": 1,
+      "high_survive": 0,
+      "low_survive": 30
+    },
+    "14": {
+      "N_k": 51,
+      "N_k1": 61,
+      "E_k": 60,
+      "R_k": 19,
+      "E_mod2": 0,
+      "R_mod2": 1,
+      "high_survive": 1,
+      "low_survive": 41
+    },
+    "15": {
+      "N_k": 61,
+      "N_k1": 109,
+      "E_k": 70,
+      "R_k": 57,
+      "E_mod2": 0,
+      "R_mod2": 1,
+      "high_survive": 0,
+      "low_survive": 52
+    },
+    "16": {
+      "N_k": 109,
+      "N_k1": 162,
+      "E_k": 139,
+      "R_k": 83,
+      "E_mod2": 1,
+      "R_mod2": 1,
+      "high_survive": 1,
+      "low_survive": 78
+    },
+    "17": {
+      "N_k": 162,
+      "N_k1": 285,
+      "E_k": 191,
+      "R_k": 152,
+      "E_mod2": 1,
+      "R_mod2": 0,
+      "high_survive": 0,
+      "low_survive": 133
+    },
+    "18": {
+      "N_k": 285,
+      "N_k1": 504,
+      "E_k": 337,
+      "R_k": 271,
+      "E_mod2": 1,
+      "R_mod2": 1,
+      "high_survive": 1,
+      "low_survive": 232
+    },
+    "19": {
+      "N_k": 504,
+      "N_k1": 717,
+      "E_k": 641,
+      "R_k": 350,
+      "E_mod2": 1,
+      "R_mod2": 0,
+      "high_survive": 0,
+      "low_survive": 367
+    },
+    "20": {
+      "N_k": 717,
+      "N_k1": 1390,
+      "E_k": 864,
+      "R_k": 820,
+      "E_mod2": 0,
+      "R_mod2": 0,
+      "high_survive": 1,
+      "low_survive": 569
+    },
+    "21": {
+      "N_k": 1390,
+      "N_k1": 2193,
+      "E_k": 1740,
+      "R_k": 1153,
+      "E_mod2": 0,
+      "R_mod2": 1,
+      "high_survive": 0,
+      "low_survive": 1040
+    }
+  },
+  "v2_identity_proof": {
+    "statement": "For odd r with r = 3 mod 4 (all non-excluded residues): v2(3r+1) = v2(3(r+2^k)+1) = 1 for k >= 2",
+    "proof_sketch": "3r+1 has v2=1 since r=3 mod 4. 3(r+2^k)+1 = 3r+1 + 3*2^k. Since v2(3r+1)=1 < k = v2(3*2^k), we get v2(sum)=min(1,k)=1.",
+    "consequence": "T(r) = (3r+1)/2 and T(r+2^k) = (3(r+2^k)+1)/2 = T(r) + 3*2^{k-1}"
+  },
+  "parity_mechanism": {
+    "formula": "N(k+1) = low_survive + high_survive + R(k), where low_survive + high_survive = N(k) - both_excluded",
+    "parity_rule": "N(k+1) mod 2 = (E(k) + R(k)) mod 2, since N(k+1) = 2*N(k) - E(k) + R(k)",
+    "non_periodic": "偶奇パターン OOOEEOOOOEEEOOOEOEOE は単純な周期を持たない",
+    "explanation": "偶奇振動はR(k)（再出現残基数）の偶奇で本質的に決まり、R(k)はcarry chain伝播の精密構造に依存する非自明な量"
+  },
+  "growth": {
+    "alpha": 1.503128,
+    "log2_alpha": 0.587968,
+    "note": "N(k) ~ 0.189 * 1.503^k, but with significant oscillation"
+  }
+}

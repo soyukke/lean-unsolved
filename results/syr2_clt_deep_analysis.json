@@ -1,0 +1,569 @@
+{
+  "1step_structure": {
+    "overall_stats": {
+      "mean": -0.4132754992,
+      "var": 1.9979788954,
+      "std": 1.4134988134,
+      "skewness": -2.1242649541,
+      "kurtosis": 6.5534876691
+    },
+    "distribution_support": {
+      "upper_bound": 0.5849625007,
+      "description": "log2(T/n) <= log2(3) - 1 \u2248 0.585 (v2=1 case)"
+    },
+    "v2_conditioned": {
+      "1": {
+        "count": 250588,
+        "fraction": 0.501176,
+        "theoretical_center": 0.5849625007,
+        "actual_mean": 0.5849625008,
+        "deviation_from_center": 1e-10,
+        "variance_within_v2": 0.0
+      },
+      "2": {
+        "count": 124536,
+        "fraction": 0.249072,
+        "theoretical_center": -0.4150374993,
+        "actual_mean": -0.4150374992,
+        "deviation_from_center": 1e-10,
+        "variance_within_v2": 0.0
+      },
+      "3": {
+        "count": 62295,
+        "fraction": 0.12459,
+        "theoretical_center": -1.4150374993,
+        "actual_mean": -1.4150374992,
+        "deviation_from_center": 1e-10,
+        "variance_within_v2": 0.0
+      },
+      "4": {
+        "count": 31398,
+        "fraction": 0.062796,
+        "theoretical_center": -2.4150374993,
+        "actual_mean": -2.4150374992,
+        "deviation_from_center": 1e-10,
+        "variance_within_v2": 0.0
+      },
+      "5": {
+        "count": 15613,
+        "fraction": 0.031226,
+        "theoretical_center": -3.4150374993,
+        "actual_mean": -3.4150374992,
+        "deviation_from_center": 1e-10,
+        "variance_within_v2": 0.0
+      },
+      "6": {
+        "count": 7814,
+        "fraction": 0.015628,
+        "theoretical_center": -4.4150374993,
+        "actual_mean": -4.4150374992,
+        "deviation_from_center": 1e-10,
+        "variance_within_v2": 0.0
+      },
+      "7": {
+        "count": 3903,
+        "fraction": 0.007806,
+        "theoretical_center": -5.4150374993,
+        "actual_mean": -5.4150374992,
+        "deviation_from_center": 1e-10,
+        "variance_within_v2": 0.0
+      },
+      "8": {
+        "count": 1956,
+        "fraction": 0.003912,
+        "theoretical_center": -6.4150374993,
+        "actual_mean": -6.4150374992,
+        "deviation_from_center": 1e-10,
+        "variance_within_v2": 0.0
+      },
+      "9": {
+        "count": 923,
+        "fraction": 0.001846,
+        "theoretical_center": -7.4150374993,
+        "actual_mean": -7.4150374992,
+        "deviation_from_center": 1e-10,
+        "variance_within_v2": 0.0
+      },
+      "10": {
+        "count": 486,
+        "fraction": 0.000972,
+        "theoretical_center": -8.4150374993,
+        "actual_mean": -8.4150374992,
+        "deviation_from_center": 1e-10,
+        "variance_within_v2": 0.0
+      },
+      "11": {
+        "count": 240,
+        "fraction": 0.00048,
+        "theoretical_center": -9.4150374993,
+        "actual_mean": -9.4150374992,
+        "deviation_from_center": 1e-10,
+        "variance_within_v2": 0.0
+      },
+      "12": {
+        "count": 109,
+        "fraction": 0.000218,
+        "theoretical_center": -10.4150374993,
+        "actual_mean": -10.4150374992,
+        "deviation_from_center": 1e-10,
+        "variance_within_v2": 0.0
+      },
+      "13": {
+        "count": 63,
+        "fraction": 0.000126,
+        "theoretical_center": -11.4150374993,
+        "actual_mean": -11.4150374992,
+        "deviation_from_center": 1e-10,
+        "variance_within_v2": 0.0
+      },
+      "14": {
+        "count": 39,
+        "fraction": 7.8e-05,
+        "theoretical_center": -12.4150374993,
+        "actual_mean": -12.4150374992,
+        "deviation_from_center": 1e-10,
+        "variance_within_v2": 0.0
+      },
+      "15": {
+        "count": 21,
+        "fraction": 4.2e-05,
+        "theoretical_center": -13.4150374993,
+        "actual_mean": -13.4150374992,
+        "deviation_from_center": 1e-10,
+        "variance_within_v2": 0.0
+      }
+    },
+    "variance_decomposition": {
+      "total_variance": 1.9979788954,
+      "between_v2_groups": 1.9979788954,
+      "within_v2_groups": 0.0,
+      "between_fraction": 1.0
+    }
+  },
+  "clt_mechanism": {
+    "1": {
+      "stats": {
+        "mean": -0.4121624992,
+        "var": 1.9875567344,
+        "std": 1.4098073395,
+        "skewness": -2.1192130497,
+        "kurtosis": 6.4626893658
+      },
+      "n_modes_in_v2_sum": 17,
+      "top_5_modes_weight": 0.96875,
+      "v2_sum_distribution": {
+        "1": 0.49982,
+        "2": 0.25162,
+        "3": 0.12432,
+        "4": 0.061885,
+        "5": 0.031105,
+        "6": 0.01587,
+        "7": 0.00786,
+        "8": 0.00373,
+        "9": 0.0019,
+        "10": 0.00095,
+        "11": 0.000445,
+        "12": 0.00022,
+        "13": 0.00012,
+        "14": 9.5e-05,
+        "15": 3e-05
+      },
+      "v2_sum_mean": 1.997125,
+      "v2_sum_var": 1.9875567344,
+      "expected_v2_sum_mean": 2,
+      "expected_v2_sum_var": 2
+    },
+    "2": {
+      "stats": {
+        "mean": -0.8375449976,
+        "var": 4.0334141832,
+        "std": 2.0083361728,
+        "skewness": -1.5109565557,
+        "kurtosis": 3.3606124898
+      },
+      "n_modes_in_v2_sum": 23,
+      "top_5_modes_weight": 0.89,
+      "v2_sum_distribution": {
+        "2": 0.24976,
+        "3": 0.248375,
+        "4": 0.188135,
+        "5": 0.125195,
+        "6": 0.078535,
+        "7": 0.046885,
+        "8": 0.02734,
+        "9": 0.01581,
+        "10": 0.008875,
+        "11": 0.00509,
+        "12": 0.002695,
+        "13": 0.001585,
+        "14": 0.00077,
+        "15": 0.00041,
+        "16": 0.000265
+      },
+      "v2_sum_mean": 4.00747,
+      "v2_sum_var": 4.0334141991,
+      "expected_v2_sum_mean": 4,
+      "expected_v2_sum_var": 4
+    },
+    "3": {
+      "stats": {
+        "mean": -1.236997469,
+        "var": 6.0006778681,
+        "std": 2.4496281081,
+        "skewness": -1.2305938882,
+        "kurtosis": 2.1723036699
+      },
+      "n_modes_in_v2_sum": 24,
+      "top_5_modes_weight": 0.774895,
+      "v2_sum_distribution": {
+        "3": 0.12594,
+        "4": 0.18788,
+        "5": 0.187665,
+        "6": 0.15668,
+        "7": 0.11673,
+        "8": 0.081805,
+        "9": 0.054,
+        "10": 0.034385,
+        "11": 0.02182,
+        "12": 0.013605,
+        "13": 0.00803,
+        "14": 0.00508,
+        "15": 0.002665,
+        "16": 0.001745,
+        "17": 0.000855
+      },
+      "v2_sum_mean": 5.991885,
+      "v2_sum_var": 6.0006791468,
+      "expected_v2_sum_mean": 6,
+      "expected_v2_sum_var": 6
+    },
+    "5": {
+      "stats": {
+        "mean": -2.0755124229,
+        "var": 9.9711022761,
+        "std": 3.1577052231,
+        "skewness": -0.9441782136,
+        "kurtosis": 1.2735765176
+      },
+      "n_modes_in_v2_sum": 29,
+      "top_5_modes_weight": 0.615995,
+      "v2_sum_distribution": {
+        "5": 0.030905,
+        "6": 0.078145,
+        "7": 0.11734,
+        "8": 0.13622,
+        "9": 0.13721,
+        "10": 0.12399,
+        "11": 0.101235,
+        "12": 0.080525,
+        "13": 0.061065,
+        "14": 0.043925,
+        "15": 0.030715,
+        "16": 0.02053,
+        "17": 0.01386,
+        "18": 0.00902,
+        "19": 0.00586
+      },
+      "v2_sum_mean": 10.000325,
+      "v2_sum_var": 9.9711048944,
+      "expected_v2_sum_mean": 10,
+      "expected_v2_sum_var": 10
+    },
+    "10": {
+      "stats": {
+        "mean": -4.1552181128,
+        "var": 20.045377959,
+        "std": 4.4772064906,
+        "skewness": -0.6662552697,
+        "kurtosis": 0.6174372033
+      },
+      "n_modes_in_v2_sum": 40,
+      "top_5_modes_weight": 0.441225,
+      "v2_sum_distribution": {
+        "10": 0.0011,
+        "11": 0.00479,
+        "12": 0.01371,
+        "13": 0.026575,
+        "14": 0.04339,
+        "15": 0.06155,
+        "16": 0.0766,
+        "17": 0.08691,
+        "18": 0.091605,
+        "19": 0.092505,
+        "20": 0.088665,
+        "21": 0.08154,
+        "22": 0.068995,
+        "23": 0.058915,
+        "24": 0.048545
+      },
+      "v2_sum_mean": 20.00486,
+      "v2_sum_var": 20.0462363804,
+      "expected_v2_sum_mean": 20,
+      "expected_v2_sum_var": 20
+    },
+    "20": {
+      "stats": {
+        "mean": -8.3087896472,
+        "var": 39.9627824616,
+        "std": 6.3216123308,
+        "skewness": -0.4643036207,
+        "kurtosis": 0.2486675965
+      },
+      "n_modes_in_v2_sum": 49,
+      "top_5_modes_weight": 0.3141,
+      "v2_sum_distribution": {
+        "21": 1.5e-05,
+        "22": 4e-05,
+        "23": 0.0002,
+        "24": 0.000665,
+        "25": 0.00123,
+        "26": 0.00254,
+        "27": 0.00482,
+        "28": 0.008065,
+        "29": 0.013015,
+        "30": 0.01828,
+        "31": 0.02544,
+        "32": 0.03244,
+        "33": 0.041005,
+        "34": 0.047645,
+        "35": 0.054235
+      },
+      "v2_sum_mean": 40.010715,
+      "v2_sum_var": 40.0894901888,
+      "expected_v2_sum_mean": 40,
+      "expected_v2_sum_var": 40
+    }
+  },
+  "theoretical_edgeworth": {
+    "v2_moments": {
+      "E[v2]": 2.0,
+      "E[v2^2]": 6.0,
+      "Var[v2]": 2.0,
+      "mu3": 6.0,
+      "mu4": 38.0
+    },
+    "X_cumulants": {
+      "E[X]": -0.4150374993,
+      "Var[X]": 2.0,
+      "skewness": -2.1213203436,
+      "excess_kurtosis": 6.5
+    },
+    "edgeworth_corrections": {
+      "description": "For S_k = sum of k X's, standardized Z_k = (S_k - k*mu)/(sigma*sqrt(k))",
+      "term1_coefficient": -2.1213203436,
+      "term2a_coefficient": 6.5,
+      "term2b_coefficient": 4.5
+    },
+    "Berry_Esseen": {
+      "rho": 6.0,
+      "sigma": 1.4142135624,
+      "BE_constant_ratio": 2.1213203436,
+      "description": "KS(S_k) <= 0.4748 * rho / (sigma^3 * sqrt(k))"
+    }
+  },
+  "t1_vs_t2": {
+    "T1_1step_stats": {
+      "mean": -0.4119574992,
+      "var": 1.9961505136,
+      "std": 1.4128519079,
+      "skewness": -2.1256102987,
+      "kurtosis": 6.4434228752
+    },
+    "T2_1step_stats": {
+      "mean": -0.8395649974,
+      "var": 4.0019599173,
+      "std": 2.0004899193,
+      "skewness": -1.4881377396,
+      "kurtosis": 3.1806359696
+    },
+    "skewness_ratio": 0.7000990447,
+    "kurtosis_ratio": 0.49362521,
+    "comparison": [
+      {
+        "k": 1,
+        "equivalent_T_steps": {
+          "T1": 1,
+          "T2": 2
+        },
+        "ks_T1_k_steps": 0.2613041121,
+        "ks_T2_k_steps": 0.1928976075,
+        "ks_ratio_T1_over_T2": 1.3546259881
+      },
+      {
+        "k": 2,
+        "equivalent_T_steps": {
+          "T1": 2,
+          "T2": 4
+        },
+        "ks_T1_k_steps": 0.192796114,
+        "ks_T2_k_steps": 0.1403820916,
+        "ks_ratio_T1_over_T2": 1.3733668723
+      },
+      {
+        "k": 3,
+        "equivalent_T_steps": {
+          "T1": 3,
+          "T2": 6
+        },
+        "ks_T1_k_steps": 0.1559919557,
+        "ks_T2_k_steps": 0.1156884161,
+        "ks_ratio_T1_over_T2": 1.3483800791
+      },
+      {
+        "k": 5,
+        "equivalent_T_steps": {
+          "T1": 5,
+          "T2": 10
+        },
+        "ks_T1_k_steps": 0.1237897496,
+        "ks_T2_k_steps": 0.092871718,
+        "ks_ratio_T1_over_T2": 1.3329111625
+      },
+      {
+        "k": 10,
+        "equivalent_T_steps": {
+          "T1": 10,
+          "T2": 20
+        },
+        "ks_T1_k_steps": 0.0838098226,
+        "ks_T2_k_steps": 0.0723243486,
+        "ks_ratio_T1_over_T2": 1.1588050799
+      }
+    ]
+  },
+  "convergence_rate": {
+    "one_step_stats": {
+      "mean": -0.4122574992,
+      "var": 2.0103522716
+    },
+    "convergence_data": [
+      {
+        "k": 1,
+        "ks": 0.259232799,
+        "ks_sqrt_k": 0.259232799,
+        "ks_k_to_2_3": 0.259232799,
+        "log_ks": -1.3500287833,
+        "log_k": 0.0
+      },
+      {
+        "k": 2,
+        "ks": 0.1904109702,
+        "ks_sqrt_k": 0.2692817765,
+        "ks_k_to_2_3": 0.3022585745,
+        "log_ks": -1.6585705415,
+        "log_k": 0.6931471806
+      },
+      {
+        "k": 3,
+        "ks": 0.1592300235,
+        "ks_sqrt_k": 0.2757944908,
+        "ks_k_to_2_3": 0.331211796,
+        "log_ks": -1.8374054335,
+        "log_k": 1.0986122887
+      },
+      {
+        "k": 4,
+        "ks": 0.1381256005,
+        "ks_sqrt_k": 0.2762512009,
+        "ks_k_to_2_3": 0.3480547031,
+        "log_ks": -1.9795918594,
+        "log_k": 1.3862943611
+      },
+      {
+        "k": 5,
+        "ks": 0.1212609493,
+        "ks_sqrt_k": 0.2711477256,
+        "ks_k_to_2_3": 0.3545691666,
+        "log_ks": -2.10981045,
+        "log_k": 1.6094379124
+      },
+      {
+        "k": 6,
+        "ks": 0.1116307266,
+        "ks_sqrt_k": 0.2734383197,
+        "ks_k_to_2_3": 0.3685965379,
+        "log_ks": -2.1925589392,
+        "log_k": 1.7917594692
+      },
+      {
+        "k": 7,
+        "ks": 0.1027704979,
+        "ks_sqrt_k": 0.2719051796,
+        "ks_k_to_2_3": 0.3760686699,
+        "log_ks": -2.2752569524,
+        "log_k": 1.9459101491
+      },
+      {
+        "k": 8,
+        "ks": 0.0972209419,
+        "ks_sqrt_k": 0.2749823492,
+        "ks_k_to_2_3": 0.3888837676,
+        "log_ks": -2.3307691391,
+        "log_k": 2.0794415417
+      },
+      {
+        "k": 10,
+        "ks": 0.0872596162,
+        "ks_sqrt_k": 0.2759391348,
+        "ks_k_to_2_3": 0.40502326,
+        "log_ks": -2.4388675101,
+        "log_k": 2.302585093
+      },
+      {
+        "k": 12,
+        "ks": 0.0793203944,
+        "ks_sqrt_k": 0.2747739064,
+        "ks_k_to_2_3": 0.4157564821,
+        "log_ks": -2.5342600029,
+        "log_k": 2.4849066498
+      },
+      {
+        "k": 15,
+        "ks": 0.069247578,
+        "ks_sqrt_k": 0.2681947164,
+        "ks_k_to_2_3": 0.4211777571,
+        "log_ks": -2.6700671092,
+        "log_k": 2.7080502011
+      },
+      {
+        "k": 20,
+        "ks": 0.0614986381,
+        "ks_sqrt_k": 0.2750302706,
+        "ks_k_to_2_3": 0.4531258398,
+        "log_ks": -2.7887402491,
+        "log_k": 2.9957322736
+      },
+      {
+        "k": 25,
+        "ks": 0.0534290539,
+        "ks_sqrt_k": 0.2671452697,
+        "ks_k_to_2_3": 0.4568119855,
+        "log_ks": -2.9294005996,
+        "log_k": 3.2188758249
+      },
+      {
+        "k": 30,
+        "ks": 0.0462757871,
+        "ks_sqrt_k": 0.2534629247,
+        "ks_k_to_2_3": 0.4467878122,
+        "log_ks": -3.0731364112,
+        "log_k": 3.4011973817
+      }
+    ],
+    "power_law_fit": {
+      "alpha": 0.5139689525,
+      "C": 0.2794675709,
+      "description": "KS \u2248 0.2795 * k^(-0.5140)"
+    }
+  },
+  "summary": {
+    "key_insight_1": "1\u30b9\u30c6\u30c3\u30d7\u5206\u5e03\u306f\u4e0a\u9650bounded (log2(3)-1\u22480.585)\u3001\u5de6\u306b\u91cd\u3044\u88fe\u3092\u6301\u3064",
+    "key_insight_2": "\u5206\u6563\u306e100.0%\u306fv2\u306e\u5024\u306e\u9055\u3044\u3067\u8aac\u660e\u3055\u308c\u308b\uff08between-group\uff09",
+    "key_insight_3": "v2\u3054\u3068\u306e\u6761\u4ef6\u4ed8\u304d\u5206\u6563\u306f\u6975\u3081\u3066\u5c0f\u3055\u3044\uff08within-group variance \u2248 0.000000\uff09",
+    "key_insight_4": "T^2\u306e\u6b6a\u5ea6\u306fT\u306e0.70\u500d \u2192 CLT\u53ce\u675f\u304c1.43\u500d\u901f\u3044",
+    "key_insight_5": "\u53ce\u675f\u3079\u304d\u6307\u6570: KS \u2248 C * k^(-alpha) with alpha = 0.5140",
+    "theoretical_skewness": -2.1213203436,
+    "theoretical_kurtosis": 6.5,
+    "berry_esseen_const": 2.1213203436
+  }
+}

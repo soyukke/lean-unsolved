@@ -1,0 +1,98 @@
+{
+  "title": "mod 18 下降逆像の再帰構造と Galton-Watson 接続",
+  "approach": "mod 6/18での逆像ツリー分岐パターン分類、GW過程パラメータ推定、有限N効果の理論的解明、Multi-type GW分析、逆BFS成長率の大規模測定",
+
+  "key_results": {
+    "mod6_classification": {
+      "type_0_dead": {
+        "residue": "mod 6 = 3 (mod 3 = 0)",
+        "fraction": "1/3",
+        "indegree": 0,
+        "description": "逆像なし。mod 3 = 0 の奇数はSyracuse写像の像にならない"
+      },
+      "type_1_critical": {
+        "residue": "mod 6 = 1 (mod 3 = 1)",
+        "fraction": "1/3",
+        "avg_indegree_finite_N": 1.0,
+        "valid_j": "j = 2, 4, 6, ... (偶数のみ)",
+        "P_deg0": 0.25,
+        "P_deg1": 0.5625,
+        "P_deg2": 0.1406,
+        "description": "有限N内で臨界的"
+      },
+      "type_2_supercritical": {
+        "residue": "mod 6 = 5 (mod 3 = 2)",
+        "fraction": "1/3",
+        "avg_indegree_finite_N": 1.5,
+        "valid_j": "j = 1, 3, 5, ... (奇数のみ)",
+        "P_deg0": 0,
+        "P_deg1": 0.625,
+        "P_deg2": 0.281,
+        "description": "常に少なくとも1つの逆像（j=1が常に有効）"
+      }
+    },
+
+    "mod18_vs_mod6": {
+      "conclusion": "mod 18 は mod 6 を超える本質的構造を持たない",
+      "evidence": "各mod6クラス内の3サブクラスの入次数分布・j値分布は統計的に同一",
+      "additional_structure": "逆像のmod18分布にはパターンあり（m mod 18 ごとに特定のmod18クラスに集中）が、これはmod 6遷移の直接的帰結"
+    },
+
+    "finite_N_paradox": {
+      "observation": "有限[1,N]内の平均入次数は N→inf でも 5/6 = 0.8333 に収束し、4/3 にならない",
+      "formula": "(1/3)*0 + (1/3)*1.0 + (1/3)*1.5 = 5/6",
+      "explanation": "T(n) > N となる n の割合が 1/6 に収束。これらの逆像はカウントされない",
+      "T_out_fraction": "1/6 = 0.1667（全奇数のうちT(n)>Nの割合）",
+      "T_out_characterization": "T(n) > N の n は v2(3n+1) = 1 かつ n > 2N/3。T(n)/n = 3/2 exactly"
+    },
+
+    "image_density": {
+      "fraction_with_preimage": "7/12 = 0.5833（[1,N]_oddのうちT^{-1}が非空な割合）",
+      "avg_indeg_on_image": "10/7 = 1.4286（像に限定した平均入次数）",
+      "NOT_4_over_3": "像での平均は 10/7 = 1.4286 であり、4/3 = 1.3333 ではない"
+    },
+
+    "true_meaning_of_4_over_3": {
+      "statement": "4/3 は「有限N内の平均逆像数」ではなく、逆像ツリーBFS成長率の漸近値かつTao対数収縮率の逆数",
+      "evidence": "固定mに対し |T^{-1}(m) cap [1,N]| ~ log_4(N/m) → 無限大",
+      "bfs_growth_root_1": [1, 14, 71, 261, 744, 1844, 4197, 8122, 15190, 25499, 41828, 68022, 100627],
+      "connection_to_tao": "log(4/3) = 0.2877 = |log3 - 2*log2|。Taoの対数収縮率と完全一致"
+    },
+
+    "galton_watson_connection": {
+      "naive_GW_fails": "各奇数mの逆像は無限集合（j→inf）なのでGW過程のモデルにはならない",
+      "finite_range_GW": {
+        "overall_mu": 0.8333,
+        "mod6_1_mu": 1.0,
+        "mod6_5_mu": 1.5,
+        "extinction_prob": 1.0,
+        "note": "有限Nの制限下ではGWは亜臨界に見える"
+      },
+      "multi_type_GW_2x2": {
+        "matrix": [[0.333, 0.333], [0.500, 0.500]],
+        "eigenvalues": [0.833, 0.0],
+        "spectral_radius": 0.833
+      },
+      "correct_interpretation": "逆像BFSの各層成長率は4/3に漸近するが、有限N効果で観測が困難。真のGW接続はTaoの対数収縮率 log(3) - 2*log(2) を通じて達成"
+    },
+
+    "j_distribution": {
+      "geometric_ratio": 0.25,
+      "explanation": "有効jごとの逆像数は幾何的に減衰（比 = 1/4）",
+      "mod6_1": "j=2,4,6,... の順に比率 3/4, (3/4)^2, ...",
+      "mod6_5": "j=1,3,5,... 最初のj=1→j=3の比は3/8、以降は 1/4"
+    },
+
+    "transition_matrix_mod18": {
+      "key_observation": "mod 18 遷移行列は3つの確率値(0.254, 0.064, 0.016)で構成",
+      "ratio": "0.254/0.064 = 4, 0.064/0.016 = 4 → 比率4の幾何的構造",
+      "explanation": "j=2k での逆像は 4^(-k) の確率で [1,N] 内に残るため"
+    }
+  },
+
+  "scripts_created": [
+    "scripts/collatz_mod18_galton_watson.py",
+    "scripts/collatz_mod18_gw_deep.py",
+    "scripts/collatz_mod18_gw_precise.py"
+  ]
+}

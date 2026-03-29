@@ -1,0 +1,428 @@
+{
+  "title": "Alpha increase cause analysis for D(N) record holders",
+  "N_max": 10000000,
+  "core_numbers": {
+    "D_count_10_7": 53,
+    "D_max_10_7": 685,
+    "alpha_count_regression": 1.236,
+    "alpha_max_regression": 1.404,
+    "beta_individual_st_vs_logn": 1.8159
+  },
+  "key_decomposition": {
+    "explanation": "D(N) = D_count(N) * mean_jump(N)",
+    "D_count_scaling": "~(logN)^1.24",
+    "mean_jump_scaling": "increases with N",
+    "total_alpha": "~1.40 for N up to 10^7"
+  },
+  "ratio_D_max_over_D_count": [
+    {
+      "N": 100,
+      "ratio": 10.73
+    },
+    {
+      "N": 1000,
+      "ratio": 9.37
+    },
+    {
+      "N": 10000,
+      "ratio": 10.44
+    },
+    {
+      "N": 100000,
+      "ratio": 10.29
+    },
+    {
+      "N": 1000000,
+      "ratio": 12.19
+    },
+    {
+      "N": 10000000,
+      "ratio": 12.92
+    }
+  ],
+  "st_jump_by_decade": {
+    "10^0": {
+      "count": 4,
+      "mean_jump": 4.5,
+      "total_jump": 18,
+      "max_jump": 8
+    },
+    "10^1": {
+      "count": 6,
+      "mean_jump": 16.5,
+      "total_jump": 99,
+      "max_jump": 88
+    },
+    "10^2": {
+      "count": 8,
+      "mean_jump": 7.5,
+      "total_jump": 60,
+      "max_jump": 26
+    },
+    "10^3": {
+      "count": 6,
+      "mean_jump": 13.833333333333334,
+      "total_jump": 83,
+      "max_jump": 26
+    },
+    "10^4": {
+      "count": 9,
+      "mean_jump": 9.88888888888889,
+      "total_jump": 89,
+      "max_jump": 26
+    },
+    "10^5": {
+      "count": 9,
+      "mean_jump": 19.333333333333332,
+      "total_jump": 174,
+      "max_jump": 57
+    },
+    "10^6": {
+      "count": 10,
+      "mean_jump": 16.1,
+      "total_jump": 161,
+      "max_jump": 52
+    }
+  },
+  "cumulative_avg_jump": [
+    {
+      "record_index": 5,
+      "n": 18,
+      "cumulative_avg_jump": 3.8,
+      "log_n": 2.8903717578961645
+    },
+    {
+      "record_index": 10,
+      "n": 97,
+      "cumulative_avg_jump": 11.7,
+      "log_n": 4.574710978503383
+    },
+    {
+      "record_index": 15,
+      "n": 327,
+      "cumulative_avg_jump": 9.466666666666667,
+      "log_n": 5.7899601708972535
+    },
+    {
+      "record_index": 20,
+      "n": 2223,
+      "cumulative_avg_jump": 9.05,
+      "log_n": 7.706612913964197
+    },
+    {
+      "record_index": 25,
+      "n": 10971,
+      "cumulative_avg_jump": 10.64,
+      "log_n": 9.30301070681749
+    },
+    {
+      "record_index": 30,
+      "n": 34239,
+      "cumulative_avg_jump": 10.3,
+      "log_n": 10.44112062422171
+    },
+    {
+      "record_index": 35,
+      "n": 142587,
+      "cumulative_avg_jump": 10.657142857142857,
+      "log_n": 11.867707618711263
+    },
+    {
+      "record_index": 40,
+      "n": 511935,
+      "cumulative_avg_jump": 11.7,
+      "log_n": 13.145952942837415
+    },
+    {
+      "record_index": 45,
+      "n": 1723519,
+      "cumulative_avg_jump": 12.333333333333334,
+      "log_n": 14.3598786889572
+    },
+    {
+      "record_index": 50,
+      "n": 5649499,
+      "cumulative_avg_jump": 12.22,
+      "log_n": 15.547077426624607
+    },
+    {
+      "record_index": 52,
+      "n": 8400511,
+      "cumulative_avg_jump": 13.153846153846153,
+      "log_n": 15.943803095296603
+    }
+  ],
+  "alpha_effective_at_powers": [
+    {
+      "N": 100,
+      "logN": 4.605,
+      "D": 118,
+      "alpha_eff": 3.1239
+    },
+    {
+      "N": 1000,
+      "logN": 6.908,
+      "D": 178,
+      "alpha_eff": 2.6812
+    },
+    {
+      "N": 10000,
+      "logN": 9.21,
+      "D": 261,
+      "alpha_eff": 2.5062
+    },
+    {
+      "N": 100000,
+      "logN": 11.513,
+      "D": 350,
+      "alpha_eff": 2.3974
+    },
+    {
+      "N": 1000000,
+      "logN": 13.816,
+      "D": 524,
+      "alpha_eff": 2.3846
+    },
+    {
+      "N": 10000000,
+      "logN": 16.118,
+      "D": 685,
+      "alpha_eff": 2.3488
+    }
+  ],
+  "alpha_from_growth_rate": 2.7222,
+  "st_per_logn_evolution": [
+    {
+      "n": 77031,
+      "st_over_logn": 31.106
+    },
+    {
+      "n": 106239,
+      "st_over_logn": 30.501
+    },
+    {
+      "n": 142587,
+      "st_over_logn": 31.514
+    },
+    {
+      "n": 156159,
+      "st_over_logn": 31.943
+    },
+    {
+      "n": 216367,
+      "st_over_logn": 31.34
+    },
+    {
+      "n": 230631,
+      "st_over_logn": 35.794
+    },
+    {
+      "n": 410011,
+      "st_over_logn": 34.664
+    },
+    {
+      "n": 511935,
+      "st_over_logn": 35.676
+    },
+    {
+      "n": 626331,
+      "st_over_logn": 38.059
+    },
+    {
+      "n": 837799,
+      "st_over_logn": 38.421
+    },
+    {
+      "n": 1117065,
+      "st_over_logn": 37.842
+    },
+    {
+      "n": 1501353,
+      "st_over_logn": 37.267
+    },
+    {
+      "n": 1723519,
+      "st_over_logn": 38.719
+    },
+    {
+      "n": 2298025,
+      "st_over_logn": 38.163
+    },
+    {
+      "n": 3064033,
+      "st_over_logn": 37.629
+    },
+    {
+      "n": 3542887,
+      "st_over_logn": 38.659
+    },
+    {
+      "n": 3732423,
+      "st_over_logn": 39.385
+    },
+    {
+      "n": 5649499,
+      "st_over_logn": 39.364
+    },
+    {
+      "n": 6649279,
+      "st_over_logn": 42.266
+    },
+    {
+      "n": 8400511,
+      "st_over_logn": 42.963
+    }
+  ],
+  "large_jumps_gt20": [
+    {
+      "n": 27,
+      "st_jump": 88,
+      "bits": 5,
+      "trailing_ones": 2,
+      "ones_density": 0.8,
+      "mod4": 3,
+      "mod8": 3,
+      "mod16": 11
+    },
+    {
+      "n": 703,
+      "st_jump": 26,
+      "bits": 10,
+      "trailing_ones": 6,
+      "ones_density": 0.8,
+      "mod4": 3,
+      "mod8": 7,
+      "mod16": 15
+    },
+    {
+      "n": 2463,
+      "st_jump": 26,
+      "bits": 12,
+      "trailing_ones": 5,
+      "ones_density": 0.6666666666666666,
+      "mod4": 3,
+      "mod8": 7,
+      "mod16": 15
+    },
+    {
+      "n": 3711,
+      "st_jump": 21,
+      "bits": 12,
+      "trailing_ones": 7,
+      "ones_density": 0.8333333333333334,
+      "mod4": 3,
+      "mod8": 7,
+      "mod16": 15
+    },
+    {
+      "n": 6171,
+      "st_jump": 24,
+      "bits": 13,
+      "trailing_ones": 2,
+      "ones_density": 0.46153846153846156,
+      "mod4": 3,
+      "mod8": 3,
+      "mod16": 11
+    },
+    {
+      "n": 26623,
+      "st_jump": 26,
+      "bits": 15,
+      "trailing_ones": 11,
+      "ones_density": 0.8666666666666667,
+      "mod4": 3,
+      "mod8": 7,
+      "mod16": 15
+    },
+    {
+      "n": 142587,
+      "st_jump": 21,
+      "bits": 18,
+      "trailing_ones": 2,
+      "ones_density": 0.6111111111111112,
+      "mod4": 3,
+      "mod8": 3,
+      "mod16": 11
+    },
+    {
+      "n": 230631,
+      "st_jump": 57,
+      "bits": 18,
+      "trailing_ones": 3,
+      "ones_density": 0.5555555555555556,
+      "mod4": 3,
+      "mod8": 7,
+      "mod16": 7
+    },
+    {
+      "n": 511935,
+      "st_jump": 21,
+      "bits": 19,
+      "trailing_ones": 6,
+      "ones_density": 0.8421052631578947,
+      "mod4": 3,
+      "mod8": 7,
+      "mod16": 15
+    },
+    {
+      "n": 626331,
+      "st_jump": 39,
+      "bits": 20,
+      "trailing_ones": 2,
+      "ones_density": 0.55,
+      "mod4": 3,
+      "mod8": 3,
+      "mod16": 11
+    },
+    {
+      "n": 1723519,
+      "st_jump": 26,
+      "bits": 21,
+      "trailing_ones": 7,
+      "ones_density": 0.6190476190476191,
+      "mod4": 3,
+      "mod8": 7,
+      "mod16": 15
+    },
+    {
+      "n": 3542887,
+      "st_jump": 21,
+      "bits": 22,
+      "trailing_ones": 3,
+      "ones_density": 0.5909090909090909,
+      "mod4": 3,
+      "mod8": 7,
+      "mod16": 7
+    },
+    {
+      "n": 6649279,
+      "st_jump": 52,
+      "bits": 23,
+      "trailing_ones": 6,
+      "ones_density": 0.6956521739130435,
+      "mod4": 3,
+      "mod8": 7,
+      "mod16": 15
+    },
+    {
+      "n": 8400511,
+      "st_jump": 21,
+      "bits": 24,
+      "trailing_ones": 7,
+      "ones_density": 0.5,
+      "mod4": 3,
+      "mod8": 7,
+      "mod16": 15
+    }
+  ],
+  "key_findings": [
+    "D_max/D_count ratio: N=100\u306710.7, N=10^7\u306712.9 (\u5897\u5927)",
+    "\u5404 record \u306e\u5e73\u5747 ST \u30b8\u30e3\u30f3\u30d7\u304c N \u3068\u5171\u306b\u5897\u5927: alpha_total(1.816) > alpha_count(1.24)",
+    "ST jump>=20 \u306e record holder: \u5e73\u5747 trailing ones = 4.9, mod4=3 \u7387 = 100%",
+    "alpha_eff: 10^3=2.6812, 10^7=2.3488",
+    "Alpha\u5897\u5927\u306e\u4e3b\u56e0: \u5404record\u306eST\u30b8\u30e3\u30f3\u30d7\u91cf\u304c(logn)\u3068\u5171\u306b\u5897\u5927\u3059\u308b\u305f\u3081\u3002D(N)=D_count*mean_jump\u306e\u5206\u89e3\u3067\u3001D_count\u306f(logN)^1.24\u3067\u5b89\u5b9a\u3060\u304c\u3001mean_jump\u304c(logN)\u306b\u5bfe\u3057\u3066\u5897\u5927\u3002",
+    "\u69cb\u9020\u7684\u539f\u56e0: \u5927\u304d\u306an\u306erecord holder\u306ftrailing ones\u304c\u591a\u304f(enrichment 4-10x)\u30013n+1\u64cd\u4f5c\u5f8c\u306ev2\u304c\u5c0f\u3055\u304f\u306a\u308a\u3084\u3059\u3044\u305f\u3081\u3001\u8ecc\u9053\u304c\u9577\u304f\u306a\u308b\u3002",
+    "\u6210\u9577\u7387 dD/d(logN) \u304b\u3089\u306e alpha \u63a8\u5b9a: 2.722"
+  ],
+  "computation_time": 53.1
+}

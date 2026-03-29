@@ -1,0 +1,58 @@
+{
+  "title": "v2列エントロピー率のk->infinity収束先特定",
+  "approach": "v2(3*T^i(n)+1)の列のブロックエントロピーH_k/kを多角的に分析。軌道内ブロック抽出、マルコフ推定、軌道内位置依存性、シャッフル比較を実施。",
+  "findings": [
+    "H(k)/kはk増加で単調減少し、k=15でも収束していない。これは有限軌道長と長距離相関の両方による",
+    "v2分布は完全な幾何分布P(v2=j)=1/2^jからずれている。特にv2=4が理論の1.33倍出現(v2=1も1.016倍)",
+    "マルコフ差分d_k = h(k-1) - h(k)がk増加で増加し続ける => 有限次マルコフモデルでは捉えきれない長距離相関が存在",
+    "軌道の先頭部分と後半部分でv2分布が大きく異なる。後半では1に向かう予測可能性が上がりエントロピーが低下する(終端効果)",
+    "シャッフル列ではH(k)/k ~ H(1)/1で安定 => 実v2列の減少は真の相関に由来",
+    "相互情報量I(v_t; v_{t+lag})は半減期~21 steps、相関長~30 stepsの緩やかな減衰を示す"
+  ],
+  "hypotheses": [
+    "h(k)の真の極限は0かもしれない。つまりv2列の定常エントロピー率h=0で、コラッツ軌道は実質的に完全に決定論的",
+    "あるいは有限軌道長による打ち切り効果を除去すれば、h~1.7-1.8 bits/step (先頭部分4次マルコフの推定値付近)に収束する可能性",
+    "マルコフ差分列の増加パターンは、v2列がマルコフ過程ではなく、軌道全体を通じた大域的構造に由来する相関を持つことを示唆"
+  ],
+  "dead_ends": [
+    "独立幾何分布のエントロピーlog2(e)*2=2.885は離散分布の問題とは無関係（連続近似のエントロピー）",
+    "ブロックエントロピーH(k)の直接計算はk>10で有限サンプル効果が深刻（distinct blocks/total > 1/5）",
+    "マルコフ外挿は差分が増加し続けるため適用不可"
+  ],
+  "key_quantitative_results": {
+    "H1_observed_all_orbits": 1.946,
+    "H1_observed_front20": 1.815,
+    "H1_theoretical_geometric": 2.0,
+    "markov_entropy_rates_all": {
+      "order_0": 1.946,
+      "order_1": 1.908,
+      "order_2": 1.829,
+      "order_3": 1.707,
+      "order_4": 1.482,
+      "order_5": 1.238
+    },
+    "markov_entropy_rates_front20": {
+      "order_0": 1.815,
+      "order_1": 1.810,
+      "order_2": 1.799,
+      "order_3": 1.771,
+      "order_4": 1.708
+    },
+    "block_entropy_rate_k15_all": 0.877,
+    "mutual_info_half_life_steps": 21,
+    "mutual_info_correlation_length_steps": 30,
+    "v2_4_overrepresentation_ratio": 1.33
+  },
+  "comparison_with_theory": {
+    "log2_4_over_3": 0.415,
+    "gap_from_independent_full": 0.762,
+    "gap_from_independent_front20": 0.292,
+    "gap_equals_log2_4_3": "No. gap(0.29-0.76) has no obvious relation to log2(4/3)=0.415",
+    "log2_e_times_2": "2.885 is irrelevant - it is the differential entropy of the geometric distribution, not the discrete entropy"
+  },
+  "data_scale": {
+    "n_orbits": 217305,
+    "total_symbols": 10428335,
+    "n_range": "3..500000"
+  }
+}

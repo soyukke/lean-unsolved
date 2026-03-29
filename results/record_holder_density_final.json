@@ -1,0 +1,40 @@
+{
+  "title": "Record holder n の出現密度: D(N)を決めるnの統計的構造",
+  "approach": "D(N)=max ST up to N を更新するnの分布・ギャップ・mod構造・trailing bitsを10^7まで計算。alpha増大の原因をD(N)=D_count(N)*mean_jump(N)分解で解明。3つのスクリプトで14個の分析を実施。",
+  "findings": [
+    "Record holder 53個 (N=10^7): 94.2%が奇数、mod4分布は 3mod4 が69.2%、1mod4が25%",
+    "Trailing ones enrichment: k=3で4.2倍、k=5で7.8倍、k=6で10.0倍 (vs ランダム期待値)",
+    "D(N) = D_count(N) * mean_jump(N) の分解: D_count~(logN)^1.24 (R2=0.998), D_max~(logN)^1.40",
+    "D_max/D_count 比が 10.7(N=100) → 12.9(N=10^7) と増大 → mean_jump の増大がalpha増大の原因",
+    "alpha_eff(N) = log(D(N))/log(logN) は 2.68(10^3) → 2.35(10^7) と減少傾向 (前回のinstantaneous alpha増大と矛盾しない: 局所的揺らぎ)",
+    "大きなSTジャンプ(>=20)を起こすrecord holderは100%が3 mod 4、平均trailing ones=4.9",
+    "STジャンプの最頻値は3 (18回/52回=35%)。ST+3の更新は 1mod4 のnで支配的",
+    "Record holder の ST/log(n) 比が 31(n~10^5) → 43(n~8*10^6) と増大: 個々のrecordのST成長率が(logn)の超線形",
+    "beta_individual = 1.82 (個々のrecord holderのlog(ST) vs log(logn)回帰): record holderのSTは(logn)^1.82で成長",
+    "大きなSTジャンプを起こすnは2クラスに分類: (A) mod16=15型 (trailing bits=1111, 高ones density), (B) mod16=11型 (trailing bits=1011, 中ones density)"
+  ],
+  "hypotheses": [
+    "alpha_eff(N) は N→∞ で固定値に収束するのではなく、ゆっくり減少して最終的に alpha~2.0±0.3 に落ち着く可能性",
+    "Record holderのtrailing ones enrichmentはSelection effect: trailing ones が多いnは3n+1後のv2が小さく、odd stepが多くなりSTが長くなるため自然選択される",
+    "D(N)の成長は D(N) ~ exp(c * (logN)^gamma) 型 (gamma<1) で、(logN)^alpha型よりも良い記述を与える可能性 (alpha_effの緩やかな減少と整合)",
+    "STジャンプ値3の高頻度(35%)は、record holderの大半が3ステップ刻みでSTを更新する構造的理由がある(3n+1→(3n+1)/2→...の3ステップパリティサイクル)"
+  ],
+  "dead_ends": [
+    "2^a * 3^b - 1 形式の分析: 53個中3個(5.7%)のみで、小さいn(2,3,7)に限られる。大きなnでは該当なし",
+    "Ones density とSTの相関: 高ones density → 短いST (272 vs 312)。直感(高OD→長いST)と逆。これはones densityが直接的なST予測因子でないことを示す"
+  ],
+  "scripts_created": [
+    "scripts/record_holder_density.py",
+    "scripts/record_holder_deep_analysis.py",
+    "scripts/record_holder_alpha_cause.py"
+  ],
+  "outcome": "中発見",
+  "next_directions": [
+    "10^8, 10^9 での record holder 分析 (高速化アルゴリズムが必要: Syracuse form T(n)を使う)",
+    "Trailing ones enrichment の理論的説明: v2(3n+1) の条件付き分布から enrichment factor を導出",
+    "D(N) ~ exp(c*(logN)^gamma) 型フィッティングの検証 (10^8データ使用)",
+    "STジャンプ値=3の構造的原因: 3ステップパリティサイクルの形式化",
+    "Record holder の mod 2^k 構造の k→∞ 極限: 2-adic measure での record holder 測度の存在"
+  ],
+  "details": "## 主要結果の詳細\n\n### 1. D(N) = D_count(N) * mean_jump(N) の分解\nD(N) = max ST up to N は、(A) record holder の数 D_count(N) と (B) 各 record の平均 ST ジャンプ mean_jump の積に分解できる。\n- D_count(N) ~ (logN)^1.24 (R2=0.998, 非常に安定)\n- mean_jump(N) は N とともに 10.7 → 12.9 へ増大\n- 両者の積として D(N) ~ (logN)^{1.24+delta} ≈ (logN)^{1.40}\n\n### 2. Trailing ones enrichment の発見\nRecord holder n の下位ビットが全て1になる確率が、ランダム期待値の最大10倍。\n- k=1: 92.5% (期待値 50%) → 1.85倍\n- k=3: 53.1% (期待値 12.5%) → 4.24倍\n- k=5: 24.4% (期待値 3.1%) → 7.82倍\n- k=6: 22.7% (期待値 1.6%) → 10.0倍\nこれは n ≡ 2^k - 1 (mod 2^k) の形のnが record holder になりやすいことを意味する。\n理由: n = ...1111 (binary) のとき、3n+1 = 3*(...1111) + 1 = ...0010 (v2=1)。v2が小さいため1回しか2で割れず、次のstepも大きな奇数になり、軌道が長くなる。\n\n### 3. alpha_eff(N) の減少傾向\nalpha_eff(N) = log(D(N))/log(logN) は:\n- N=10^2: 3.12\n- N=10^3: 2.68\n- N=10^5: 2.40\n- N=10^7: 2.35\nゆっくり減少している。これは D(N) が (logN)^alpha よりも exp(c*(logN)^gamma) (gamma<1) 型に近い可能性を示唆。\n\n### 4. 大きなSTジャンプの2クラス分類\nST jump >= 20 のrecord holder は全て 3 mod 4 であり、2つのクラスに分かれる:\n- クラスA (mod16=15, 即ち mod16≡1111₂): trailing ones が長く、高 ones density\n  例: n=703, 2463, 3711, 26623, 511935, 1723519, 8400511\n- クラスB (mod16=11, 即ち mod16≡1011₂): trailing ones 2-3個、中 ones density\n  例: n=6171, 142587, 626331\nクラスAのnは末尾ビット列「...01111」を持ち、3n+1後に小さなv2を繰り返す。\nクラスBのnは末尾ビット列「...01011」を持ち、同様にv2が制限される。\n\n### 5. STジャンプ値=3の支配性\n52回のSTジャンプのうち18回(35%)がジャンプ値=3。これらは全て n≡1(mod4) (12個) または n≡3(mod4) (6個)。ジャンプ値=3は、前のrecordのSTから3ステップだけ長い軌道を持つnが高頻度で存在することを意味し、コラッツ反復の3ステップ周期構造を反映している可能性がある。"
+}

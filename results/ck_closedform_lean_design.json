@@ -1,0 +1,38 @@
+{
+  "title": "C_k閉形式のLean形式化設計: 2^{S_k}*T^k(n)=3^k*n+C_k の一般乗法公式",
+  "approach": "探索171のk-step独立性定理を形式化するため、(1)正しい閉形式公式C_k=sum 3^{k-1-i}*2^{S_i}を導出、(2)漸化式C_{k+1}=3*C_k+2^{S_k}の数値検証(n=1..499,k=1..5で全成功)、(3)Lean帰納法証明の詳細設計。既存のsyracuse_iter_mul_formula(consecutiveAscents前提)を一般化し、全奇数n>=1で成立する乗法形式を設計した。",
+  "findings": [
+    "正しい閉形式: T^k(n)=(3^k*n+C_k)/2^{S_k} where C_k=sum_{i=0}^{k-1} 3^{k-1-i}*2^{S_i}, S_k=v_1+...+v_k",
+    "C_k漸化式 C_{k+1}=3*C_k+2^{S_k} がn=1..499,k=1..5で完全検証済み",
+    "T^k(n) mod 3^k = C_k * (2^{S_k})^{-1} mod 3^k はv2列のみに依存(500奇数x4段階で独立性確認)",
+    "既存のascentConst k = 3^k - 2^k は全v_i=1の特殊ケース(k=1..5で完全一致確認)",
+    "帰納法ステップの核心: syracuse_mul_pow_v2をT^k(n)に適用 => 2^{v_{k+1}}*T(T^k(n))=3*T^k(n)+1",
+    "v2Seq n k = v2(3*syracuseIter k n + 1) がn=1..11,k=0..5で検証済み(シフト補題)",
+    "帰納法でnを一般化しない(固定)アプローチが有効。IHがckConst n kに直接適用可能"
+  ],
+  "hypotheses": [
+    "Lean証明は80-100行で完成可能。sorry不要の完全形式化が実現できる",
+    "recurrence_stepの証明でsyracuse_mul_pow_v2 + ring/linarithの組み合わせが鍵"
+  ],
+  "dead_ends": [
+    "元の公式 sum 3^{i-1}*2^{-S_i} は不正確。正しくはC_k=sum 3^{k-1-i}*2^{S_i}(2^{S_i}は正のべき乗)",
+    "帰納法でnを一般化するアプローチ: ckConst n k と ckConst (syracuse n) k の関係が複雑で失敗",
+    "mod 3^kの直接的帰納法: (3m+1)/2^v_{k+1} の展開でS_i+v_{k+1}とS_{i+1}の不一致問題"
+  ],
+  "scripts_created": [
+    "scripts/exploration_ck_closedform.py",
+    "scripts/exploration_ck_closedform_v2.py",
+    "scripts/exploration_ck_lean_design.py",
+    "scripts/exploration_ck_verify_recurrence.py"
+  ],
+  "outcome": "中発見",
+  "next_directions": [
+    "Lean実装: v2Seq, cumulV2, ckConst の3定義を追加",
+    "Lean実装: v2Seq_eq補題 (v2Seq n k = v2(3*syracuseIter k n + 1))",
+    "Lean実装: recurrence_step (帰納ステップの核心)",
+    "Lean実装: syracuse_iter_general_mul (主定理)",
+    "Lean実装: mod 3^k独立性の系",
+    "ascentConstとの統一: ckConst n k = ascentConst k when consecutiveAscents n k"
+  ],
+  "details": "## 数学的分析\n\n### 正しい閉形式公式\n\nSyracuse反復 T^k(n) の一般乗法公式:\n\n  2^{S_k} * T^k(n) = 3^k * n + C_k\n\nここで:\n- S_k = v_1 + v_2 + ... + v_k (累積2-adic付値)\n- v_i = v2(3 * T^{i-1}(n) + 1)\n- C_0 = 0, C_{k+1} = 3 * C_k + 2^{S_k}\n- 閉形式: C_k = sum_{i=0}^{k-1} 3^{k-1-i} * 2^{S_i}  (S_0 = 0)\n\n### mod 3^k 独立性\n\n2^{S_k} * T^k(n) = 3^k * n + C_k から:\n  2^{S_k} * T^k(n) ≡ C_k (mod 3^k)\n  T^k(n) ≡ C_k * (2^{S_k})^{-1} (mod 3^k)\n\nC_kとS_kはv2列(v_1,...,v_k)のみに依存するため、\nT^k(n) mod 3^kもv2列のみに依存する。\n\n### Lean証明構造\n\n**定義** (3つ):\n```\ndef v2Seq (n : Nat) : Nat -> Nat\n  | 0 => v2 (3 * n + 1)\n  | k + 1 => v2Seq (syracuse n) k\n\ndef cumulV2 (n : Nat) : Nat -> Nat\n  | 0 => 0\n  | k + 1 => cumulV2 n k + v2Seq n k\n\ndef ckConst (n : Nat) : Nat -> Nat\n  | 0 => 0\n  | k + 1 => 3 * ckConst n k + 2 ^ cumulV2 n k\n```\n\n**補題1** (v2Seqの展開): v2Seq n k = v2(3 * syracuseIter k n + 1)\n- 帰納法 on k, generalizing n\n- syracuse_pos, syracuse_odd を使用\n\n**補題2** (漸化式ステップ):\n  2^{cumulV2 n (k+1)} * T^{k+1}(n) = 3 * (2^{cumulV2 n k} * T^k(n)) + 2^{cumulV2 n k}\n- syracuse_mul_pow_v2 を T^k(n) に適用\n- v2Seq_eq で v2Seq n k を v2(3*T^k(n)+1) に書き換え\n- 代数的変形で完了\n\n**主定理**: 2^{cumulV2 n k} * T^k(n) = 3^k * n + ckConst n k\n- 帰納法 on k (nは固定!一般化しない)\n- ステップで補題2 + IH + ring\n\n**系**: mod 3^k 独立性\n- 主定理 + Nat.add_mul_mod_self で自明\n\n### 既存コードとの関係\n\n既存の syracuse_iter_mul_formula (Formula.lean) は consecutiveAscents 前提で\n2^k * T^k(n) = 3^k * n + ascentConst k を証明。\n\n新定理は:\n1. 前提条件なし(全奇数n>=1)\n2. 2^{S_k}(一般の累積付値)を使用\n3. C_k(n依存の定数)を使用\n4. ascentConst k は C_k の特殊ケース(全v_i=1のとき)\n\n完全に既存証明を包含する一般化である。"
+}

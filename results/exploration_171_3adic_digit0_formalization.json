@@ -1,0 +1,30 @@
+{
+  "title": "3-adic digit 0非出現のLean形式化設計: syracuseIter (k+1) n % 3 != 0",
+  "approach": "既存Leanコードの全構造を分析し、syracuse_not_div_three（T(n)%3!=0）をk回反復に一般化する形式化を設計。計算実験で元の「全3-adic桁が{1,2}」という主張を反証し、正しい命題（最下位3-adic桁のみ非零）を特定。依存関係を全て確認し、sorryなしの完全な証明設計を完成。",
+  "findings": [
+    "元の主張「T^k(n) mod 3^kの全桁が{1,2}」はFALSE。反例: T(7)=11, base3=[1,0,2]でdigit 0が出現",
+    "正しい命題は「T^k(n) mod 3 != 0（k>=1）」のみ。最下位3-adic桁だけが0を回避する",
+    "既存のsyracuseIter_odd_of_ascentsはconsecutiveAscents前提だが、新定理syracuseIter_oddは前提なし（一般化）",
+    "依存関係: syracuse_odd (Structure.lean:575), syracuse_pos (Structure.lean:243), syracuse_not_div_three (Structure.lean:272) が全て証明済み",
+    "形式化は15行程度、sorry不要。induction k generalizing nで帰納法"
+  ],
+  "hypotheses": [
+    "syracuseIter_not_div_three + syracuseIter_oddの組み合わせで、より強い軌道構造の定理（例: mod 9 の分類）が導出可能かもしれない"
+  ],
+  "dead_ends": [
+    "「全3-adic桁が{1,2}」の主張は完全に誤り。T^k(n)のbase-3表現で0が出現する率は約35%",
+    "T^k(n) mod 3^k での桁0非出現も不成立。例えばT^2(1)=1, mod 9=1, digits=[1,0]で0出現"
+  ],
+  "scripts_created": [
+    "scripts/exploration_171_3adic_digits.py",
+    "scripts/exploration_171_formalization_design.py"
+  ],
+  "outcome": "中発見",
+  "next_directions": [
+    "syracuseIter_not_div_threeのLean実装（推定15行、sorry不要）",
+    "syracuseIter_odd（consecutiveAscentsなし版）のLean実装（既存定理の一般化）",
+    "syracuseIter_pos（consecutiveAscentsなし版）のLean実装",
+    "T^k(n) mod 9 の分類定理（syracuse_mod3_eqのk回反復版、v2列の偶奇列に依存）"
+  ],
+  "details": "## 数学的分析\n\n### 正しい命題\n\n**定理 (syracuseIter_not_div_three)**:\n任意の奇数 n >= 1 と任意の k に対して、syracuseIter (k+1) n % 3 != 0。\n\nすなわち、Syracuse反復の結果は決して3の倍数にならない。\n\n### 証明構造\n\nk に関する帰納法（n を一般化）:\n\n**基底 (k=0)**:\nsyracuseIter 1 n = syracuseIter 0 (syracuse n) = syracuse n\nsyracuse_not_div_three より syracuse n % 3 != 0。\n\n**帰納 (k -> k+1)**:\nsyracuseIter (k+2) n = syracuseIter (k+1) (syracuse n)\nm := syracuse n とおくと:\n- m % 2 = 1 (syracuse_odd)\n- m >= 1 (syracuse_pos)\n帰納仮定を m に適用: syracuseIter (k+1) m % 3 != 0。\n\n### Lean 証明の設計\n\n```lean\n-- 新定理1: syracuseIterは奇数性を保存（consecutiveAscents不要）\ntheorem syracuseIter_odd (n k : Nat) (hn : n >= 1) (hodd : n % 2 = 1) :\n    syracuseIter k n % 2 = 1 := by\n  induction k generalizing n with\n  | zero => simp only [syracuseIter_zero]; exact hodd\n  | succ k ih =>\n    simp only [syracuseIter_succ]\n    exact ih (syracuse n) (syracuse_pos n hn hodd) (syracuse_odd n hn hodd)\n\n-- 新定理2: syracuseIterは正値性を保存（consecutiveAscents不要）\ntheorem syracuseIter_pos (n k : Nat) (hn : n >= 1) (hodd : n % 2 = 1) :\n    syracuseIter k n >= 1 := by\n  induction k generalizing n with\n  | zero => simp only [syracuseIter_zero]; exact hn\n  | succ k ih =>\n    simp only [syracuseIter_succ]\n    exact ih (syracuse n) (syracuse_pos n hn hodd) (syracuse_odd n hn hodd)\n\n-- 主定理: Syracuse反復は3の倍数を生じない\ntheorem syracuseIter_not_div_three (n k : Nat) (hn : n >= 1) (hodd : n % 2 = 1) :\n    syracuseIter (k + 1) n % 3 != 0 := by\n  induction k generalizing n with\n  | zero =>\n    simp only [syracuseIter_succ, syracuseIter_zero]\n    exact syracuse_not_div_three n hodd\n  | succ k ih =>\n    simp only [syracuseIter_succ]\n    exact ih (syracuse n) (syracuse_pos n hn hodd) (syracuse_odd n hn hodd)\n```\n\n### 既存定理との関係\n\n| 既存定理 | 前提条件 | 新定理 | 前提条件 |\n|----------|----------|--------|----------|\n| syracuseIter_odd_of_ascents | consecutiveAscents | syracuseIter_odd | なし |\n| syracuseIter_pos_of_ascents | consecutiveAscents | syracuseIter_pos | なし |\n| （なし） | - | syracuseIter_not_div_three | なし |\n\n新定理1,2は既存定理の一般化（前提条件の除去）。新定理3は完全に新規。\n\n### 元の主張の反証\n\n「T^k(n) mod 3^k の全桁が{1,2}」は誤り:\n- T(7) = 11 = 1*9 + 0*3 + 2、base-3桁 = [1,0,2] で digit 0 が出現\n- T^k(n) のfull base-3表現で digit 0 が出現する率は約35%\n- 正しいのは最下位桁（mod 3）のみ非零という事実"
+}

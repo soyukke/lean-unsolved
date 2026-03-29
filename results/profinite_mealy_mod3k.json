@@ -1,0 +1,2084 @@
+{
+  "exploration_id": 186,
+  "title": "Profinite整合性 delta_{K+1} mod 3^K = delta_K の形式化設計",
+  "verification_1_profinite_consistency": {
+    "1": {
+      "K": 1,
+      "K_plus_1": 2,
+      "mod_K": 3,
+      "mod_K1": 9,
+      "num_states_K1": 4,
+      "total_tests": 44,
+      "failures": 0,
+      "consistent": true,
+      "max_j_tested": 11
+    },
+    "2": {
+      "K": 2,
+      "K_plus_1": 3,
+      "mod_K": 9,
+      "mod_K1": 27,
+      "num_states_K1": 13,
+      "total_tests": 143,
+      "failures": 0,
+      "consistent": true,
+      "max_j_tested": 11
+    },
+    "3": {
+      "K": 3,
+      "K_plus_1": 4,
+      "mod_K": 27,
+      "mod_K1": 81,
+      "num_states_K1": 40,
+      "total_tests": 440,
+      "failures": 0,
+      "consistent": true,
+      "max_j_tested": 11
+    },
+    "4": {
+      "K": 4,
+      "K_plus_1": 5,
+      "mod_K": 81,
+      "mod_K1": 243,
+      "num_states_K1": 121,
+      "total_tests": 1331,
+      "failures": 0,
+      "consistent": true,
+      "max_j_tested": 11
+    },
+    "5": {
+      "K": 5,
+      "K_plus_1": 6,
+      "mod_K": 243,
+      "mod_K1": 729,
+      "num_states_K1": 364,
+      "total_tests": 4004,
+      "failures": 0,
+      "consistent": true,
+      "max_j_tested": 11
+    }
+  },
+  "verification_2_delta_vs_syracuse": {
+    "1": {
+      "K": 1,
+      "mod": 3,
+      "total_tests": 5000,
+      "failures": 0,
+      "matches": 5000,
+      "match_rate": 1.0,
+      "note": "delta_K depends on j=v2(3n+1) which is NOT determined by n mod 3^K alone"
+    },
+    "2": {
+      "K": 2,
+      "mod": 9,
+      "total_tests": 5000,
+      "failures": 0,
+      "matches": 5000,
+      "match_rate": 1.0,
+      "note": "delta_K depends on j=v2(3n+1) which is NOT determined by n mod 3^K alone"
+    },
+    "3": {
+      "K": 3,
+      "mod": 27,
+      "total_tests": 5000,
+      "failures": 0,
+      "matches": 5000,
+      "match_rate": 1.0,
+      "note": "delta_K depends on j=v2(3n+1) which is NOT determined by n mod 3^K alone"
+    },
+    "4": {
+      "K": 4,
+      "mod": 81,
+      "total_tests": 5000,
+      "failures": 0,
+      "matches": 5000,
+      "match_rate": 1.0,
+      "note": "delta_K depends on j=v2(3n+1) which is NOT determined by n mod 3^K alone"
+    },
+    "5": {
+      "K": 5,
+      "mod": 243,
+      "total_tests": 5000,
+      "failures": 0,
+      "matches": 5000,
+      "match_rate": 1.0,
+      "note": "delta_K depends on j=v2(3n+1) which is NOT determined by n mod 3^K alone"
+    }
+  },
+  "verification_3_mealy_determinism": {
+    "1": {
+      "K": 1,
+      "mod": 3,
+      "num_odd_states": 1,
+      "states_fully_deterministic_given_j": 1,
+      "determinism_ratio": 1.0,
+      "avg_num_j_per_state": 14.0,
+      "sample_states": {
+        "1": {
+          "j_values_observed": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ],
+          "num_j_values": 14,
+          "j_deterministic": {
+            "2": true,
+            "1": true,
+            "3": true,
+            "4": true,
+            "8": true,
+            "5": true,
+            "6": true,
+            "7": true,
+            "9": true,
+            "10": true,
+            "14": true,
+            "11": true,
+            "12": true,
+            "13": true
+          },
+          "all_deterministic_given_j": true,
+          "outputs_by_j": {
+            "2": [
+              1
+            ],
+            "1": [
+              2
+            ],
+            "3": [
+              2
+            ],
+            "4": [
+              1
+            ],
+            "8": [
+              1
+            ],
+            "5": [
+              2
+            ],
+            "6": [
+              1
+            ],
+            "7": [
+              2
+            ],
+            "9": [
+              2
+            ],
+            "10": [
+              1
+            ],
+            "14": [
+              1
+            ],
+            "11": [
+              2
+            ],
+            "12": [
+              1
+            ],
+            "13": [
+              2
+            ]
+          }
+        }
+      }
+    },
+    "2": {
+      "K": 2,
+      "mod": 9,
+      "num_odd_states": 4,
+      "states_fully_deterministic_given_j": 4,
+      "determinism_ratio": 1.0,
+      "avg_num_j_per_state": 12.25,
+      "sample_states": {
+        "1": {
+          "j_values_observed": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "num_j_values": 12,
+          "j_deterministic": {
+            "2": true,
+            "1": true,
+            "4": true,
+            "3": true,
+            "5": true,
+            "7": true,
+            "6": true,
+            "8": true,
+            "9": true,
+            "10": true,
+            "12": true,
+            "11": true
+          },
+          "all_deterministic_given_j": true,
+          "outputs_by_j": {
+            "2": [
+              1
+            ],
+            "1": [
+              2
+            ],
+            "4": [
+              7
+            ],
+            "3": [
+              5
+            ],
+            "5": [
+              8
+            ],
+            "7": [
+              2
+            ],
+            "6": [
+              4
+            ],
+            "8": [
+              1
+            ],
+            "9": [
+              5
+            ],
+            "10": [
+              7
+            ],
+            "12": [
+              4
+            ],
+            "11": [
+              8
+            ]
+          }
+        },
+        "3": {
+          "j_values_observed": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "num_j_values": 12,
+          "j_deterministic": {
+            "1": true,
+            "6": true,
+            "2": true,
+            "3": true,
+            "4": true,
+            "5": true,
+            "8": true,
+            "7": true,
+            "9": true,
+            "11": true,
+            "10": true,
+            "12": true
+          },
+          "all_deterministic_given_j": true,
+          "outputs_by_j": {
+            "1": [
+              5
+            ],
+            "6": [
+              1
+            ],
+            "2": [
+              7
+            ],
+            "3": [
+              8
+            ],
+            "4": [
+              4
+            ],
+            "5": [
+              2
+            ],
+            "8": [
+              7
+            ],
+            "7": [
+              5
+            ],
+            "9": [
+              8
+            ],
+            "11": [
+              2
+            ],
+            "10": [
+              4
+            ],
+            "12": [
+              1
+            ]
+          }
+        },
+        "5": {
+          "j_values_observed": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "num_j_values": 12,
+          "j_deterministic": {
+            "4": true,
+            "1": true,
+            "2": true,
+            "3": true,
+            "6": true,
+            "5": true,
+            "7": true,
+            "9": true,
+            "8": true,
+            "10": true,
+            "11": true,
+            "12": true
+          },
+          "all_deterministic_given_j": true,
+          "outputs_by_j": {
+            "4": [
+              1
+            ],
+            "1": [
+              8
+            ],
+            "2": [
+              4
+            ],
+            "3": [
+              2
+            ],
+            "6": [
+              7
+            ],
+            "5": [
+              5
+            ],
+            "7": [
+              8
+            ],
+            "9": [
+              2
+            ],
+            "8": [
+              4
+            ],
+            "10": [
+              1
+            ],
+            "11": [
+              5
+            ],
+            "12": [
+              7
+            ]
+          }
+        },
+        "7": {
+          "j_values_observed": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            14
+          ],
+          "num_j_values": 13,
+          "j_deterministic": {
+            "1": true,
+            "2": true,
+            "3": true,
+            "4": true,
+            "6": true,
+            "5": true,
+            "9": true,
+            "7": true,
+            "8": true,
+            "14": true,
+            "10": true,
+            "11": true,
+            "12": true
+          },
+          "all_deterministic_given_j": true,
+          "outputs_by_j": {
+            "1": [
+              2
+            ],
+            "2": [
+              1
+            ],
+            "3": [
+              5
+            ],
+            "4": [
+              7
+            ],
+            "6": [
+              4
+            ],
+            "5": [
+              8
+            ],
+            "9": [
+              5
+            ],
+            "7": [
+              2
+            ],
+            "8": [
+              1
+            ],
+            "14": [
+              1
+            ],
+            "10": [
+              7
+            ],
+            "11": [
+              8
+            ],
+            "12": [
+              4
+            ]
+          }
+        }
+      }
+    },
+    "3": {
+      "K": 3,
+      "mod": 27,
+      "num_odd_states": 13,
+      "states_fully_deterministic_given_j": 13,
+      "determinism_ratio": 1.0,
+      "avg_num_j_per_state": 10.6923,
+      "sample_states": {
+        "1": {
+          "j_values_observed": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+          ],
+          "num_j_values": 11,
+          "j_deterministic": {
+            "2": true,
+            "1": true,
+            "3": true,
+            "4": true,
+            "5": true,
+            "8": true,
+            "6": true,
+            "7": true,
+            "10": true,
+            "9": true,
+            "11": true
+          },
+          "all_deterministic_given_j": true,
+          "outputs_by_j": {
+            "2": [
+              1
+            ],
+            "1": [
+              2
+            ],
+            "3": [
+              14
+            ],
+            "4": [
+              7
+            ],
+            "5": [
+              17
+            ],
+            "8": [
+              19
+            ],
+            "6": [
+              22
+            ],
+            "7": [
+              11
+            ],
+            "10": [
+              25
+            ],
+            "9": [
+              23
+            ],
+            "11": [
+              26
+            ]
+          }
+        },
+        "3": {
+          "j_values_observed": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+          ],
+          "num_j_values": 11,
+          "j_deterministic": {
+            "1": true,
+            "2": true,
+            "4": true,
+            "3": true,
+            "8": true,
+            "5": true,
+            "6": true,
+            "7": true,
+            "11": true,
+            "9": true,
+            "10": true
+          },
+          "all_deterministic_given_j": true,
+          "outputs_by_j": {
+            "1": [
+              5
+            ],
+            "2": [
+              16
+            ],
+            "4": [
+              4
+            ],
+            "3": [
+              8
+            ],
+            "8": [
+              7
+            ],
+            "5": [
+              2
+            ],
+            "6": [
+              1
+            ],
+            "7": [
+              14
+            ],
+            "11": [
+              11
+            ],
+            "9": [
+              17
+            ],
+            "10": [
+              22
+            ]
+          }
+        },
+        "5": {
+          "j_values_observed": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            12
+          ],
+          "num_j_values": 11,
+          "j_deterministic": {
+            "4": true,
+            "1": true,
+            "2": true,
+            "3": true,
+            "5": true,
+            "6": true,
+            "7": true,
+            "10": true,
+            "8": true,
+            "9": true,
+            "12": true
+          },
+          "all_deterministic_given_j": true,
+          "outputs_by_j": {
+            "4": [
+              1
+            ],
+            "1": [
+              8
+            ],
+            "2": [
+              4
+            ],
+            "3": [
+              2
+            ],
+            "5": [
+              14
+            ],
+            "6": [
+              7
+            ],
+            "7": [
+              17
+            ],
+            "10": [
+              19
+            ],
+            "8": [
+              22
+            ],
+            "9": [
+              11
+            ],
+            "12": [
+              25
+            ]
+          }
+        },
+        "7": {
+          "j_values_observed": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            14
+          ],
+          "num_j_values": 11,
+          "j_deterministic": {
+            "1": true,
+            "3": true,
+            "2": true,
+            "6": true,
+            "4": true,
+            "5": true,
+            "7": true,
+            "14": true,
+            "8": true,
+            "9": true,
+            "10": true
+          },
+          "all_deterministic_given_j": true,
+          "outputs_by_j": {
+            "1": [
+              11
+            ],
+            "3": [
+              23
+            ],
+            "2": [
+              19
+            ],
+            "6": [
+              13
+            ],
+            "4": [
+              25
+            ],
+            "5": [
+              26
+            ],
+            "7": [
+              20
+            ],
+            "14": [
+              1
+            ],
+            "8": [
+              10
+            ],
+            "9": [
+              5
+            ],
+            "10": [
+              16
+            ]
+          }
+        },
+        "9": {
+          "j_values_observed": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+          ],
+          "num_j_values": 11,
+          "j_deterministic": {
+            "2": true,
+            "1": true,
+            "5": true,
+            "3": true,
+            "4": true,
+            "7": true,
+            "6": true,
+            "10": true,
+            "8": true,
+            "9": true,
+            "11": true
+          },
+          "all_deterministic_given_j": true,
+          "outputs_by_j": {
+            "2": [
+              7
+            ],
+            "1": [
+              14
+            ],
+            "5": [
+              11
+            ],
+            "3": [
+              17
+            ],
+            "4": [
+              22
+            ],
+            "7": [
+              23
+            ],
+            "6": [
+              19
+            ],
+            "10": [
+              13
+            ],
+            "8": [
+              25
+            ],
+            "9": [
+              26
+            ],
+            "11": [
+              20
+            ]
+          }
+        }
+      }
+    },
+    "4": {
+      "K": 4,
+      "mod": 81,
+      "num_odd_states": 40,
+      "states_fully_deterministic_given_j": 40,
+      "determinism_ratio": 1.0,
+      "avg_num_j_per_state": 9.225,
+      "sample_states": {
+        "1": {
+          "j_values_observed": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9
+          ],
+          "num_j_values": 9,
+          "j_deterministic": {
+            "2": true,
+            "1": true,
+            "4": true,
+            "3": true,
+            "8": true,
+            "5": true,
+            "6": true,
+            "7": true,
+            "9": true
+          },
+          "all_deterministic_given_j": true,
+          "outputs_by_j": {
+            "2": [
+              1
+            ],
+            "1": [
+              2
+            ],
+            "4": [
+              61
+            ],
+            "3": [
+              41
+            ],
+            "8": [
+              19
+            ],
+            "5": [
+              71
+            ],
+            "6": [
+              76
+            ],
+            "7": [
+              38
+            ],
+            "9": [
+              50
+            ]
+          }
+        },
+        "3": {
+          "j_values_observed": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            10
+          ],
+          "num_j_values": 9,
+          "j_deterministic": {
+            "1": true,
+            "4": true,
+            "2": true,
+            "3": true,
+            "5": true,
+            "7": true,
+            "6": true,
+            "8": true,
+            "10": true
+          },
+          "all_deterministic_given_j": true,
+          "outputs_by_j": {
+            "1": [
+              5
+            ],
+            "4": [
+              31
+            ],
+            "2": [
+              43
+            ],
+            "3": [
+              62
+            ],
+            "5": [
+              56
+            ],
+            "7": [
+              14
+            ],
+            "6": [
+              28
+            ],
+            "8": [
+              7
+            ],
+            "10": [
+              22
+            ]
+          }
+        },
+        "5": {
+          "j_values_observed": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "num_j_values": 10,
+          "j_deterministic": {
+            "4": true,
+            "1": true,
+            "2": true,
+            "3": true,
+            "6": true,
+            "5": true,
+            "10": true,
+            "7": true,
+            "8": true,
+            "9": true
+          },
+          "all_deterministic_given_j": true,
+          "outputs_by_j": {
+            "4": [
+              1
+            ],
+            "1": [
+              8
+            ],
+            "2": [
+              4
+            ],
+            "3": [
+              2
+            ],
+            "6": [
+              61
+            ],
+            "5": [
+              41
+            ],
+            "10": [
+              19
+            ],
+            "7": [
+              71
+            ],
+            "8": [
+              76
+            ],
+            "9": [
+              38
+            ]
+          }
+        },
+        "7": {
+          "j_values_observed": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9
+          ],
+          "num_j_values": 9,
+          "j_deterministic": {
+            "1": true,
+            "2": true,
+            "3": true,
+            "5": true,
+            "4": true,
+            "6": true,
+            "7": true,
+            "9": true,
+            "8": true
+          },
+          "all_deterministic_given_j": true,
+          "outputs_by_j": {
+            "1": [
+              11
+            ],
+            "2": [
+              46
+            ],
+            "3": [
+              23
+            ],
+            "5": [
+              26
+            ],
+            "4": [
+              52
+            ],
+            "6": [
+              13
+            ],
+            "7": [
+              47
+            ],
+            "9": [
+              32
+            ],
+            "8": [
+              64
+            ]
+          }
+        },
+        "9": {
+          "j_values_observed": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            11
+          ],
+          "num_j_values": 9,
+          "j_deterministic": {
+            "2": true,
+            "1": true,
+            "3": true,
+            "7": true,
+            "4": true,
+            "5": true,
+            "6": true,
+            "8": true,
+            "11": true
+          },
+          "all_deterministic_given_j": true,
+          "outputs_by_j": {
+            "2": [
+              7
+            ],
+            "1": [
+              14
+            ],
+            "3": [
+              44
+            ],
+            "7": [
+              23
+            ],
+            "4": [
+              22
+            ],
+            "5": [
+              11
+            ],
+            "6": [
+              46
+            ],
+            "8": [
+              52
+            ],
+            "11": [
+              47
+            ]
+          }
+        }
+      }
+    }
+  },
+  "verification_4_algebraic_structure": {
+    "1": {
+      "K": 1,
+      "linear_part_consistent": true,
+      "inverse_consistent": true,
+      "proof_sketch": "(3R+1) mod 3^1 = (3(R mod 3^1)+1) mod 3^1 because 3*(R - R mod 3^1) = 3 * 3^1 * t ≡ 0 (mod 3^1). Also 2^{-j} mod 3^1 is the projection of 2^{-j} mod 3^2.",
+      "formalization_approach": "Split into two lemmas: (1) (3R+1) % 3^K = (3*(R%3^K)+1) % 3^K  [omega or Nat.add_mul_mod_self] (2) pow(2,j,3^{K+1})^{-1} % 3^K = pow(2,j,3^K)^{-1}  [ZMod.castHom compatibility]"
+    },
+    "2": {
+      "K": 2,
+      "linear_part_consistent": true,
+      "inverse_consistent": true,
+      "proof_sketch": "(3R+1) mod 3^2 = (3(R mod 3^2)+1) mod 3^2 because 3*(R - R mod 3^2) = 3 * 3^2 * t ≡ 0 (mod 3^2). Also 2^{-j} mod 3^2 is the projection of 2^{-j} mod 3^3.",
+      "formalization_approach": "Split into two lemmas: (1) (3R+1) % 3^K = (3*(R%3^K)+1) % 3^K  [omega or Nat.add_mul_mod_self] (2) pow(2,j,3^{K+1})^{-1} % 3^K = pow(2,j,3^K)^{-1}  [ZMod.castHom compatibility]"
+    },
+    "3": {
+      "K": 3,
+      "linear_part_consistent": true,
+      "inverse_consistent": true,
+      "proof_sketch": "(3R+1) mod 3^3 = (3(R mod 3^3)+1) mod 3^3 because 3*(R - R mod 3^3) = 3 * 3^3 * t ≡ 0 (mod 3^3). Also 2^{-j} mod 3^3 is the projection of 2^{-j} mod 3^4.",
+      "formalization_approach": "Split into two lemmas: (1) (3R+1) % 3^K = (3*(R%3^K)+1) % 3^K  [omega or Nat.add_mul_mod_self] (2) pow(2,j,3^{K+1})^{-1} % 3^K = pow(2,j,3^K)^{-1}  [ZMod.castHom compatibility]"
+    },
+    "4": {
+      "K": 4,
+      "linear_part_consistent": true,
+      "inverse_consistent": true,
+      "proof_sketch": "(3R+1) mod 3^4 = (3(R mod 3^4)+1) mod 3^4 because 3*(R - R mod 3^4) = 3 * 3^4 * t ≡ 0 (mod 3^4). Also 2^{-j} mod 3^4 is the projection of 2^{-j} mod 3^5.",
+      "formalization_approach": "Split into two lemmas: (1) (3R+1) % 3^K = (3*(R%3^K)+1) % 3^K  [omega or Nat.add_mul_mod_self] (2) pow(2,j,3^{K+1})^{-1} % 3^K = pow(2,j,3^K)^{-1}  [ZMod.castHom compatibility]"
+    }
+  },
+  "verification_5_projective_limit": {
+    "n=1": {
+      "n": 1,
+      "syracuse_n": 1,
+      "v2_3n1": 2,
+      "trajectory": {
+        "1": {
+          "state_R": 1,
+          "input_j": 2,
+          "next_state": 1,
+          "actual_syracuse_mod": 1,
+          "match": true
+        },
+        "2": {
+          "state_R": 1,
+          "input_j": 2,
+          "next_state": 1,
+          "actual_syracuse_mod": 1,
+          "match": true
+        },
+        "3": {
+          "state_R": 1,
+          "input_j": 2,
+          "next_state": 1,
+          "actual_syracuse_mod": 1,
+          "match": true
+        },
+        "4": {
+          "state_R": 1,
+          "input_j": 2,
+          "next_state": 1,
+          "actual_syracuse_mod": 1,
+          "match": true
+        },
+        "5": {
+          "state_R": 1,
+          "input_j": 2,
+          "next_state": 1,
+          "actual_syracuse_mod": 1,
+          "match": true
+        }
+      },
+      "projective_coherent": true
+    },
+    "n=3": {
+      "n": 3,
+      "syracuse_n": 5,
+      "v2_3n1": 1,
+      "trajectory": {
+        "1": {
+          "state_R": 0,
+          "input_j": 1,
+          "next_state": 2,
+          "actual_syracuse_mod": 2,
+          "match": true
+        },
+        "2": {
+          "state_R": 3,
+          "input_j": 1,
+          "next_state": 5,
+          "actual_syracuse_mod": 5,
+          "match": true
+        },
+        "3": {
+          "state_R": 3,
+          "input_j": 1,
+          "next_state": 5,
+          "actual_syracuse_mod": 5,
+          "match": true
+        },
+        "4": {
+          "state_R": 3,
+          "input_j": 1,
+          "next_state": 5,
+          "actual_syracuse_mod": 5,
+          "match": true
+        },
+        "5": {
+          "state_R": 3,
+          "input_j": 1,
+          "next_state": 5,
+          "actual_syracuse_mod": 5,
+          "match": true
+        }
+      },
+      "projective_coherent": true
+    },
+    "n=5": {
+      "n": 5,
+      "syracuse_n": 1,
+      "v2_3n1": 4,
+      "trajectory": {
+        "1": {
+          "state_R": 2,
+          "input_j": 4,
+          "next_state": 1,
+          "actual_syracuse_mod": 1,
+          "match": true
+        },
+        "2": {
+          "state_R": 5,
+          "input_j": 4,
+          "next_state": 1,
+          "actual_syracuse_mod": 1,
+          "match": true
+        },
+        "3": {
+          "state_R": 5,
+          "input_j": 4,
+          "next_state": 1,
+          "actual_syracuse_mod": 1,
+          "match": true
+        },
+        "4": {
+          "state_R": 5,
+          "input_j": 4,
+          "next_state": 1,
+          "actual_syracuse_mod": 1,
+          "match": true
+        },
+        "5": {
+          "state_R": 5,
+          "input_j": 4,
+          "next_state": 1,
+          "actual_syracuse_mod": 1,
+          "match": true
+        }
+      },
+      "projective_coherent": true
+    },
+    "n=7": {
+      "n": 7,
+      "syracuse_n": 11,
+      "v2_3n1": 1,
+      "trajectory": {
+        "1": {
+          "state_R": 1,
+          "input_j": 1,
+          "next_state": 2,
+          "actual_syracuse_mod": 2,
+          "match": true
+        },
+        "2": {
+          "state_R": 7,
+          "input_j": 1,
+          "next_state": 2,
+          "actual_syracuse_mod": 2,
+          "match": true
+        },
+        "3": {
+          "state_R": 7,
+          "input_j": 1,
+          "next_state": 11,
+          "actual_syracuse_mod": 11,
+          "match": true
+        },
+        "4": {
+          "state_R": 7,
+          "input_j": 1,
+          "next_state": 11,
+          "actual_syracuse_mod": 11,
+          "match": true
+        },
+        "5": {
+          "state_R": 7,
+          "input_j": 1,
+          "next_state": 11,
+          "actual_syracuse_mod": 11,
+          "match": true
+        }
+      },
+      "projective_coherent": true
+    },
+    "n=9": {
+      "n": 9,
+      "syracuse_n": 7,
+      "v2_3n1": 2,
+      "trajectory": {
+        "1": {
+          "state_R": 0,
+          "input_j": 2,
+          "next_state": 1,
+          "actual_syracuse_mod": 1,
+          "match": true
+        },
+        "2": {
+          "state_R": 0,
+          "input_j": 2,
+          "next_state": 7,
+          "actual_syracuse_mod": 7,
+          "match": true
+        },
+        "3": {
+          "state_R": 9,
+          "input_j": 2,
+          "next_state": 7,
+          "actual_syracuse_mod": 7,
+          "match": true
+        },
+        "4": {
+          "state_R": 9,
+          "input_j": 2,
+          "next_state": 7,
+          "actual_syracuse_mod": 7,
+          "match": true
+        },
+        "5": {
+          "state_R": 9,
+          "input_j": 2,
+          "next_state": 7,
+          "actual_syracuse_mod": 7,
+          "match": true
+        }
+      },
+      "projective_coherent": true
+    },
+    "n=11": {
+      "n": 11,
+      "syracuse_n": 17,
+      "v2_3n1": 1,
+      "trajectory": {
+        "1": {
+          "state_R": 2,
+          "input_j": 1,
+          "next_state": 2,
+          "actual_syracuse_mod": 2,
+          "match": true
+        },
+        "2": {
+          "state_R": 2,
+          "input_j": 1,
+          "next_state": 8,
+          "actual_syracuse_mod": 8,
+          "match": true
+        },
+        "3": {
+          "state_R": 11,
+          "input_j": 1,
+          "next_state": 17,
+          "actual_syracuse_mod": 17,
+          "match": true
+        },
+        "4": {
+          "state_R": 11,
+          "input_j": 1,
+          "next_state": 17,
+          "actual_syracuse_mod": 17,
+          "match": true
+        },
+        "5": {
+          "state_R": 11,
+          "input_j": 1,
+          "next_state": 17,
+          "actual_syracuse_mod": 17,
+          "match": true
+        }
+      },
+      "projective_coherent": true
+    },
+    "n=13": {
+      "n": 13,
+      "syracuse_n": 5,
+      "v2_3n1": 3,
+      "trajectory": {
+        "1": {
+          "state_R": 1,
+          "input_j": 3,
+          "next_state": 2,
+          "actual_syracuse_mod": 2,
+          "match": true
+        },
+        "2": {
+          "state_R": 4,
+          "input_j": 3,
+          "next_state": 5,
+          "actual_syracuse_mod": 5,
+          "match": true
+        },
+        "3": {
+          "state_R": 13,
+          "input_j": 3,
+          "next_state": 5,
+          "actual_syracuse_mod": 5,
+          "match": true
+        },
+        "4": {
+          "state_R": 13,
+          "input_j": 3,
+          "next_state": 5,
+          "actual_syracuse_mod": 5,
+          "match": true
+        },
+        "5": {
+          "state_R": 13,
+          "input_j": 3,
+          "next_state": 5,
+          "actual_syracuse_mod": 5,
+          "match": true
+        }
+      },
+      "projective_coherent": true
+    },
+    "n=15": {
+      "n": 15,
+      "syracuse_n": 23,
+      "v2_3n1": 1,
+      "trajectory": {
+        "1": {
+          "state_R": 0,
+          "input_j": 1,
+          "next_state": 2,
+          "actual_syracuse_mod": 2,
+          "match": true
+        },
+        "2": {
+          "state_R": 6,
+          "input_j": 1,
+          "next_state": 5,
+          "actual_syracuse_mod": 5,
+          "match": true
+        },
+        "3": {
+          "state_R": 15,
+          "input_j": 1,
+          "next_state": 23,
+          "actual_syracuse_mod": 23,
+          "match": true
+        },
+        "4": {
+          "state_R": 15,
+          "input_j": 1,
+          "next_state": 23,
+          "actual_syracuse_mod": 23,
+          "match": true
+        },
+        "5": {
+          "state_R": 15,
+          "input_j": 1,
+          "next_state": 23,
+          "actual_syracuse_mod": 23,
+          "match": true
+        }
+      },
+      "projective_coherent": true
+    },
+    "n=17": {
+      "n": 17,
+      "syracuse_n": 13,
+      "v2_3n1": 2,
+      "trajectory": {
+        "1": {
+          "state_R": 2,
+          "input_j": 2,
+          "next_state": 1,
+          "actual_syracuse_mod": 1,
+          "match": true
+        },
+        "2": {
+          "state_R": 8,
+          "input_j": 2,
+          "next_state": 4,
+          "actual_syracuse_mod": 4,
+          "match": true
+        },
+        "3": {
+          "state_R": 17,
+          "input_j": 2,
+          "next_state": 13,
+          "actual_syracuse_mod": 13,
+          "match": true
+        },
+        "4": {
+          "state_R": 17,
+          "input_j": 2,
+          "next_state": 13,
+          "actual_syracuse_mod": 13,
+          "match": true
+        },
+        "5": {
+          "state_R": 17,
+          "input_j": 2,
+          "next_state": 13,
+          "actual_syracuse_mod": 13,
+          "match": true
+        }
+      },
+      "projective_coherent": true
+    },
+    "n=19": {
+      "n": 19,
+      "syracuse_n": 29,
+      "v2_3n1": 1,
+      "trajectory": {
+        "1": {
+          "state_R": 1,
+          "input_j": 1,
+          "next_state": 2,
+          "actual_syracuse_mod": 2,
+          "match": true
+        },
+        "2": {
+          "state_R": 1,
+          "input_j": 1,
+          "next_state": 2,
+          "actual_syracuse_mod": 2,
+          "match": true
+        },
+        "3": {
+          "state_R": 19,
+          "input_j": 1,
+          "next_state": 2,
+          "actual_syracuse_mod": 2,
+          "match": true
+        },
+        "4": {
+          "state_R": 19,
+          "input_j": 1,
+          "next_state": 29,
+          "actual_syracuse_mod": 29,
+          "match": true
+        },
+        "5": {
+          "state_R": 19,
+          "input_j": 1,
+          "next_state": 29,
+          "actual_syracuse_mod": 29,
+          "match": true
+        }
+      },
+      "projective_coherent": true
+    }
+  },
+  "verification_6_lean_design": {
+    "target_theorem": "profinite_consistency",
+    "statement": "forall K : Nat, forall R : ZMod (3^(K+1)), forall j : Nat, ZMod.castHom (dvd_pow_self 3 (show K <= K+1 by omega)) (delta (K+1) R j) = delta K (ZMod.castHom ... R) j",
+    "key_definitions": {
+      "delta_K": "def delta_K (K : Nat) (R : ZMod (3^K)) (j : Nat) : ZMod (3^K) := (3 * R + 1) * (2^j)^(-1 : ZMod (3^K))",
+      "mealy_machine": "structure MealyK (K : Nat) where   states : Finset (ZMod (3^K))  -- odd residues   transition : ZMod (3^K) -> Nat -> ZMod (3^K)",
+      "projection": "def pi (K : Nat) : ZMod (3^(K+1)) ->+* ZMod (3^K) := ZMod.castHom (dvd_pow_self 3 (show K <= K+1 by omega))"
+    },
+    "proof_structure": [
+      "Step 1: Show (3*R+1) mod 3^K = (3*(R mod 3^K)+1) mod 3^K",
+      "  This is: ZMod.castHom preserves (3*R+1)",
+      "  Proof: castHom is a ring hom, so castHom(3*R+1) = 3*castHom(R)+1",
+      "",
+      "Step 2: Show castHom((2^j)^(-1)) = (2^j)^(-1) in ZMod(3^K)",
+      "  This follows from: castHom is a ring hom, ring hom preserves inverses",
+      "  Specifically: if f is RingHom and f(x) is invertible, f(x^(-1)) = f(x)^(-1)",
+      "",
+      "Step 3: Combine: castHom(delta_{K+1}(R,j)) = castHom((3R+1)*(2^j)^(-1))",
+      "  = castHom(3R+1) * castHom((2^j)^(-1))",
+      "  = (3*castHom(R)+1) * (2^j)^(-1)",
+      "  = delta_K(castHom(R), j)"
+    ],
+    "lean_proof_sketch": "\n-- The key insight: everything follows from castHom being a ring homomorphism\n-- ZMod.castHom (dvd) : ZMod n →+* ZMod m\n\ntheorem profinite_consistency (K : ℕ) (R : ZMod (3^(K+1))) (j : ℕ) :\n    let π := ZMod.castHom (Dvd.intro (3^1) rfl) (ZMod (3^K))\n    π (delta (K+1) R j) = delta K (π R) j := by\n  simp only [delta]\n  -- π is a ring homomorphism, so:\n  -- π((3*R+1) * (2^j)⁻¹) = π(3*R+1) * π((2^j)⁻¹)\n  --                        = (3*π(R)+1) * (π(2^j))⁻¹\n  --                        = (3*π(R)+1) * (2^j)⁻¹\n  rw [map_mul, map_add, map_mul, map_natCast, map_one, map_inv₀, map_pow, map_natCast]\n",
+    "dependencies": [
+      "Mathlib.RingTheory.Ideal.Quotient",
+      "Mathlib.Data.ZMod.Basic",
+      "Mathlib.Data.ZMod.Algebra"
+    ],
+    "challenges": [
+      "ZMod (3^K) requires K to be a natural number, and 3^K > 0",
+      "Invertibility of 2^j in ZMod(3^K): gcd(2, 3^K) = 1 always holds",
+      "castHom preserves inv requires the element to be a unit in both rings",
+      "Need to handle: 2^j is a unit in ZMod(3^K) because gcd(2,3)=1"
+    ],
+    "alternative_nat_approach": {
+      "description": "Instead of ZMod, work purely with Nat and modular arithmetic",
+      "statement": "theorem profinite_consistency_nat (K R j : ℕ) (hR : R < 3^(K+1)) (h2inv : ∃ t, t * 2^j % 3^K = 1) (h2inv' : ∃ t, t * 2^j % 3^(K+1) = 1) : let inv_K := Classical.choose h2inv; let inv_K1 := Classical.choose h2inv'; ((3 * R + 1) * inv_K1) % 3^(K+1) % 3^K = ((3 * (R % 3^K) + 1) * inv_K) % 3^K",
+      "proof_idea": "The proof reduces to: (a * b) % m = ((a % m) * (b % m)) % m [Nat.mul_mod] and (3 * R + 1) % 3^K = (3 * (R % 3^K) + 1) % 3^K [because 3*(R - R%3^K) ≡ 0 mod 3^K]"
+    }
+  },
+  "verification_7_j_distribution": {
+    "1": {
+      "K": 1,
+      "mod": 3,
+      "total_odd_states": 1,
+      "states_with_unique_j": 0,
+      "unique_j_ratio": 0.0,
+      "note": "j (= v2(3n+1)) is generally NOT determined by n mod 3^K alone",
+      "implication": "The Mealy machine needs j as explicit input, not derivable from state",
+      "sample_states": {
+        "1": {
+          "total_samples": 250,
+          "j_distribution": {
+            "1": 125,
+            "2": 63,
+            "3": 31,
+            "4": 16,
+            "5": 7,
+            "6": 4,
+            "7": 2,
+            "8": 1,
+            "9": 1
+          },
+          "num_distinct_j": 9,
+          "is_j_unique": false,
+          "dominant_j": [
+            1,
+            125
+          ]
+        }
+      }
+    },
+    "2": {
+      "K": 2,
+      "mod": 9,
+      "total_odd_states": 4,
+      "states_with_unique_j": 0,
+      "unique_j_ratio": 0.0,
+      "note": "j (= v2(3n+1)) is generally NOT determined by n mod 3^K alone",
+      "implication": "The Mealy machine needs j as explicit input, not derivable from state",
+      "sample_states": {
+        "1": {
+          "total_samples": 250,
+          "j_distribution": {
+            "1": 125,
+            "2": 63,
+            "3": 31,
+            "4": 16,
+            "5": 8,
+            "6": 3,
+            "7": 2,
+            "8": 1,
+            "9": 1
+          },
+          "num_distinct_j": 9,
+          "is_j_unique": false,
+          "dominant_j": [
+            1,
+            125
+          ]
+        },
+        "3": {
+          "total_samples": 250,
+          "j_distribution": {
+            "1": 125,
+            "2": 62,
+            "3": 31,
+            "4": 16,
+            "5": 8,
+            "6": 4,
+            "7": 2,
+            "8": 1,
+            "9": 1
+          },
+          "num_distinct_j": 9,
+          "is_j_unique": false,
+          "dominant_j": [
+            1,
+            125
+          ]
+        },
+        "5": {
+          "total_samples": 250,
+          "j_distribution": {
+            "1": 125,
+            "2": 62,
+            "3": 31,
+            "4": 16,
+            "5": 8,
+            "6": 4,
+            "7": 2,
+            "8": 1,
+            "9": 1
+          },
+          "num_distinct_j": 9,
+          "is_j_unique": false,
+          "dominant_j": [
+            1,
+            125
+          ]
+        },
+        "7": {
+          "total_samples": 250,
+          "j_distribution": {
+            "1": 125,
+            "2": 63,
+            "3": 31,
+            "4": 16,
+            "5": 7,
+            "6": 4,
+            "7": 2,
+            "8": 1,
+            "9": 1
+          },
+          "num_distinct_j": 9,
+          "is_j_unique": false,
+          "dominant_j": [
+            1,
+            125
+          ]
+        }
+      }
+    },
+    "3": {
+      "K": 3,
+      "mod": 27,
+      "total_odd_states": 13,
+      "states_with_unique_j": 0,
+      "unique_j_ratio": 0.0,
+      "note": "j (= v2(3n+1)) is generally NOT determined by n mod 3^K alone",
+      "implication": "The Mealy machine needs j as explicit input, not derivable from state",
+      "sample_states": {
+        "1": {
+          "total_samples": 250,
+          "j_distribution": {
+            "1": 125,
+            "2": 63,
+            "3": 31,
+            "4": 16,
+            "5": 8,
+            "6": 3,
+            "7": 2,
+            "8": 1,
+            "10": 1
+          },
+          "num_distinct_j": 9,
+          "is_j_unique": false,
+          "dominant_j": [
+            1,
+            125
+          ]
+        },
+        "3": {
+          "total_samples": 250,
+          "j_distribution": {
+            "1": 125,
+            "2": 63,
+            "3": 31,
+            "4": 16,
+            "5": 7,
+            "6": 4,
+            "7": 2,
+            "8": 1,
+            "11": 1
+          },
+          "num_distinct_j": 9,
+          "is_j_unique": false,
+          "dominant_j": [
+            1,
+            125
+          ]
+        },
+        "5": {
+          "total_samples": 250,
+          "j_distribution": {
+            "1": 125,
+            "2": 62,
+            "3": 31,
+            "4": 16,
+            "5": 8,
+            "6": 4,
+            "7": 2,
+            "8": 1,
+            "10": 1
+          },
+          "num_distinct_j": 9,
+          "is_j_unique": false,
+          "dominant_j": [
+            1,
+            125
+          ]
+        },
+        "7": {
+          "total_samples": 250,
+          "j_distribution": {
+            "1": 125,
+            "2": 62,
+            "3": 32,
+            "4": 15,
+            "5": 8,
+            "6": 4,
+            "7": 2,
+            "8": 1,
+            "14": 1
+          },
+          "num_distinct_j": 9,
+          "is_j_unique": false,
+          "dominant_j": [
+            1,
+            125
+          ]
+        },
+        "9": {
+          "total_samples": 250,
+          "j_distribution": {
+            "1": 125,
+            "2": 63,
+            "3": 31,
+            "4": 15,
+            "5": 8,
+            "6": 4,
+            "7": 2,
+            "8": 1,
+            "10": 1
+          },
+          "num_distinct_j": 9,
+          "is_j_unique": false,
+          "dominant_j": [
+            1,
+            125
+          ]
+        },
+        "11": {
+          "total_samples": 250,
+          "j_distribution": {
+            "1": 125,
+            "2": 63,
+            "3": 31,
+            "4": 16,
+            "5": 8,
+            "6": 4,
+            "7": 1,
+            "8": 1,
+            "11": 1
+          },
+          "num_distinct_j": 9,
+          "is_j_unique": false,
+          "dominant_j": [
+            1,
+            125
+          ]
+        },
+        "13": {
+          "total_samples": 250,
+          "j_distribution": {
+            "1": 125,
+            "2": 62,
+            "3": 32,
+            "4": 16,
+            "5": 7,
+            "6": 4,
+            "7": 2,
+            "8": 1,
+            "10": 1
+          },
+          "num_distinct_j": 9,
+          "is_j_unique": false,
+          "dominant_j": [
+            1,
+            125
+          ]
+        },
+        "15": {
+          "total_samples": 250,
+          "j_distribution": {
+            "1": 125,
+            "2": 62,
+            "3": 31,
+            "4": 16,
+            "5": 8,
+            "6": 4,
+            "7": 2,
+            "8": 1,
+            "12": 1
+          },
+          "num_distinct_j": 9,
+          "is_j_unique": false,
+          "dominant_j": [
+            1,
+            125
+          ]
+        }
+      }
+    },
+    "4": {
+      "K": 4,
+      "mod": 81,
+      "total_odd_states": 40,
+      "states_with_unique_j": 0,
+      "unique_j_ratio": 0.0,
+      "note": "j (= v2(3n+1)) is generally NOT determined by n mod 3^K alone",
+      "implication": "The Mealy machine needs j as explicit input, not derivable from state",
+      "sample_states": {
+        "1": {
+          "total_samples": 186,
+          "j_distribution": {
+            "1": 93,
+            "2": 47,
+            "3": 23,
+            "4": 12,
+            "5": 5,
+            "6": 3,
+            "7": 1,
+            "8": 1,
+            "9": 1
+          },
+          "num_distinct_j": 9,
+          "is_j_unique": false,
+          "dominant_j": [
+            1,
+            93
+          ]
+        },
+        "3": {
+          "total_samples": 186,
+          "j_distribution": {
+            "1": 93,
+            "2": 46,
+            "3": 23,
+            "4": 12,
+            "5": 6,
+            "6": 3,
+            "7": 2,
+            "8": 1
+          },
+          "num_distinct_j": 8,
+          "is_j_unique": false,
+          "dominant_j": [
+            1,
+            93
+          ]
+        },
+        "5": {
+          "total_samples": 186,
+          "j_distribution": {
+            "1": 93,
+            "2": 46,
+            "3": 23,
+            "4": 12,
+            "5": 6,
+            "6": 3,
+            "7": 1,
+            "8": 1,
+            "10": 1
+          },
+          "num_distinct_j": 9,
+          "is_j_unique": false,
+          "dominant_j": [
+            1,
+            93
+          ]
+        },
+        "7": {
+          "total_samples": 186,
+          "j_distribution": {
+            "1": 93,
+            "2": 47,
+            "3": 23,
+            "4": 11,
+            "5": 6,
+            "6": 3,
+            "7": 2,
+            "9": 1
+          },
+          "num_distinct_j": 8,
+          "is_j_unique": false,
+          "dominant_j": [
+            1,
+            93
+          ]
+        },
+        "9": {
+          "total_samples": 186,
+          "j_distribution": {
+            "1": 93,
+            "2": 47,
+            "3": 23,
+            "4": 11,
+            "5": 6,
+            "6": 3,
+            "7": 2,
+            "8": 1
+          },
+          "num_distinct_j": 8,
+          "is_j_unique": false,
+          "dominant_j": [
+            1,
+            93
+          ]
+        },
+        "11": {
+          "total_samples": 186,
+          "j_distribution": {
+            "1": 93,
+            "2": 46,
+            "3": 24,
+            "4": 11,
+            "5": 6,
+            "6": 3,
+            "7": 1,
+            "8": 1,
+            "11": 1
+          },
+          "num_distinct_j": 9,
+          "is_j_unique": false,
+          "dominant_j": [
+            1,
+            93
+          ]
+        },
+        "13": {
+          "total_samples": 186,
+          "j_distribution": {
+            "1": 93,
+            "2": 46,
+            "3": 24,
+            "4": 11,
+            "5": 6,
+            "6": 3,
+            "7": 2,
+            "9": 1
+          },
+          "num_distinct_j": 8,
+          "is_j_unique": false,
+          "dominant_j": [
+            1,
+            93
+          ]
+        },
+        "15": {
+          "total_samples": 186,
+          "j_distribution": {
+            "1": 93,
+            "2": 47,
+            "3": 23,
+            "4": 11,
+            "5": 6,
+            "6": 3,
+            "7": 1,
+            "8": 1,
+            "10": 1
+          },
+          "num_distinct_j": 9,
+          "is_j_unique": false,
+          "dominant_j": [
+            1,
+            93
+          ]
+        }
+      }
+    }
+  }
+}

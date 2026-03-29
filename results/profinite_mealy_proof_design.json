@@ -1,0 +1,63 @@
+{
+  "lemmas": [
+    {
+      "name": "three_mul_add_one_mod_pow3_consistent",
+      "statement": "\ntheorem three_mul_add_one_mod_pow3_consistent (K R : ℕ) :\n    (3 * R + 1) % 3 ^ K = (3 * (R % 3 ^ K) + 1) % 3 ^ K\n",
+      "proof_idea": "Nat.add_mul_mod_self or omega on R = (R%3^K) + 3^K*(R/3^K)",
+      "proof_sketch": "\n  have hR : R = R % 3^K + 3^K * (R / 3^K) := (Nat.mod_add_div R (3^K)).symm\n  calc (3 * R + 1) % 3^K\n      = (3 * (R % 3^K + 3^K * (R / 3^K)) + 1) % 3^K := by rw [hR]\n    _ = (3 * (R % 3^K) + 1 + 3 * 3^K * (R / 3^K)) % 3^K := by ring_nf\n    _ = (3 * (R % 3^K) + 1) % 3^K := by rw [Nat.add_mul_mod_self_right]\n  -- 注: ring_nf と Nat.add_mul_mod_self が使える形に変形する必要がある\n  -- 代替: omega で直接\n",
+      "difficulty": "easy",
+      "existing_tools": "omega, Nat.mod_add_div, Nat.add_mul_mod_self"
+    },
+    {
+      "name": "pow2_inv_mod_pow3_consistent",
+      "statement": "\n-- 2^j の逆元が 3^{K+1} と 3^K で整合する\n-- i.e., if t * 2^j ≡ 1 (mod 3^{K+1}), then t % 3^K * 2^j ≡ 1 (mod 3^K)\n-- equivalently: inv(2^j, 3^{K+1}) % 3^K = inv(2^j, 3^K)\ntheorem pow2_inv_mod_pow3_consistent (K j : ℕ) (hK : K ≥ 1)\n    (t : ℕ) (ht : t * 2^j % 3^(K+1) = 1) :\n    t % 3^K * 2^j % 3^K = 1 % 3^K\n",
+      "proof_idea": "t * 2^j ≡ 1 (mod 3^{K+1}) implies t * 2^j ≡ 1 (mod 3^K) because 3^K | 3^{K+1}. Then (t % 3^K) * 2^j ≡ t * 2^j ≡ 1 (mod 3^K).",
+      "proof_sketch": "\n  -- Step 1: 3^K | 3^{K+1}\n  have hdvd : 3^K ∣ 3^(K+1) := dvd_pow_self 3 (by omega)\n  -- Step 2: t * 2^j ≡ 1 (mod 3^K) from t * 2^j ≡ 1 (mod 3^{K+1})\n  have h_mod_K : t * 2^j % 3^K = 1 % 3^K := by\n    calc t * 2^j % 3^K\n        = (t * 2^j % 3^(K+1)) % 3^K := by rw [Nat.mod_mod_of_dvd _ (Or.inr hdvd)]\n      _ = 1 % 3^K := by rw [ht]\n  -- Step 3: (t % 3^K) * 2^j % 3^K = t * 2^j % 3^K\n  rw [Nat.mul_mod, Nat.mod_mod_of_dvd, ← Nat.mul_mod]\n  exact h_mod_K\n",
+      "difficulty": "medium",
+      "existing_tools": "Nat.mod_mod_of_dvd, Nat.mul_mod"
+    },
+    {
+      "name": "mul_mod_consistent",
+      "statement": "\n-- (a * b) % m = ((a % m) * (b % m)) % m\n-- This is Nat.mul_mod from Mathlib\n",
+      "proof_idea": "This is Nat.mul_mod, already in Mathlib.",
+      "difficulty": "trivial (existing)"
+    }
+  ],
+  "main_theorem_nat": {
+    "name": "profinite_consistency_nat",
+    "statement": "\n/-- Mealy機械族の profinite 整合性:\n    delta_{K+1}(R, j) mod 3^K = delta_K(R mod 3^K, j)\n    ここで delta_K(R, j) = (3R+1) * inv(2^j) mod 3^K -/\ntheorem profinite_consistency_nat (K R j : ℕ) (hK : K ≥ 1)\n    (inv_K : ℕ) (hinv_K : inv_K * 2^j % 3^K = 1)\n    (inv_K1 : ℕ) (hinv_K1 : inv_K1 * 2^j % 3^(K+1) = 1) :\n    ((3 * R + 1) * inv_K1 % 3^(K+1)) % 3^K\n    = (3 * (R % 3^K) + 1) * inv_K % 3^K\n",
+    "proof_outline": "\n  -- Step 1: Reduce LHS modulo 3^K\n  -- ((3R+1) * inv_K1) % 3^{K+1} % 3^K = ((3R+1) * inv_K1) % 3^K\n  --   by Nat.mod_mod_of_dvd (since 3^K | 3^{K+1})\n\n  -- Step 2: Factor modular arithmetic\n  -- ((3R+1) * inv_K1) % 3^K = ((3R+1) % 3^K) * (inv_K1 % 3^K) % 3^K\n  --   by Nat.mul_mod\n\n  -- Step 3: Use three_mul_add_one_mod_pow3_consistent\n  -- (3R+1) % 3^K = (3*(R%3^K)+1) % 3^K\n\n  -- Step 4: Use pow2_inv_mod_pow3_consistent\n  -- inv_K1 % 3^K behaves like inv_K modulo 3^K\n  --   (since inv_K1 * 2^j ≡ 1 mod 3^{K+1} implies inv_K1 * 2^j ≡ 1 mod 3^K)\n  --   and the inverse mod 3^K is unique (if it exists)\n\n  -- Step 5: Reassemble\n  -- ((3*(R%3^K)+1) % 3^K) * (inv_K1 % 3^K) % 3^K\n  -- = (3*(R%3^K)+1) * (inv_K1 % 3^K) % 3^K\n  -- Now: inv_K1 % 3^K is also an inverse of 2^j mod 3^K\n  -- Since inverse is unique mod 3^K, inv_K1 % 3^K ≡ inv_K (mod 3^K)\n  -- Actually we need: inv_K1 % 3^K * 2^j ≡ 1 (mod 3^K)\n  -- and inv_K * 2^j ≡ 1 (mod 3^K)\n  -- so (3*(R%3^K)+1) * (inv_K1 % 3^K) ≡ (3*(R%3^K)+1) * inv_K (mod 3^K)\n  -- This requires uniqueness of inverse, or direct computation.\n",
+    "key_insight": "The proof has an inherent difficulty: even though inv_K1 % 3^K and inv_K are both inverses of 2^j mod 3^K, they might differ by multiples of 3^K. However, (a * b) % m only depends on (a % m) and (b % m), so we need to show inv_K1 % 3^K ≡ inv_K (mod 3^K). This follows from uniqueness of modular inverse."
+  },
+  "main_theorem_zmod": {
+    "name": "profinite_consistency_zmod",
+    "statement": "\n/-- ZMod版: castHom は delta を保存する -/\ntheorem profinite_consistency_zmod (K : ℕ) (hK : K ≥ 1)\n    (R : ZMod (3^(K+1))) (j : ℕ) :\n    let π : ZMod (3^(K+1)) →+* ZMod (3^K) :=\n      ZMod.castHom (dvd_pow_self 3 (show K ≤ K+1 from Nat.le_succ K)) _\n    π ((3 * R + 1) * ((2:ZMod (3^(K+1)))^j)⁻¹)\n    = (3 * (π R) + 1) * ((2:ZMod (3^K))^j)⁻¹\n",
+    "proof": "\n  intro π\n  -- π is a ring homomorphism\n  simp only [map_mul, map_add, map_mul, map_natCast, map_one, map_pow, map_inv₀]\n  -- After simplification, both sides are syntactically equal\n  -- because π(2) = 2, π(3) = 3, π(1) = 1 (castHom preserves these)\n",
+    "advantages": [
+      "Much shorter proof via ring homomorphism properties",
+      "map_mul, map_add, map_pow, map_inv₀ do all the work",
+      "No need to handle modular inverse uniqueness explicitly"
+    ],
+    "disadvantages": [
+      "Requires ZMod infrastructure from Mathlib",
+      "Need to ensure 2^j is a unit in ZMod(3^K)",
+      "The map_inv₀ might need IsUnit hypothesis"
+    ],
+    "unit_proof": "\n-- 2 is a unit in ZMod(3^K) because gcd(2, 3^K) = 1\ntheorem two_isUnit_zmod_pow3 (K : ℕ) (hK : K ≥ 1) :\n    IsUnit (2 : ZMod (3^K)) := by\n  rw [ZMod.isUnit_natCast_iff]\n  simp [Nat.Coprime, Nat.gcd_comm]\n  -- gcd(2, 3^K) = 1 since 3^K is odd\n"
+  },
+  "uniqueness_lemma": {
+    "name": "modular_inverse_unique_proj",
+    "statement": "\n-- If a * b ≡ 1 (mod m*n) and a' * b ≡ 1 (mod m), then a % m ≡ a' (mod m)\n-- (Uniqueness of modular inverse under projection)\ntheorem modular_inverse_unique_proj (a a' b m n : ℕ) (hm : m > 0)\n    (h1 : a * b % (m * n) = 1) (h2 : a' * b % m = 1)\n    (hmn : m ∣ (m * n)) :\n    (a % m) * b % m = 1\n",
+    "proof_idea": "From a*b ≡ 1 (mod m*n) and m | m*n, we get a*b ≡ 1 (mod m). Then (a%m)*b ≡ a*b ≡ 1 (mod m). Since a' is also an inverse, a ≡ a' (mod m). This means for the main theorem, we can replace inv_K1 % 3^K with inv_K."
+  },
+  "recommended_approach": "ZMod",
+  "reason": "The ZMod approach is dramatically simpler because the entire proof reduces to 'castHom is a ring homomorphism'. The ring homomorphism properties handle multiplication, addition, power, and inverse preservation automatically.",
+  "estimated_loc": {
+    "ZMod_approach": "~30 lines (including definitions and unit proof)",
+    "Nat_approach": "~80 lines (handling modular inverse uniqueness)"
+  },
+  "connection_to_existing": {
+    "syracuse_mod3_eq": "The K=1 case of profinite consistency implies: T(n) mod 3 depends only on n mod 3 and v2(3n+1). This is a generalization of syracuse_mod3_eq to arbitrary K.",
+    "hensel_attrition": "The 2-adic structure (Hensel.lean) controls v2(3n+1), while the 3-adic structure (this theorem) controls the residue. Together they give a complete mod 2^a * 3^K description."
+  }
+}

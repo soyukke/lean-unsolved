@@ -1,0 +1,366 @@
+{
+  "single_step_statistics": {
+    "mean": -0.420237,
+    "variance": 2.050373,
+    "std": 1.431912,
+    "skewness": -2.149629,
+    "kurtosis_excess": 6.428953
+  },
+  "distribution_at_k5_k10_k20": {
+    "5": {
+      "alpha_k": 0.2373046875,
+      "mean": 13.235739,
+      "std": 3.189262,
+      "variance": 10.171391,
+      "skewness": -1.033812,
+      "kurtosis_excess": 1.788439,
+      "ks_statistic": 0.114865,
+      "ks_pvalue": 1.1484250739030321e-172,
+      "percentiles": {
+        "1%": 3.3152,
+        "5%": 7.2369,
+        "25%": 11.2777,
+        "75%": 15.2957,
+        "95%": 17.2882,
+        "99%": 18.2701
+      }
+    },
+    "10": {
+      "alpha_k": 0.056313514709472656,
+      "mean": 14.756078,
+      "std": 4.562651,
+      "variance": 20.817782,
+      "skewness": -0.737985,
+      "kurtosis_excess": 0.737616,
+      "ks_statistic": 0.083234,
+      "ks_pvalue": 7.263857826500144e-91,
+      "percentiles": {
+        "1%": -1.1252,
+        "5%": 6.7138,
+        "25%": 11.8618,
+        "75%": 17.8429,
+        "95%": 20.8853,
+        "99%": 22.845
+      }
+    },
+    "20": {
+      "alpha_k": 0.0031712119389339932,
+      "mean": 11.79576,
+      "std": 6.054981,
+      "variance": 36.662796,
+      "skewness": -0.220432,
+      "kurtosis_excess": -0.426606,
+      "ks_statistic": 0.066184,
+      "ks_pvalue": 1.3125056135076803e-57,
+      "percentiles": {
+        "1%": -0.064,
+        "5%": -0.0636,
+        "25%": 7.7754,
+        "75%": 15.8149,
+        "95%": 20.8153,
+        "99%": 24.5934
+      }
+    }
+  },
+  "optimal_scaling": {
+    "5": {
+      "alpha_k_theoretical": 0.2373046875,
+      "beta_k_fitted": 1.0020720256,
+      "difference": 0.7647673381,
+      "intercept": -2.1154401865,
+      "residual_std": 3.1916362532
+    },
+    "10": {
+      "alpha_k_theoretical": 0.0563135147,
+      "beta_k_fitted": 0.3695818136,
+      "difference": 0.3132682988,
+      "intercept": 8.5014378821,
+      "residual_std": 4.5210238569
+    },
+    "20": {
+      "alpha_k_theoretical": 0.0031712119,
+      "beta_k_fitted": 0.5215344503,
+      "difference": 0.5183632383,
+      "intercept": 1.4225524704,
+      "residual_std": 6.0156730982
+    }
+  },
+  "n_scale_dependence": {
+    "k5": [
+      {
+        "scale": 10000,
+        "log10_scale": 4,
+        "mean": 8.4332,
+        "std": 3.1632,
+        "skewness": -0.8641,
+        "kurtosis_excess": 0.875
+      },
+      {
+        "scale": 100000,
+        "log10_scale": 5,
+        "mean": 11.0426,
+        "std": 3.1343,
+        "skewness": -0.9067,
+        "kurtosis_excess": 1.1089
+      },
+      {
+        "scale": 1000000,
+        "log10_scale": 6,
+        "mean": 13.571,
+        "std": 3.1539,
+        "skewness": -0.9631,
+        "kurtosis_excess": 1.3984
+      },
+      {
+        "scale": 10000000,
+        "log10_scale": 7,
+        "mean": 15.9799,
+        "std": 3.2206,
+        "skewness": -0.8646,
+        "kurtosis_excess": 1.0115
+      }
+    ],
+    "k10": [
+      {
+        "scale": 10000,
+        "log10_scale": 4,
+        "mean": 8.9622,
+        "std": 4.3753,
+        "skewness": -0.4475,
+        "kurtosis_excess": -0.304
+      },
+      {
+        "scale": 100000,
+        "log10_scale": 5,
+        "mean": 12.0801,
+        "std": 4.3447,
+        "skewness": -0.5207,
+        "kurtosis_excess": 0.1954
+      },
+      {
+        "scale": 1000000,
+        "log10_scale": 6,
+        "mean": 15.2047,
+        "std": 4.4804,
+        "skewness": -0.641,
+        "kurtosis_excess": 0.4804
+      },
+      {
+        "scale": 10000000,
+        "log10_scale": 7,
+        "mean": 18.2056,
+        "std": 4.5622,
+        "skewness": -0.6404,
+        "kurtosis_excess": 0.5161
+      }
+    ]
+  },
+  "step_evolution_k1_to_k20": [
+    {
+      "k": 1,
+      "mean": 4.5846,
+      "std": 1.4199,
+      "skewness": -2.0116,
+      "kurtosis_excess": 5.5026,
+      "ks_statistic": 0.2503,
+      "ks_pvalue": 0.0
+    },
+    {
+      "k": 2,
+      "mean": 7.9433,
+      "std": 1.9731,
+      "skewness": -1.4127,
+      "kurtosis_excess": 2.6554,
+      "ks_statistic": 0.181,
+      "ks_pvalue": 0.0
+    },
+    {
+      "k": 3,
+      "mean": 10.3503,
+      "std": 2.4213,
+      "skewness": -1.1317,
+      "kurtosis_excess": 1.6326,
+      "ks_statistic": 0.1464,
+      "ks_pvalue": 3.9612035730136565e-280
+    },
+    {
+      "k": 4,
+      "mean": 12.0656,
+      "std": 2.7867,
+      "skewness": -0.9976,
+      "kurtosis_excess": 1.2644,
+      "ks_statistic": 0.1273,
+      "ks_pvalue": 6.537480873411152e-212
+    },
+    {
+      "k": 5,
+      "mean": 13.2256,
+      "std": 3.132,
+      "skewness": -0.9457,
+      "kurtosis_excess": 1.3024,
+      "ks_statistic": 0.1157,
+      "ks_pvalue": 4.646544718300304e-175
+    },
+    {
+      "k": 6,
+      "mean": 14.0079,
+      "std": 3.4179,
+      "skewness": -0.8321,
+      "kurtosis_excess": 0.8893,
+      "ks_statistic": 0.1043,
+      "ks_pvalue": 1.4975137856134066e-142
+    },
+    {
+      "k": 7,
+      "mean": 14.4885,
+      "std": 3.6898,
+      "skewness": -0.7321,
+      "kurtosis_excess": 0.5722,
+      "ks_statistic": 0.0969,
+      "ks_pvalue": 5.070593429381469e-123
+    },
+    {
+      "k": 8,
+      "mean": 14.7422,
+      "std": 3.9388,
+      "skewness": -0.6786,
+      "kurtosis_excess": 0.4653,
+      "ks_statistic": 0.0899,
+      "ks_pvalue": 5.735898229393274e-106
+    },
+    {
+      "k": 9,
+      "mean": 14.8216,
+      "std": 4.1894,
+      "skewness": -0.6476,
+      "kurtosis_excess": 0.4175,
+      "ks_statistic": 0.082,
+      "ks_pvalue": 2.927213559818386e-88
+    },
+    {
+      "k": 10,
+      "mean": 14.774,
+      "std": 4.463,
+      "skewness": -0.6871,
+      "kurtosis_excess": 0.6382,
+      "ks_statistic": 0.0791,
+      "ks_pvalue": 3.5716357437014586e-82
+    },
+    {
+      "k": 11,
+      "mean": 14.6423,
+      "std": 4.6483,
+      "skewness": -0.6039,
+      "kurtosis_excess": 0.3322,
+      "ks_statistic": 0.0757,
+      "ks_pvalue": 2.5220417803940273e-75
+    },
+    {
+      "k": 12,
+      "mean": 14.4672,
+      "std": 4.8357,
+      "skewness": -0.5525,
+      "kurtosis_excess": 0.2369,
+      "ks_statistic": 0.0702,
+      "ks_pvalue": 7.5766918331960945e-65
+    },
+    {
+      "k": 13,
+      "mean": 14.2482,
+      "std": 4.9933,
+      "skewness": -0.5114,
+      "kurtosis_excess": 0.1517,
+      "ks_statistic": 0.0677,
+      "ks_pvalue": 3.065548280815515e-60
+    },
+    {
+      "k": 14,
+      "mean": 13.9492,
+      "std": 5.1747,
+      "skewness": -0.4709,
+      "kurtosis_excess": 0.0024,
+      "ks_statistic": 0.067,
+      "ks_pvalue": 4.089639420295431e-59
+    },
+    {
+      "k": 15,
+      "mean": 13.604,
+      "std": 5.3764,
+      "skewness": -0.4708,
+      "kurtosis_excess": 0.0402,
+      "ks_statistic": 0.0628,
+      "ks_pvalue": 7.483213904498872e-52
+    },
+    {
+      "k": 16,
+      "mean": 13.262,
+      "std": 5.5051,
+      "skewness": -0.378,
+      "kurtosis_excess": -0.1773,
+      "ks_statistic": 0.0629,
+      "ks_pvalue": 3.937019542114891e-52
+    },
+    {
+      "k": 17,
+      "mean": 12.9347,
+      "std": 5.5928,
+      "skewness": -0.325,
+      "kurtosis_excess": -0.2351,
+      "ks_statistic": 0.0561,
+      "ks_pvalue": 1.596091457824141e-41
+    },
+    {
+      "k": 18,
+      "mean": 12.616,
+      "std": 5.6611,
+      "skewness": -0.2656,
+      "kurtosis_excess": -0.3266,
+      "ks_statistic": 0.0524,
+      "ks_pvalue": 3.103321166965925e-36
+    },
+    {
+      "k": 19,
+      "mean": 12.2362,
+      "std": 5.7788,
+      "skewness": -0.2105,
+      "kurtosis_excess": -0.4023,
+      "ks_statistic": 0.0483,
+      "ks_pvalue": 6.481964793196252e-31
+    },
+    {
+      "k": 20,
+      "mean": 11.8136,
+      "std": 5.9739,
+      "skewness": -0.2207,
+      "kurtosis_excess": -0.4153,
+      "ks_statistic": 0.0621,
+      "ks_pvalue": 7.983525418910018e-51
+    }
+  ],
+  "alternative_clt_scaling": {
+    "5": {
+      "mean": -0.009064,
+      "std": 1.009499,
+      "skewness": -0.926616,
+      "kurtosis_excess": 1.244051,
+      "ks_statistic": 0.124072,
+      "ks_pvalue": 0.0
+    },
+    "10": {
+      "mean": -0.002015,
+      "std": 1.003123,
+      "skewness": -0.66989,
+      "kurtosis_excess": 0.617612,
+      "ks_statistic": 0.084947,
+      "ks_pvalue": 0.0
+    },
+    "20": {
+      "mean": 0.019837,
+      "std": 0.95592,
+      "skewness": -0.208972,
+      "kurtosis_excess": -0.42908,
+      "ks_statistic": 0.062097,
+      "ks_pvalue": 0.0
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "title": "Pi_2 -> Pi_1 帰着: 計算可能上界による同値変換の形式化分析",
+  "approach": "stopping timeの経験的分布を2*10^6まで計算し上界関数の候補を検証。CC<->BCC_fの同値変換の形式化設計を行い、T^{f(n)}(n)=1定義の致命的問題(サイクル周期3)を発見。collatzReachesBoundedベースの代替定式化を提案。",
+  "findings": [
+    "s(n)/log2(n)のrecord holder: n=27で23.34, n=837799で26.63, n=1723519で26.84と単調増大",
+    "9*log2(n)はN=32(n=27,s=111)で既に破綻。経験的上界として不十分",
+    "20*log2(n)^2はn<=2*10^6で十分(violations=0)だが理論的保証なし",
+    "★重大発見: BCC_fをT^{f(n)}(n)=1と定義すると{1,4,2}サイクル(周期3)のせいでf(n)-s(n)が3の倍数でない限り成立しない",
+    "collatzReachesBoundedを使ったPi_1定式化が最も自然で既存コードと整合する",
+    "既存のcollatzConjectureR_iff_boundedがCC<->(exists f, Pi_1版)の本質を含む",
+    "CC->BCC_fの順方向はstoppingTimeを使うため非構成的(noncomputable)。特定のfを提示することはCC証明と等価"
+  ],
+  "hypotheses": [
+    "s(n)/log2(n)はO(log(log(n)))で増大する可能性がある(record holderのデータから推測)",
+    "f(n) = C * log2(n) * log2(log2(n)) が最適な上界の形かもしれない",
+    "理論的にはCC下でs(n) = O(log(n)^2)が成り立つ可能性が高い(Terras予想の拡張)"
+  ],
+  "dead_ends": [
+    "T^{f(n)}(n)=1によるBCC定義: {1,4,2}サイクル(周期3)により一般のfでは成立しない",
+    "9*log2(n)上界: n=27で既に破綻するため形式化に使えない",
+    "exists k<=f(n), T^k(n)=1による定義: Pi_2のままで帰着の意味がない"
+  ],
+  "record_holders": [
+    {"n": 27, "st": 111, "ratio": 23.34},
+    {"n": 230631, "st": 442, "ratio": 24.81},
+    {"n": 626331, "st": 508, "ratio": 26.38},
+    {"n": 837799, "st": 524, "ratio": 26.63},
+    {"n": 1723519, "st": 556, "ratio": 26.84}
+  ],
+  "scripts_created": [
+    "scripts/pi2_to_pi1_analysis.py",
+    "scripts/pi2_pi1_bound_refinement.py"
+  ],
+  "outcome": "中発見",
+  "next_directions": [
+    "CollatzBoundedPi1 (f : Nat -> Nat) := forall n>=1, collatzReachesBounded (f n) n = true のLean形式化",
+    "CC <-> Exists CollatzBoundedPi1 の形式証明(既存 collatzConjectureR_iff_bounded から導出)",
+    "CollatzBoundedPi1Below f N の Decidable instance 構築",
+    "既存検証 collatzReaches_le_1000000 を CollatzBoundedPi1Below (fun _ => 600) 1000000 として再記述",
+    "s(n)/log2(n) の record holder の増大速度の理論的解析"
+  ],
+  "lean_formalization_plan": {
+    "new_definitions": [
+      "CollatzBoundedPi1 (f : Nat -> Nat) : Prop := forall n, n >= 1 -> collatzReachesBounded (f n) n = true",
+      "CollatzBoundedPi1Below (f : Nat -> Nat) (N : Nat) : Prop := forall n, 1 <= n -> n <= N -> collatzReachesBounded (f n) n = true"
+    ],
+    "new_theorems": [
+      "cc_iff_bounded_pi1 : CollatzConjectureR <-> Exists CollatzBoundedPi1",
+      "cc_of_bounded_pi1 : CollatzBoundedPi1 f -> CollatzConjectureR",
+      "bounded_pi1_decidable_below : Decidable (CollatzBoundedPi1Below f N)"
+    ],
+    "key_insight": "collatzReachesBoundedは内部でOR再帰(n==1 || recurse)を使うため、f(n)>=s(n)であれば必ずtrue。T^{f(n)}(n)=1の問題を回避。",
+    "connection_to_existing": "collatzConjectureR_iff_bounded (Orbit.lean line 196) から直接導出可能"
+  },
+  "details": "## 核心分析\n\n### 算術的階層における位置\n- CC = forall n>=1, exists k, T^k(n)=1 は Pi_2 文\n- BCC_f = forall n>=1, collatzReachesBounded(f(n), n) = true は Pi_1 文\n- CC <-> Exists(fun f => BCC_f) は成立するが、CC->BCC_f は noncomputable\n\n### T^{f(n)}(n)=1 定義の致命的問題\n- 1に到達後 {1->4->2->1} の3サイクルに入る\n- T^k(n)=1 となるkは s(n), s(n)+3, s(n)+6, ... のみ\n- f(n)>=s(n) でも f(n)-s(n) mod 3 != 0 なら T^{f(n)}(n) != 1\n- 解決策: collatzReachesBounded を使う（内部で n==1 をチェック）\n\n### 経験的上界データ\n- max(s(n)/log2(n)) for n<=2*10^6: 26.84 (at n=1723519)\n- 上界 C*log2(n)^alpha: alpha=1で C>=27必要、alpha=2で C>=5で十分\n- alpha=1.5, C=11 が効率的なバランス点\n\n### Lean形式化との接続\n- collatzReachesBounded: Verification.lean line 130\n- collatzReaches_of_bounded: Verification.lean line 136 (健全性)\n- collatzReachesBounded_complete: Verification.lean line 150 (完全性)\n- collatzConjectureR_iff_bounded: Orbit.lean line 196\n  CCR <-> forall n>=1, exists k, collatzReachesBounded k n = true\n- 新たに必要: exists k を特定の f(n) に具体化する層"
+}

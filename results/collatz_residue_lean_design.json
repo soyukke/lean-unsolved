@@ -1,0 +1,33 @@
+{
+  "title": "collatzResidue再帰定義+核心等式のLean実装設計",
+  "approach": "collatzResidue(n)の再帰定義を数値的に分析し、閉じた形 c(2m)=(4^m-1)/3 を発見。核心等式 3*c(2m)+1=4^m を加法形式で定式化し、Lean 4での完全な証明設計（定義1個+展開補題6個+核心等式2個+閉じた形2個）を作成した。帰納法の各ステップでring+rwのみを使い、自然数除算の問題を回避する戦略を設計した。",
+  "findings": [
+    "collatzResidueは偶数ステップでのみ値が変化（4倍+1）し、奇数ステップでは不変。c(2m)=c(2m-1)のペア構造を持つ",
+    "閉じた形: c(2m) = (4^m - 1)/3, c(2m+1) = (4^(m+1) - 1)/3。統一形: c(k) = (4^{ceil(k/2)} - 1)/3",
+    "核心等式（加法形式、除算回避）: 3*c(2m)+1 = 4^m および 3*c(2m+1)+1 = 4^(m+1)。自然数除算を含まないため証明が安定",
+    "帰納法の核心ステップは ring で解ける代数的等式 3*(4x+1)+1 = 4*(3x+1) に帰着。Nat上のringで問題なし",
+    "ascentConstとcollatzResidueは異なる漸化式だが、ともに幾何級数の和の閉じた形を持つ。ascentConst(k)=3^k-2^k、c(2m)=(4^m-1)/3",
+    "展開補題のsimp戦略として、if_pos/if_neg、unfold+split、simp only [_, reduceIte]の3つの代替パターンを特定"
+  ],
+  "hypotheses": [
+    "collatzResidueは連続上昇中のSyracuse軌道のmod 2^k残余を直接捉えており、Hensel attritionの定量的分析に使える可能性がある",
+    "核心等式のomega代替として Nat.mul_div_cancel_left が閉じた形の証明で必要になる可能性が高い（omegaはNat除算を直接扱えない場合がある）"
+  ],
+  "dead_ends": [
+    "仮説 3*c(k)+1 = 4^{ceil((k+1)/2)} は k=0 で不一致（1 vs 4）。正しくは偶奇で分けた2つの等式が必要",
+    "ascentConstとcollatzResidueの直接的な代数的関係（比率など）は単純な形にならない。異なる基底の幾何級数であり、直接の変換式は存在しない"
+  ],
+  "scripts_created": [
+    "scripts/collatz_residue_analysis.py",
+    "scripts/collatz_residue_lean_design.py",
+    "scripts/collatz_residue_final_design.py"
+  ],
+  "outcome": "中発見",
+  "next_directions": [
+    "設計書に基づいてLean 4ファイル Unsolved/Collatz/Residue.lean を実装。まず展開補題+核心等式のみで最小限の動作確認",
+    "simp [collatzResidue, h] の挙動をLean 4で実際にテストし、失敗する場合は代替戦略（unfold+split / if_pos）に切り替え",
+    "閉じた形の証明で omega が Nat除算を扱えるか検証。失敗時は Nat.mul_div_cancel_left を使う戦略Bに切り替え",
+    "collatzResidueとascentConstの関係をFormula.leanに追加し、連続上昇公式の別証明を探索"
+  ],
+  "details": "## 数学的分析結果\n\ncollatzResidue の定義:\n  c(0) = 0\n  c(n+1) = if n%2=0 then 4*c(n)+1 else c(n)\n\n数値列: 0, 1, 1, 5, 5, 21, 21, 85, 85, 341, ...\n\n### 発見1: ペア構造\nc(2m) = c(2m+1) が全てのmで成立...と思いきや、実際は c(2m+1) = 4*c(2m)+1 で c(2m+2) = c(2m+1)。つまり (c(2m), c(2m+1)) がペアで、偶数→奇数で変化、奇数→偶数で不変。\n\n### 発見2: 閉じた形\nc(2m) = (4^m - 1)/3  （m=0,1,...,11 で数値検証済み）\nc(2m+1) = (4^(m+1) - 1)/3  （同上）\n\n### 発見3: 核心等式（加法形式）\n3*c(2m) + 1 = 4^m  (自然数の除算を含まない！)\n3*c(2m+1) + 1 = 4^(m+1)\n\nこの加法形式は ascentConst_add_two_pow (ascentConst k + 2^k = 3^k) と同じパターン。\n\n### 帰納法の構造\nbase: 3*c(0)+1 = 1 = 4^0 （trivial）\nstep: 3*c(2(m+1))+1 = 3*(4*c(2m)+1)+1 = 12*c(2m)+4 = 4*(3*c(2m)+1) = 4*4^m = 4^(m+1)\n\n核心は 3*(4x+1)+1 = 4*(3x+1) という代数的恒等式。\n\n### Lean証明設計\n全11個の定理/補題:\n1. collatzResidue_zero [rfl]\n2. collatzResidue_even_step [simp/unfold]\n3. collatzResidue_odd_step [simp/unfold]\n4. collatzResidue_two_mul_succ [even_step適用]\n5. collatzResidue_two_mul_succ_succ [odd_step適用]\n6. collatzResidue_double_step [4+5の組み合わせ]\n7. collatzResidue_even_core [帰納法, 最重要]\n8. collatzResidue_odd_core [7に帰着]\n9-10. closed forms [omega or Nat.mul_div_cancel_left]\n\n推定90行、使用タクティク: rfl, simp, unfold, omega, ring, rw, induction, exact, have, linarith\n\n### リスク評価\n- simp [collatzResidue, h]: if文の簡約が失敗する可能性（低）→ 代替3パターン準備済み\n- omega と Nat除算: omegaがNat除算を直接扱えない可能性（中）→ Nat.mul_div_cancel_left で回避\n- ring と Nat: 引き算を含まないので問題なし（リスクなし）"
+}

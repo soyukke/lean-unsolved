@@ -1,0 +1,50 @@
+{
+  "title": "D(N)_alpha_convergence_with_1e8",
+  "DN_at_powers_of_10": {
+    "3": 178,
+    "4": 261,
+    "5": 350,
+    "6": 524,
+    "7": 685,
+    "8": 949
+  },
+  "regression_k3_to_k8": {
+    "alpha": 1.697,
+    "C": 6.1912,
+    "R2": 0.985826
+  },
+  "corrected_model": {
+    "alpha_asymptotic": 2.5997,
+    "beta_correction": 10.652,
+    "C": 0.2534,
+    "RMSE": 0.041376
+  },
+  "adjacent_pair_alpha": {
+    "3-4": 1.3304,
+    "4-5": 1.3149,
+    "5-6": 2.2134,
+    "6-7": 1.7381,
+    "7-8": 2.4413
+  },
+  "cv_optimal_alpha": {
+    "all_data": 1.638,
+    "N_ge_1e5": 1.911,
+    "N_ge_1e6": 1.965,
+    "N_ge_1e7": 2.999
+  },
+  "cumulative_alpha": {
+    "5": 1.324,
+    "6": 1.5169,
+    "7": 1.5961,
+    "8": 1.697
+  },
+  "reverse_alpha": {
+    "3": 1.697,
+    "4": 1.8718,
+    "5": 2.0826,
+    "6": 2.0561
+  },
+  "alpha_estimate_range": "1.55 - 1.95",
+  "best_simple_alpha": 1.697,
+  "conclusion": "alpha ~ 1.6 は安定だが、k=7->8 で instantaneous alpha が急増 (1.97)"
+}

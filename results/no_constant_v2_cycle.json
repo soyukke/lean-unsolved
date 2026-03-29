@@ -1,0 +1,35 @@
+{
+  "title": "no_constant_v2_cycle: 全v_i=cサイクル排除のLean形式化設計",
+  "approach": "探索189の結果（全ステップv2=cのサイクルはn=1/(2^c-3)に帰着、c>=3で非整数）をLean 4の完全な形式化設計に落とし込んだ。generalAscentConst(c,k)の定義、閉じた形の等式G_k*(2^c-3)+3^k=2^{ck}、一般乗法公式2^{ck}*T^k(n)=3^k*n+G_k(c)、サイクル排除定理の4段階構成。自然数算術の引き算問題を加法形式で全面回避する設計。",
+  "findings": [
+    "generalAscentConst_mul_add: G_k(c)*(2^c-3)+3^k=2^{ck}が核心等式。k帰納法で証明可能。c>=2で成立",
+    "three_pow_add_mul_generalAscentConst: 3^k+2^c*G_k=G_{k+1}が帰納ステップの鍵。generalAscentConst_mul_addから直接導出",
+    "サイクル排除の最終ステップ: 乗法公式+閉じた形からn*(2^c-3)=1を加法形式で導出。c>=3なら2^c-3>=5でn>=1と矛盾",
+    "c=2の場合: 2^c-3=1なのでn*1=1、つまりn=1のみ。syracuse(1)=1の自明不動点",
+    "c=1の場合: 既存no_all_ascent_cycleで完全排除済み。generalAscentConst(1,k)=ascentConst(k)",
+    "数値検証: c=2..5、p=1..10で全てC_p*(2^c-3)=2^{cp}-3^pが成立。閉じた形の正当性を確認",
+    "全体で新規定義2個、新規定理9個、推定110-130行のLeanコード",
+    "nlinarithへの依存が技術的リスク。中間変数の明示的束縛で解消可能"
+  ],
+  "hypotheses": [
+    "nlinarithが2^{cp}*n*(2^c-3)+3^p=3^p*n*(2^c-3)+2^{cp}とn*(2^c-3)>=5と2^{cp}>3^pから矛盾を導出可能（中確信度）",
+    "形式化は1セッション（30-40分）で完了可能。主要困難点はgeneralAscentConst_mul_addのnlinarithステップ"
+  ],
+  "dead_ends": [
+    "Z(整数)上で形式化する方針は、自然数からの変換コストが大きく不採用。加法形式で自然数のまま処理する方が簡潔",
+    "c=1をgeneralAscentConst_mul_addに含める方針は、c>=2の仮定が必要なため不採用。c=1は既存定理に委ねる"
+  ],
+  "scripts_created": [
+    "scripts/no_constant_v2_cycle_analysis.py",
+    "scripts/no_constant_v2_key_lemma.py",
+    "scripts/no_constant_v2_cycle_lean_design.py",
+    "scripts/no_constant_v2_cycle_final_design.lean"
+  ],
+  "outcome": "中発見",
+  "next_directions": [
+    "Lean形式化の実装: Unsolved/Collatz/ConstV2Cycle.lean を新規作成し、設計に従って実装・コンパイル",
+    "nlinarithの通過テスト: generalAscentConst_mul_addとno_constant_v2_cycleの2箇所でnlinarithが通るか先行確認",
+    "一般乗法公式（v2が各ステップで異なる場合）への拡張: 探索179のconsecutiveAscents不要版との統合"
+  ],
+  "details": "## 数学的内容\n\nSyracuse反復で全ステップ v2(3*n_i+1) = c (定数) のサイクルを考える。\n\n### 一般乗法公式\nallV2Eq(c, n, k) のとき:\n  2^{ck} * T^k(n) = 3^k * n + G_k(c)\nここで G_k(c) は漸化式 G_0=0, G_{k+1}=3*G_k+2^{ck} で定義。\n\n### 閉じた形\nG_k(c) * (2^c - 3) + 3^k = 2^{ck}  (c >= 2)\nすなわち G_k(c) = (2^{ck} - 3^k) / (2^c - 3)\n\n### サイクル条件 T^p(n) = n の帰結\n乗法公式に代入: 2^{cp}*n = 3^p*n + G_p(c)\n閉じた形と組み合わせ: n*(2^c-3) = 1\n\n- c=1: 2^c-3=-1 → n=-1（非正数、no_all_ascent_cycleで排除済み）\n- c=2: 2^c-3=1 → n=1（自明不動点 syracuse(1)=1）\n- c>=3: 2^c-3>=5 → n=1/5以下（非整数、自然数サイクル不可）\n\n## Lean形式化構造\n\n| Section | 内容 | 行数 |\n|---------|------|------|\n| 1 | generalAscentConst定義 | 5 |\n| 2 | generalAscentConst_mul_add | 15 |\n| 3 | three_pow_add_mul補題 | 10 |\n| 4 | allV2Eq定義+シフト | 15 |\n| 5 | two_pow_mul_syracuse_of_v2_eq | 10 |\n| 6 | syracuse_iter_constv2_mul_formula | 25 |\n| 7 | no_constant_v2_cycle (c>=3) | 20 |\n| 8 | constant_v2_two_cycle_trivial (c=2) | 10 |\n| 9 | no_constant_v2_cycle_complete | 10 |\n| 合計 | | 120 |\n\n## 技術的ポイント\n\n1. 自然数の引き算回避: 全ての等式を加法形式で表現\n   - G_k*(2^c-3)+3^k=2^{ck} (引き算なし)\n   - 2^{cp}*n*(2^c-3)+3^p=3^p*n*(2^c-3)+2^{cp} (引き算なし)\n\n2. 帰納ステップの鍵: 3^k+2^c*G_k=G_{k+1}\n   これはgeneralAscentConst_mul_addから直接従う\n\n3. nlinarithの使用箇所: generalAscentConst_mul_add(帰納ステップ)とno_constant_v2_cycle(最終矛盾)\n   中間変数(n*(2^c-3), 2^{cp}vs3^p)をhaveで束縛してnlinarithに渡す\n\n4. 既存定理への依存: syracuse_odd, syracuse_pos, two_pow_v2_dvd, Nat.mul_div_cancel'"
+}

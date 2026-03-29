@@ -1,0 +1,35 @@
+{
+  "title": "周期軌道の二重制約: 全v_i=cサイクルの完全排除定理",
+  "approach": "C_p閉形式のadic評価を系統的に計算し、全v_i=cパターンで n=1/(2^c-3) という閉じた形を導出。整数条件 (2^c-3)|1 の完全分類により、非自明正奇数整数サイクルの非存在を示した。",
+  "findings": [
+    "v3(C_p)=0, v3(D)=0 が常に成立: 3-adic制約はサイクル排除に寄与しない",
+    "v2(2^J-3^p)=0 (J>=1): 分母は常に奇数",
+    "3-adic側ではSyracuseはZ_3の自己写像。制約の本質は2-adic側に集中",
+    "★正しい閉じた形: 全v_i=cサイクルで n = 1/(2^c-3) (pに依存しない)",
+    "整数条件: (2^c-3)|1 は 2^c-3 in {-1,1} のみ。c=1でn=-1(負), c=2でn=1(自明不動点)",
+    "c>=3: n=1/(2^c-3)は正だが非整数なので排除",
+    "c=2, n=1: v2(3*1+1)=v2(4)=2で整合。自明不動点 1->1",
+    "c=1は既存のno_all_ascent_cycleでカバー (別証明: 2^p<3^pによる矛盾)",
+    "初版スクリプトのsigma_j=c(p-j)は誤り。正しくはsigma_j=c(p-1-j)。数値計算は正しかった"
+  ],
+  "hypotheses": [
+    "全v_i=c排除のLean形式化: 等比級数の和の定理+整数性条件で約30行",
+    "混合パターン排除には個別のv2整合性チェックが必要だが、パターンごとのC_p/Dの一般的上界が使える可能性あり"
+  ],
+  "dead_ends": [
+    "3-adic条件は単独では弱い (Z_3上でSyracuseは自己写像なのでほぼ無制約)",
+    "等比級数のsigma_jで1-indexed/0-indexedの混乱に注意 (sigma_j=v_{j+1}+...+v_p)"
+  ],
+  "scripts_created": [
+    "scripts/dual_constraint_cycle_analysis.py",
+    "scripts/constant_v2_closed_form_verify.py"
+  ],
+  "outcome": "中発見",
+  "next_directions": [
+    "全v_i=cサイクル排除のLean形式化 (no_constant_v2_cycle): 等比級数sum公式の形式化が核心",
+    "2種類の混合パターン (v_i in {a,b}) のサイクル排除への拡張",
+    "v2パターンの組合せ論的制約と整数性条件の結合による一般的排除",
+    "C_p/D < 2 条件の系統的適用による大周期の排除拡張"
+  ],
+  "details": "## 核心的結果\n\n全 v_i = c パターンのSyracuseサイクルの閉じた形:\n  n = 1 / (2^c - 3)\n\nこれは周期 p に依存しないという注目すべき性質を持つ。\n\n### 証明\nsigma_j = c*(p-1-j) (= v_{j+1}+...+v_p) を代入:\n  C_p = sum_{j=0}^{p-1} 3^j * 2^{c(p-1-j)}\n      = sum_{k=0}^{p-1} 3^{p-1-k} * (2^c)^k\n      = (2^{cp} - 3^p) / (2^c - 3)  [等比級数]\n  D = 2^{cp} - 3^p\n  n = C_p / D = 1 / (2^c - 3)\n\n整数条件: (2^c - 3) | 1\n  2^c - 3 = -1: c=1, n=-1 (負、正整数でない)\n  2^c - 3 = 1:  c=2, n=1  (自明不動点)\n  c >= 3: 2^c - 3 >= 5, 非整数\n\n### 数学的意義\n1. pに依存しない閉じた形: 全v_i=cパターンのサイクル方程式が任意のpで同一の解を持つ\n2. 完全な一般化: no_all_ascent_cycle (c=1) を含み、全ての定数v2パターンをカバー\n3. c=1のケースの新しい理解: n=-1は2-adic固定点 ...111_2 に対応\n4. c=2のケースの整合性: n=1は自明不動点で、v2(4)=2で実際にv2整合\n\n### Lean形式化案\ndef constantAscentSum (c p : Nat) : Nat :=\n  -- sum_{j=0}^{p-1} 3^j * (2^c)^{p-1-j}\n\ntheorem constantAscentSum_eq (c p : Nat) (hc : c >= 3) :\n    constantAscentSum c p * (2^c - 3) = 2^(c*p) - 3^p\n\ntheorem no_constant_v2_cycle (n p c : Nat)\n    (hn : n >= 2) (hodd : n % 2 = 1) (hp : p >= 1) (hc : c >= 3)\n    (hcycle_eq : (2^(c*p) - 3^p) * n = constantAscentSum c p) : False\n-- 証明: n * (2^c - 3) = 1 を導出し、2^c - 3 >= 5 で矛盾\n\nc=1,2は既存定理でカバー済み。c>=3の新定理が核心。"
+}

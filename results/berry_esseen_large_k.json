@@ -1,0 +1,137 @@
+{
+  "results": [
+    {
+      "k": 1,
+      "n_samples": 50000,
+      "n_rejected": 0,
+      "ks_clt": 0.261109938917,
+      "ks_edgeworth": 0.302683709186,
+      "ks_pred_edgeworth": 0.325747955307,
+      "ks_times_sqrt_k": 0.261109938917,
+      "c_be_effective": 0.105504347682,
+      "ratio_actual_to_pred": 0.80157046165,
+      "improvement_edge_over_clt": 0.862649462105
+    },
+    {
+      "k": 2,
+      "n_samples": 50000,
+      "n_rejected": 0,
+      "ks_clt": 0.189082461288,
+      "ks_edgeworth": 0.178819480852,
+      "ks_pred_edgeworth": 0.192085849811,
+      "ks_times_sqrt_k": 0.267402981161,
+      "c_be_effective": 0.108047120736,
+      "ratio_actual_to_pred": 0.984364342687,
+      "improvement_edge_over_clt": 1.05739296629
+    },
+    {
+      "k": 3,
+      "n_samples": 50000,
+      "n_rejected": 0,
+      "ks_clt": 0.15895430086,
+      "ks_edgeworth": 0.111537761509,
+      "ks_pred_edgeworth": 0.143000605124,
+      "ks_times_sqrt_k": 0.275316925172,
+      "c_be_effective": 0.111244837008,
+      "ratio_actual_to_pred": 1.111563833752,
+      "improvement_edge_over_clt": 1.425116469166
+    },
+    {
+      "k": 5,
+      "n_samples": 50000,
+      "n_rejected": 0,
+      "ks_clt": 0.126085182992,
+      "ks_edgeworth": 0.074248500584,
+      "ks_pred_edgeworth": 0.100018424935,
+      "ks_times_sqrt_k": 0.281935040126,
+      "c_be_effective": 0.113918959273,
+      "ratio_actual_to_pred": 1.260619561592,
+      "improvement_edge_over_clt": 1.698151235374
+    },
+    {
+      "k": 10,
+      "n_samples": 25000,
+      "n_rejected": 1,
+      "ks_clt": 0.087828363134,
+      "ks_edgeworth": 0.04743644378,
+      "ks_pred_edgeworth": 0.063073158846,
+      "ks_times_sqrt_k": 0.277737670668,
+      "c_be_effective": 0.112222965897,
+      "ratio_actual_to_pred": 1.392483977991,
+      "improvement_edge_over_clt": 1.851495519804
+    },
+    {
+      "k": 20,
+      "n_samples": 20000,
+      "n_rejected": 13,
+      "ks_clt": 0.064600000005,
+      "ks_edgeworth": 0.034089109563,
+      "ks_pred_edgeworth": 0.040774184496,
+      "ks_times_sqrt_k": 0.288899982717,
+      "c_be_effective": 0.116733221065,
+      "ratio_actual_to_pred": 1.584335794899,
+      "improvement_edge_over_clt": 1.895033365027
+    },
+    {
+      "k": 30,
+      "n_samples": 20000,
+      "n_rejected": 66,
+      "ks_clt": 0.048939480646,
+      "ks_edgeworth": 0.030851373398,
+      "ks_pred_edgeworth": 0.031908298782,
+      "ks_times_sqrt_k": 0.268052575022,
+      "c_be_effective": 0.108309596293,
+      "ratio_actual_to_pred": 1.533753992326,
+      "improvement_edge_over_clt": 1.5862982829
+    },
+    {
+      "k": 50,
+      "n_samples": 20000,
+      "n_rejected": 343,
+      "ks_clt": 0.053572162736,
+      "ks_edgeworth": 0.033826580284,
+      "ks_pred_edgeworth": 0.023641125208,
+      "ks_times_sqrt_k": 0.378812395533,
+      "c_be_effective": 0.153063322102,
+      "ratio_actual_to_pred": 2.266058077327,
+      "improvement_edge_over_clt": 1.583729785456
+    },
+    {
+      "k": 75,
+      "n_samples": 20000,
+      "n_rejected": 1364,
+      "ks_clt": 0.077050048961,
+      "ks_edgeworth": 0.080379760107,
+      "ks_pred_edgeworth": 0.018749424522,
+      "ks_times_sqrt_k": 0.667272997631,
+      "c_be_effective": 0.269619006587,
+      "ratio_actual_to_pred": 4.109462072777,
+      "improvement_edge_over_clt": 0.958575254004
+    },
+    {
+      "k": 100,
+      "n_samples": 20000,
+      "n_rejected": 1980,
+      "ks_clt": 0.118803007789,
+      "ks_edgeworth": 0.119022011718,
+      "ks_pred_edgeworth": 0.015951745183,
+      "ks_times_sqrt_k": 1.188030077892,
+      "c_be_effective": 0.480036642475,
+      "ratio_actual_to_pred": 7.447649547245,
+      "improvement_edge_over_clt": 0.998159971206
+    }
+  ],
+  "closed_form": {
+    "c1": 0.141047395887,
+    "c1_exact": "1/(4*sqrt(pi))",
+    "c2": 0.18470055942,
+    "gamma3": -2.12132034356,
+    "gamma4": 6.5,
+    "rho_over_sigma3": 2.474873734153
+  },
+  "power_law": {
+    "alpha": -0.176001907533,
+    "A": 0.144918840378
+  },
+  "elapsed_seconds": 1.707258701324
+}

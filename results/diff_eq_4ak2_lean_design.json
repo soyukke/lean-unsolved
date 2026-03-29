@@ -1,0 +1,90 @@
+{
+  "title": "差分方程式 a(k+2)=4a(k)+2 のLean形式化設計",
+  "approach": "mod 2^k像サイズの閉公式(k偶: (7*2^{k-3}-2)/3, k奇: 3*2^{k-3})から差分方程式を代数的に導出し、k=3-21の直接計算で完全検証。Lean4形式化は除算回避のため乗法形式b(j)=14*4^jを導入し、核心補題div3_stepを含む約80行の設計を完成させた。",
+  "findings": [
+    "閉公式からの差分方程式の代数的導出が完了: k偶 a(k+2)=4a(k)+2 は (7*2^{k-1}-2)/3 = 4*(7*2^{k-3}-2)/3+2 の簡約で証明可能",
+    "k奇 a(k+2)=4a(k) は 3*2^{k-1}=4*3*2^{k-3} の恒等式で自明",
+    "除算回避戦略: 乗法形式 b(j)=3*a(2j+4)+2=14*4^j を導入。b(j+1)=4*b(j) は ring で自明",
+    "核心補題 div3_step: 3|(a-2) かつ a>=2 のとき (4a-2)/3=4*((a-2)/3)+2。obtain+subst+Nat.mul_div_cancel_left で証明可能",
+    "可除性 3|(14*4^j-2) の帰納法証明: base 14-2=12, step 14*4^{n+1}-2=4*(14*4^n-2)+6=3*(4d+2)",
+    "偶奇分離インデックス j により、k=2j+3(奇数)とk=2j+4(偶数)の2系列を独立に扱う設計が最もクリーン",
+    "k=3-21の全19値で閉公式と直接計算(Syracuse写像の像集合)が完全一致",
+    "推定行数79行、sorry 1個(統合定理のみ、省略可能)。核心定理は全てsorryなし"
+  ],
+  "hypotheses": [
+    "div3_step 補題は Lean4 の omega タクティクでは直接解けず、Nat.mul_div_cancel_left を明示的に使う必要がある",
+    "evenImageSizeAux_sub_two_dvd3 の帰納法ステップで ring が 14*4^(n+1) = 4*(14*4^n) を解ける(あるいは omega で代用)",
+    "統合定義 collatzImageSize は偶奇場合分けのインデックス計算が煩雑だが、実用上は偶奇分離版で十分"
+  ],
+  "dead_ends": [
+    "直接 (7*2^{k-3}-2)/3 を Nat で定義する方法: Lean の Nat.div が omega と相性が悪く、全ての定理で除算の扱いが必要になる",
+    "Int に移して証明する方法: Nat への戻りが煩雑で、乗法形式の方がシンプル",
+    "統一的な漸化式 imageSize(k+2) = 4*imageSize(k) + (if k%2=0 then 2 else 0) は Lean のパターンマッチと相性が悪い"
+  ],
+  "scripts_created": [
+    "scripts/diff_eq_4ak2_lean_design.py",
+    "scripts/diff_eq_4ak2_lean_proof_detail.py"
+  ],
+  "outcome": "中発見",
+  "next_directions": [
+    "Unsolved/Collatz/ImageSize.lean の実装: 設計に基づいて約80行のLeanコードを書く",
+    "div3_step 補題の Lean ビルド検証: Nat.mul_div_cancel_left の適用が実際に通るか確認",
+    "Syracuse 像サイズとの接続: Mod.lean の v2 分類を使って oddImageSize j = |Im(T mod 2^{2j+3})| を証明",
+    "占有率 rho(k) = 7/12 - 1/(3*2^{k-2}) の形式化: evenImageSize / 2^{k-1} の漸近展開"
+  ],
+  "details": {
+    "mathematical_derivation": {
+      "even_case": {
+        "closed_form": "a(k) = (7*2^{k-3} - 2) / 3  (k even, k >= 4)",
+        "recurrence": "a(k+2) = 4*a(k) + 2",
+        "proof": "4*(7*2^{k-3}-2)/3 + 2 = (28*2^{k-3}-8+6)/3 = (7*2^{k-1}-2)/3 = a(k+2)"
+      },
+      "odd_case": {
+        "closed_form": "a(k) = 3*2^{k-3}  (k odd, k >= 3)",
+        "recurrence": "a(k+2) = 4*a(k)",
+        "proof": "4*3*2^{k-3} = 3*2^{k-1} = a(k+2)"
+      }
+    },
+    "lean_design": {
+      "file": "Unsolved/Collatz/ImageSize.lean",
+      "dependencies": ["Mathlib"],
+      "definitions": {
+        "oddImageSize": "j : Nat => 3 * 4^j",
+        "evenImageSizeAux": "j : Nat => 14 * 4^j",
+        "evenImageSize": "j : Nat => (14*4^j - 2) / 3"
+      },
+      "key_theorems": {
+        "oddImageSize_step": "oddImageSize(j+1) = 4 * oddImageSize(j)  [ring]",
+        "evenImageSizeAux_step": "evenImageSizeAux(j+1) = 4 * evenImageSizeAux(j)  [ring]",
+        "evenImageSizeAux_sub_two_dvd3": "3 | (14*4^j - 2)  [induction + omega]",
+        "div3_step": "(4a-2)/3 = 4*((a-2)/3)+2  when 3|(a-2), a>=2  [obtain + Nat.mul_div_cancel_left]",
+        "evenImageSize_step": "evenImageSize(j+1) = 4*evenImageSize(j)+2  [composition]",
+        "evenImageSize_mul3_add2": "3*evenImageSize(j)+2 = evenImageSizeAux(j)  [obtain + cancel]"
+      },
+      "estimated_lines": 79,
+      "sorry_count": "1 (optional, 統合定理のみ)",
+      "difficulty_assessment": {
+        "easy": ["oddImageSize_step", "evenImageSizeAux_step", "evenImageSizeAux_base", "evenImageSize_base"],
+        "medium": ["evenImageSizeAux_sub_two_dvd3", "div3_step", "evenImageSize_step", "evenImageSize_mul3_add2"],
+        "hard": []
+      }
+    },
+    "divisibility_proof": {
+      "statement": "3 | (14*4^j - 2) for all j >= 0",
+      "method": "Induction on j",
+      "base": "j=0: 14-2=12=3*4",
+      "step": "14*4^{n+1}-2 = 4*(14*4^n)-2 = 4*(3d+2)-2 = 12d+6 = 3*(4d+2)",
+      "mod3_alternative": "14*4^j = 2*7*4^j ≡ 2*1*1 = 2 (mod 3), so 14*4^j-2 ≡ 0 (mod 3)"
+    },
+    "numerical_verification": {
+      "range": "k=3..21",
+      "all_match": true,
+      "sample_values": {
+        "k=3_odd": {"computed": 3, "formula": 3},
+        "k=4_even": {"computed": 4, "formula": 4},
+        "k=10_even": {"computed": 298, "formula": 298},
+        "k=21_odd": {"computed": 786432, "formula": 786432}
+      }
+    }
+  }
+}

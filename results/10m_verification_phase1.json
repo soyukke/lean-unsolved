@@ -1,0 +1,131 @@
+{
+  "title": "10^7 Verification Phase 1 Report",
+  "description": "最初の10チャンク (n = 1,000,001 ~ 1,500,000) の分析結果",
+  "total_chunks_generated": 10,
+  "total_chunks_needed": 180,
+  "chunk_size": 50000,
+  "steps": 750,
+  "build_test_results": {
+    "chunk001": {
+      "status": "SUCCESS",
+      "build_time_sec": 8.6
+    },
+    "chunk002": {
+      "status": "SUCCESS",
+      "build_time_sec": 8.7
+    }
+  },
+  "overall_max_stopping_time": 527,
+  "overall_max_stopping_time_n": 1117065,
+  "steps_margin": 223,
+  "chunk_analysis": [
+    {
+      "chunk_id": 1,
+      "range": [
+        1000001,
+        1050000
+      ],
+      "max_stopping_time": 488,
+      "max_stopping_time_n": 1003263,
+      "python_analysis_time_sec": 0.32
+    },
+    {
+      "chunk_id": 2,
+      "range": [
+        1050001,
+        1100000
+      ],
+      "max_stopping_time": 501,
+      "max_stopping_time_n": 1056935,
+      "python_analysis_time_sec": 0.32
+    },
+    {
+      "chunk_id": 3,
+      "range": [
+        1100001,
+        1150000
+      ],
+      "max_stopping_time": 527,
+      "max_stopping_time_n": 1117065,
+      "python_analysis_time_sec": 0.32
+    },
+    {
+      "chunk_id": 4,
+      "range": [
+        1150001,
+        1200000
+      ],
+      "max_stopping_time": 465,
+      "max_stopping_time_n": 1151855,
+      "python_analysis_time_sec": 0.32
+    },
+    {
+      "chunk_id": 5,
+      "range": [
+        1200001,
+        1250000
+      ],
+      "max_stopping_time": 447,
+      "max_stopping_time_n": 1208233,
+      "python_analysis_time_sec": 0.32
+    },
+    {
+      "chunk_id": 6,
+      "range": [
+        1250001,
+        1300000
+      ],
+      "max_stopping_time": 522,
+      "max_stopping_time_n": 1256699,
+      "python_analysis_time_sec": 0.32
+    },
+    {
+      "chunk_id": 7,
+      "range": [
+        1300001,
+        1350000
+      ],
+      "max_stopping_time": 504,
+      "max_stopping_time_n": 1345383,
+      "python_analysis_time_sec": 0.32
+    },
+    {
+      "chunk_id": 8,
+      "range": [
+        1350001,
+        1400000
+      ],
+      "max_stopping_time": 473,
+      "max_stopping_time_n": 1365161,
+      "python_analysis_time_sec": 0.32
+    },
+    {
+      "chunk_id": 9,
+      "range": [
+        1400001,
+        1450000
+      ],
+      "max_stopping_time": 517,
+      "max_stopping_time_n": 1413787,
+      "python_analysis_time_sec": 0.32
+    },
+    {
+      "chunk_id": 10,
+      "range": [
+        1450001,
+        1500000
+      ],
+      "max_stopping_time": 455,
+      "max_stopping_time_n": 1451551,
+      "python_analysis_time_sec": 0.33
+    }
+  ],
+  "build_time_estimates": {
+    "per_chunk_sec": 8.65,
+    "10_chunks_sec": 86.5,
+    "180_chunks_sec": 1557.0,
+    "180_chunks_min": 25.9,
+    "180_chunks_hours": 0.43
+  },
+  "conclusion": "Phase1成功: 10チャンク生成+2チャンクビルドテスト完了。native_decide による 50K 範囲の検証は約 9s/チャンクで安定。steps=750 は十分な余裕あり。全180チャンクの逐次ビルドは約26分の見込み。"
+}

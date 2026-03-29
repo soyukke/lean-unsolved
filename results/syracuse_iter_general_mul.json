@@ -1,0 +1,34 @@
+{
+  "title": "探索179: Syracuse反復の一般乗法公式の形式化設計",
+  "approach": "2^{S_k}*T^k(n)=3^k*n+C_k の数値検証を30+ケースで行い、帰納ステップの6行calcチェーンを代数的に検証。set使用時のLean型問題を分析し、set不使用版を設計。",
+  "findings": [
+    "主公式 2^{totalV2 n k} * syracuseIter k n = 3^k * n + generalConst n k は全テストケースでPASS",
+    "帰納ステップの核心は syracuse_mul_pow_v2 の左掛け版 (mul_comm) 1回のみ",
+    "n固定のk帰納法で generalizing n が不要（既存版と異なる設計上の簡略化）",
+    "set を使うと pow_v2_mul_syracuse の rw でマッチ問題が起きうる。set 不使用の直接 calc チェーンが安全",
+    "consecutiveAscents版の特殊ケース検証: n=2^{k+1}-1 のとき S_k=k, C_k=3^k-2^k が成立（k回目まで）",
+    "C_k(n) + 2^{S_k(n)} は一般には 3^k*(n+1) に等しくない（consecutiveAscents版との差異）",
+    "n=1 (不動点) でも公式は正しく動作: S_k=2k, C_k=(4^k-1)/3 に相当"
+  ],
+  "hypotheses": [
+    "totalV2_shift 補題: totalV2 n (k+1) = v2(3n+1) + totalV2 (syracuse n) k が成立するが、主定理には不要",
+    "consecutiveAscents n k → totalV2 n k = k の証明は v2_three_mul_add_one_of_mod4_eq3 + syracuseIter_mod4_eq3_of_ascents で帰納的に構成可能"
+  ],
+  "dead_ends": [
+    "C_k(n) の n に依らない閉形式は存在しない（v2 値が軌道依存のため）",
+    "generalizing n を使う帰納法設計: totalV2/generalConst が n に依存するため、IH が ∀m... になると totalV2 m k と totalV2 n k の関係が複雑化し不適"
+  ],
+  "scripts_created": [
+    "scripts/syracuse_iter_general_mul.py",
+    "scripts/syracuse_iter_general_mul_final.py",
+    "scripts/syracuse_iter_general_mul_edge_cases.py"
+  ],
+  "outcome": "中発見",
+  "next_directions": [
+    "Lean 4 実装: 設計通りの約40行コードを Structure.lean に追記して lake build テスト",
+    "系の形式化: consecutiveAscents n k → totalV2 n k = k → syracuse_iter_mul_formula の再導出",
+    "応用: generalConst n k の成長率分析（3^k * n に対する C_k(n) の比率）",
+    "応用: totalV2 n k / k の平均値 = log_2(3/2) ≈ 0.585 の統計的検証と形式化"
+  ],
+  "details": "=== 完全な Lean 4 証明設計 ===\n\n--- 新定義 ---\n\ndef totalV2 (n : \\N) : \\N -> \\N\n  | 0 => 0\n  | k + 1 => totalV2 n k + v2 (3 * syracuseIter k n + 1)\n\ndef generalConst (n : \\N) : \\N -> \\N\n  | 0 => 0\n  | k + 1 => 3 * generalConst n k + 2 ^ totalV2 n k\n\n--- 補助定理 ---\n\ntheorem pow_v2_mul_syracuse (n : \\N) :\n    2 ^ v2 (3 * n + 1) * syracuse n = 3 * n + 1 := by\n  rw [mul_comm]; exact syracuse_mul_pow_v2 n\n\n--- 主定理 ---\n\ntheorem syracuse_iter_general_mul (n k : \\N) (hn : n >= 1) (hodd : n % 2 = 1) :\n    2 ^ totalV2 n k * syracuseIter k n = 3 ^ k * n + generalConst n k := by\n  induction k with\n  | zero => simp [totalV2, generalConst, syracuseIter]\n  | succ k ih =>\n    simp only [syracuseIter_succ, totalV2_succ, generalConst_succ]\n    calc 2 ^ (totalV2 n k + v2 (3 * syracuseIter k n + 1)) * syracuse (syracuseIter k n)\n        = 2 ^ totalV2 n k * 2 ^ v2 (3 * syracuseIter k n + 1) * syracuse (syracuseIter k n)\n            := by rw [pow_add]\n      _ = 2 ^ totalV2 n k * (2 ^ v2 (3 * syracuseIter k n + 1) * syracuse (syracuseIter k n))\n            := by rw [mul_assoc]\n      _ = 2 ^ totalV2 n k * (3 * syracuseIter k n + 1)\n            := by rw [pow_v2_mul_syracuse]\n      _ = 3 * (2 ^ totalV2 n k * syracuseIter k n) + 2 ^ totalV2 n k\n            := by ring\n      _ = 3 * (3 ^ k * n + generalConst n k) + 2 ^ totalV2 n k\n            := by rw [ih]\n      _ = 3 ^ (k + 1) * n + (3 * generalConst n k + 2 ^ totalV2 n k)\n            := by ring\n\n=== 設計の要点 ===\n\n1. 依存定理: syracuse_mul_pow_v2 のみ（+ mul_comm で左掛け版を導出）\n2. 帰納法: k に関する帰納法、n 固定（generalizing n 不要）\n3. 証明構造: 6行の calc チェーン（pow_add, mul_assoc, 核心rw, ring, IH, ring）\n4. set 不使用（型マッチの安全性のため）\n5. 全体約40行、sorry なし、推定ビルド成功率 > 90%\n6. hn/hodd の仮定は主定理では使わないが、数学的意味の明示のため残す"
+}

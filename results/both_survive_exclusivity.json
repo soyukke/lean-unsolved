@@ -1,0 +1,89 @@
+{
+  "title": "both_survive=0のLean形式化: mod 2^{k+1}リフトの排他性",
+  "approach": "非排除残基rに対しrとr+2^kの同時生存を検証。停止時間ベースの定義ではboth>0だが、連続上昇パス(r=2^k-1)に限定すると差分公式 Delta_j = 3^j * 2^{k-j} が成立し、j=k-1でmod4パリティ排他性が証明可能。Lean形式化のための6定理チェーンを設計した。",
+  "findings": [
+    "T(r+2^k) - T(r) = 3*2^{k-1} (厳密差分、v2=1のとき)",
+    "3*2^{k-1} mod 2^k = 2^{k-1} (mod簡約定理)",
+    "T(r+2^k) ≡ T(r) + 2^{k-1} (mod 2^k)",
+    "連続上昇パスでは Delta_j = 3^j * 2^{k-j} (帰納法で証明可能)",
+    "j=k-1 で Delta_{k-1} = 3^{k-1} * 2, v2=1, mod4差は2",
+    "2つの奇数の差が4m+2なら mod4パリティが異なる (omega即解)",
+    "k-1回連続上昇は r ≡ 2^k-1 (mod 2^k) に限られる (Hensel attrition)",
+    "停止時間ベースの非排除定義ではboth_survive > 0 (排他性は不成立)",
+    "反復mod追跡(kステップ)ではNE=0 (全残基が排除される → 命題は空真)",
+    "排他性は連続上昇パス(末尾全1ビットパターン)に限定して成立する"
+  ],
+  "hypotheses": [
+    "連続上昇パスの排他性は一般の非排除残基にも拡張可能（差分メカニズムの一般化による）",
+    "停止時間ベースの非排除でのboth>0は、排除メカニズムが複数ステップにまたがるため"
+  ],
+  "dead_ends": [
+    "停止時間ベースの非排除定義: both > 0 が普遍的に成立し、排他性命題は成り立たない",
+    "v2(3r+1)=1 だけの非排除定義: 常にboth = 全数（r≡3 mod 4 は保存される）",
+    "反復mod追跡(kステップ): NE=0で命題が空真",
+    "T^j のmod差分をmod 2^kで計算するとmod演算で0に丸められ、情報が失われる"
+  ],
+  "scripts_created": [
+    "scripts/both_survive_analysis.py",
+    "scripts/both_survive_v2.py",
+    "scripts/both_survive_v3_precise.py",
+    "scripts/both_survive_v4_reinterpret.py",
+    "scripts/both_survive_v5_theorem.py",
+    "scripts/both_survive_v6_general.py",
+    "scripts/both_survive_lean_sketch.py"
+  ],
+  "outcome": "中発見",
+  "next_directions": [
+    "定理A (T_lift_diff) と 定理E (parity_split) はomegaで即形式化可能。まずこれらを実装",
+    "定理D (T_iter_diff) の帰納法による形式化。consecutiveAscentsとsyracuse_mod4_eq3を活用",
+    "定理B (three_two_pow_mod) の形式化。Nat.add_mod系の補題とpow_lt系の補題が必要",
+    "停止時間ベースの非排除でboth>0の理由の理論的解明",
+    "一般の非排除残基への排他性拡張（差分が3^j*2^{k-j}でない場合の解析）"
+  ],
+  "details": {
+    "core_theorem": {
+      "name": "反復差分公式",
+      "statement": "r ≡ 2^k - 1 (mod 2^k) のとき、T^j(r+2^k) - T^j(r) = 3^j * 2^{k-j} (j <= k-1)",
+      "proof_method": "帰納法。基底: Δ_0 = 2^k。帰納ステップ: Δ_{j+1} = (3*Δ_j)/2 = 3^{j+1} * 2^{k-j-1}",
+      "prerequisite": "全ステップで v2(3*T^i(r)+1) = 1 (i < j)、つまり T^i(r) ≡ 3 (mod 4)"
+    },
+    "exclusivity_mechanism": {
+      "step": "j = k-1",
+      "delta": "3^{k-1} * 2",
+      "v2_delta": 1,
+      "delta_mod4": 2,
+      "consequence": "T^{k-1}(r) と T^{k-1}(r+2^k) は奇数で差が 4m+2。よって一方が mod4≡1(下降)、他方がmod4≡3(上昇)"
+    },
+    "lean_formalization_plan": {
+      "theorem_chain": ["T_lift_diff", "three_two_pow_mod", "T_lift_mod2k", "T_iter_diff", "parity_split", "hensel_lift_exclusive"],
+      "difficulty": {
+        "T_lift_diff": "easy (omega)",
+        "three_two_pow_mod": "medium (pow arithmetic)",
+        "T_lift_mod2k": "easy (A+B combination)",
+        "T_iter_diff": "hard (induction + Syracuse)",
+        "parity_split": "easy (omega)",
+        "hensel_lift_exclusive": "hard (full integration)"
+      },
+      "existing_tools": [
+        "v2_three_mul_add_one_of_mod4_eq3",
+        "syracuse_mod4_eq3",
+        "consecutiveAscents (defined in Hensel.lean)",
+        "hensel_attrition_k1..k4",
+        "v2_ge_iff_dvd"
+      ]
+    },
+    "non_exclusivity_cases": {
+      "stopping_time_based": {
+        "description": "停止時間ベースの非排除。代表元で停止ステップ数が異なる残基",
+        "both_survive_at_k5": 4,
+        "reason": "差分メカニズムは連続上昇パスにのみ適用。一般のパスでは途中でv2>=2の分岐が入り、差分構造が崩れる"
+      }
+    },
+    "numerical_verification": {
+      "T_lift_diff": "k=1..9, r=3,7,11,15,23 全てPASS",
+      "three_two_pow_mod": "k=1..19 全てPASS",
+      "parity_split": "a,b odd, (b-a)%4=2, a,b in 1..99 全てPASS",
+      "continuous_ascent_residues": "k=3..11 で唯一 r=2^k-1 のみ (Hensel attrition と一致)"
+    }
+  }
+}

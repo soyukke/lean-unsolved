@@ -1,0 +1,122 @@
+{
+  "title": "2-adic -> 3-adic transducer: 有限状態オートマトン表現の完全構成",
+  "approach": "v2列からT^k(n) mod 3^Kを計算するMealy machine族 {M_K} を構成。遷移関数 delta(R,j)=(3R+1)*2^{-j} mod 3^K のアフィン写像構造を解明。profinite limit, quotient tower, 遷移半群のlevel分解を検証。",
+  "findings": [
+    "遷移関数の完全な代数的記述: delta_K(R, j) = (3R+1)*2^{-j} mod 3^K はアフィン写像 f_j(R) = 3*2^{-j}*R + 2^{-j}",
+    "k回合成の傾き 3^k*2^{-S_k} が mod 3^k で消滅するため、合成は定数写像。k-step独立性の代数的証明",
+    "Profinite consistency完全検証: delta_{K+1}(R,j) mod 3^K = delta_K(R mod 3^K, j) (K=1..4)",
+    "Quotient tower構造: M_Kの遷移はR mod 3^{K-1}のみに依存。商自動機械はM_{K-1}と完全一致",
+    "到達可能状態 = {0} ∪ (Z/3^KZ)* = phi(3^K)+1。3の倍数は初期状態0のみ到達可能",
+    "遷移半群サイズ: K=1:2, K=2:12, K=3:72, K=4:540。v3(slope)によるlevel分解を発見。正規化列 |S|/phi = 1,2,4,10",
+    "定常v2列の3-adic極限: j=const => 1/(2^j-3) ∈ Z_3。j=1で-1, j=2で1",
+    "周期v2列の3-adic極限の閉形式: (a,b)周期 => (3+2^a)/(2^{a+b}-9) ∈ Z_3",
+    "K>=5でcoverage gap: v2列の実現可能性制約により全coprime残基が出現しない"
+  ],
+  "hypotheses": [
+    "遷移半群サイズの正規化列 1,2,4,10 のlevel分解: L(K,2)=(K-1)! の仮説（K=2,3,4で検証済み）",
+    "coverage gapはv2列のMarkov的制約から厳密に特徴づけられる",
+    "profinite limit M_inf は Z_2 上の連続力学系 → Z_3 への連続写像を定義する"
+  ],
+  "dead_ends": [
+    "streaming transducer（入力ごとに1桁出力）は有限状態では不可能。必要状態数が桁とともに増大",
+    "3-adic桁のcoherence不成立: T^k(n) mod 3^{k-1} ≠ T^{k-1}(n) mod 3^{k-1}",
+    "K=5の半群計算は状態空間爆発のため直接計算不可（243^243規模の関数空間）"
+  ],
+  "scripts_created": [
+    "scripts/exploration_2adic_3adic_transducer.py",
+    "scripts/exploration_2adic_3adic_transducer_v2.py",
+    "scripts/exploration_2adic_3adic_transducer_v3_fast.py"
+  ],
+  "outcome": "中発見",
+  "next_directions": [
+    "遷移半群サイズ列 2, 12, 72, 540 の閉形式探索。L(K,m)の一般公式（特にm=3以上）",
+    "Lean形式化: profinite consistency定理",
+    "Lean形式化: affine composition slope vanishing定理",
+    "v2列の実現可能性制約（Markov連鎖モデル）と coverage gap の関係解析",
+    "3-adic極限の連続写像としての性質（Z_2 -> Z_3の連続性、像の測度）"
+  ],
+  "transducer_specification": {
+    "family": "M_K for K = 1, 2, 3, ...",
+    "state_space": "Q_K = (Z/3^K Z)* ∪ {0}, |Q_K| = 2*3^{K-1} + 1",
+    "input_alphabet": "Z_{>0}, effective mod 2*3^{K-1} (= ord_{3^K}(2))",
+    "initial_state": 0,
+    "transition": "delta_K(R, j) = (3R + 1) * 2^{-j} mod 3^K",
+    "output": "lambda_K(R) = base-3 digits of R (K digits)",
+    "properties": [
+      "Affine: f_j(R) = 3*2^{-j}*R + 2^{-j}",
+      "Profinite consistent: compatible under reduction mod 3^{K-1}",
+      "k >= K compositions are constant (independent of initial state)",
+      "All reachable states coprime to 3 (except initial 0)",
+      "Quotient M_K -> M_{K-1} is exact (transition factors through)"
+    ]
+  },
+  "semigroup_analysis": {
+    "sizes": {
+      "1": 2,
+      "2": 12,
+      "3": 72,
+      "4": 540
+    },
+    "ratios": {
+      "2/1": 6.0,
+      "3/2": 6.0,
+      "4/3": 7.5
+    },
+    "normalized_by_phi": {
+      "1": 1,
+      "2": 2,
+      "3": 4,
+      "4": 10
+    },
+    "level_decomposition": {
+      "description": "Functions classified by v3(slope). Level K contains constant maps.",
+      "K1": {"level1": 2},
+      "K2": {"level1": 6, "level2": 6},
+      "K3": {"level1": 18, "level2": 36, "level3": 18},
+      "K4": {"level1": 54, "level2": 324, "level3": 108, "level4": 54},
+      "normalized": {
+        "K1": [1],
+        "K2": [1, 1],
+        "K3": [1, 2, 1],
+        "K4": [1, 6, 2, 1]
+      },
+      "L_K_2_hypothesis": "L(K,2) = (K-1)! verified for K=2,3,4"
+    },
+    "constant_maps": {
+      "1": 2,
+      "2": 6,
+      "3": 18,
+      "4": 54
+    }
+  },
+  "3adic_limits": {
+    "constant_j": "1/(2^j - 3) in Z_3",
+    "j=1": "-1 = ...222 in Z_3",
+    "j=2": "1 = ...001 in Z_3",
+    "period_2": "(3+2^a)/(2^{a+b}-9) in Z_3"
+  },
+  "explicit_tables": {
+    "M1_mod3": {
+      "description": "State-independent: delta(R,j) = 2^{-j} mod 3",
+      "rule": "j odd -> 2, j even -> 1"
+    },
+    "M2_mod9": {
+      "description": "2 effective states (d_1 in {1,2}), input mod 6",
+      "transitions": {
+        "(1,1)": "(2,d2=0)",
+        "(1,2)": "(1,d2=0)",
+        "(1,3)": "(2,d2=1)",
+        "(1,4)": "(1,d2=2)",
+        "(1,5)": "(2,d2=2)",
+        "(1,6)": "(1,d2=1)",
+        "(2,1)": "(2,d2=2)",
+        "(2,2)": "(1,d2=1)",
+        "(2,3)": "(2,d2=0)",
+        "(2,4)": "(1,d2=0)",
+        "(2,5)": "(2,d2=1)",
+        "(2,6)": "(1,d2=2)"
+      }
+    }
+  },
+  "details": "See transducer_specification and semigroup_analysis for full details."
+}

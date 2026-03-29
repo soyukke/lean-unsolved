@@ -1,0 +1,31 @@
+{
+  "title": "10^7検証全180チャンク生成+高番号ビルドテスト",
+  "approach": "generate_10m_verification.pyで全180チャンク(Chunk001-Chunk180)とAll.lean統合ファイルを自動生成。高番号チャンク(Chunk170-180)のビルドテストで9,450,001-10,000,000範囲の検証が正常に動作することを確認。",
+  "findings": [
+    "全180チャンクファイル+All.lean+ビルドスクリプトの計182ファイルを正常生成",
+    "180チャンクが[1,000,001..10,000,000]を隙間なくカバー(総数9,000,000)",
+    "Chunk170-180の全11チャンクがビルド成功(エラーなし)",
+    "Chunk050/100/170の計測でビルド時間は9.5-9.7秒/チャンク(範囲によらず一定)",
+    "All.leanは18バッチ(各10チャンク)のサブ定理+最終定理collatzReaches_le_10000000の構造",
+    "steps=750は最大stopping time 685に対して十分な余裕あり"
+  ],
+  "hypotheses": [
+    "全180チャンクが同様に約9.5秒でビルド可能(低番号/中番号/高番号で実測済み)",
+    "全チャンク順次ビルド推定時間: 180 * 9.5s = 1,710s = 約28.5分",
+    "All.leanのビルドは全チャンクビルド完了後にomega tactic主体で高速に完了するはず"
+  ],
+  "dead_ends": [],
+  "scripts_created": [
+    "scripts/generate_10m_verification.py (既存・使用)",
+    "scripts/verify_chunk_coverage.py (新規・カバレッジ検証)",
+    "scripts/build_10m_verification.sh (自動生成・全チャンクビルド用)"
+  ],
+  "outcome": "中発見",
+  "next_directions": [
+    "bash scripts/build_10m_verification.sh で全180チャンクの完全ビルド実行(推定28分)",
+    "全チャンクビルド後、lake env lean Unsolved/Collatz/Verification10M/All.lean で統合ビルド",
+    "collatzReaches_le_10000000 定理の完成を確認",
+    "並列ビルド対応(xargs -P4等)で所要時間を8分程度に短縮可能"
+  ],
+  "details": "## 生成結果\n\n### ファイル構成\n- Unsolved/Collatz/Verification10M/Chunk001.lean ~ Chunk180.lean (180ファイル)\n- Unsolved/Collatz/Verification10M/All.lean (843行、統合定理)\n- scripts/build_10m_verification.sh (ビルドスクリプト)\n\n### チャンク構造\n各チャンクは同一パターン:\n```lean\nimport Unsolved.Collatz.StoppingTime.Verification\nset_option maxHeartbeats 0 in\nset_option maxRecDepth 2000 in\nset_option linter.style.nativeDecide false in\ntheorem collatzAllReach_{lo}_{hi} :\n    collatzAllReachBounded 750 {lo} {hi} = true := by\n  native_decide\n```\n\n### All.lean構造\n- 180チャンクのimport\n- 18バッチサブ定理(collatzReaches_{lo}_{hi}): 各バッチ10チャンクをby_casesで統合\n- 最終定理: collatzReaches_le_10000000がcollatzReaches_le_1000000(基盤)+18バッチを接続\n- ラッパー定理: collatzConjectureR_verified_le_10000000\n\n### ビルドテスト結果\n| チャンク | 範囲 | 結果 | 時間 |\n|---------|------|------|------|\n| Chunk050 | 3,450,001-3,500,000 | OK | 9.67s |\n| Chunk100 | 5,950,001-6,000,000 | OK | 9.66s |\n| Chunk170 | 9,450,001-9,500,000 | OK | 9.51s |\n| Chunk171 | 9,500,001-9,550,000 | OK | - |\n| Chunk172 | 9,550,001-9,600,000 | OK | - |\n| Chunk173 | 9,600,001-9,650,000 | OK | - |\n| Chunk174 | 9,650,001-9,700,000 | OK | - |\n| Chunk175 | 9,700,001-9,750,000 | OK | - |\n| Chunk176 | 9,750,001-9,800,000 | OK | - |\n| Chunk177 | 9,800,001-9,850,000 | OK | - |\n| Chunk178 | 9,850,001-9,900,000 | OK | - |\n| Chunk179 | 9,900,001-9,950,000 | OK | - |\n| Chunk180 | 9,950,001-10,000,000 | OK | - |\n\n### 全体ビルド推定\n- 1チャンクあたり約9.5秒(範囲に依存しない)\n- 順次ビルド: 180 * 9.5s = 約28.5分\n- 4並列ビルド: 約7分\n- All.lean: 全チャンクのoleanが揃えばomega tactic主体で数秒"
+}

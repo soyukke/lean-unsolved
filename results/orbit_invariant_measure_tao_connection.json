@@ -1,0 +1,36 @@
+{
+  "title": "軌道不変測度のmod 2^k表現: Tao ergodic approachとの接続",
+  "approach": "軌道上のmod 2^k頻度mu_k(r)を大規模計算し、Syracuse遷移行列定常分布(べき乗法)、終端効果(sink/truncation/tail除去)、対数重み測度、上昇/下降フェーズ分離、ランダム大規模初期値との比較を実施。Taoのmixing定理との接続を定量化。",
+  "findings": [
+    "遷移行列定常分布はほぼ一様(max deviation<1%)だが軌道測度は大きく非一様(r=5で1.44倍)。差は終端効果。",
+    "v2=4過大表現1.45倍の主因: n=5ゲートウェイ(T(5)=1, v2(16)=4)。n=5,1除外で1.07倍に低下。",
+    "軌道末尾5ステップ除去でL2非一様性が0.19→0.06に激減。終端5ステップが非一様性の約70%を占める。",
+    "Truncation実験: 最初3ステップではv2=4 ratio=1.01、100ステップで1.45に飽和。終端効果の漸進的蓄積。",
+    "1に到達する直前のresidueは100%がr=5(mod32)。これはT(5)=1が唯一の直接ゲートウェイであることの確認。",
+    "L2非一様性はmod 2^kのkに対して約1.6倍/stepで成長。終端効果はkが大きいほど顕著。",
+    "上昇フェーズではv2=4 ratio≒0.95、下降フェーズでは2.05。非一様性は下降フェーズに集中。",
+    "ランダム大規模初期値(~10^6)と小規模(3..30000)で軌道測度はほぼ一致。初期値分布への依存は弱い。"
+  ],
+  "hypotheses": [
+    "mu_32(5) ≈ (1/16) * (1 + C/L_avg) where L_avg=平均軌道長, C=mod32サイクル補正定数",
+    "Taoのmixing定理は遷移行列の定常分布(≈一様)を保証するが、有限軌道のabsorbing boundary(n=1)が測度を歪める",
+    "非一様性のk成長率1.6≈(3/2)^{2/3}は3x+1の平均縮小率log(3/4)/log(2)と関連する可能性",
+    "mu_k(r)の閉公式: mu_k(r) = (1/N_odd) + (1/L_avg) * w(r,1) where w(r,1)=rから1への逆Syracuseパスの重み"
+  ],
+  "dead_ends": [
+    "対数重み(1/n)測度はr=1に11倍集中し、Tao理論の対数密度とは直接対応しない",
+    "mu_k(r)の完全な閉公式は導出できず。再帰構造はあるが解析的に閉じない",
+    "Taoの3-adic Syracuse RVとmod 2^k測度の直接的な対応関係は見出せず"
+  ],
+  "scripts_created": [
+    "scripts/collatz_orbit_invariant_measure_mod2k.py",
+    "scripts/collatz_tao_connection_analysis.py"
+  ],
+  "outcome": "中発見",
+  "next_directions": [
+    "終端効果の正確なモデル化: absorbing Markov chainの理論を適用し mu(r) = pi_stationary(r) + delta(r) を厳密導出",
+    "mod 3^n (Taoの設定) での同様の軌道測度計算。2-adic vs 3-adic の対称性",
+    "v2=4 ratio 1.07 (n=5除外後) の残余非一様性の原因: mod 64以上のサイクル構造",
+    "Lean形式化: T(5)=1の証明、mod 32でのSyracuseグラフ構造の形式化"
+  ]
+}

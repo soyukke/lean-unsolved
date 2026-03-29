@@ -1,0 +1,25 @@
+{
+  "key_finding": "v2=4 \u904e\u5927\u8868\u73fe\u306f\u9077\u79fb\u884c\u5217\u306e\u56fa\u6709\u69cb\u9020\u3067\u306f\u306a\u304f\u8ecc\u9053\u306e\u4e0d\u5909\u6e2c\u5ea6\u306e\u975e\u4e00\u69d8\u6027\u306b\u8d77\u56e0",
+  "transition_independence": {
+    "description": "mod 2^k \u2192 \u221e \u3067\u9077\u79fb\u306f\u5b8c\u5168\u72ec\u7acb\uff08\u5e7e\u4f55\u5206\u5e03\uff09\u306b\u53ce\u675f",
+    "MI_k13": 0.003,
+    "convergence_rate": "roughly halving per k increment"
+  },
+  "orbit_v2_4": {
+    "observed_ratio": 0.08899474621446271,
+    "theoretical": 0.0625,
+    "overrepresentation": 1.4239159394314034,
+    "n5_contribution_pct": 27.704577591868368,
+    "without_n5": 0.06596554911097963
+  },
+  "mechanism": {
+    "primary": "Syracuse orbit invariant measure non-uniformity mod 32",
+    "secondary": "n=5 \u2192 1 path contributes systematically to v2=4",
+    "algebraic_cause": "3*5+1 = 16 = 2^4, so v2(3*5+1) = 4 and T(5) = 1"
+  },
+  "algebraic_structure": {
+    "mod_2k_convergence": "P(v2_next=b | v2_curr=a) \u2192 1/2^b as k\u2192\u221e",
+    "convergence_rate": "Frobenius norm halves roughly per 2 increments of k",
+    "tail_effect": "mod 2^k truncation creates apparent Markov dependency that vanishes in limit"
+  }
+}
