@@ -1305,8 +1305,12 @@
         "analysis"
       ],
       "priority": 2,
-      "status": "in_progress",
-      "created": "2026-03-29"
+      "status": "done",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_160.md",
+      "outcome": "中発見",
+      "summary": "平均逆像数=4/3厳密証明。既存エントロピー理論はコラッツに直接適用不可。log(4/3)位置づけ未解決"
     },
     {
       "id": "collatz-161",
