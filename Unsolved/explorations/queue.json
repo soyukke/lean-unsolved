@@ -829,6 +829,328 @@
       "result_file": "exploration_134.md",
       "outcome": "失敗",
       "summary": "APIエラー(500)"
+    },
+    {
+      "id": "collatz-136",
+      "problem": "collatz",
+      "title": "Syracuse軌道とStern-Brocot木の関係（再試行）",
+      "category": "組合せ論的",
+      "description": "Stern-Brocot木はCalkin-Wilf列挙で全正有理数を網羅。Syracuse軌道のlog2スケールでの振る舞いをStern-Brocot木上のパスとして解釈。",
+      "expected_output": "Stern-Brocot木上の解釈、軌道パスの特徴付け",
+      "tools": [
+        "python",
+        "analysis"
+      ],
+      "priority": 2,
+      "status": "done",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_140.md",
+      "outcome": "小発見",
+      "summary": "D/k=mediant操作。v2=5→v2=4が51.5%(理論8倍)。SB木直接対応なし"
+    },
+    {
+      "id": "collatz-137",
+      "problem": "collatz",
+      "title": "well-ordering最小発散列の非存在（再試行）",
+      "category": "論理的/モデル理論",
+      "description": "最小反例n₀の性質を演繹。偶数→n₀/2<n₀矛盾。奇数の精密制約。Minimal.leanのsorry解消設計。",
+      "expected_output": "最小反例の必要条件、Lean形式化設計",
+      "tools": [
+        "lean",
+        "analysis"
+      ],
+      "priority": 1,
+      "status": "done",
+      "formalization_potential": "補題候補",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_136.md",
+      "outcome": "中発見",
+      "formalization_value": "補題候補",
+      "summary": "Minimal.leanにsorryなし確認。mod256で新規3クラス排除(r=7,143,187)"
+    },
+    {
+      "id": "collatz-138",
+      "problem": "collatz",
+      "title": "Syracuse写像mod 2^k上の置換群（再試行）",
+      "category": "代数的構造",
+      "description": "T:(Z/2^kZ)*→(Z/2^kZ)*の置換群⟨T⟩をk=3..12で計算。位数の成長率。",
+      "expected_output": "置換群の位数・構造",
+      "tools": [
+        "python"
+      ],
+      "priority": 2,
+      "status": "queued",
+      "created": "2026-03-29"
+    },
+    {
+      "id": "collatz-139",
+      "problem": "collatz",
+      "title": "軌道合流統計（再試行）",
+      "category": "逆問題/双対",
+      "description": "異なる始点の軌道合流時間の分布。合流点のmod構造。",
+      "expected_output": "合流時間分布、合流点構造",
+      "tools": [
+        "python"
+      ],
+      "priority": 2,
+      "status": "queued",
+      "created": "2026-03-29"
+    },
+    {
+      "id": "collatz-140",
+      "problem": "collatz",
+      "title": "v2_mul乗法性の形式化: v2(a*b)=v2(a)+v2(b)",
+      "category": "既存補題の拡張",
+      "description": "v2の乗法性をLean形式化。strongRecOnで帰納法。偶数の場合v2(2*a'*b)=1+v2(a'*b)。全ての大規模形式化の前提条件。",
+      "expected_output": "v2_mulのLean証明設計",
+      "tools": [
+        "lean",
+        "analysis"
+      ],
+      "priority": 1,
+      "status": "done",
+      "formalization_potential": "定理候補",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_137.md",
+      "outcome": "小発見",
+      "formalization_value": "定理候補",
+      "summary": "★v2_mul設計完了。v2_odd_mul+v2_mul、strongRecOn+calc ring"
+    },
+    {
+      "id": "collatz-141",
+      "problem": "collatz",
+      "title": "Syracuse写像の2^k | (3n+1) の条件の精密化",
+      "category": "既存補題の拡張",
+      "description": "v2(3n+1)≥kとなるnの条件をmod 2^{k+1}で表現。既存v2_of_mod8との一般化。形式化候補。",
+      "expected_output": "v2(3n+1)≥k⟺n≡(2^k-1)/3 mod 2^kの証明",
+      "tools": [
+        "lean",
+        "analysis"
+      ],
+      "priority": 1,
+      "status": "done",
+      "formalization_potential": "定理候補",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_138.md",
+      "outcome": "中発見",
+      "formalization_value": "定理候補",
+      "summary": "★collatzResidue(k)=(4^{⌈k/2⌉}-1)/3。v2≥k⟺n%2^k=r。6段階設計"
+    },
+    {
+      "id": "collatz-142",
+      "problem": "collatz",
+      "title": "T(n)≡1(mod3)⟺v2偶数のLean形式化検証",
+      "category": "既存補題の拡張",
+      "description": "既にsyracuse_mod3_eqとして形式化済み。その系として有用な補題を設計: T(n)≡2(mod3)⟺v2奇数。",
+      "expected_output": "syracuse_mod3_eqの系の形式化",
+      "tools": [
+        "lean"
+      ],
+      "priority": 2,
+      "status": "queued",
+      "formalization_potential": "補題候補",
+      "created": "2026-03-29"
+    },
+    {
+      "id": "collatz-143",
+      "problem": "collatz",
+      "title": "mod 2^k下降マップの固定点集合とBaker排除の拡張",
+      "category": "計算実験",
+      "description": "mod 2^k (k=10..20)でSyracuse 1ステップ下降T(n)<nとなる残基を完全分類。Baker定理と組合せてサイクル排除の範囲を拡張。",
+      "expected_output": "下降マップの固定点分類、サイクル排除の拡張可能性",
+      "tools": [
+        "python"
+      ],
+      "priority": 2,
+      "status": "queued",
+      "created": "2026-03-29"
+    },
+    {
+      "id": "collatz-144",
+      "problem": "collatz",
+      "title": "Syracuse軌道のprefix共有: 長いcommon prefixを持つ(n₁,n₂)の構造",
+      "category": "組合せ論的",
+      "description": "T^k(n₁)=T^k(n₂)となる最小k（合流時間）がLのペア(n₁,n₂)のうち、n₁-n₂が最小のものの構造。",
+      "expected_output": "prefix共有の条件、n₁-n₂の構造",
+      "tools": [
+        "python"
+      ],
+      "priority": 3,
+      "status": "queued",
+      "created": "2026-03-29"
+    },
+    {
+      "id": "collatz-145",
+      "problem": "collatz",
+      "title": "generalized_waterfall_formula のLean帰納法実装",
+      "category": "既存補題の拡張",
+      "description": "waterfall_stepを用いてT^s(3^k·2^j-1)=3^{k+s}·2^{j-s}-1をLean帰納法で証明。sに関する帰納法+waterfall_stepの繰り返し適用。",
+      "expected_output": "一般化Waterfall公式のLean証明",
+      "tools": [
+        "lean",
+        "analysis"
+      ],
+      "priority": 1,
+      "status": "done",
+      "formalization_potential": "定理候補",
+      "created": "2026-03-29",
+      "completed": "2026-03-29",
+      "result_file": "exploration_139.md",
+      "outcome": "中発見",
+      "formalization_value": "定理候補",
+      "summary": "★一般化Waterfall設計完了。352テスト全合格。既存補題のみで実装可能"
+    },
+    {
+      "id": "collatz-146",
+      "problem": "collatz",
+      "title": "逆Syracuse写像の代数的構造: T^{-1}(m)の完全記述",
+      "category": "逆問題/双対",
+      "description": "T^{-1}(m)={n odd: T(n)=m}を代数的に完全記述。n=(m·2^j-1)/3でj≥1, 3|(m·2^j-1), nが奇数。有効jの条件をm mod 6で分類。",
+      "expected_output": "T^{-1}(m)の完全記述、有効j条件",
+      "tools": [
+        "python",
+        "analysis"
+      ],
+      "priority": 2,
+      "status": "queued",
+      "formalization_potential": "補題候補",
+      "created": "2026-03-29"
+    },
+    {
+      "id": "collatz-147",
+      "problem": "collatz",
+      "title": "コラッツ木の深さ分布: n≤Nの最大到達深さD(N)のスケーリング",
+      "category": "計算実験",
+      "description": "D(N)=max_{n≤N}stopping_time(n)のN=10^3..10^7でのスケーリング。D(N)/log(N)^αの最良αを特定。",
+      "expected_output": "D(N)のスケーリング則、αの精密値",
+      "tools": [
+        "python"
+      ],
+      "priority": 3,
+      "status": "queued",
+      "created": "2026-03-29"
+    },
+    {
+      "id": "collatz-148",
+      "problem": "collatz",
+      "title": "v2(3n+1)=j の正確な残基条件の一般k証明設計",
+      "category": "既存補題の拡張",
+      "description": "v2(3n+1)=j⟺n≡(2^j-1)·3^{-1} mod 2^j かつ n≢(2^{j+1}-1)·3^{-1} mod 2^{j+1}。3^{-1} mod 2^kの明示的計算を含む。",
+      "expected_output": "v2(3n+1)=jの完全条件のLean設計",
+      "tools": [
+        "lean",
+        "analysis"
+      ],
+      "priority": 2,
+      "status": "queued",
+      "formalization_potential": "定理候補",
+      "created": "2026-03-29"
+    },
+    {
+      "id": "collatz-149",
+      "problem": "collatz",
+      "title": "コラッツ写像のエントロピー: h(T) vs h(σ)",
+      "category": "位相的/幾何学的",
+      "description": "コラッツ写像の位相的エントロピーを計算。2進シフト写像σとの関係。Bowen-Dinaburg定義による計算。",
+      "expected_output": "位相的エントロピーの値、シフト写像との比較",
+      "tools": [
+        "python",
+        "analysis"
+      ],
+      "priority": 3,
+      "status": "queued",
+      "created": "2026-03-29"
+    },
+    {
+      "id": "collatz-150",
+      "problem": "collatz",
+      "title": "奇数核テーブルによるcollatzReaches_le_10^7の効率的検証",
+      "category": "計算実験",
+      "description": "native_decide以外の方法でn≤10^7の検証をLeanで実現する設計。奇数核テーブル+メタプログラミング(探索091の方針)の具体化。",
+      "expected_output": "効率的検証の設計、必要メモリ/時間推定",
+      "tools": [
+        "lean",
+        "python"
+      ],
+      "priority": 3,
+      "status": "queued",
+      "created": "2026-03-29"
+    },
+    {
+      "id": "collatz-151",
+      "problem": "collatz",
+      "title": "Syracuse軌道の自己相似性: T^k(n)の統計的スケーリング",
+      "category": "確率的",
+      "description": "T^k(n)/n^{α_k}の分布が収束するか調査。α_k=(3/4)^kのスケーリング。中心極限定理的な収束の検証。",
+      "expected_output": "スケーリング分布の形状、収束速度",
+      "tools": [
+        "python"
+      ],
+      "priority": 3,
+      "status": "queued",
+      "created": "2026-03-29"
+    },
+    {
+      "id": "collatz-152",
+      "problem": "collatz",
+      "title": "Taoの対数密度アプローチの精密化: Syracuse random variableの相関構造",
+      "category": "確率的",
+      "description": "Tao 2019のSyracuse random variableモデルでの相関関数を精密計算。実軌道との乖離の定量化。",
+      "expected_output": "相関関数の理論値vs実測、乖離の原因",
+      "tools": [
+        "python",
+        "websearch"
+      ],
+      "priority": 2,
+      "status": "queued",
+      "created": "2026-03-29"
+    },
+    {
+      "id": "collatz-153",
+      "problem": "collatz",
+      "title": "コラッツ軌道と素数分布: T^k(p)の統計 (p素数)",
+      "category": "変種/特殊ケース",
+      "description": "素数pのSyracuse軌道の統計的性質を非素数と比較。stopping time、peak、v2列の差異を調査。",
+      "expected_output": "素数vs非素数の軌道統計比較",
+      "tools": [
+        "python"
+      ],
+      "priority": 3,
+      "status": "queued",
+      "created": "2026-03-29"
+    },
+    {
+      "id": "collatz-154",
+      "problem": "collatz",
+      "title": "mod 2^k での一意下降経路: n>N₀の全ての奇数に対する下降保証",
+      "category": "計算実験",
+      "description": "mod 2^k (k=8..16) で、kステップ以内に必ずn未満に到達する残基の割合を計算。k→∞での漸近100%到達の数値的証拠。",
+      "expected_output": "kステップ下降保証の残基割合、漸近挙動",
+      "tools": [
+        "python"
+      ],
+      "priority": 2,
+      "status": "queued",
+      "created": "2026-03-29"
+    },
+    {
+      "id": "collatz-155",
+      "problem": "collatz",
+      "title": "ascentConst(k)=3^k-2^kの3-adic評価とサイクル方程式への応用",
+      "category": "代数的構造",
+      "description": "ascentConst(k)=3^k-2^kのv3評価を計算。サイクル方程式n(2^s-3^p)=...の分母の3-adic構造解析。",
+      "expected_output": "v3(3^k-2^k)の閉形式、サイクル排除への応用",
+      "tools": [
+        "python",
+        "analysis"
+      ],
+      "priority": 2,
+      "status": "queued",
+      "created": "2026-03-29"
     }
   ]
 }
